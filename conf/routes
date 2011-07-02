@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Application.index
+
+# User actions
+GET     /login																	Users.login
+GET     /logout																	Users.logout
+GET     /listen																  Users.listen
+
+# Server actions
+GET     /getroomfor															Servers.getRoomFor
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Import CRUD routes
+*      /admin              module:crud
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

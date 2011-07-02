@@ -1,0 +1,25 @@
+02 Jul 2011 18:08:17,241 INFO  ~ Starting /Users/goggin/Documents/CS/strangechat
+02 Jul 2011 18:08:17,244 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+02 Jul 2011 18:08:17,244 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+02 Jul 2011 18:08:17,822 WARN  ~ You're running Play! in DEV mode
+02 Jul 2011 18:08:17,900 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+02 Jul 2011 18:08:23,595 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+02 Jul 2011 18:08:25,358 INFO  ~ Application 'strangechat' is now started !
+02 Jul 2011 18:13:50,027 ERROR ~ 
+
+@671ci30pe
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /test/ServersTest.java around line 30)
+The file /test/ServersTest.java could not be compiled. Error raised is : JsonArr cannot be resolved to a type
+
+play.exceptions.CompilationException: JsonArr cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
