@@ -28,10 +28,11 @@ public class Users extends Index {
 	 * included a mapping of -1 => chatroom server; this is the server the requesting client should 
 	 * login to
 	 * @param facebook_id the facebook id of the user logging in
+	 * @param name the name to assign to the user logging in
 	 * @param access_token an up to date access_token for logging into the facebook API
 	 * @param callback optional, required for cross-doman requests
 	 */
-	public static void login (Long facebook_id, String access_token, String callback) {
+	public static void login (Long facebook_id, String name, String access_token, String callback) {
 		
 		JsonObject jsonObj = Utility.getMyFacebookFriends(facebook_id, access_token);
 		if (jsonObj.has("error")) {
@@ -39,7 +40,7 @@ public class Users extends Index {
 		}
 		
 		Set<User> friends = new HashSet<User>();
-		HashMap<Long, String> friendData = new HashMap<Long, String>();
+		HashMap<String, User> friendData = new HashMap<String, User>();
 		
 		for (JsonElement ele : jsonObj.get("data").getAsJsonArray()) {
 			JsonObject friendObj = ele.getAsJsonObject();
@@ -49,7 +50,7 @@ public class Users extends Index {
 				User friend = User.find("byUser_id", friendID).first();
 				if (friend != null && friend.online) {
 					friends.add(friend);
-					friendData.put(friendID, friendName);
+					friendData.put(friendID.toString(), friend);
 				}
 			} catch (Exception e) {
 				System.out.println("EXCEPTION " + e);
@@ -57,15 +58,18 @@ public class Users extends Index {
 		}
 
 		User user = User.getOrCreate(facebook_id);
+		Server server = Server.getMyHeartbeatServer(user);
+		user.heartbeatServer = server;
 		user.friends = friends;
+		user.name = name;
 		user.login();
 		user.save();		
 		
 		// add heartbeat server into list
-		friendData.put(-1L, Server.getMyHeartbeatServer(user).name);
+		friendData.put(user.user_id.toString(), user);
 		Users.renderJSONP(
 			friendData, 
-			new TypeToken<HashMap<Long, String>>() {}.getType(),
+			new TypeToken<HashMap<String, User>>() {}.getType(),
 			callback
 		);
 	}
@@ -83,35 +87,6 @@ public class Users extends Index {
 		} else {
 			returnFailed("user " + facebook_id + " not found", callback);
 		}
-	}
-
-	/**
-	 * Long poll for events relevant to <code>facebook_id</code>
-	 * @param facebook_id
-	 * @param lastReceived the id of the last event seen
-	 * @param callback optional JSONP callback
-	 */	
-	public static void listen (Long user_id, Long lastReceived, String callback) {
-		
-		List<IndexedEvent<UserEvent.AnEvent>> returnData = new LinkedList<IndexedEvent<UserEvent.AnEvent>>();
-		
-		do {
-			System.out.println(user_id + " is waiting for events");
-			List<IndexedEvent<UserEvent.AnEvent>> events = await(User.userEvents.nextEvents(lastReceived));
-			System.out.println(user_id + " is considering returned events");
-			for (IndexedEvent<UserEvent.AnEvent> e : events) {
-				if (e.data.user_id.equals(user_id)) {
-					returnData.add(e);
-				}
-			}			
-		} while (returnData.size() == 0);
-
-		System.out.println(user_id + " returning events");
-		Users.renderJSONP(
-			returnData, 
-			new TypeToken<List<IndexedEvent<UserEvent.AnEvent>>>() {}.getType(),
-			callback
-		);
 	}
 
 }

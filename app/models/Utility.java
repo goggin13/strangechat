@@ -6,6 +6,7 @@ import java.net.*;
 import java.io.*;
 import java.util.Collection;
 import java.util.*;
+import java.text.Format;
 import com.google.gson.*;
 import play.cache.Cache;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,22 @@ public class Utility {
 			   .params(params)
 			   .setHeader("content-type", "application/json")
 			   .get();
+		return resp;
+	}
+	
+	/**
+	 * Get the response from <code>url</code> as a JSON string, posting a request with
+	 * <code>params</code>
+	 * @param url the url to hit
+     * @param params to be added the request
+	 * @return a response object from the given url
+	 */
+	public static WS.HttpResponse fetchPostUrl (String url, HashMap<String, Object> params) {
+		WS.HttpResponse resp = 
+				WS.url(url)
+			   .params(params)
+			   .setHeader("content-type", "application/json")
+			   .post();
 		return resp;
 	}
 	

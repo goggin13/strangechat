@@ -25,22 +25,35 @@ public class UsersTest extends MyFunctionalTest {
 	public void testLoginResponse () {
 		
 		// first id 2 logs in
-		String url = "/login?facebook_id=" + fb_id_2 + "&access_token=" + facebook_token_2;
+		String url = "/login?facebook_id=" + fb_id_2 + "&access_token=" + facebook_token_2 + "&name=Matthew Goggin";
 	    JsonObject jsonObj = getAndValidateResponse(url);
 	
 		assertEquals(3, jsonObj.entrySet().size());
-		assertEquals("Patrick Moberg", jsonObj.get(pmo_id.toString()).getAsString());
-		assertEquals("Kristen Diver", jsonObj.get(k_id.toString()).getAsString());
-		assertEquals("chat1.com", jsonObj.get("-1").getAsString());
 		
-		// and now id 2 logs in
-		url = "/login?facebook_id=" + fb_id_1 + "&access_token=" + facebook_token_1;
+		JsonObject pmo = jsonObj.get(pmo_id.toString()).getAsJsonObject();
+		assertEquals("Patrick Moberg", pmo.get("name").getAsString());
+		assertEquals("http://localhost:9000/", pmo.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
+
+		JsonObject kk = jsonObj.get(k_id.toString()).getAsJsonObject();
+		assertEquals("Kristen Diver", kk.get("name").getAsString());
+		assertEquals("http://localhost:9000/", kk.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
+				
+		JsonObject caller = jsonObj.get(fb_id_2.toString()).getAsJsonObject();
+		assertEquals("http://localhost:9000/", caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
+		
+		// and now id 1 logs in
+		url = "/login?facebook_id=" + fb_id_1 + "&access_token=" + facebook_token_1 + "&name=Matt Goggin";;
 	    jsonObj = getAndValidateResponse(url);
 		
 		// should include my fake account
 		assertEquals(2, jsonObj.entrySet().size());
-		assertEquals("Matthew Goggin", jsonObj.get(fb_id_2.toString()).getAsString());
-		assertEquals("chat1.com", jsonObj.get("-1").getAsString());
+		JsonObject goggin = jsonObj.get(fb_id_2.toString()).getAsJsonObject();
+		
+		assertEquals("Matthew Goggin", goggin.get("name").getAsString());
+		assertEquals("http://localhost:9000/", goggin.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
+
+		caller = jsonObj.get(fb_id_1.toString()).getAsJsonObject();
+		assertEquals("http://localhost:9000/", caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
 		
 		// there should be an event waiting for user 2 telling them that user 1
 		// logged in
@@ -59,24 +72,24 @@ public class UsersTest extends MyFunctionalTest {
 	} 
 	
 	@Test
-	public void testGoodLogout () {
-		String url = "/logout?facebook_id=" + k_id;
-	    JsonObject jsonObj = getAndValidateResponse(url);
-		assertEquals("okay", jsonObj.get("status").getAsString());
-		
-		// PMO should have an event waiting notifying him k logged out
-		JsonObject data = getListenResponse(pmo_id, 0);
-		assertEquals("userlogout", data.get("type").getAsString());
-		assertEquals(k_id.toString(), data.get("left_user").getAsString());
-		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());		
-	}
-	
-	@Test
 	public void testBadLogout () {
 		String bad_id = "23423424312";
 		String url = "/logout?facebook_id=" + bad_id;
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("user " + bad_id + " not found", jsonObj.get("message").getAsString());
 	}
-	    
+	
+	@Test
+	public void testGoodLogout () {
+		String url = "/logout?facebook_id=" + k_id;
+	    JsonObject jsonObj = getAndValidateResponse(url);
+		assertEquals("okay", jsonObj.get("status").getAsString());
+
+		// PMO should have an event waiting notifying him k logged out
+		JsonObject data = getListenResponse(pmo_id, 0);
+		assertEquals("userlogout", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("left_user").getAsString());
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());		
+	} 
+		    
 }

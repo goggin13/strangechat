@@ -19,15 +19,23 @@ import com.google.gson.reflect.*;
 @Entity
 public class Server extends Model {
 	
-	/** The name of the server, which is also the root domain for that box */
+	/** The name of the server */
 	@Required
 	public String name;
+	
+	/** URI for the server */
+	@Required
+	public String uri;
+	
+	/**
+	 * true if this server is the master server */
+	public boolean isMaster;
 	
 	/** Number of active rooms on this server */
 	public int roomCount;
 
 	/** the next room id to use when we need a new room on this server */
-	public Long nextID;
+	public Long nextID = 1L;
 	
 	/** 
 	 * Servers name
@@ -35,6 +43,15 @@ public class Server extends Model {
 	 */	
 	public String toString () {
 		return this.name;
+	}
+	
+	/**
+	 * Post an event to stream of this server.  Since this
+	 * object is of course just meta data for the actual chat server,
+	 * we perform a post request in order to get the data in to the server's
+	 * event stream */
+	public void postEvent (UserEvent.Event e) {
+		
 	}
 	
 	/**
@@ -46,12 +63,18 @@ public class Server extends Model {
 		return next;
 	}
 	
+	/** 
+	 * @Return the master server instance */
+	public static Server getMasterServer () {
+		Server master = Server.find("byIsMaster", true).first();
+		return master;
+	}
+	
 	/**
 	 * @return a Server instance that this user should use to
 	 * to heartbeat against */
 	public static Server getMyHeartbeatServer (User user) {
-		Server heartbeat = Server.all().first();
-		user.heartbeatServer = heartbeat;
+		Server heartbeat = Server.find("byIsMaster", false).first();
 		return heartbeat;
 	}
 	
@@ -59,7 +82,7 @@ public class Server extends Model {
 	 * @return a Server instance that these users should use to
 	 * to chat on */
 	public static Server getServerFor (User user1, User user2) {
-		Server chatServer = Server.all().first();
+		Server chatServer = Server.find("byIsMaster", false).first();
 		// user1.addChatServer(chatServer);
 		// user1.save();
 		// user2.addChatServer(chatServer);

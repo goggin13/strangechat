@@ -1,19 +1,27 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
 
+
+Server(chat1):
+  name: chat1.com
+  uri: http://localhost:9000/
+  roomCount: 4
+  nextID: 1
+
 User(kristen):
    user_id: 411183
+   name: "Kristen Diver"
    online: true
+   heartbeatServer: chat1
    
 User(pmo):
    user_id: 24403414
+   name: "Patrick Moberg"
    online: true
-
+   heartbeatServer: chat1
+   
 User(goggin):
    user_id: 100002292928724
+   name: "Matthew Goggin"
    online: true
-   
-Server(chat1):
-   name: chat1.com
-   roomCount: 4
-   nextID: 1
+   heartbeatServer: chat1

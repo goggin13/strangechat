@@ -13,6 +13,7 @@ public class MyFunctionalTest extends FunctionalTest {
 	
 	protected JsonObject getListenResponse (Long id, int lastReceived) {
 		String url = "/listen?user_id=" + id + "&lastReceived=" + lastReceived;
+		System.out.println(url);
 	    JsonArray jsonArr = getAndValidateAsArray(url);
 		JsonObject jsonObj = jsonArr.get(0).getAsJsonObject();
 		JsonObject data = jsonObj.get("data").getAsJsonObject();

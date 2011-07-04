@@ -4,15 +4,21 @@
 
 # Home page
 GET     /                                       Application.index
+GET     /demo																		Application.demo
 
 # User actions
 GET     /login																	Users.login
 GET     /logout																	Users.logout
-GET     /listen																  Users.listen
+
+# Chat actions
+GET     /listen																  Notify.listen
+GET     /message																Notify.message
+GET 	  /heartbeat															Notify.heartbeat
 
 # Server actions
 GET     /getroomfor															Servers.getRoomFor
 GET     /leaveroom															Servers.leaveRoom
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

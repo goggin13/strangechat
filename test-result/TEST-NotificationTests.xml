@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<testsuite failures="0" time="0.855" errors="0" skipped="0" tests="4" name="NotificationTests">
+  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.466">
+      </testcase>
+  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.151">
+      </testcase>
+  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.134">
+      </testcase>
+  <testcase classname="NotificationTests" name="stub" time="0.104">
+      </testcase>
+</testsuite>

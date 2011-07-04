@@ -1,174 +1,25 @@
-03 Jul 2011 16:36:48,742 INFO  ~ Starting /Users/mattgoggin/Desktop/CS/strangechat
-03 Jul 2011 16:36:48,746 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-03 Jul 2011 16:36:48,746 INFO  ~ Module crud is available (/Users/mattgoggin/Library/play/modules/crud)
-03 Jul 2011 16:36:49,471 WARN  ~ You're running Play! in DEV mode
-03 Jul 2011 16:36:49,642 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-03 Jul 2011 16:36:58,946 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-03 Jul 2011 16:36:59,497 ERROR ~ 
+04 Jul 2011 14:56:03,639 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+04 Jul 2011 14:56:03,642 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+04 Jul 2011 14:56:03,642 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+04 Jul 2011 14:56:04,180 WARN  ~ You're running Play! in DEV mode
+04 Jul 2011 14:56:04,280 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+04 Jul 2011 14:56:10,897 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+04 Jul 2011 14:56:13,188 INFO  ~ Application 'strangechat' is now started !
+04 Jul 2011 14:56:41,809 ERROR ~ 
 
-@671jcc61f
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
+@672069gmo
+Internal Server Error (500) for request GET /demo
 
-JPA error
-A JPA error occurred (Unable to build EntityManagerFactory): @OneToOne or @ManyToOne on models.Room.participants references an unknown entity: java.util.Set
+Compilation error (In /app/controllers/Notify.java around line 24)
+The file /app/controllers/Notify.java could not be compiled. Error raised is : The method returnFailed(String, String) in the type Index is not applicable for the arguments (String)
 
-play.exceptions.JPAException: Unable to build EntityManagerFactory
-	at play.db.jpa.JPAPlugin.onApplicationStart(JPAPlugin.java:232)
-	at play.plugins.PluginCollection.onApplicationStart(PluginCollection.java:425)
-	at play.Play.start(Play.java:492)
-	at play.Play.detectChanges(Play.java:607)
-	at play.Invoker$Invocation.init(Invoker.java:186)
-	at Invocation.HTTP Request(Play!)
-Caused by: org.hibernate.AnnotationException: @OneToOne or @ManyToOne on models.Room.participants references an unknown entity: java.util.Set
-	at org.hibernate.cfg.ToOneFkSecondPass.doSecondPass(ToOneFkSecondPass.java:107)
-	at org.hibernate.cfg.Configuration.processEndOfQueue(Configuration.java:1550)
-	at org.hibernate.cfg.Configuration.processFkSecondPassInOrder(Configuration.java:1473)
-	at org.hibernate.cfg.Configuration.secondPassCompile(Configuration.java:1389)
-	at org.hibernate.cfg.Configuration.buildMappings(Configuration.java:1345)
-	at org.hibernate.ejb.Ejb3Configuration.buildMappings(Ejb3Configuration.java:1477)
-	at org.hibernate.ejb.EventListenerConfigurator.configure(EventListenerConfigurator.java:193)
-	at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:1096)
-	at org.hibernate.ejb.Ejb3Configuration.buildEntityManagerFactory(Ejb3Configuration.java:900)
-	at play.db.jpa.JPAPlugin.onApplicationStart(JPAPlugin.java:230)
-	... 5 more
-03 Jul 2011 16:38:13,677 INFO  ~ Application 'strangechat' is now started !
-03 Jul 2011 16:38:52,160 WARN  ~ SQL Error: 1406, SQLState: 22001
-03 Jul 2011 16:38:52,160 ERROR ~ Data truncation: Data too long for column 'server' at row 1
-03 Jul 2011 16:39:37,672 WARN  ~ SQL Error: 1406, SQLState: 22001
-03 Jul 2011 16:39:37,672 ERROR ~ Data truncation: Data too long for column 'server' at row 1
-03 Jul 2011 16:42:58,626 WARN  ~ SQL Error: 1406, SQLState: 22001
-03 Jul 2011 16:42:58,636 ERROR ~ Data truncation: Data too long for column 'server' at row 1
-03 Jul 2011 16:43:07,160 WARN  ~ SQL Error: 1406, SQLState: 22001
-03 Jul 2011 16:43:07,160 ERROR ~ Data truncation: Data too long for column 'server' at row 1
-03 Jul 2011 16:46:06,785 WARN  ~ SQL Error: 1406, SQLState: 22001
-03 Jul 2011 16:46:06,785 ERROR ~ Data truncation: Data too long for column 'server' at row 1
-03 Jul 2011 16:46:42,494 WARN  ~ SQL Error: 1406, SQLState: 22001
-03 Jul 2011 16:46:42,494 ERROR ~ Data truncation: Data too long for column 'server' at row 1
-03 Jul 2011 16:49:58,089 WARN  ~ SQL Error: 1406, SQLState: 22001
-03 Jul 2011 16:49:58,108 ERROR ~ Data truncation: Data too long for column 'server' at row 1
-03 Jul 2011 17:09:46,684 ERROR ~ 
-
-@671jcc61n
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
-
-Compilation error (In /app/controllers/Servers.java around line 65)
-The file /app/controllers/Servers.java could not be compiled. Error raised is : user_1 cannot be resolved to a variable
-
-play.exceptions.CompilationException: user_1 cannot be resolved to a variable
+play.exceptions.CompilationException: The method returnFailed(String, String) in the type Index is not applicable for the arguments (String)
 	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
 	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
 	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
 	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
 	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
-	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:310)
-	at play.Play.detectChanges(Play.java:592)
-	at play.Invoker$Invocation.init(Invoker.java:186)
-	at Invocation.HTTP Request(Play!)
-03 Jul 2011 17:09:53,841 ERROR ~ 
-
-@671jcc61o
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
-
-Compilation error (In /app/controllers/Servers.java around line 73)
-The file /app/controllers/Servers.java could not be compiled. Error raised is : Type mismatch: cannot convert from GenericModel.JPAQuery to Room
-
-play.exceptions.CompilationException: Type mismatch: cannot convert from GenericModel.JPAQuery to Room
-	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
-	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
-	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
-	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
-	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
-	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:310)
-	at play.Play.detectChanges(Play.java:592)
-	at play.Invoker$Invocation.init(Invoker.java:186)
-	at Invocation.HTTP Request(Play!)
-03 Jul 2011 17:10:05,526 ERROR ~ 
-
-@671jcc61p
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
-
-Compilation error (In /app/controllers/Servers.java around line 77)
-The file /app/controllers/Servers.java could not be compiled. Error raised is : The method contains(User) is undefined for the type Room
-
-play.exceptions.CompilationException: The method contains(User) is undefined for the type Room
-	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
-	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
-	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
-	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
-	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
-	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:310)
-	at play.Play.detectChanges(Play.java:592)
-	at play.Invoker$Invocation.init(Invoker.java:186)
-	at Invocation.HTTP Request(Play!)
-03 Jul 2011 17:10:17,290 ERROR ~ 
-
-@671jcc620
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
-
-Compilation error (In /app/controllers/Servers.java around line 80)
-The file /app/controllers/Servers.java could not be compiled. Error raised is : The method returnOkay(String) in the type Index is not applicable for the arguments ()
-
-play.exceptions.CompilationException: The method returnOkay(String) in the type Index is not applicable for the arguments ()
-	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
-	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
-	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
-	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
-	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
-	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:310)
-	at play.Play.detectChanges(Play.java:592)
-	at play.Invoker$Invocation.init(Invoker.java:186)
-	at Invocation.HTTP Request(Play!)
-03 Jul 2011 17:16:27,469 ERROR ~ 
-
-@671jcc621
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
-
-Compilation error (In /test/ServersTest.java around line 35)
-The file /test/ServersTest.java could not be compiled. Error raised is : Duplicate local variable jsonObj
-
-play.exceptions.CompilationException: Duplicate local variable jsonObj
-	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
-	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
-	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
-	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
-	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
-	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:310)
-	at play.Play.detectChanges(Play.java:592)
-	at play.Invoker$Invocation.init(Invoker.java:186)
-	at Invocation.HTTP Request(Play!)
-03 Jul 2011 21:43:13,666 ERROR ~ 
-
-@671jcc622
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
-
-Compilation error (In /app/models/Utility.java around line 61)
-The file /app/models/Utility.java could not be compiled. Error raised is : Date cannot be resolved to a type
-
-play.exceptions.CompilationException: Date cannot be resolved to a type
-	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
-	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
-	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
-	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
-	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
-	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:310)
-	at play.Play.detectChanges(Play.java:592)
-	at play.Invoker$Invocation.init(Invoker.java:186)
-	at Invocation.HTTP Request(Play!)
-03 Jul 2011 21:43:24,826 ERROR ~ 
-
-@671jcc623
-Internal Server Error (500) for request GET /@tests?select=UsersTest.class
-
-Compilation error (In /app/models/Utility.java around line 72)
-The file /app/models/Utility.java could not be compiled. Error raised is : Format cannot be resolved to a type
-
-play.exceptions.CompilationException: Format cannot be resolved to a type
-	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
-	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
-	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
-	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
-	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
-	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:310)
-	at play.Play.detectChanges(Play.java:592)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
 	at play.Invoker$Invocation.init(Invoker.java:186)
 	at Invocation.HTTP Request(Play!)

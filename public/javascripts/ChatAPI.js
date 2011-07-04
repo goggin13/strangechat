@@ -1,0 +1,149 @@
+
+// serialize a dict to url form, key=value&key2=....
+var serialize = function (dict) {
+  var vals = [],
+		key;
+  for (key in dict) {
+    if (dict.hasOwnProperty(key)) {
+      vals.push(key + '=' + dict[key]);
+    }
+  }
+  return vals.join('&');
+};
+
+// address book, maintains map of ids to names and servers
+var MyContacts = (function () {
+	var my = {},
+		that = {};
+	my.contacts = {};
+	
+	that.get = function (id) {
+		return my.contacts[id].name;
+	};
+	
+	that.getServerFor = function (id) {
+		return my.contacts[id].server;
+	};
+	
+	that.put = function (id, name, server) {
+		my.contacts[id] = {
+			name: name,
+			server: server
+		};
+	};
+	
+	return that;
+}());
+
+var ChatAPI = (function () {
+	var that = {},
+		my = {};
+	my.home_url = "http://localhost:9000/";
+	my.facebook_id = "";
+	my.heartbeatServer = "";
+	my.currentListen = "";
+	my.HEARTBEAT_FREQUENCY = 5000;
+	my.messageHandler = function (JSON) { console.debug(JSON); }
+	
+	// send an API call, either POST, or GET, with given data.
+  // on success the given callback function is called
+  that.send = function (url, method, data, callback) {
+	  // add callback if this is cross domain
+
+	  if (url.indexOf(window.location.host) === -1) {
+			url += "?callback=?";
+			// data["callback"] = "?";
+		}
+		
+		var hash = url + "?" + serialize(data);
+		console.debug(hash);
+		
+    if (method === 'POST') {
+
+    } else {
+      $.ajax({
+          type: "GET",
+          url: url,
+          data: data,
+          dataType: 'json',
+          success: function(JSON) {
+            callback(JSON, hash);
+          }
+      });
+    }
+    return hash;
+  };
+
+	// assign the message function to be called when 
+	// new events arrive
+	that.registerMessageHandler = function (f) {
+		my.messageHandler = f;
+	};
+
+	// listen for chat invitations, direct messages, etc.
+  that.listen = function (lastReceived) {
+    var url = my.heartbeatServer + 'listen',
+      data = {
+        user_id: my.facebook_id,
+				lastReceived: lastReceived
+      };
+    my.currentListen = that.send(url, "GET", data, function (JSON, hash) {
+			$.each(JSON, function (key, val) {
+				if (val.data.type === "userlogin") {
+				}
+			});
+			my.messageHandler(JSON);
+			if (hash === my.currentListen) {
+				that.listen(JSON[JSON.length - 1].id);
+			}
+		});
+  };
+
+	// log in the given user, and return a list of their friends
+	that.login = function (facebook_id, name, facebook_token, callback) {
+		var url = my.home_url + 'login',
+      data = {
+        facebook_id: facebook_id,
+        access_token: facebook_token,
+				name: name
+      };
+		my.facebook_id = facebook_id;
+    that.send(url, "GET", data, function (JSON) {
+			console.debug(JSON);
+			$.each(JSON, function (key, val) {
+				MyContacts.put(key, val.name, val.heartbeatServer.uri);
+			});
+			my.heartbeatServer = MyContacts.getServerFor(my.facebook_id);
+			that.listen(0);
+			my.heartbeat();
+			callback(JSON);
+		});
+	};
+	
+	// send a direct message to another friend
+	that.directMessage = function (to, msg) {
+		var url = MyContacts.getServerFor(to) + 'message',
+      data = {
+        from_user: my.facebook_id,
+				for_user: to,
+				msg: msg
+      };
+    that.send(url, "GET", data, function (JSON) {
+			console.debug(JSON);
+		});
+	};
+	
+	// send out a heartbeat to let the server know "I'm still here"
+	my.heartbeat = function () {
+		var url = my.heartbeatServer + "heartbeat",
+			data = {
+				for_user: my.facebook_id
+			};
+	  that.send(url, "GET", data, function (JSON) {
+			console.debug(JSON);
+			setTimeout(my.heartbeat, my.HEARTBEAT_FREQUENCY);
+		});
+	};
+	
+	return that;
+}());

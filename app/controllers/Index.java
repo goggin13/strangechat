@@ -52,6 +52,8 @@ public class Index extends CRUD {
 	 * renders a JSON status okay response
 	 * @param callback optional, used for cross domain requests */
 	protected static void returnOkay (String callback) {
+		System.out.println("CALLBACK");
+		System.out.println(callback);
 		Users.renderJSONP(
 			getOkayResponse(), 
 			new TypeToken<HashMap<String, String>>() {}.getType(),

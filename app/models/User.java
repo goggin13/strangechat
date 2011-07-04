@@ -6,7 +6,11 @@ import play.data.validation.*;
 import play.libs.F.*;
 import play.db.jpa.*;
 import com.google.gson.*;
-
+import play.libs.WS;
+import play.*;
+import play.mvc.*;
+import java.lang.reflect.Modifier;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A chat user in the system, who can be online or off, and the maintained meta
@@ -15,7 +19,10 @@ import com.google.gson.*;
 
 @Entity
 public class User extends Model {
-    public static ArchivedEventStream<UserEvent.AnEvent> userEvents = new ArchivedEventStream<UserEvent.AnEvent>(100);
+	/** Amount of time a user can go without heartbeating before they are removed */
+	public static final int HEALTHY_HEARTBEAT = 6;
+	/** A map of all the latest user_ids to heartbeats on this server */
+	public static final AbstractMap<Long, Date> heartbeats = new ConcurrentHashMap<Long, Date>();
 	
 	/**
 	 * The user_id, in this case will be the facebook_id
@@ -23,6 +30,11 @@ public class User extends Model {
 	@Required	 
     public Long user_id;
 
+	/**
+	 * Name of this user */
+	@Required
+	public String name;
+	
 	/**
 	 * The most current faceook token we used for this user
 	 */
@@ -32,6 +44,7 @@ public class User extends Model {
 	 * Collection of other users this user is friends with
 	 */
 	@ManyToMany(fetch=FetchType.LAZY)
+	@Transient
 	public Set<User> friends;
 	
 	/**
@@ -48,6 +61,7 @@ public class User extends Model {
 	/**
 	 * The server this user was assigned to heartbeat on
 	 */	
+	@ManyToOne
 	public Server heartbeatServer;
 	
 	public User (Long u) {
@@ -65,23 +79,21 @@ public class User extends Model {
 		this.online = true;
 		for (User friend : this.friends) {
 			if (friend.online) {
-				new UserEvent.UserLogon(friend.user_id, this.user_id);	
+				friend.notifyMeLogin(this.user_id);
 			}
 		}
 	}
 	
 	/**
-	 * log this user in, and notify any of their friends that
-	 * are online that they are available */	
+	 * log this user out, and notify any of their friends that
+	 * are online that they are no longer available */	
 	public void logout () {
 		this.online = false;
 		System.out.println("logout " + this.user_id);
 		System.out.println(this.friends);
 		for (User friend : this.friends) {
-			System.out.println("a friend " + friend.user_id);
-			if (friend.online) {
-				new UserEvent.UserLogout(friend.user_id, this.user_id);	
-			}
+			System.out.println("a friend " + friend.user_id + " logs out");
+			friend.notifyMeLogout(this.user_id);
 		}
 	}	
 	
@@ -107,13 +119,32 @@ public class User extends Model {
 		return user;
 	}
 
-	/**
-	 * publish an event into the user event stream
-	 * @param e the event to publish
-	 */	
-	public static void publishEvent (UserEvent.AnEvent e) {
-		System.out.println("publish event " + e.type);
-		User.userEvents.publish(e);
+	public void notifyMeLogout (Long left_user) {
+		if (Play.mode != Play.Mode.DEV) {
+          	HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("for_user", this.user_id);
+			params.put("left_user", left_user);		
+			notifyMe("logout", params);   
+        } else {
+			new UserEvent.UserLogout(this.user_id, left_user);
+		}
+	}
+
+	public void notifyMeLogin (Long new_user) {
+		if (Play.mode != Play.Mode.DEV) {
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("for_user", this.user_id);
+			params.put("new_user", new_user);		
+			notifyMe("login", params);
+	    } else {
+			new UserEvent.UserLogon(this.user_id, new_user);
+		}		
+	}
+	
+	public void notifyMe (String action, HashMap<String, Object> params) {
+		String url = this.heartbeatServer.uri + "notify/" + action;
+		WS.HttpResponse resp = Utility.fetchUrl(url, params);
+		JsonObject json = resp.getJson().getAsJsonObject();		
 	}
 	
 	/**
@@ -125,11 +156,5 @@ public class User extends Model {
 			this.chatServers.add(server);
 		}
 	}
-	
-	/**
-	 * Reset the user event queue, flushing out existing events */
-	public static void resetEventQueue () {
-		User.userEvents = new ArchivedEventStream<UserEvent.AnEvent>(100);
-	}
-	
+		
 }

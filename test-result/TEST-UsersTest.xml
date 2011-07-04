@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="2.106" errors="0" skipped="0" tests="5" name="UsersTest">
-  <testcase classname="UsersTest" name="testLoginResponse" time="1.773">
+<testsuite failures="0" time="1.526" errors="0" skipped="0" tests="5" name="UsersTest">
+  <testcase classname="UsersTest" name="testLoginResponse" time="1.205">
       </testcase>
-  <testcase classname="UsersTest" name="testBadTokenResponse" time="0.14">
+  <testcase classname="UsersTest" name="testBadTokenResponse" time="0.159">
       </testcase>
-  <testcase classname="UsersTest" name="testGoodLogout" time="0.114">
+  <testcase classname="UsersTest" name="testBadLogout" time="0.054">
       </testcase>
-  <testcase classname="UsersTest" name="testBadLogout" time="0.052">
+  <testcase classname="UsersTest" name="testGoodLogout" time="0.068">
       </testcase>
-  <testcase classname="UsersTest" name="stub" time="0.027">
+  <testcase classname="UsersTest" name="stub" time="0.04">
       </testcase>
 </testsuite>

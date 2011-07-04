@@ -15,7 +15,7 @@ public class Mock extends Controller {
             notFound();
         }
 		Fixtures.deleteAll();
-		User.resetEventQueue();
+		UserEvent.resetEventQueue();
     }
 
     public static void init () {
