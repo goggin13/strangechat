@@ -5,7 +5,7 @@ import play.mvc.Http.*;
 import models.*;
 import com.google.gson.*;
 
-public class UsersTest extends FunctionalTest {
+public class UsersTest extends MyFunctionalTest {
 	
 	// These tokens were obtained using offline_access permissions from the facebook API, which are NOT like
 	// the tokens this app will usually be receiving.  But they will hopefully last for testing.  
@@ -24,9 +24,8 @@ public class UsersTest extends FunctionalTest {
 	@Test
 	public void testLoginResponse () {
 		
-		// first id 1 logs in
+		// first id 2 logs in
 		String url = "/login?facebook_id=" + fb_id_2 + "&access_token=" + facebook_token_2;
-		System.out.println(url);
 	    JsonObject jsonObj = getAndValidateResponse(url);
 	
 		assertEquals(3, jsonObj.entrySet().size());
@@ -35,7 +34,7 @@ public class UsersTest extends FunctionalTest {
 		assertEquals("chat1.com", jsonObj.get("-1").getAsString());
 		
 		// and now id 2 logs in
-		url = "/login?facebook_id=" + fb_id_1+ "&access_token=" + facebook_token_1;
+		url = "/login?facebook_id=" + fb_id_1 + "&access_token=" + facebook_token_1;
 	    jsonObj = getAndValidateResponse(url);
 		
 		// should include my fake account
@@ -43,6 +42,12 @@ public class UsersTest extends FunctionalTest {
 		assertEquals("Matthew Goggin", jsonObj.get(fb_id_2.toString()).getAsString());
 		assertEquals("chat1.com", jsonObj.get("-1").getAsString());
 		
+		// there should be an event waiting for user 2 telling them that user 1
+		// logged in
+		JsonObject data = getListenResponse(fb_id_2, 0);
+		assertEquals("userlogon", data.get("type").getAsString());
+		assertEquals(fb_id_1.toString(), data.get("new_user").getAsString());
+		assertEquals(fb_id_2.toString(), data.get("user_id").getAsString());		
 	}
 
 	@Test
@@ -51,13 +56,19 @@ public class UsersTest extends FunctionalTest {
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		JsonObject errObj = jsonObj.get("error").getAsJsonObject();
 		assertEquals("OAuthException", errObj.get("type").getAsString());
-	}
+	} 
 	
 	@Test
 	public void testGoodLogout () {
 		String url = "/logout?facebook_id=" + k_id;
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
+		
+		// PMO should have an event waiting notifying him k logged out
+		JsonObject data = getListenResponse(pmo_id, 0);
+		assertEquals("userlogout", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("left_user").getAsString());
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());		
 	}
 	
 	@Test
@@ -67,15 +78,5 @@ public class UsersTest extends FunctionalTest {
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("user " + bad_id + " not found", jsonObj.get("message").getAsString());
 	}
-	
-	private JsonObject getAndValidateResponse (String url) {
-		Response response = GET(url);
-	    assertIsOk(response);
-	    assertContentType("application/json", response);
-	    assertCharset("utf-8", response);	
-		String jsonStr = response.out.toString();
-		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
-		return jsonObj;
-	}
-    
+	    
 }

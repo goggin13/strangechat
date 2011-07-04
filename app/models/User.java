@@ -6,7 +6,8 @@ import play.data.validation.*;
 import play.libs.F.*;
 import play.db.jpa.*;
 import com.google.gson.*;
- 
+
+
 /**
  * A chat user in the system, who can be online or off, and the maintained meta
  * data relevant to them
@@ -14,7 +15,7 @@ import com.google.gson.*;
 
 @Entity
 public class User extends Model {
-    public static final ArchivedEventStream<UserEvent.AnEvent> userEvents = new ArchivedEventStream<UserEvent.AnEvent>(100);
+    public static ArchivedEventStream<UserEvent.AnEvent> userEvents = new ArchivedEventStream<UserEvent.AnEvent>(100);
 	
 	/**
 	 * The user_id, in this case will be the facebook_id
@@ -37,7 +38,7 @@ public class User extends Model {
 	 * True if this user is currently online
 	 */	
 	public boolean online;
-	
+
 	/**
 	 * Collection of servers this user is currently participating in chats on,
 	 */
@@ -58,6 +59,40 @@ public class User extends Model {
 	}
 	
 	/**
+	 * log this user in, and notify any of their friends that
+	 * are online that they are available */	
+	public void login () {
+		this.online = true;
+		for (User friend : this.friends) {
+			if (friend.online) {
+				new UserEvent.UserLogon(friend.user_id, this.user_id);	
+			}
+		}
+	}
+	
+	/**
+	 * log this user in, and notify any of their friends that
+	 * are online that they are available */	
+	public void logout () {
+		this.online = false;
+		System.out.println("logout " + this.user_id);
+		System.out.println(this.friends);
+		for (User friend : this.friends) {
+			System.out.println("a friend " + friend.user_id);
+			if (friend.online) {
+				new UserEvent.UserLogout(friend.user_id, this.user_id);	
+			}
+		}
+	}	
+	
+	/**
+	 * @return string representation of this user
+	 */	
+	public String toString () {
+		return this.user_id.toString();
+	}
+	
+	/**
 	 * Return a user with id <code>user_id</code>, either an 
 	 * existing one, or a newly created user with this id
 	 * @param user_id
@@ -66,7 +101,6 @@ public class User extends Model {
 	public static User getOrCreate (Long user_id) {
 		User user = User.find("byUser_id", user_id).first();
 		if (user == null) {
-			System.out.println("new user " + user_id);
 			user = new User(user_id);
 			user.save();
 		}
@@ -93,10 +127,9 @@ public class User extends Model {
 	}
 	
 	/**
-	 * @return string representation of this user
-	 */	
-	public String toString () {
-		return this.user_id.toString();
+	 * Reset the user event queue, flushing out existing events */
+	public static void resetEventQueue () {
+		User.userEvents = new ArchivedEventStream<UserEvent.AnEvent>(100);
 	}
 	
 }

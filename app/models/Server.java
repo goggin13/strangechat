@@ -16,27 +16,21 @@ import com.google.gson.reflect.*;
  * the master server will utilize to spawn new chat rooms, and also
  * will be used to assign heart beat servers to.
  */
-
 @Entity
 public class Server extends Model {
 	
-	/**
-	 * The name of the server, which is also the root domain for that box
-	 */
+	/** The name of the server, which is also the root domain for that box */
 	@Required
 	public String name;
 	
-	/**
-	 * Number of active rooms on this server
-	 */
+	/** Number of active rooms on this server */
 	public int roomCount;
 
-	/**
-	 * the next room id to use when we need a new room on this server
-	 */
+	/** the next room id to use when we need a new room on this server */
 	public Long nextID;
 	
-	/**
+	/** 
+	 * Servers name
 	 * @return string representation of this server 
 	 */	
 	public String toString () {

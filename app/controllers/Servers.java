@@ -32,9 +32,15 @@ public class Servers extends Index {
 		if (user1 == null || user2 == null) {
 			returnFailed((user1 == null ? user_1 : user_2) + " is no longer logged in", callback);
 		}
+		
 		Server server = Server.getServerFor(user1, user2);
 		Long nextID = server.getNextID();
-		User.publishEvent(new UserEvent.ListenTo(user_2, server.name, nextID));
+		Room room = new Room(server, nextID);
+		room.participants.add(user1);
+		room.participants.add(user2);
+		room.save();
+		
+		new UserEvent.ListenTo(user_2, server.name, nextID);
 		
 		HashMap<String, String> resp = new HashMap<String, String>();
 		resp.put("server", server.name);
@@ -47,4 +53,30 @@ public class Servers extends Index {
 		);
 	}
 	
+ 	/**
+	 * remove <code>user_id</code> from the room
+	 * 
+	 * @param server	the name of the server the room belongs to 
+	 * @param room_id   the id of the relevant room
+	 * @param user_id 	the user who is leaving the room
+	 * @param callback	optional JSONP callback
+	 */
+	public static void leaveRoom (String server, Long room_id, Long user_id, String callback) {
+		User user = User.find("byUser_idAndOnline", user_id, true).first();
+		if (user == null) {
+			returnFailed(user_id + " is no longer logged in", callback);
+		}
+		Server chatServer = Server.find("byName", server).first();		
+		if (chatServer == null) {
+			returnFailed("unknown server, " + server, callback);
+		}		
+		Room room = Room.find("byRoom_idAndServer", room_id, chatServer).first();
+		if (room == null) {
+			returnFailed("no room " + room_id + " on server " + chatServer.name, callback);
+		}
+		if (room.participants.contains(user)) {
+			room.participants.remove(user);
+		}
+		returnOkay(callback);
+	}
 }

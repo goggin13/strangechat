@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.158" errors="0" skipped="0" tests="2" name="ServersTest">
-  <testcase classname="ServersTest" name="testRoomRequest" time="0.082">
+<testsuite failures="0" time="0.2" errors="0" skipped="0" tests="3" name="ServersTest">
+  <testcase classname="ServersTest" name="testRoomRequest" time="0.121">
       </testcase>
-  <testcase classname="ServersTest" name="testBadRoomRequest" time="0.076">
+  <testcase classname="ServersTest" name="testBadRoomRequest" time="0.048">
+      </testcase>
+  <testcase classname="ServersTest" name="stub" time="0.031">
       </testcase>
 </testsuite>

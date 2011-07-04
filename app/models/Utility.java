@@ -5,14 +5,13 @@ import org.w3c.dom.Document;
 import java.net.*;
 import java.io.*;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 import com.google.gson.*;
 import play.cache.Cache;
+import java.text.SimpleDateFormat;
 
 /**
- * A collection of random, static utility functions
- */
-
+ * A collection of random, static utility functions */
 public class Utility {
 	
 	/**
@@ -51,6 +50,28 @@ public class Utility {
 			// Cache.set(cacheKey, friends, "30mn");
 		}
 		return friends;		
+	}
+	
+	/**
+	 * Calculate the difference between 2 dates in seconds 
+	 * @param d1 the first date
+	 * @param d2 the second date
+	 * @return number of seconds <code>d2</code> is greater than 
+	 * 		   <code>d1</code> */
+	public static Long diffInSecs (Date d1, Date d2) {
+		Long diff = d1.getTime() - d2.getTime();
+		diff = diff / 1000;
+		return diff; 
+	}
+	
+	/**
+	 * A formatted string of <code>date</code>
+	 * @param date the date to format
+	 * @return a string of the form "HH:mm:ss a" */
+	public static String formattedTime (Date date) {
+	 	Format formatter = new SimpleDateFormat("HH:mm:ss a");
+		String str = formatter.format(date);
+		return str;
 	}
 	
 }

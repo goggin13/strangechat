@@ -12,6 +12,7 @@ GET     /listen																  Users.listen
 
 # Server actions
 GET     /getroomfor															Servers.getRoomFor
+GET     /leaveroom															Servers.leaveRoom
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -3,6 +3,7 @@ import play.*;
 import play.mvc.*;
 import java.util.*;
 import play.test.*;
+import models.*;
 
 /**
  * Utilized by functional tests to perform data loading */
@@ -14,6 +15,7 @@ public class Mock extends Controller {
             notFound();
         }
 		Fixtures.deleteAll();
+		User.resetEventQueue();
     }
 
     public static void init () {

@@ -57,8 +57,8 @@ public class Users extends Index {
 		}
 
 		User user = User.getOrCreate(facebook_id);
-		user.online = true;
 		user.friends = friends;
+		user.login();
 		user.save();		
 		
 		// add heartbeat server into list
@@ -77,7 +77,7 @@ public class Users extends Index {
 	public static void logout (Long facebook_id, String callback) {
 		User user = User.find("byUser_id", facebook_id).first();
 		if (user != null) {
-			user.online = false;
+			user.logout();
 			user.save();
 			returnOkay(callback);
 		} else {
