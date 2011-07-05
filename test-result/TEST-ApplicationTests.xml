@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<testsuite failures="0" time="0.058" errors="0" skipped="0" tests="2" name="ApplicationTests">
+  <testcase classname="ApplicationTests" name="testSelfRequest" time="0.03">
+      </testcase>
+  <testcase classname="ApplicationTests" name="stub" time="0.028">
+      </testcase>
+</testsuite>

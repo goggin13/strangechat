@@ -11,6 +11,7 @@ import play.*;
 import play.mvc.*;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.ConcurrentHashMap;
+import controllers.*;
 
 /**
  * A chat user in the system, who can be online or off, and the maintained meta
@@ -41,10 +42,17 @@ public class User extends Model {
 	public String facebook_token;
 	
 	/**
+	 * the avatar to display for this user */
+	public String avatar;
+
+	/**
+	 * this users alias */
+	public String alias;
+	
+	/**
 	 * Collection of other users this user is friends with
 	 */
 	@ManyToMany(fetch=FetchType.LAZY)
-	@Transient
 	public Set<User> friends;
 	
 	/**
@@ -89,12 +97,15 @@ public class User extends Model {
 	 * are online that they are no longer available */	
 	public void logout () {
 		this.online = false;
-		System.out.println("logout " + this.user_id);
-		System.out.println(this.friends);
+		if (this.friends == null) {
+			System.out.println(this.user_id + "is logging out but has no friends");
+			return;
+		}
 		for (User friend : this.friends) {
-			System.out.println("a friend " + friend.user_id + " logs out");
+			System.out.println("tell " + friend.user_id + " I'm logging out");
 			friend.notifyMeLogout(this.user_id);
 		}
+		System.out.println("done logging " + this.user_id + " out");
 	}	
 	
 	/**
@@ -102,6 +113,15 @@ public class User extends Model {
 	 */	
 	public String toString () {
 		return this.user_id.toString();
+	}
+	
+	/**
+	 * A random user who's user_id does not match this object
+	 * @return a random user */
+	public User getRandom () {
+		return User.find(
+		    "user_id != ? and online = ? order by rand()", this.user_id, true
+		).first();
 	}
 	
 	/**
@@ -119,8 +139,35 @@ public class User extends Model {
 		return user;
 	}
 
+	/**
+	 * Send this user a notification that someone in the room
+	 * they were chatting in has left */
+	public void notifyLeftRoom (User user, Long room_id) {
+		if (!this.heartbeatServer.isCurrent()) {
+          	HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("for_user", this.user_id);
+			params.put("left_user", user.user_id);		
+			params.put("room_id", room_id);
+			notifyMe("left", params);   
+        } else {
+			new UserEvent.Leave(this.user_id, user.user_id, room_id);
+		}
+	}
+
+	public void notifyJoined (User otherUser) {
+		if (!this.heartbeatServer.isCurrent()) {
+          	HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("for_user", this.user_id);
+			params.put("new_user", otherUser.user_id);		
+			params.put("avatar", otherUser.avatar);
+			notifyMe("joined", params);   
+        } else {
+			new UserEvent.Join(this.user_id, otherUser);
+		}
+	}
+
 	public void notifyMeLogout (Long left_user) {
-		if (Play.mode != Play.Mode.DEV) {
+		if (!this.heartbeatServer.isCurrent()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
 			params.put("left_user", left_user);		
@@ -131,7 +178,7 @@ public class User extends Model {
 	}
 
 	public void notifyMeLogin (Long new_user) {
-		if (Play.mode != Play.Mode.DEV) {
+		if (!this.heartbeatServer.isCurrent()) {
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
 			params.put("new_user", new_user);		
@@ -146,6 +193,21 @@ public class User extends Model {
 		WS.HttpResponse resp = Utility.fetchUrl(url, params);
 		JsonObject json = resp.getJson().getAsJsonObject();		
 	}
+		
+	/**
+	 * retrieve and log out the given user
+	 * @param user_id the user_id of the user to log out
+	 * @return true on success, false if the user is not found */
+	public static boolean logOutUser (Long user_id) {
+		User user = User.find("byUser_id", user_id).first();
+		if (user != null) {
+			user.logout();
+			user.save();
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	/**
 	 * add the given server to this users collection of chat servers
@@ -156,5 +218,16 @@ public class User extends Model {
 			this.chatServers.add(server);
 		}
 	}
+	
+	public static class ChatExclusionStrategy implements ExclusionStrategy {
+
+		public boolean shouldSkipClass(Class<?> clazz) {
+			return false;
+		}
+
+		public boolean shouldSkipField(FieldAttributes f) {
+		  return f.getName().equals("friends");
+		}
+ 	}
 		
 }

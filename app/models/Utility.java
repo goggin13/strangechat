@@ -1,7 +1,6 @@
 package models;
  
 import play.libs.WS;
-import org.w3c.dom.Document;
 import java.net.*;
 import java.io.*;
 import java.util.Collection;
@@ -22,7 +21,7 @@ public class Utility {
 	 * @return a response object from the given url
 	 */
 	public static WS.HttpResponse fetchUrl (String url, HashMap<String, Object> params) {
-		System.out.println(url);
+		System.out.println("GET " + url);
 		WS.HttpResponse resp = 
 				WS.url(url)
 			   .params(params)

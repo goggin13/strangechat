@@ -17,6 +17,27 @@ public class NotificationTests extends MyFunctionalTest {
 	}
 	
 	@Test
+	public void testHeartbeatFadeout () {
+		// send one heartbeat to register
+		String url = "/heartbeat?for_user=" + k_id;
+	    JsonObject jsonObj = getAndValidateResponse(url);
+		assertEquals("okay", jsonObj.get("status").getAsString());
+		
+		try {
+			System.out.println("sleeping");
+			Thread.sleep(10000);
+			System.out.println("waking up");			
+		} catch (InterruptedException e){
+			System.out.println(e.getMessage());
+		}
+		
+		JsonObject data = getListenResponse(pmo_id, 0);
+		assertEquals("userlogout", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("left_user").getAsString());
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
+	}
+	
+	@Test
 	public void testNotifyLogout () {
 		String url = "/notify/logout?for_user=" + pmo_id + "&left_user=" + k_id;
 	    JsonObject jsonObj = getAndValidateResponse(url);
@@ -50,6 +71,20 @@ public class NotificationTests extends MyFunctionalTest {
 		assertEquals("directmessage", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("from").getAsString());
 		assertEquals("helloworld", data.get("text").getAsString());		
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
+	} 
+
+	@Test
+	public void testNotifyJoined () {
+		String url = "/notify/joined?for_user=" + pmo_id + "&new_user=" + k_id + "&avatar=www.avatar.com";
+	    JsonObject jsonObj = getAndValidateResponse(url);
+		assertEquals("okay", jsonObj.get("status").getAsString());
+
+		JsonObject data = getListenResponse(pmo_id, 0);
+		System.out.println(data);
+		assertEquals("join", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("new_user").getAsString());
+		assertEquals("www.avatar.com", data.get("avatar").getAsString());		
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
 	}
 	

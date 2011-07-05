@@ -27,10 +27,23 @@ public class Room extends Model {
 	@Required
 	public Long room_id;
 	
-	public Room (Server server, Long room_id) {
-		this.server = server;
+	public Room (Long room_id) {
 		this.room_id = room_id;
 		this.participants = new HashSet<User>();
+	}
+	
+	/**
+	 * Remove a user from this room, and notify the other participants they have left
+	 * @param user the user to remove */
+	public void removeParticipant (User user) {
+		if (!this.participants.contains(user)) {
+			return;
+		}
+		this.participants.remove(user);
+		this.save();
+		for (User u : this.participants) {
+			u.notifyLeftRoom(user, room_id);
+		}		
 	}
 	
 }

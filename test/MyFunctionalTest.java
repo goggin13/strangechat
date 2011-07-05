@@ -3,6 +3,8 @@ import play.mvc.*;
 import play.mvc.Http.*;
 import org.junit.*;
 import com.google.gson.*;
+import com.google.gson.reflect.*;
+import models.*;
 
 public class MyFunctionalTest extends FunctionalTest {
 	
@@ -22,12 +24,12 @@ public class MyFunctionalTest extends FunctionalTest {
 	
 	protected JsonArray getAndValidateAsArray (String url) {
 		String jsonStr = getAndValidateInner(url);
-		System.out.println("JSON = " + jsonStr);
 		JsonArray jsonArr = new JsonParser().parse(jsonStr).getAsJsonArray();
 		return jsonArr;
 	}
 
 	protected String getAndValidateInner (String url) {
+		System.out.println("GET " + url);
 		Response response = GET(url);
 	    assertIsOk(response);
 	    assertContentType("application/json", response);

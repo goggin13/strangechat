@@ -25,12 +25,11 @@ public class Notify extends Index {
 		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
 		
 		do {
-			System.out.println(user_id + " is waiting for events");
+			System.out.println(user_id + " is waiting for events : " + lastReceived);
 			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.userEvents.nextEvents(lastReceived));
-			System.out.println(user_id + " is considering returned events");
+			System.out.println(user_id + " is considering returned events : " + lastReceived);
 			
 			for (IndexedEvent<UserEvent.Event> e : events) {
-				System.out.println(e.data.user_id);
 				if (e.data.user_id.equals(user_id)) {
 					returnData.add(e);
 				}
@@ -38,12 +37,20 @@ public class Notify extends Index {
 			}			
 		} while (returnData.size() == 0);
 
-		System.out.println(user_id + " returning events");
+		System.out.println(user_id + " returning events : " + lastReceived);
 		Users.renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
 			callback
 		);
+	}
+	
+	public static void joined (Long for_user, Long new_user, String avatar) {
+		User newUser = User.find("byUser_id", new_user).first();
+		newUser.avatar = avatar;
+		newUser.save();
+		new UserEvent.Join(for_user, newUser);
+		returnOkay(null);	
 	}
 	
 	public static void login (Long for_user, Long new_user) {

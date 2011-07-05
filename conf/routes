@@ -9,7 +9,8 @@ GET     /demo																		Application.demo
 # User actions
 GET     /login																	Users.login
 GET     /logout																	Users.logout
-
+GET		  /random																	Users.random
+GET     /requestrandomroom 											Users.requestRandomRoom
 # Chat actions
 GET     /listen																  Notify.listen
 GET     /message																Notify.message

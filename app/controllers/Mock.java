@@ -19,10 +19,7 @@ public class Mock extends Controller {
     }
 
     public static void init () {
-        Fixtures.load("data.yml");
-    }
-
-    public static void initfull () {
         Fixtures.load("data-full.yml");
     }
+
 }

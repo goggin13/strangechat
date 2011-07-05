@@ -7,7 +7,9 @@ import play.libs.F.*;
 import play.db.jpa.*;
 import com.google.gson.*;
 import models.*;
+import play.libs.WS;
 
+import controllers.*;
 import java.lang.reflect .*;
 import com.google.gson.reflect.*;
  
@@ -46,6 +48,14 @@ public class Server extends Model {
 	}
 	
 	/**
+	 * check if this server instance is on the same domain as the current request
+	 * @return true if <code>Http.Request.current().host</code> matches this server uri */
+	public boolean isCurrent () {
+		return true;
+		// return uri.indexOf(Application.currentRequest().host) != -1;
+	}
+	
+	/**
 	 * Post an event to stream of this server.  Since this
 	 * object is of course just meta data for the actual chat server,
 	 * we perform a post request in order to get the data in to the server's
@@ -69,6 +79,21 @@ public class Server extends Model {
 		Server master = Server.find("byIsMaster", true).first();
 		return master;
 	}
+
+	/** 
+	 * @Return a chat server */
+	public static Server getAChatServer () {
+		Server server = Server.find("byIsMaster", false).first();
+		return server;
+	}
+	
+	/**
+	 * check if the node we are on is the master server
+	 * @return true if <code>Http.Request.current().host</code> matches the masters server uri */
+	public static boolean onMaster () {
+		return true;
+		// return getMasterServer().isCurrent();
+	}
 	
 	/**
 	 * @return a Server instance that this user should use to
@@ -78,15 +103,4 @@ public class Server extends Model {
 		return heartbeat;
 	}
 	
-	/**
-	 * @return a Server instance that these users should use to
-	 * to chat on */
-	public static Server getServerFor (User user1, User user2) {
-		Server chatServer = Server.find("byIsMaster", false).first();
-		// user1.addChatServer(chatServer);
-		// user1.save();
-		// user2.addChatServer(chatServer);
-		// user2.save();
-		return chatServer;
-	}
 }

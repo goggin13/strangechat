@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.855" errors="0" skipped="0" tests="4" name="NotificationTests">
-  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.466">
+<testsuite failures="0" time="10.267" errors="0" skipped="0" tests="6" name="NotificationTests">
+  <testcase classname="NotificationTests" name="testHeartbeatFadeout" time="10.045">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.151">
+  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.046">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.134">
+  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.048">
       </testcase>
-  <testcase classname="NotificationTests" name="stub" time="0.104">
+  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.04">
+      </testcase>
+  <testcase classname="NotificationTests" name="testNotifyJoined" time="0.049">
+      </testcase>
+  <testcase classname="NotificationTests" name="stub" time="0.039">
       </testcase>
 </testsuite>

@@ -17,6 +17,16 @@ import com.google.gson.reflect.*;
  * A convenience class to hold common methods used
  * by the our controllers */
 public class Index extends CRUD {
+	public static Http.Request currentRequest;
+	
+	@Before
+	protected static void setCurrent () {
+		currentRequest = Http.Request.current();
+	}
+	
+	public static Http.Request currentRequest () {
+		return currentRequest;
+	}
 	
 	/**
 	 * @param msg the error message to include in the response
@@ -52,8 +62,6 @@ public class Index extends CRUD {
 	 * renders a JSON status okay response
 	 * @param callback optional, used for cross domain requests */
 	protected static void returnOkay (String callback) {
-		System.out.println("CALLBACK");
-		System.out.println(callback);
 		Users.renderJSONP(
 			getOkayResponse(), 
 			new TypeToken<HashMap<String, String>>() {}.getType(),
@@ -69,16 +77,18 @@ public class Index extends CRUD {
  	 * @param callback 	optional, used for cross domain requests */
 	protected static void renderJSONP (Object myObj, Type t, String callback) {
 		String json;
+		GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new User.ChatExclusionStrategy());
+		Gson gson = gsonBuilder.create();
 		if (t != null) {
-			json = new Gson().toJson(myObj, t); 
+			json = gson.toJson(myObj, t); 
 		} else {
-			json = new Gson().toJson(myObj); 
+			json = gson.toJson(myObj); 
 		}
 		if (callback != null && !callback.equals("")) {
 			json = callback + "(" + json + ")";
 			renderText(json);
 		} else {
-			renderJSON(myObj, t);
+			renderJSON(json);
 		}
 	}
 	

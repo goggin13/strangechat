@@ -59,10 +59,17 @@ public class UserEvent {
 	public static class UserLogon extends Event {
 		/** The user id of the user who just logged on */
 		public final Long new_user;
+		/** the name of the user logging on */
+		public final String name;
+		/** server this user is located on */
+		final public String server;
 		
 		public UserLogon (Long user_id, Long new_user) {
 			super("userlogon", user_id);
 			this.new_user = new_user;
+			User newUser = User.find("byUser_id", new_user).first();
+			this.name = newUser.name;
+			this.server = newUser.heartbeatServer.uri;
 		}
 	}	
 	
@@ -94,59 +101,42 @@ public class UserEvent {
         }
         
     }
-	
-	/**
-	 * An event that occurs in a chat room, and is pushed
-	 * into the event stream */
-    public static abstract class ChatRoomEvent {
-        public final String type;
-		public final Long room_id;
-
-        public ChatRoomEvent(String type, Long id) {
-			this.type = type;
-			this.room_id = id;
-        }
-    }
-    
+	    
 	/** 
 	 * represents a user joining the chat room */
-    public static class Join extends ChatRoomEvent {
+    public static class Join extends Event {
         /** the user id of the joining user */
-        final public String user;
-        
-        public Join(String user, Long room_id) {
-            super("join", room_id);
-            this.user = user;
+        public final Long new_user;
+        /** an optional url displaying this new users avatar */
+		public final String avatar;
+		/** the name of the user joining */
+		public final String name;
+		/** the server the new user is on */
+		public final String server;
+		
+        public Join (Long for_user, User newUser) {
+            super("join", for_user);
+            this.new_user = newUser.user_id;
+			this.avatar = newUser.avatar;
+			this.name = newUser.alias;
+			this.server = newUser.heartbeatServer.uri;
         }
         
     }
     
 	/**
 	 * Represents a user leaving the chat room */
-    public static class Leave extends ChatRoomEvent {
+    public static class Leave extends Event {
         /** user id of the user leaving */
-        final public String user;
-        
-        public Leave(String user, Long room_id) {
-            super("leave", room_id);
-            this.user = user;
+        final public Long left_user;
+        /** room id that was left */
+		final public Long room_id;
+		
+        public Leave(Long for_user, Long left_user, Long room_id) {
+            super("leave", for_user);
+            this.left_user = left_user;
+			this.room_id = room_id;
         }
-    }
-    
-	/**
-	 * Represents a message in the chat room */
-    public static class Message extends ChatRoomEvent {
-		/** the user_id of the user who sent the message */
-        final public String user;
-		/** the text of the message */
-        final public String text;
-        
-        public Message(String user, String text, Long room_id) {
-            super("message", room_id);
-            this.user = user;
-            this.text = text;
-        }
-        
     }
 	
 	/**

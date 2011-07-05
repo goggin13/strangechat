@@ -21,6 +21,10 @@ var MyContacts = (function () {
 		return my.contacts[id].name;
 	};
 	
+	that.has = function (id) {
+		return my.contacts.hasOwnProperty(id);
+	};
+	
 	that.getServerFor = function (id) {
 		return my.contacts[id].server;
 	};
@@ -30,6 +34,7 @@ var MyContacts = (function () {
 			name: name,
 			server: server
 		};
+		console.debug(my.contacts);
 	};
 	
 	return that;
@@ -89,8 +94,15 @@ var ChatAPI = (function () {
       };
     my.currentListen = that.send(url, "GET", data, function (JSON, hash) {
 			$.each(JSON, function (key, val) {
-				if (val.data.type === "userlogin") {
+				if (val.data.type === "userlogon" && !MyContacts.has(val.data.new_user)) {
+					MyContacts.put(val.data.new_user, val.data.name, val.data.server.uri);
 				}
+				if (val.data.type === "join") {
+					console.debug("HERE");
+					console.debug(val.data.server);
+					console.debug("HERE2");
+					MyContacts.put(val.data.new_user, val.data.name, val.data.server);
+				}				
 			});
 			my.messageHandler(JSON);
 			if (hash === my.currentListen) {
@@ -100,12 +112,14 @@ var ChatAPI = (function () {
   };
 
 	// log in the given user, and return a list of their friends
-	that.login = function (facebook_id, name, facebook_token, callback) {
+	that.login = function (facebook_id, name, avatar, alias, facebook_token, callback) {
 		var url = my.home_url + 'login',
       data = {
         facebook_id: facebook_id,
         access_token: facebook_token,
-				name: name
+				name: name,
+				avatar: avatar,
+				alias: alias
       };
 		my.facebook_id = facebook_id;
     that.send(url, "GET", data, function (JSON) {
@@ -133,6 +147,17 @@ var ChatAPI = (function () {
 		});
 	};
 	
+	// indicate you wish to get paired with a random user
+	that.requestRandomRoom = function () {
+		var url = my.home_url + 'requestrandomroom',
+      data = {
+        user_id: my.facebook_id,
+      };
+		that.send(url, "GET", data, function (JSON) {
+			console.debug(JSON);
+		});
+	}
+	
 	// send out a heartbeat to let the server know "I'm still here"
 	my.heartbeat = function () {
 		var url = my.heartbeatServer + "heartbeat",
@@ -140,7 +165,6 @@ var ChatAPI = (function () {
 				for_user: my.facebook_id
 			};
 	  that.send(url, "GET", data, function (JSON) {
-			console.debug(JSON);
 			setTimeout(my.heartbeat, my.HEARTBEAT_FREQUENCY);
 		});
 	};
