@@ -11,6 +11,8 @@ GET     /login																	Users.login
 GET     /logout																	Users.logout
 GET		  /random																	Users.random
 GET     /requestrandomroom 											Users.requestRandomRoom
+GET     /leaveroom															Users.leaveRoom
+
 # Chat actions
 GET     /listen																  Notify.listen
 GET     /message																Notify.message

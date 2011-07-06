@@ -93,11 +93,14 @@ public class UserEvent {
         public final Long from;
 		/** the text of the message */
  		public final String text;
-        
-        public DirectMessage(Long to, Long from, String msg) {
+		/** optional room id that this message is pertinent to */
+		public final Long room_id;
+		
+        public DirectMessage(Long to, Long from, Long room_id, String msg) {
             super("directmessage", to);
             this.from = from;
             this.text = msg;
+			this.room_id = room_id;
         }
         
     }
@@ -113,15 +116,26 @@ public class UserEvent {
 		public final String name;
 		/** the server the new user is on */
 		public final String server;
+		/** the room id that you are now chatting in */
+		public final Long room_id;
 		
-        public Join (Long for_user, User newUser) {
+        public Join (Long for_user, Long new_user, String avatar, String name, String server, Long room_id) {
             super("join", for_user);
-            this.new_user = newUser.user_id;
-			this.avatar = newUser.avatar;
-			this.name = newUser.alias;
-			this.server = newUser.heartbeatServer.uri;
+            this.new_user = new_user;
+			this.avatar = avatar;
+			this.name = name;
+			this.server = server;
+			this.room_id = room_id;
         }
         
+    }
+
+	/**
+	 * Represents a users heartbeat in a room */
+    public static class Test extends Event {		
+        public Test () {
+            super("leave", -1L);
+        }
     }
     
 	/**

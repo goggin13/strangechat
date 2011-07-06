@@ -63,28 +63,44 @@ public class NotificationTests extends MyFunctionalTest {
 
 	@Test
 	public void testNotifyMessage () {
-		String url = "/notify/message?for_user=" + pmo_id + "&from_user=" + k_id + "&msg=helloworld";
+		String url = "/notify/message?for_user=" + pmo_id + "&from_user=" + k_id + "&msg=helloworld&room_id=14";
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 
 		JsonObject data = getListenResponse(pmo_id, 0);
 		assertEquals("directmessage", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("from").getAsString());
-		assertEquals("helloworld", data.get("text").getAsString());		
+		assertEquals("helloworld", data.get("text").getAsString());	
+		assertEquals("14", data.get("room_id").getAsString());		
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
 	} 
 
 	@Test
 	public void testNotifyJoined () {
-		String url = "/notify/joined?for_user=" + pmo_id + "&new_user=" + k_id + "&avatar=www.avatar.com";
+		String url = "/notify/joined?for_user=" + pmo_id + "&new_user=" + k_id + "&avatar=www.avatar.com&room_id=14&name=kristen&server=chat1.com";
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 
 		JsonObject data = getListenResponse(pmo_id, 0);
-		System.out.println(data);
 		assertEquals("join", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("new_user").getAsString());
-		assertEquals("www.avatar.com", data.get("avatar").getAsString());		
+		assertEquals("www.avatar.com", data.get("avatar").getAsString());
+		assertEquals("14", data.get("room_id").getAsString());
+		assertEquals("kristen", data.get("name").getAsString());
+		assertEquals("chat1.com", data.get("server").getAsString());		
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
+	}
+
+	@Test
+	public void testNotifyLeft () {
+		String url = "/notify/left?for_user=" + pmo_id + "&left_user=" + k_id + "&room_id=15";
+	    JsonObject jsonObj = getAndValidateResponse(url);
+		assertEquals("okay", jsonObj.get("status").getAsString());
+
+		JsonObject data = getListenResponse(pmo_id, 0);
+		assertEquals("leave", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("left_user").getAsString());
+		assertEquals("15", data.get("room_id").getAsString());		
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
 	}
 	

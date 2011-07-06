@@ -18,11 +18,12 @@ public class CheckPulses extends Job {
 	public void doJob() {
 		// I dont know why this helps, but it seems to prevent occasional events from getting stuck in the
 		// queue
-		UserEvent.userEvents.archive(); 
-		List<IndexedEvent> events = UserEvent.userEvents.availableEvents(lastReceived);
-		if (events.size() > 0) {
-			lastReceived = events.get(events.size() - 1).id;
-		} 
+		// UserEvent.userEvents.archive(); 
+		// List<IndexedEvent> events = UserEvent.userEvents.availableEvents(lastReceived);
+		// if (events.size() > 0) {
+			// lastReceived = events.get(events.size() - 1).id;
+		// } 
+		// UserEvent.userEvents.publish(new UserEvent.Test());
 		
 		for (Long user_id : User.heartbeats.keySet()) {
 			Date lastBeat = User.heartbeats.get(user_id);

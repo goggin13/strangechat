@@ -45,14 +45,21 @@ public class Notify extends Index {
 		);
 	}
 	
-	public static void joined (Long for_user, Long new_user, String avatar) {
-		User newUser = User.find("byUser_id", new_user).first();
-		newUser.avatar = avatar;
-		newUser.save();
-		new UserEvent.Join(for_user, newUser);
+	public static void joined (Long for_user, Long new_user, String name, String server, String avatar, Long room_id) {
+		new UserEvent.Join(for_user, 
+						   new_user, 
+						   avatar,
+						   name,
+						   server,
+						   room_id);
 		returnOkay(null);	
 	}
 	
+	public static void left (Long for_user, Long left_user, Long room_id) {
+		new UserEvent.Leave(for_user, left_user, room_id);
+		returnOkay(null);	
+	}
+
 	public static void login (Long for_user, Long new_user) {
 		new UserEvent.UserLogon(for_user, new_user);
 		returnOkay(null);	
@@ -63,8 +70,8 @@ public class Notify extends Index {
 		returnOkay(null);	
 	}
 	
-	public static void message (Long for_user, Long from_user, String msg, String callback) {
-		new UserEvent.DirectMessage(for_user, from_user, msg);
+	public static void message (Long for_user, Long from_user, String msg, Long room_id, String callback) {
+		new UserEvent.DirectMessage(for_user, from_user, room_id, msg);
 		returnOkay(callback);
 	}
 	

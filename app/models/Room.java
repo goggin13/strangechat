@@ -13,12 +13,7 @@ import com.google.gson.*;
  */
 @Entity
 public class Room extends Model {
-	
-	/** the server this chatroom lives on */
-	@Required
-	@ManyToOne
-	public Server server;
-	
+		
 	/** set of users in this chatroom */
 	@ManyToMany(fetch=FetchType.LAZY)
 	public Set<User> participants;

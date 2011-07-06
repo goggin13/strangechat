@@ -135,12 +135,13 @@ var ChatAPI = (function () {
 	};
 	
 	// send a direct message to another friend
-	that.directMessage = function (to, msg) {
+	that.directMessage = function (to, msg, room_id) {
 		var url = MyContacts.getServerFor(to) + 'message',
       data = {
         from_user: my.facebook_id,
 				for_user: to,
-				msg: msg
+				msg: msg,
+				room_id: room_id
       };
     that.send(url, "GET", data, function (JSON) {
 			console.debug(JSON);
@@ -156,7 +157,18 @@ var ChatAPI = (function () {
 		that.send(url, "GET", data, function (JSON) {
 			console.debug(JSON);
 		});
-	}
+	};
+	
+	that.leaveRoom = function (room_id) {
+		var url = my.home_url + 'leaveroom',
+      data = {
+        user_id: my.facebook_id,
+				room_id: room_id
+      };
+		that.send(url, "GET", data, function (JSON) {
+			console.debug(JSON);
+		});
+	};
 	
 	// send out a heartbeat to let the server know "I'm still here"
 	my.heartbeat = function () {

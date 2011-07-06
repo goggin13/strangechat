@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.022" errors="0" skipped="0" tests="1" name="UserTest">
-  <testcase classname="UserTest" name="testBasicUserFunctions" time="0.022">
+<testsuite failures="0" time="0.125" errors="0" skipped="0" tests="1" name="UserTest">
+  <testcase classname="UserTest" name="testBasicUserFunctions" time="0.125">
       </testcase>
 </testsuite>

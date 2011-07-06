@@ -25,7 +25,7 @@ public class UsersTest extends MyFunctionalTest {
 		// chatURI = Server.getAChatServer().uri;
 	}
 
-	@Test
+/*	@Test
 	public void testLoginResponse () {
 		
 		// first id 2 logs in
@@ -103,7 +103,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertNotSame(k_id.toString(), jsonObj.get("user_id").getAsString());
 		assertTrue(jsonObj.get("online").getAsBoolean());
 		assertTrue(jsonObj.has("name"));
-	} 
+	} */
 	
 	@Test
 	public void testMeetUpFunction () {
@@ -129,7 +129,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("join", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("new_user").getAsString());
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
-		
+	   
 		// kk should have an event waiting notifying her pmo joined
 		data = getListenResponse(k_id, 0);
 		assertEquals("join", data.get("type").getAsString());
@@ -145,6 +145,20 @@ public class UsersTest extends MyFunctionalTest {
 		// assertEquals("join", data.get("type").getAsString());
 		// assertEquals(pmo_id.toString(), data.get("new_user").getAsString());		
 		// assertEquals(fb_id_1.toString(), data.get("user_id").getAsString());
+		
+		GET("/mock/reseteventqueue");
+		
+		// now if kk logs out, pmo should get a notification telling him she left
+		url =  "/logout?facebook_id=" + k_id;
+	    jsonObj = getAndValidateResponse(url);
+		assertEquals("okay", jsonObj.get("status").getAsString());
+		
+		// PMO should have an event waiting notifying him kk peaced
+		data = getListenResponse(pmo_id, 0);
+		System.out.println(data);
+		assertEquals("leave", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("left_user").getAsString());
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
 	}
 		    
 }

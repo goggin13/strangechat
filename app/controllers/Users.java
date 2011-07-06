@@ -147,13 +147,14 @@ public class Users extends Index {
 				User otherUser = User.find("byUser_id", otherUserID).first();
 				User you = User.find("byUser_id", user_id).first();
 
-				Room r = new Room(nextRoomID.incrementAndGet());
+				Long room_id = nextRoomID.incrementAndGet();
+				Room r = new Room(room_id);
 				r.participants.add(otherUser);
 				r.participants.add(you);
 				r.save();
 				
-				you.notifyJoined(otherUser);
-				otherUser.notifyJoined(you);
+				you.notifyJoined(otherUser, room_id);
+				otherUser.notifyJoined(you, room_id);
 				returnOkay(callback);
 			}
 		}

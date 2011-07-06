@@ -97,6 +97,7 @@ public class User extends Model {
 	 * are online that they are no longer available */	
 	public void logout () {
 		this.online = false;
+		this.removeMeFromRooms();
 		if (this.friends == null) {
 			System.out.println(this.user_id + "is logging out but has no friends");
 			return;
@@ -125,23 +126,39 @@ public class User extends Model {
 	}
 	
 	/**
-	 * Return a user with id <code>user_id</code>, either an 
-	 * existing one, or a newly created user with this id
-	 * @param user_id
-	 * @return user object of matched or created user
-	 */
-	public static User getOrCreate (Long user_id) {
-		User user = User.find("byUser_id", user_id).first();
-		if (user == null) {
-			user = new User(user_id);
-			user.save();
+	 * add the given server to this users collection of chat servers
+	 * @param server */
+	public void addChatServer (Server server) {
+		if (!this.chatServers.contains(server)) {
+			System.out.println("adding " + server.name + " to " + this.user_id);
+			this.chatServers.add(server);
 		}
-		return user;
+	}
+	
+	/**
+	 * All the rooms this user is in
+	 * @return a list of all the rooms this user is participating in */
+	public List<Room> getRooms () {
+	    return Room.find(
+	        "select distinct r from Room r join r.participants as p where p = ?", this
+	    ).fetch();
+	}
+	
+	/**
+	 * Remove this user from any chat rooms they are in */
+	public void removeMeFromRooms () {
+		for (Room r : this.getRooms()) {
+			if (r.participants.contains(this)) {
+				r.removeParticipant(this);
+			}
+		}
 	}
 
 	/**
 	 * Send this user a notification that someone in the room
-	 * they were chatting in has left */
+	 * they were chatting in has left 
+	 * @param user the user who left the room
+	 * @param room_id the id of the room */
 	public void notifyLeftRoom (User user, Long room_id) {
 		if (!this.heartbeatServer.isCurrent()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
@@ -154,15 +171,27 @@ public class User extends Model {
 		}
 	}
 
-	public void notifyJoined (User otherUser) {
+	/**
+	 * Notify this user that someone has joined them in a room
+	 * @param otherUser the user joining the room
+	 * @param room_id the id of the room being joined */
+	public void notifyJoined (User otherUser, Long room_id) {
 		if (!this.heartbeatServer.isCurrent()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
 			params.put("new_user", otherUser.user_id);		
 			params.put("avatar", otherUser.avatar);
+			params.put("name", otherUser.alias);
+			params.put("room_id", room_id);
+			params.put("server", otherUser.heartbeatServer.uri);
 			notifyMe("joined", params);   
         } else {
-			new UserEvent.Join(this.user_id, otherUser);
+			new UserEvent.Join(this.user_id, 
+							   otherUser.user_id, 
+							   otherUser.avatar,
+							   otherUser.alias,
+							   otherUser.heartbeatServer.uri,
+							   room_id);
 		}
 	}
 
@@ -201,6 +230,7 @@ public class User extends Model {
 	public static boolean logOutUser (Long user_id) {
 		User user = User.find("byUser_id", user_id).first();
 		if (user != null) {
+			user.removeMeFromRooms();
 			user.logout();
 			user.save();
 			return true;
@@ -210,15 +240,20 @@ public class User extends Model {
 	}
 	
 	/**
-	 * add the given server to this users collection of chat servers
-	 * @param server */
-	public void addChatServer (Server server) {
-		if (!this.chatServers.contains(server)) {
-			System.out.println("adding " + server.name + " to " + this.user_id);
-			this.chatServers.add(server);
+	 * Return a user with id <code>user_id</code>, either an 
+	 * existing one, or a newly created user with this id
+	 * @param user_id
+	 * @return user object of matched or created user
+	 */
+	public static User getOrCreate (Long user_id) {
+		User user = User.find("byUser_id", user_id).first();
+		if (user == null) {
+			user = new User(user_id);
+			user.save();
 		}
+		return user;
 	}
-	
+		
 	public static class ChatExclusionStrategy implements ExclusionStrategy {
 
 		public boolean shouldSkipClass(Class<?> clazz) {

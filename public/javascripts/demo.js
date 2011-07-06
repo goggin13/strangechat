@@ -12,7 +12,7 @@ $(document).ready(function () {
 			});
 		});
 		
-		ChatAPI.login(fb_id, name, fb_tok, function (JSON) {
+		ChatAPI.login(fb_id, name, "", "", fb_tok, function (JSON) {
 			
 			$(".login_user").remove();
 			
