@@ -145,6 +145,14 @@ public class User extends Model {
 	}
 	
 	/**
+	 * Check if this user is listening on the master server
+	 * @return <code>true</code> if this user's heartbeat server
+	 * 		   matches the master servers uri */
+	public boolean imOnMaster () {
+		return this.heartbeatServer.uri.equals(Server.getMasterServer().uri);
+	}
+	
+	/**
 	 * Remove this user from any chat rooms they are in */
 	public void removeMeFromRooms () {
 		for (Room r : this.getRooms()) {
@@ -160,7 +168,7 @@ public class User extends Model {
 	 * @param user the user who left the room
 	 * @param room_id the id of the room */
 	public void notifyLeftRoom (User user, Long room_id) {
-		if (!this.heartbeatServer.isCurrent()) {
+		if (!this.imOnMaster()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
 			params.put("left_user", user.user_id);		
@@ -176,7 +184,7 @@ public class User extends Model {
 	 * @param otherUser the user joining the room
 	 * @param room_id the id of the room being joined */
 	public void notifyJoined (User otherUser, Long room_id) {
-		if (!this.heartbeatServer.isCurrent()) {
+		if (!this.imOnMaster()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
 			params.put("new_user", otherUser.user_id);		
@@ -196,7 +204,7 @@ public class User extends Model {
 	}
 
 	public void notifyMeLogout (Long left_user) {
-		if (!this.heartbeatServer.isCurrent()) {
+		if (!this.imOnMaster()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
 			params.put("left_user", left_user);		
@@ -207,13 +215,18 @@ public class User extends Model {
 	}
 
 	public void notifyMeLogin (Long new_user) {
-		if (!this.heartbeatServer.isCurrent()) {
+		User newUser = User.find("byUser_id", new_user).first();
+		String name = newUser.name;
+		String server = newUser.heartbeatServer.uri;
+		if (!this.imOnMaster()) {
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
-			params.put("new_user", new_user);		
+			params.put("new_user", new_user);
+			params.put("name", name);
+			params.put("server", server);								
 			notifyMe("login", params);
 	    } else {
-			new UserEvent.UserLogon(this.user_id, new_user);
+			new UserEvent.UserLogon(this.user_id, new_user, name, server);
 		}		
 	}
 	

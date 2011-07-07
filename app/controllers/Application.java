@@ -4,7 +4,7 @@ import play.*;
 import play.mvc.*;
 import play.libs.WS;
 
-public class Application extends Controller {
+public class Application extends Index {
 
 	// public static void aResponse () {
 	// 	renderText("hello world");

@@ -60,8 +60,8 @@ public class Notify extends Index {
 		returnOkay(null);	
 	}
 
-	public static void login (Long for_user, Long new_user) {
-		new UserEvent.UserLogon(for_user, new_user);
+	public static void login (Long for_user, Long new_user, String name, String server) {
+		new UserEvent.UserLogon(for_user, new_user, name, server);
 		returnOkay(null);	
 	}
 	

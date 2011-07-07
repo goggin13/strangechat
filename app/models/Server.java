@@ -51,19 +51,9 @@ public class Server extends Model {
 	 * check if this server instance is on the same domain as the current request
 	 * @return true if <code>Http.Request.current().host</code> matches this server uri */
 	public boolean isCurrent () {
-		return true;
-		// return uri.indexOf(Application.currentRequest().host) != -1;
+		return uri.indexOf(Index.host()) != -1;
 	}
-	
-	/**
-	 * Post an event to stream of this server.  Since this
-	 * object is of course just meta data for the actual chat server,
-	 * we perform a post request in order to get the data in to the server's
-	 * event stream */
-	public void postEvent (UserEvent.Event e) {
 		
-	}
-	
 	/**
 	 * @return return a new room_id and increment the next room id */
 	public Long getNextID () {
@@ -88,11 +78,17 @@ public class Server extends Model {
 	}
 	
 	/**
+	 * @return true if the current server is a chat server */
+	public static boolean imAChatServer () {
+		Long count = Server.count("uri like ? and ismaster = ?", "%" + Index.host() + "%", false);
+		return count > 0;
+	}
+	
+	/**
 	 * check if the node we are on is the master server
 	 * @return true if <code>Http.Request.current().host</code> matches the masters server uri */
 	public static boolean onMaster () {
-		return true;
-		// return getMasterServer().isCurrent();
+		return getMasterServer().isCurrent();
 	}
 	
 	/**

@@ -18,14 +18,38 @@ import com.google.gson.reflect.*;
  * by the our controllers */
 public class Index extends CRUD {
 	public static Http.Request currentRequest;
+	public static String host = "";
 	
 	@Before
 	protected static void setCurrent () {
 		currentRequest = Http.Request.current();
+		if (host == null) {  // this is for testing environment only
+			System.out.println("HOST IS NULL; could cause issues in multi server environment");
+			host = "localhost:9000";			
+			return;
+		}
+		if (host.equals("")) {
+			if (currentRequest.host == null) {
+				System.out.println("HOST IS NULL; could cause issues in multi server environment");
+				host = "localhost:9000";
+			} else {
+				System.out.println("set host");
+				host = currentRequest.host;
+			}
+		}
+
 	}
 	
 	public static Http.Request currentRequest () {
 		return currentRequest;
+	}
+	
+	public static String host () {
+		if (host == null || host.equals("")) {
+			return "localhost:9000";
+		} else {
+			return host;
+		}
 	}
 	
 	/**

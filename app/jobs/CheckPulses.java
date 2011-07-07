@@ -10,20 +10,18 @@ import java.util.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import models.*;
+import controllers.Index;
 
 @Every("5s")
 public class CheckPulses extends Job {
 	private static Long lastReceived = 0L;
 	
 	public void doJob() {
-		// I dont know why this helps, but it seems to prevent occasional events from getting stuck in the
-		// queue
-		// UserEvent.userEvents.archive(); 
-		// List<IndexedEvent> events = UserEvent.userEvents.availableEvents(lastReceived);
-		// if (events.size() > 0) {
-			// lastReceived = events.get(events.size() - 1).id;
-		// } 
+		// maybe help events from getting stuck in the queue?
 		// UserEvent.userEvents.publish(new UserEvent.Test());
+		if (!Server.imAChatServer()) {
+			return;
+		}
 		
 		for (Long user_id : User.heartbeats.keySet()) {
 			Date lastBeat = User.heartbeats.get(user_id);

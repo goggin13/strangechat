@@ -38,6 +38,7 @@ public class Utility {
 	 * @return a response object from the given url
 	 */
 	public static WS.HttpResponse fetchPostUrl (String url, HashMap<String, Object> params) {
+		System.out.println("POST " + url);
 		WS.HttpResponse resp = 
 				WS.url(url)
 			   .params(params)

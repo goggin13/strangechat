@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.309" errors="0" skipped="0" tests="2" name="UsersTest">
-  <testcase classname="UsersTest" name="testMeetUpFunction" time="0.192">
+<testsuite failures="0" time="0.126" errors="0" skipped="0" tests="2" name="UsersTest">
+  <testcase classname="UsersTest" name="testMeetUpFunction" time="0.09">
       </testcase>
-  <testcase classname="UsersTest" name="stub" time="0.117">
+  <testcase classname="UsersTest" name="stub" time="0.036">
       </testcase>
 </testsuite>

@@ -29,7 +29,7 @@ public class UserEvent {
 	        this.type = type;
 			this.user_id = user_id;
 	        this.timestamp = System.currentTimeMillis();
-			System.out.println("publishing " + type);
+			System.out.println("publishing " + type + " for " + user_id);
 			userEvents.publish(this);
 	    }
 	}
@@ -64,12 +64,11 @@ public class UserEvent {
 		/** server this user is located on */
 		final public String server;
 		
-		public UserLogon (Long user_id, Long new_user) {
+		public UserLogon (Long user_id, Long new_user, String name, String server) {
 			super("userlogon", user_id);
 			this.new_user = new_user;
-			User newUser = User.find("byUser_id", new_user).first();
-			this.name = newUser.name;
-			this.server = newUser.heartbeatServer.uri;
+			this.name = name;
+			this.server = server;
 		}
 	}	
 	
