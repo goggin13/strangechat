@@ -11,7 +11,11 @@ public class Bootstrap extends Job {
  
     public void doJob() {
         Fixtures.deleteAll();
-        Fixtures.loadModels("bootstrap-data.yml");
+		if (Play.mode == Play.Mode.DEV) {
+        	Fixtures.loadModels("bootstrap-data-dev.yml");
+		} else {
+			Fixtures.loadModels("bootstrap-data-prod.yml");
+		}
     }
  
 }

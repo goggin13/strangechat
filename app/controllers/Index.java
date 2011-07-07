@@ -17,33 +17,45 @@ import com.google.gson.reflect.*;
  * A convenience class to hold common methods used
  * by the our controllers */
 public class Index extends CRUD {
+	/** The current request object */
 	public static Http.Request currentRequest;
+	/** The current host name */
 	public static String host = "";
 	
+	/**
+	 * This is something of a hack, but as of now the only
+	 * way I can get to differentiate between the nodes; Each node
+	 * needs to look at its own hostname and then it can determine
+	 * if it is a master, slave, or both.  This is the only way I could
+	 * tell to get a host name.  If/when we find a better way, change the
+	 * <code>host()</code> function below. */
 	@Before
 	protected static void setCurrent () {
 		currentRequest = Http.Request.current();
 		if (host == null) {  // this is for testing environment only
-			System.out.println("HOST IS NULL; could cause issues in multi server environment");
+			System.out.println("HOST IS NULL; could cause issues in production");
 			host = "localhost:9000";			
 			return;
 		}
 		if (host.equals("")) {
 			if (currentRequest.host == null) {
-				System.out.println("HOST IS NULL; could cause issues in multi server environment");
+				System.out.println("HOST IS NULL; could cause issues in production");
 				host = "localhost:9000";
 			} else {
-				System.out.println("set host");
 				host = currentRequest.host;
 			}
 		}
 
 	}
 	
+	/**
+	 * @return the current request object */
 	public static Http.Request currentRequest () {
 		return currentRequest;
 	}
-	
+
+	/**
+	 * @return the current host name */	
 	public static String host () {
 		if (host == null || host.equals("")) {
 			return "localhost:9000";

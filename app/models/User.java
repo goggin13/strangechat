@@ -87,7 +87,7 @@ public class User extends Model {
 		this.online = true;
 		for (User friend : this.friends) {
 			if (friend.online) {
-				friend.notifyMeLogin(this.user_id);
+				friend.notifyMeLogin(this);
 			}
 		}
 	}
@@ -113,7 +113,9 @@ public class User extends Model {
 	 * @return string representation of this user
 	 */	
 	public String toString () {
-		return this.user_id.toString();
+		return this.user_id.toString() 
+			   + (this.heartbeatServer == null ? " no hb server " : this.heartbeatServer.uri) 
+			   + (this.online ? " - online" : "");
 	}
 	
 	/**
@@ -203,6 +205,9 @@ public class User extends Model {
 		}
 	}
 
+	/**
+	 * Inform this user that one of their friends has logged out 
+	 * @param left_user the user_id of the user who has left */
 	public void notifyMeLogout (Long left_user) {
 		if (!this.imOnMaster()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
@@ -214,23 +219,30 @@ public class User extends Model {
 		}
 	}
 
-	public void notifyMeLogin (Long new_user) {
-		User newUser = User.find("byUser_id", new_user).first();
+	/**
+	 * Inform this user that one of their friends has logged on
+	 * @param newUser the user who has logged on */
+	public void notifyMeLogin (User newUser) {
 		String name = newUser.name;
 		String server = newUser.heartbeatServer.uri;
 		if (!this.imOnMaster()) {
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("for_user", this.user_id);
-			params.put("new_user", new_user);
+			params.put("new_user", newUser.user_id);
 			params.put("name", name);
 			params.put("server", server);								
 			notifyMe("login", params);
 	    } else {
-			new UserEvent.UserLogon(this.user_id, new_user, name, server);
+			new UserEvent.UserLogon(this.user_id, newUser.user_id, name, server);
 		}		
 	}
 	
-	public void notifyMe (String action, HashMap<String, Object> params) {
+	/**
+	 * Helper for previous notify functions; sends the given parameters
+	 * to the /notify/<code>action</code> url of this users heartbeat server
+	 * @param action the notify action to take, eg <code>login</code>, <code>logout</code>, etc...
+	 * @param params the parameters to pass along to that notified */	
+	private void notifyMe (String action, HashMap<String, Object> params) {
 		String url = this.heartbeatServer.uri + "notify/" + action;
 		WS.HttpResponse resp = Utility.fetchUrl(url, params);
 		JsonObject json = resp.getJson().getAsJsonObject();		
@@ -267,12 +279,21 @@ public class User extends Model {
 		return user;
 	}
 		
+	/** 
+	 * This class is used when serializing and deserializing JSON.  Its only 
+	 * purpose is to inform the GsonBuilder objects that they should exclude 
+	 * the friends field (since it likely will contain a circular reference) */
 	public static class ChatExclusionStrategy implements ExclusionStrategy {
 
+		/** 
+		 * Required to implement this, but we dont want to skip
+		 * any classes */
 		public boolean shouldSkipClass(Class<?> clazz) {
 			return false;
 		}
 
+		/**
+		 * Indicate which fieds to skip; for now, just friends */
 		public boolean shouldSkipField(FieldAttributes f) {
 		  return f.getName().equals("friends");
 		}

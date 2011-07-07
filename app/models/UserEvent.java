@@ -2,6 +2,7 @@ package models;
  
 import java.util.*;
 import play.libs.F.*;
+import play.Logger;
 
 /* 
  * A wrapper for the UserEvent classes.  See comment on {@link AnEvent} for 
@@ -29,8 +30,6 @@ public class UserEvent {
 	        this.type = type;
 			this.user_id = user_id;
 	        this.timestamp = System.currentTimeMillis();
-			System.out.println("publishing " + type + " for " + user_id);
-			userEvents.publish(this);
 	    }
 	}
 	
@@ -50,6 +49,7 @@ public class UserEvent {
 			super("listento", user_id);
 			this.server = server;
 			this.room_id = room_id;
+			userEvents.publish(this);
 		}
 	}
 	
@@ -69,6 +69,7 @@ public class UserEvent {
 			this.new_user = new_user;
 			this.name = name;
 			this.server = server;
+			userEvents.publish(this);
 		}
 	}	
 	
@@ -82,6 +83,7 @@ public class UserEvent {
 		public UserLogout (Long user_id, Long left_user) {
 			super("userlogout", user_id);
 			this.left_user = left_user;
+			userEvents.publish(this);
 		}
 	}	
 	
@@ -100,6 +102,7 @@ public class UserEvent {
             this.from = from;
             this.text = msg;
 			this.room_id = room_id;
+			userEvents.publish(this);
         }
         
     }
@@ -119,12 +122,13 @@ public class UserEvent {
 		public final Long room_id;
 		
         public Join (Long for_user, Long new_user, String avatar, String name, String server, Long room_id) {
-            super("join", for_user);
+			super("join", for_user);
             this.new_user = new_user;
 			this.avatar = avatar;
 			this.name = name;
 			this.server = server;
 			this.room_id = room_id;
+			userEvents.publish(this);
         }
         
     }
@@ -134,6 +138,7 @@ public class UserEvent {
     public static class Test extends Event {		
         public Test () {
             super("leave", -1L);
+			userEvents.publish(this);
         }
     }
     
@@ -149,6 +154,7 @@ public class UserEvent {
             super("leave", for_user);
             this.left_user = left_user;
 			this.room_id = room_id;
+			userEvents.publish(this);
         }
     }
 	

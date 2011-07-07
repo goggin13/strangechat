@@ -4,8 +4,11 @@ import play.*;
 import play.mvc.*;
 import play.libs.WS;
 
+/**
+ * Demo page and home page, which is blank for now */
 public class Application extends Index {
 
+	// leave this for now, could be a good SO question;
 	// public static void aResponse () {
 	// 	renderText("hello world");
 	// }

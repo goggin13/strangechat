@@ -10,6 +10,10 @@ import com.google.gson.reflect.*;
 
 import models.*;
 
+/**
+ * This controller is in charge of pushing events into the event streams
+ * for the individual chat servers, as well as providing an interface for
+ * clients to listen to. */  
 public class Notify extends Index {
 	
 	/**
@@ -36,8 +40,7 @@ public class Notify extends Index {
 				lastReceived = e.id;
 			}			
 		} while (returnData.size() == 0);
-
-		System.out.println(user_id + " returning events : " + lastReceived);
+		
 		Users.renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
@@ -45,6 +48,14 @@ public class Notify extends Index {
 		);
 	}
 	
+	/**
+	 * Creates a new event signifying a user has joined a room.  
+	 * @param for_user the user id who will recieve this notification
+	 * @param new_user the user id of the user who just joined
+	 * @param name the name to be passed with the new user
+	 * @param server the uri the new user is located on
+	 * @param avatar url to display for the new user
+	 * @param room_id the id of the room to join */
 	public static void joined (Long for_user, Long new_user, String name, String server, String avatar, Long room_id) {
 		new UserEvent.Join(for_user, 
 						   new_user, 
@@ -54,27 +65,61 @@ public class Notify extends Index {
 						   room_id);
 		returnOkay(null);	
 	}
-	
+
+	/**
+	 * Creates a new event signifying a user has left a room.  
+	 * @param for_user the user id who will recieve this notification
+	 * @param left_user the user id of the user who has left
+	 * @param room_id the id of the room being left */	
 	public static void left (Long for_user, Long left_user, Long room_id) {
 		new UserEvent.Leave(for_user, left_user, room_id);
 		returnOkay(null);	
 	}
 
+	/**
+	 * Creates a new event signifying a user has just logged on and is available
+	 * to chat
+	 * @param for_user the user id who will recieve this notification
+	 * @param new_user the user id of the user who just logged on
+	 * @param name the name to be passed with the new user
+	 * @param server the uri the new user is located on */
 	public static void login (Long for_user, Long new_user, String name, String server) {
 		new UserEvent.UserLogon(for_user, new_user, name, server);
 		returnOkay(null);	
 	}
-	
+
+	/**
+	 * Creates a new event signifying a user has logged out of the system
+	 * @param for_user the user id who will recieve this notification
+	 * @param left_user the user id of the user who has left */	
 	public static void logout (Long for_user, Long left_user) {
 		new UserEvent.UserLogout(for_user, left_user);
 		returnOkay(null);	
 	}
-	
+
+	/**
+	 * Creates a new event signifying a user has joined a room.  
+	 * @param for_user the user id who will recieve this notification; note that this
+	 * 				   doesn't preclude more than one user from receiving this message, 
+	 *				   if there are more than 2 users in a room multiple events of this
+	 *				   type will be generated.  	
+	 * @param from_user the user id of the user who sent the message
+	 * @param msg the text of the message being sent
+	 * @param room_id optional, if this message is directed at a specific room
+	 * @param callback optional JSONP callback */
 	public static void message (Long for_user, Long from_user, String msg, Long room_id, String callback) {
 		new UserEvent.DirectMessage(for_user, from_user, room_id, msg);
 		returnOkay(callback);
 	}
 	
+	/**
+	 * Record a heartbeat for the given user.  Once we have recorded a heartbeat,
+	 * this server will be in charge of keeping track of whether this user is still
+	 * alive in the system. Once their heartbeat fades for more than 
+	 * <code>User.HEALTHY_HEARTBEAT</code> seconds, the master is notified that this 
+	 * user logged out 
+	 * @param for_user the user_id of the user logging out 
+	 * @param callback optional JSONP callback */
 	public static void heartbeat (Long for_user, String callback) {
 		User.heartbeats.put(for_user, new Date());
 		returnOkay(callback);

@@ -44,7 +44,7 @@ public class Server extends Model {
 	 * @return string representation of this server 
 	 */	
 	public String toString () {
-		return this.name;
+		return this.name + "( " + this.uri + ") - " + (this.isMaster ? "m" : "s");
 	}
 	
 	/**

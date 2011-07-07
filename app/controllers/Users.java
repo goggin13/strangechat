@@ -87,6 +87,7 @@ public class Users extends Index {
 	/**
 	 * Mark this user as offline
 	 * @param facebook_id
+	 * @param callback optional JSONP callback
 	 */
 	public static void logout (Long facebook_id, String callback) {
 		if (User.logOutUser(facebook_id)) {
