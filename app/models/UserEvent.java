@@ -31,25 +31,9 @@ public class UserEvent {
 			this.user_id = user_id;
 	        this.timestamp = System.currentTimeMillis();
 	    }
-	}
 	
-	/**
-	 * This event indicates to clients that they should begin
-	 * listening the described server and room_id.  When ClientA
-	 * initiates a chat with ClientB, ClientB will receieve an event of this 
-	 * type. */
-	public static class ListenTo extends Event {
-		/** The url of the server to listen to */
-		public final String server;
-
-		/** The room id to listen to */
-		public final Long room_id;
-		
-		public ListenTo (Long user_id, String server, Long room_id) {
-			super("listento", user_id);
-			this.server = server;
-			this.room_id = room_id;
-			userEvents.publish(this);
+		public String toString () {
+			return this.user_id + " ( " + this.type + " )";
 		}
 	}
 	
@@ -71,6 +55,10 @@ public class UserEvent {
 			this.server = server;
 			userEvents.publish(this);
 		}
+		
+		public String toString () {
+			return super.toString() + " : " + this.new_user + " has logged in ";
+		}		
 	}	
 	
 	/**
@@ -85,6 +73,10 @@ public class UserEvent {
 			this.left_user = left_user;
 			userEvents.publish(this);
 		}
+		
+		public String toString () {
+			return super.toString() + " : " + this.left_user + " has logged out ";
+		}		
 	}	
 	
 	/**
@@ -94,19 +86,47 @@ public class UserEvent {
         public final Long from;
 		/** the text of the message */
  		public final String text;
+		
+        public DirectMessage(Long to, Long from, String msg) {
+            super("directmessage", to);
+            this.from = from;
+            this.text = msg;
+			userEvents.publish(this);
+        }
+
+		public String toString () {
+			return super.toString() 
+				   + " : message from " + this.from + ", " + this.text;
+		}
+        
+    }
+	    
+	/**
+	 * Represents a direct message from one user to another in a chatroom */
+    public static class RoomMessage extends Event {
+		/** the user_id of the user who sent the message */
+        public final Long from;
+		/** the text of the message */
+ 		public final String text;
 		/** optional room id that this message is pertinent to */
 		public final Long room_id;
 		
-        public DirectMessage(Long to, Long from, Long room_id, String msg) {
-            super("directmessage", to);
+        public RoomMessage(Long to, Long from, Long room_id, String msg) {
+            super("roommessage", to);
             this.from = from;
             this.text = msg;
 			this.room_id = room_id;
 			userEvents.publish(this);
         }
+
+		public String toString () {
+			return super.toString() 
+				   + " : message from " + this.from + ", " + this.text
+				   + ", in room " + this.room_id;
+		}
         
     }
-	    
+	
 	/** 
 	 * represents a user joining the chat room */
     public static class Join extends Event {
@@ -115,7 +135,7 @@ public class UserEvent {
         /** an optional url displaying this new users avatar */
 		public final String avatar;
 		/** the name of the user joining */
-		public final String name;
+		public final String alias;
 		/** the server the new user is on */
 		public final String server;
 		/** the room id that you are now chatting in */
@@ -125,19 +145,43 @@ public class UserEvent {
 			super("join", for_user);
             this.new_user = new_user;
 			this.avatar = avatar;
-			this.name = name;
+			this.alias = name;
 			this.server = server;
 			this.room_id = room_id;
 			userEvents.publish(this);
         }
+
+		public String toString () {
+			return super.toString() + " : " + this.new_user + " is joining room " + this.room_id;
+		}
         
     }
+
+	/**
+	 * Indicates that the user is typing */
+	public static class UserIsTyping extends Event {
+        /** user id of the user leaving */
+        final public Long typing_user;
+        /** room id the event is for */
+		final public Long room_id;
+		
+        public UserIsTyping (Long for_user, Long typing_user, Long room_id) {
+            super("useristyping", for_user);
+            this.typing_user = typing_user;
+			this.room_id = room_id;
+			userEvents.publish(this);
+        }
+
+		public String toString () {
+			return super.toString() + " : " + this.typing_user + " is typing all up in room " + this.room_id;
+		}		
+	}
 
 	/**
 	 * Represents a users heartbeat in a room */
     public static class Test extends Event {		
         public Test () {
-            super("leave", -1L);
+            super("nothing", -1L);
 			userEvents.publish(this);
         }
     }
@@ -156,6 +200,10 @@ public class UserEvent {
 			this.room_id = room_id;
 			userEvents.publish(this);
         }
+
+		public String toString () {
+			return super.toString() + " : " + this.left_user + " left room " + this.room_id;
+		}
     }
 	
 	/**
@@ -168,6 +216,16 @@ public class UserEvent {
      */
     public static Promise<List<IndexedEvent<UserEvent.Event>>> nextMessages (long lastReceived) {
         return userEvents.nextEvents(lastReceived);
+    }
+	
+	/**
+     * Just used for admin purposes, return entire event stream
+	 * @return list of all messages in the queue
+     */
+    public static List<UserEvent.Event> currentMessages () {
+		List<UserEvent.Event> events = userEvents.archive();
+		Collections.reverse(events);
+        return events;
     }
 	
 	/**

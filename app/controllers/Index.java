@@ -17,52 +17,28 @@ import com.google.gson.reflect.*;
  * A convenience class to hold common methods used
  * by the our controllers */
 public class Index extends CRUD {
-	/** The current request object */
-	public static Http.Request currentRequest;
-	/** The current host name */
-	public static String host = "";
 	
 	/**
-	 * This is something of a hack, but as of now the only
-	 * way I can get to differentiate between the nodes; Each node
-	 * needs to look at its own hostname and then it can determine
-	 * if it is a master, slave, or both.  This is the only way I could
-	 * tell to get a host name.  If/when we find a better way, change the
-	 * <code>host()</code> function below. */
-	@Before
-	protected static void setCurrent () {
-		currentRequest = Http.Request.current();
-		if (host == null) {  // this is for testing environment only
-			System.out.println("HOST IS NULL; could cause issues in production");
-			host = "localhost:9000";			
-			return;
-		}
-		if (host.equals("")) {
-			if (currentRequest.host == null) {
-				System.out.println("HOST IS NULL; could cause issues in production");
-				host = "localhost:9000";
-			} else {
-				host = currentRequest.host;
+	 * Catch any argument exceptions thrown by children methods, 
+	 * logs the error and returns a failed JSON response */
+	@Catch(Index.ArgumentException.class)
+    public static void log(Index.ArgumentException e) {
+        Logger.error("Caught Illegal Argument %s", e);
+		returnFailed(e.toString(), e.getCallback());
+    }
+	
+	/**
+	 * This method is utilized by children to protected
+	 * methods we need to authenticate for*/
+    protected static void checkAuthentication() {
+       	if (!Security.isConnected()) {
+			try {
+				Secure.login();
+			} catch (Throwable e) {
+				Logger.error("authentication excpetion %s", e);
 			}
 		}
-
-	}
-	
-	/**
-	 * @return the current request object */
-	public static Http.Request currentRequest () {
-		return currentRequest;
-	}
-
-	/**
-	 * @return the current host name */	
-	public static String host () {
-		if (host == null || host.equals("")) {
-			return "localhost:9000";
-		} else {
-			return host;
-		}
-	}
+    }
 	
 	/**
 	 * @param msg the error message to include in the response
@@ -125,6 +101,41 @@ public class Index extends CRUD {
 			renderText(json);
 		} else {
 			renderJSON(json);
+		}
+	}
+	
+	/**
+	 * Simple exception class used by our controllers to handle invalid
+	 * arguments.  These are thrown by individual methods, and caught and handled
+	 * in this class */
+	protected static class ArgumentException extends Exception {
+		/** The parameter that is invalid */
+		private String field;
+		/** The error, e.g. "is null", "cant be negative" */		
+		private String mistake;
+		/** Optional JSONP callback to be used when this exception is caught */
+		private String callback;
+		
+		public ArgumentException (String err, String field, String callback) {
+			super(err);   
+			System.out.println();  
+			this.mistake = err; 
+			this.field = field; 
+			this.callback = callback;
+		}
+
+		/** 
+		 * @return the message string which will be logged and displaed to the user
+		 * when this exception occurs */
+		public String toString () {
+			return "**Invalid argument** " + this.field + " " + this.mistake;
+		}
+
+		/**
+		 * @return the JSONP callback to use when returning the error for this
+		 * exception */
+		public String getCallback () {
+			return this.callback;
 		}
 	}
 	

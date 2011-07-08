@@ -1,49 +1,13 @@
-06 Jul 2011 19:57:33,247 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
-06 Jul 2011 19:57:33,249 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-06 Jul 2011 19:57:33,250 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
-06 Jul 2011 19:57:33,810 WARN  ~ You're running Play! in DEV mode
-06 Jul 2011 19:57:33,890 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-06 Jul 2011 19:57:38,728 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-06 Jul 2011 19:57:41,138 INFO  ~ Application 'strangechat' is now started !
-06 Jul 2011 19:57:56,623 ERROR ~ 
-
-@672g81e6b
-Error during job execution (jobs.CheckPulses)
-
-Execution exception (In /app/models/Server.java around line 54)
-NullPointerException occured : null
-
-play.exceptions.JavaExecutionException
-	at play.jobs.Job.call(Job.java:166)
-	at Invocation.Job(Play!)
-Caused by: java.lang.NullPointerException
-	at java.lang.String.indexOf(String.java:1733)
-	at java.lang.String.indexOf(String.java:1715)
-	at models.Server.isCurrent(Server.java:54)
-	at models.Server.onMaster(Server.java:91)
-	at jobs.CheckPulses.broadcastLogout(CheckPulses.java:37)
-	at jobs.CheckPulses.doJob(CheckPulses.java:31)
-	at play.jobs.Job.doJobWithResult(Job.java:55)
-	at play.jobs.Job.call(Job.java:157)
-	... 1 more
-06 Jul 2011 19:58:59,245 ERROR ~ 
-
-@672g81e6c
-Error during job execution (jobs.CheckPulses)
-
-Execution exception (In /app/models/Server.java around line 54)
-NullPointerException occured : null
-
-play.exceptions.JavaExecutionException
-	at play.jobs.Job.call(Job.java:166)
-	at Invocation.Job(Play!)
-Caused by: java.lang.NullPointerException
-	at java.lang.String.indexOf(String.java:1733)
-	at java.lang.String.indexOf(String.java:1715)
-	at models.Server.isCurrent(Server.java:54)
-	at models.Server.onMaster(Server.java:91)
-	at jobs.CheckPulses.broadcastLogout(CheckPulses.java:37)
-	at jobs.CheckPulses.doJob(CheckPulses.java:31)
-	at play.jobs.Job.doJobWithResult(Job.java:55)
-	at play.jobs.Job.call(Job.java:157)
-	... 1 more
+08 Jul 2011 19:19:32,074 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+08 Jul 2011 19:19:32,077 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+08 Jul 2011 19:19:32,077 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
+08 Jul 2011 19:19:32,077 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+08 Jul 2011 19:19:32,077 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+08 Jul 2011 19:19:32,077 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
+08 Jul 2011 19:19:32,078 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
+08 Jul 2011 19:19:32,645 WARN  ~ You're running Play! in DEV mode
+08 Jul 2011 19:19:32,732 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+08 Jul 2011 19:19:41,114 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+08 Jul 2011 19:19:43,364 INFO  ~ Application 'strangechat' is now started !
+08 Jul 2011 19:19:43,553 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+08 Jul 2011 19:19:47,052 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )

@@ -98,17 +98,31 @@ public class Notify extends Index {
 	}
 
 	/**
-	 * Creates a new event signifying a user has joined a room.  
+	 * Creates a new event signifying a message from one user to another 
 	 * @param for_user the user id who will recieve this notification; note that this
 	 * 				   doesn't preclude more than one user from receiving this message, 
 	 *				   if there are more than 2 users in a room multiple events of this
 	 *				   type will be generated.  	
 	 * @param from_user the user id of the user who sent the message
 	 * @param msg the text of the message being sent
-	 * @param room_id optional, if this message is directed at a specific room
 	 * @param callback optional JSONP callback */
-	public static void message (Long for_user, Long from_user, String msg, Long room_id, String callback) {
-		new UserEvent.DirectMessage(for_user, from_user, room_id, msg);
+	public static void message (Long for_user, Long from_user, String msg, String callback) {
+		new UserEvent.DirectMessage(for_user, from_user, msg);
+		returnOkay(callback);
+	}
+
+	/**
+	 * Creates a new event signifying a message from one user to another IN a chatroom.    
+	 * @param for_user the user id who will recieve this notification; note that this
+	 * 				   doesn't preclude more than one user from receiving this message, 
+	 *				   if there are more than 2 users in a room multiple events of this
+	 *				   type will be generated.  	
+	 * @param from_user the user id of the user who sent the message
+	 * @param msg the text of the message being sent
+	 * @param room_id the pertinent room for this message
+	 * @param callback optional JSONP callback */
+	public static void roomMessage (Long for_user, Long from_user, String msg, Long room_id, String callback) {
+		new UserEvent.RoomMessage(for_user, from_user, room_id, msg);
 		returnOkay(callback);
 	}
 	

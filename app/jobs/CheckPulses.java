@@ -22,7 +22,6 @@ public class CheckPulses extends Job {
 		if (!Server.imAChatServer()) {
 			return;
 		}
-		
 		for (Long user_id : User.heartbeats.keySet()) {
 			Date lastBeat = User.heartbeats.get(user_id);
 			Long diff = Utility.diffInSecs(new Date(), lastBeat);
@@ -37,7 +36,7 @@ public class CheckPulses extends Job {
 		if (Server.onMaster()) {
 			User.logOutUser(user_id);
 		} else {	
-			String url = Server.getMasterServer().uri + "logout?facebook_id=" + user_id;
+			String url = Server.getMasterServer().uri + "signout?facebook_id=" + user_id;
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("facebook_id", user_id);
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);

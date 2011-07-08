@@ -20,6 +20,8 @@ import com.google.gson.reflect.*;
  */
 @Entity
 public class Server extends Model {
+	private static boolean onMasterServer = false;
+	private static boolean onChatServer = false;
 	
 	/** The name of the server */
 	@Required
@@ -46,14 +48,7 @@ public class Server extends Model {
 	public String toString () {
 		return this.name + "( " + this.uri + ") - " + (this.isMaster ? "m" : "s");
 	}
-	
-	/**
-	 * check if this server instance is on the same domain as the current request
-	 * @return true if <code>Http.Request.current().host</code> matches this server uri */
-	public boolean isCurrent () {
-		return uri.indexOf(Index.host()) != -1;
-	}
-		
+			
 	/**
 	 * @return return a new room_id and increment the next room id */
 	public Long getNextID () {
@@ -69,26 +64,31 @@ public class Server extends Model {
 		Server master = Server.find("byIsMaster", true).first();
 		return master;
 	}
-
-	/** 
-	 * @Return a chat server */
-	public static Server getAChatServer () {
-		Server server = Server.find("byIsMaster", false).first();
-		return server;
-	}
 	
 	/**
 	 * @return true if the current server is a chat server */
 	public static boolean imAChatServer () {
-		Long count = Server.count("uri like ? and ismaster = ?", "%" + Index.host() + "%", false);
-		return count > 0;
+		return Server.onChatServer;
 	}
 	
 	/**
-	 * check if the node we are on is the master server
-	 * @return true if <code>Http.Request.current().host</code> matches the masters server uri */
+	 * @return true if the node we are on is the master server */
 	public static boolean onMaster () {
-		return getMasterServer().isCurrent();
+		return Server.onMasterServer;
+	}
+	
+	/**
+	 * Mark the current server (e.g. current slot, not current server object),
+	 * as being a chat server */
+	public static void setChatServer (boolean b) {
+		Server.onChatServer = b;
+	}
+
+	/**
+	 * Mark the current server (e.g. current slot, not current server object),
+	 * as being the master server */
+	public static void setMasterServer (boolean b) {
+		Server.onMasterServer = b;
 	}
 	
 	/**

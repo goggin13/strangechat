@@ -25,7 +25,7 @@ public class NotificationTests extends MyFunctionalTest {
 		
 		try {
 			System.out.println("sleeping");
-			Thread.sleep(10000);
+			Thread.sleep(12000);
 			System.out.println("waking up");			
 		} catch (InterruptedException e){
 			System.out.println(e.getMessage());
@@ -63,7 +63,7 @@ public class NotificationTests extends MyFunctionalTest {
 
 	@Test
 	public void testNotifyMessage () {
-		String url = "/notify/message?for_user=" + pmo_id + "&from_user=" + k_id + "&msg=helloworld&room_id=14";
+		String url = "/notify/message?for_user=" + pmo_id + "&from_user=" + k_id + "&msg=helloworld&";
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 
@@ -71,9 +71,22 @@ public class NotificationTests extends MyFunctionalTest {
 		assertEquals("directmessage", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("from").getAsString());
 		assertEquals("helloworld", data.get("text").getAsString());	
-		assertEquals("14", data.get("room_id").getAsString());		
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
 	} 
+
+	@Test
+	public void testNotifyChatMessage () {
+		String url = "/notify/roommessage?for_user=" + pmo_id + "&from_user=" + k_id + "&msg=helloworld&room_id=45";
+	    JsonObject jsonObj = getAndValidateResponse(url);
+		assertEquals("okay", jsonObj.get("status").getAsString());
+
+		JsonObject data = getListenResponse(pmo_id, 0);
+		assertEquals("roommessage", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("from").getAsString());
+		assertEquals("helloworld", data.get("text").getAsString());	
+		assertEquals("45", data.get("room_id").getAsString());			
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
+	}
 
 	@Test
 	public void testNotifyJoined () {
@@ -86,7 +99,7 @@ public class NotificationTests extends MyFunctionalTest {
 		assertEquals(k_id.toString(), data.get("new_user").getAsString());
 		assertEquals("www.avatar.com", data.get("avatar").getAsString());
 		assertEquals("14", data.get("room_id").getAsString());
-		assertEquals("kristen", data.get("name").getAsString());
+		assertEquals("kristen", data.get("alias").getAsString());
 		assertEquals("chat1.com", data.get("server").getAsString());		
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
 	}

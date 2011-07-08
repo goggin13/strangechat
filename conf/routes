@@ -7,8 +7,8 @@ GET     /                                       Application.index
 GET     /demo																		Application.demo
 
 # User actions
-GET     /login																	Users.login
-GET     /logout																	Users.logout
+GET     /signin																	Users.signin
+GET     /signout																Users.signout
 GET		  /random																	Users.random
 GET     /requestrandomroom 											Users.requestRandomRoom
 GET     /leaveroom															Users.leaveRoom
@@ -16,6 +16,7 @@ GET     /leaveroom															Users.leaveRoom
 # Chat actions
 GET     /listen																  Notify.listen
 GET     /message																Notify.message
+GET     /roommessage														Notify.roomMessage
 GET 	  /heartbeat															Notify.heartbeat
 
 # Server actions
@@ -25,6 +26,9 @@ GET     /leaveroom															Servers.leaveRoom
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
+
+# Import Secure routes
+*       /                                       module:secure
 
 # Import CRUD routes
 *      /admin              module:crud

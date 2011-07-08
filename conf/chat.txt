@@ -1,0 +1,2 @@
+this files only purpose is to indicate the server is a chat server.  
+delete it and on restart this server will not act as a chat server

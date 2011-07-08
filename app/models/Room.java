@@ -35,9 +35,13 @@ public class Room extends Model {
 			return;
 		}
 		this.participants.remove(user);
-		this.save();
-		for (User u : this.participants) {
-			u.notifyLeftRoom(user, room_id);
+		if (this.participants.size() > 0) {
+			this.save();
+			for (User u : this.participants) {
+				u.notifyLeftRoom(user, room_id);
+			}			
+		} else {
+			this.delete();
 		}		
 	}
 	

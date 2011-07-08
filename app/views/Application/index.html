@@ -1,4 +1,29 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
 
-<p>Nothing</p>
+#{if amMaster} 
+	#{set title:'Master' /}
+#{/if}
+#{else}
+	#{set title:'ChatServer' /}
+#{/else}
+
+#{if amMaster} 
+	<p>I'm the Master server <br/>
+		#{list items:masterStats.keySet(), as:'stat'} 
+			${masterStats.get(stat)} | ${stat} <br/>
+		#{/list}
+	</p>
+#{/if}
+
+#{if amChat} 
+	<p>
+		I'm a chat server <br/>
+		#{list items:chatStats.keySet(), as:'stat'} 
+			${chatStats.get(stat)} | ${stat} <br/>
+		#{/list}				
+	</p>
+	<p>EVENT QUEUE <br/>
+		#{list items:events, as:'e'} 
+			${e} <br/>
+		#{/list}
+#{/if}

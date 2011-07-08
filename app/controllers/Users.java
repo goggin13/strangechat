@@ -25,6 +25,11 @@ public class Users extends Index {
 	public static final Queue<Long> waitingRoom = new ConcurrentLinkedQueue<Long>();
 	public static AtomicLong nextRoomID = new AtomicLong(1);
 	
+	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom"})
+	public static void checkAuth () {
+		Index.checkAuthentication();
+	}
+	
 	/**
 	 * Log user with <code>facebook_id</code> into the system.  Using <code>access_token</code>,
 	 * contact the Facebook API and download their latest set of friends.  Check current online
@@ -38,35 +43,30 @@ public class Users extends Index {
 	 * @param alias optional, an alias for this user
 	 * @param callback optional, required for cross-doman requests
 	 */
-	public static void login (Long facebook_id, String name, String access_token, String avatar, String alias, String callback) {
-		
-		JsonObject jsonObj = Utility.getMyFacebookFriends(facebook_id, access_token);
-		if (jsonObj.has("error")) {
-			renderJSON(jsonObj.toString());
-		}
-		
-		Set<User> friends = new HashSet<User>();
-		HashMap<String, User> friendData = new HashMap<String, User>();
-		
-		for (JsonElement ele : jsonObj.get("data").getAsJsonArray()) {
-			JsonObject friendObj = ele.getAsJsonObject();
-			try {
-				Long friendID = friendObj.get("id").getAsLong();
-				String friendName = friendObj.get("name").getAsString();
-				User friend = User.find("byUser_id", friendID).first();
-				if (friend != null && friend.online) {
-					friends.add(friend);
-					friendData.put(friendID.toString(), friend);
-				}
-			} catch (Exception e) {
-				System.out.println("EXCEPTION " + e);
-			}
-		}
-
+	public static void signin (
+								Long facebook_id, 
+								String name, 
+								String access_token, 
+								String avatar, 
+								String alias, 
+								boolean updatefriends, 
+								String callback) throws Index.ArgumentException
+	{
+		if (facebook_id == null || (updatefriends && access_token == null)) {
+			throw new Index.ArgumentException("are both required", "facebook_id and access_token", callback);
+		}	
 		User user = User.getOrCreate(facebook_id);
 		Server server = Server.getMyHeartbeatServer(user);
 		user.heartbeatServer = server;
-		user.friends = friends;
+		
+		HashMap<String, User> friendData = new HashMap<String, User>();
+		if (updatefriends) {
+			friendData = user.updateMyFacebookFriends(access_token);	
+			if (friendData == null){
+				returnFailed("Failed to log into facebook; likely expired token", callback);
+			}
+		}
+		
 		user.name = name;
 		if (avatar != null) {
 			user.avatar = avatar;
@@ -89,7 +89,7 @@ public class Users extends Index {
 	 * @param facebook_id
 	 * @param callback optional JSONP callback
 	 */
-	public static void logout (Long facebook_id, String callback) {
+	public static void signout (Long facebook_id, String callback) {
 		if (User.logOutUser(facebook_id)) {
 			returnOkay(callback);
 		} else {

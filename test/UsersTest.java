@@ -25,11 +25,11 @@ public class UsersTest extends MyFunctionalTest {
 		// chatURI = Server.getAChatServer().uri;
 	}
 
-/*	@Test
-	public void testLoginResponse () {
+	@Test
+	public void testSigninResponse () {
 		
 		// first id 2 logs in
-		String url = "/login?facebook_id=" + fb_id_2 + "&access_token=" + facebook_token_2 + "&name=Matthew Goggin";
+		String url = "/signin?facebook_id=" + fb_id_2 + "&access_token=" + facebook_token_2 + "&name=Matthew Goggin&updatefriends=true";
 	    JsonObject jsonObj = getAndValidateResponse(url);
 	
 		assertEquals(4, jsonObj.entrySet().size());
@@ -46,7 +46,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
 		
 		// and now id 1 logs in
-		url = "/login?facebook_id=" + fb_id_1 + "&access_token=" + facebook_token_1 + "&name=Matt Goggin";;
+		url = "/signin?facebook_id=" + fb_id_1 + "&access_token=" + facebook_token_1 + "&name=Matt Goggin&updatefriends=true";
 	    jsonObj = getAndValidateResponse(url);
 		
 		// should include my fake account
@@ -69,23 +69,22 @@ public class UsersTest extends MyFunctionalTest {
 
 	@Test
 	public void testBadTokenResponse () {		
-		String url =  "/login?facebook_id=" + fb_id_1 + "&access_token=ANINVALIDTOKENASdfasdf";
+		String url =  "/signin?facebook_id=" + fb_id_1 + "&access_token=ANINVALIDTOKENASdfasdf&updatefriends=true";
 	    JsonObject jsonObj = getAndValidateResponse(url);
-		JsonObject errObj = jsonObj.get("error").getAsJsonObject();
-		assertEquals("OAuthException", errObj.get("type").getAsString());
+		assertEquals("error", jsonObj.get("status").getAsString());
 	} 
 	
 	@Test
 	public void testBadLogout () {
 		String bad_id = "23423424312";
-		String url = "/logout?facebook_id=" + bad_id;
+		String url = "/signout?facebook_id=" + bad_id;
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("user " + bad_id + " not found", jsonObj.get("message").getAsString());
 	} 
 	
 	@Test
 	public void testGoodLogout () {
-		String url =  "/logout?facebook_id=" + k_id;
+		String url =  "/signout?facebook_id=" + k_id;
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 
@@ -103,7 +102,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertNotSame(k_id.toString(), jsonObj.get("user_id").getAsString());
 		assertTrue(jsonObj.get("online").getAsBoolean());
 		assertTrue(jsonObj.has("name"));
-	} */
+	} 
 	
 	@Test
 	public void testMeetUpFunction () {
@@ -149,7 +148,7 @@ public class UsersTest extends MyFunctionalTest {
 		GET("/mock/reseteventqueue");
 		
 		// now if kk logs out, pmo should get a notification telling him she left
-		url =  "/logout?facebook_id=" + k_id;
+		url =  "/signout?facebook_id=" + k_id;
 	    jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 		

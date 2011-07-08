@@ -113,8 +113,8 @@ public class User extends Model {
 	 * @return string representation of this user
 	 */	
 	public String toString () {
-		return this.user_id.toString() 
-			   + (this.heartbeatServer == null ? " no hb server " : this.heartbeatServer.uri) 
+		return this.user_id.toString() + " "
+			   + (this.heartbeatServer == null ? "no hb server" : this.heartbeatServer.uri) + " "
 			   + (this.online ? " - online" : "");
 	}
 	
@@ -144,6 +144,34 @@ public class User extends Model {
 	    return Room.find(
 	        "select distinct r from Room r join r.participants as p where p = ?", this
 	    ).fetch();
+	}
+	
+	public HashMap<String, User> updateMyFacebookFriends (String access_token) {
+		JsonObject jsonObj = Utility.getMyFacebookFriends(this.user_id, access_token);
+
+		if (jsonObj.has("error")) {
+			Logger.error("Failed to log in " + this.user_id + " ( " + jsonObj.toString() + " )");
+			return null;
+		}
+		
+		HashMap<String, User> friendData = new HashMap<String, User>();
+		
+		for (JsonElement ele : jsonObj.get("data").getAsJsonArray()) {
+			JsonObject friendObj = ele.getAsJsonObject();
+			try {
+				Long friendID = friendObj.get("id").getAsLong();
+				String friendName = friendObj.get("name").getAsString();
+				User friend = User.find("byUser_id", friendID).first();
+				if (friend != null && friend.online) {
+					this.friends.add(friend);
+					friendData.put(friendID.toString(), friend);
+				}
+			} catch (Exception e) {
+				System.out.println("EXCEPTION " + e);
+			}
+		}
+		
+		return friendData;
 	}
 	
 	/**
