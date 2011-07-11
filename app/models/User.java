@@ -52,7 +52,7 @@ public class User extends Model {
 	/**
 	 * Collection of other users this user is friends with
 	 */
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	public Set<User> friends;
 	
 	/**

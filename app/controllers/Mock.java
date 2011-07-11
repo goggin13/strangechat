@@ -11,7 +11,6 @@ public class Mock extends Index {
 
 	@Before
 	protected static void checkMode(String force) {
-		System.out.println(force);
         if (Play.mode != Play.Mode.DEV) {
             notFound();
         }

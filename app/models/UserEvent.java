@@ -164,11 +164,14 @@ public class UserEvent {
         final public Long typing_user;
         /** room id the event is for */
 		final public Long room_id;
+		/** the text they have typed so far */
+		final public String text;
 		
-        public UserIsTyping (Long for_user, Long typing_user, Long room_id) {
+        public UserIsTyping (Long for_user, Long typing_user, String text, Long room_id) {
             super("useristyping", for_user);
             this.typing_user = typing_user;
 			this.room_id = room_id;
+			this.text = text;
 			userEvents.publish(this);
         }
 

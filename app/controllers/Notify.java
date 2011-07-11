@@ -127,6 +127,19 @@ public class Notify extends Index {
 	}
 	
 	/**
+	 * Create a new event indicating the given user is currently typing 
+	 * @param for_user the user who should read this event 
+	 * @param typing_user the user who is typing
+	 * @param room_id optional, the room the typing is occuring in
+	 * @param text the text that the user has typed so far 
+	 * @param callback optional JSONP callback */
+	public static void userIsTyping (Long for_user, Long typing_user, Long room_id, String text, String callback) {
+		new UserEvent.UserIsTyping(for_user, typing_user, text, room_id);
+		returnOkay(callback);
+	}	
+	
+	
+	/**
 	 * Record a heartbeat for the given user.  Once we have recorded a heartbeat,
 	 * this server will be in charge of keeping track of whether this user is still
 	 * alive in the system. Once their heartbeat fades for more than 

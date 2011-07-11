@@ -18,6 +18,7 @@ GET     /listen																  Notify.listen
 GET     /message																Notify.message
 GET     /roommessage														Notify.roomMessage
 GET 	  /heartbeat															Notify.heartbeat
+GET			/imtyping																Notify.userIsTyping
 
 # Server actions
 GET     /getroomfor															Servers.getRoomFor

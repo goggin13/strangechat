@@ -15,7 +15,7 @@ import com.google.gson.*;
 public class Room extends Model {
 		
 	/** set of users in this chatroom */
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	public Set<User> participants;
 	
 	/** id of this room */

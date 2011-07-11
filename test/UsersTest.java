@@ -25,7 +25,7 @@ public class UsersTest extends MyFunctionalTest {
 		// chatURI = Server.getAChatServer().uri;
 	}
 
-	@Test
+/*	@Test
 	public void testSigninResponse () {
 		
 		// first id 2 logs in
@@ -102,7 +102,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertNotSame(k_id.toString(), jsonObj.get("user_id").getAsString());
 		assertTrue(jsonObj.get("online").getAsBoolean());
 		assertTrue(jsonObj.has("name"));
-	} 
+	} */
 	
 	@Test
 	public void testMeetUpFunction () {
