@@ -24,6 +24,8 @@
 	</p>
 	<p>EVENT QUEUE <br/>
 		#{list items:events, as:'e'} 
-			${e} <br/>
+			#{if e.type != "nothing"}
+				${e} <br/>
+			#{/if}
 		#{/list}
 #{/if}

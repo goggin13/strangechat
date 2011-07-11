@@ -35,7 +35,6 @@ public class Application extends Index {
 		HashMap<String, String> masterStats = getMasterStats();
 		HashMap<String, String> chatStats = getChatStats();
 		List<UserEvent.Event> events = UserEvent.currentMessages();
-		System.out.println(events.size());
         render(amMaster, masterStats, amChat, chatStats, events);
     }
 

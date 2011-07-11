@@ -115,11 +115,11 @@ public class NotificationTests extends MyFunctionalTest {
 		assertEquals(k_id.toString(), data.get("left_user").getAsString());
 		assertEquals("15", data.get("room_id").getAsString());		
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
-	}
+	} 
 
 	@Test
 	public void testNotifyTyping () {
-		String url = "/notify/useristyping?for_user=" + pmo_id + "&typing_user=" + k_id + "&room_id=15&text=helloworld";
+		String url = "/notify/useristyping?for_user=" + pmo_id + "&user_id=" + k_id + "&room_id=15&text=helloworld";
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 

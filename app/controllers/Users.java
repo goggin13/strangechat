@@ -72,6 +72,7 @@ public class Users extends Index {
 			user.avatar = avatar;
 		}
 		user.alias = alias == null ? "" : alias;
+		user.nextMessage = UserEvent.lastID();
 		user.login();
 		user.save();		
 		
@@ -129,7 +130,6 @@ public class Users extends Index {
 	 * @param callback optional JSONP callback*/
 	public static synchronized void requestRandomRoom (Long user_id, String callback) {
 		
-		System.out.println(waitingRoom);
 		if (waitingRoom.size() > 0) {
 			Long otherUserID = null;
 			if (waitingRoom.peek().equals(user_id)) {
@@ -173,15 +173,11 @@ public class Users extends Index {
 	 * @param room_id the room to remove them from
 	 * @param callback optional JSONP callback */
 	public static void leaveRoom (Long user_id, Long room_id, String callback) {
-		Room room = Room.find("byRoom_id", room_id).first();
-		User user = User.find("byUser_id", user_id).first();
-		if (user == null) {
-			returnFailed("user " + user_id + " not found", callback);
+		if (!Room.removeUserFrom(room_id, user_id)) {
+			returnFailed("user " + user_id + " or room " + room_id + " not found", callback);			
+		} else {
+			returnOkay(callback);
 		}
-		if (room == null) {
-			returnFailed("room " + room_id + " not found", callback);
-		}
-		room.removeParticipant(user);
 	}
 	
 

@@ -16,7 +16,7 @@ public class Bootstrap extends Job {
 
     public void doJob() {
         Fixtures.deleteAll();
-
+		UserEvent.resetEventQueue();
 		if (Play.mode == Play.Mode.DEV) {
         	Fixtures.loadModels("bootstrap-data-dev.yml");
 		} else {

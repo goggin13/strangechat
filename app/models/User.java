@@ -24,7 +24,9 @@ public class User extends Model {
 	public static final int HEALTHY_HEARTBEAT = 6;
 	/** A map of all the latest user_ids to heartbeats on this server */
 	public static final AbstractMap<Long, Date> heartbeats = new ConcurrentHashMap<Long, Date>();
-	
+	/** A map of all the latest user_id_room_id to last heartbeat in that room on this server */
+	public static final AbstractMap<String, Date> roombeats = new ConcurrentHashMap<String, Date>();
+		
 	/**
 	 * The user_id, in this case will be the facebook_id
 	 */
@@ -59,6 +61,9 @@ public class User extends Model {
 	 * True if this user is currently online
 	 */	
 	public boolean online;
+
+	/** next messgae this user should poll for */
+	public Long nextMessage;
 
 	/**
 	 * Collection of servers this user is currently participating in chats on,
@@ -307,6 +312,15 @@ public class User extends Model {
 		return user;
 	}
 		
+	/**
+	 * Update the heartbeat for the given user in the given room
+	 * @param room_id the id of the room to beat in
+	 * @param user_id the id of the user to beat for */
+	public static void beatInRoom (Long room_id, Long user_id) {
+		String key = room_id.toString() + "_" + user_id.toString();
+		User.roombeats.put(key, new Date());	
+	}
+
 	/** 
 	 * This class is used when serializing and deserializing JSON.  Its only 
 	 * purpose is to inform the GsonBuilder objects that they should exclude 

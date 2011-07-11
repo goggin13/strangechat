@@ -25,11 +25,14 @@ public class UserEvent {
 
 		/** timestamp the event was created */
 		final public Long timestamp;
-	
+		
+		public boolean seen;
+		
 		public Event (String type, Long user_id) {
 	        this.type = type;
 			this.user_id = user_id;
 	        this.timestamp = System.currentTimeMillis();
+			this.seen = false;
 	    }
 	
 		public String toString () {
@@ -230,6 +233,18 @@ public class UserEvent {
 		Collections.reverse(events);
         return events;
     }
+	
+	/**
+	 * @return the id of the message at the top of the current event queue */
+	public static Long lastID () {
+		List<IndexedEvent> events = userEvents.availableEvents(0L);
+		if (events.size() > 0) {
+			return events.get(events.size() - 1).id;			
+		} else {
+			return 0L;
+		}
+
+	}
 	
 	/**
 	 * Reset the user event queue, flushing out existing events */

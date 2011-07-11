@@ -22,7 +22,7 @@ $(document).ready(function () {
 					var input = $("<input type='text' id='" + val.user_id + "'>"),
 						li = $("<li><input type='submit' value='send' /></li>").append(input);
 					$("#user_list").append(li);
-					ChatAPI.watchInput(input, val.user_id);
+					ChatAPI.watchInput(input);
 				}
 			});
 			

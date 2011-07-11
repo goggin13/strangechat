@@ -98,6 +98,7 @@ public class Index extends CRUD {
 		}
 		if (callback != null && !callback.equals("")) {
 			json = callback + "(" + json + ")";
+			response.contentType = "application/javascript";
 			renderText(json);
 		} else {
 			renderJSON(json);
@@ -118,7 +119,6 @@ public class Index extends CRUD {
 		
 		public ArgumentException (String err, String field, String callback) {
 			super(err);   
-			System.out.println();  
 			this.mistake = err; 
 			this.field = field; 
 			this.callback = callback;

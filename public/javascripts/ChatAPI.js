@@ -65,7 +65,7 @@ var ChatAPI = (function () {
 	my.checkInputsForTyping = function () {
 		$.each(my.inputsToWatch, function (key, data) {
 			var newVal = data.input.val();
-			if (newVal != data.last && newVal !== "") {
+			if (newVal != data.last) {
 				that.imTypingInRoom(data.to, newVal, -1);
 			}
 			data.last = newVal;

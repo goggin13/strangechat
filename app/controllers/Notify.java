@@ -15,6 +15,20 @@ import models.*;
  * for the individual chat servers, as well as providing an interface for
  * clients to listen to. */  
 public class Notify extends Index {
+	private static HashMap<Long, List<Long>> userSeen = new HashMap<Long, List<Long>>();
+	
+	private static boolean userHasSeen (Long user_id, Long event_id) {
+		List<Long> seenEvents;
+		if (Notify.userSeen.containsKey(user_id)) {
+			seenEvents = userSeen.get(user_id);
+		} else {
+			seenEvents = new LinkedList<Long>();
+		}
+		boolean hasSeen = seenEvents.contains(event_id);
+		seenEvents.add(event_id);
+		Notify.userSeen.put(user_id, seenEvents);
+		return hasSeen;
+	}
 	
 	/**
 	 * Long poll for events relevant to <code>facebook_id</code>
@@ -29,15 +43,17 @@ public class Notify extends Index {
 		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
 		
 		do {
-			System.out.println(user_id + " is waiting for events : " + lastReceived);
+			// System.out.println(user_id + " is waiting for events : " + lastReceived);
 			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.userEvents.nextEvents(lastReceived));
-			System.out.println(user_id + " is considering returned events : " + lastReceived);
+			// System.out.println(user_id + " is considering returned events : " + lastReceived);
 			
 			for (IndexedEvent<UserEvent.Event> e : events) {
-				if (e.data.user_id.equals(user_id)) {
+				if (e.data.user_id.equals(user_id) && !userHasSeen(user_id, e.id)) {
 					returnData.add(e);
+					// e.data.seen = true;
 				}
 				lastReceived = e.id;
+				
 			}			
 		} while (returnData.size() == 0);
 		
@@ -63,6 +79,7 @@ public class Notify extends Index {
 						   name,
 						   server,
 						   room_id);
+		User.beatInRoom(room_id, for_user);					
 		returnOkay(null);	
 	}
 
@@ -129,26 +146,34 @@ public class Notify extends Index {
 	/**
 	 * Create a new event indicating the given user is currently typing 
 	 * @param for_user the user who should read this event 
-	 * @param typing_user the user who is typing
+	 * @param user_id the user who is typing
 	 * @param room_id optional, the room the typing is occuring in
 	 * @param text the text that the user has typed so far 
 	 * @param callback optional JSONP callback */
-	public static void userIsTyping (Long for_user, Long typing_user, Long room_id, String text, String callback) {
-		new UserEvent.UserIsTyping(for_user, typing_user, text, room_id);
+	public static void userIsTyping (Long for_user, Long user_id, Long room_id, String text, String callback) {
+		new UserEvent.UserIsTyping(for_user, user_id, text, room_id);
 		returnOkay(callback);
 	}	
 	
 	
 	/**
+	 * http://localhost:9000/heartbeat?for_user=1&room_ids[0]=1&room_ids[1]=2&room_ids[2]=3
 	 * Record a heartbeat for the given user.  Once we have recorded a heartbeat,
 	 * this server will be in charge of keeping track of whether this user is still
 	 * alive in the system. Once their heartbeat fades for more than 
 	 * <code>User.HEALTHY_HEARTBEAT</code> seconds, the master is notified that this 
 	 * user logged out 
 	 * @param for_user the user_id of the user logging out 
+	 * @param room_ids optional, list of rooms this user is currently in
 	 * @param callback optional JSONP callback */
-	public static void heartbeat (Long for_user, String callback) {
+	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
 		User.heartbeats.put(for_user, new Date());
+		if (room_ids != null && room_ids.get(0) != null) {
+			for (Long rid : room_ids) {
+				User.beatInRoom(rid, for_user);
+				System.out.println("beat for " + for_user + " in " + rid);
+			}
+		}
 		returnOkay(callback);
 	}
 	

@@ -45,4 +45,24 @@ public class Room extends Model {
 		}		
 	}
 	
+	/**
+	 * Remove the given user from the given room
+	 * @param user_id the user_id of the User to remove from the room
+	 * @param room_id the id of the room to remove from
+	 * @return true on success, false if user_id or room_id does not exist */
+	public static boolean removeUserFrom (Long room_id, Long user_id) {
+		Room room = Room.find("byRoom_id", room_id).first();
+		User user = User.find("byUser_id", user_id).first();
+		if (user == null) {
+			System.out.println("NO USER ID " + user_id);
+			return false;
+		}
+		if (room == null) {
+			System.out.println("NO ROOM ID " + room_id);
+			return false;
+		}
+		room.removeParticipant(user);
+		return true;
+	}
+	
 }
