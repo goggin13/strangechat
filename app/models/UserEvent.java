@@ -26,13 +26,10 @@ public class UserEvent {
 		/** timestamp the event was created */
 		final public Long timestamp;
 		
-		public boolean seen;
-		
 		public Event (String type, Long user_id) {
 	        this.type = type;
 			this.user_id = user_id;
 	        this.timestamp = System.currentTimeMillis();
-			this.seen = false;
 	    }
 	
 		public String toString () {
@@ -151,6 +148,7 @@ public class UserEvent {
 			this.alias = name;
 			this.server = server;
 			this.room_id = room_id;
+			Logger.info("publishing join for " + for_user + ", " + new_user + " in room " + room_id);
 			userEvents.publish(this);
         }
 

@@ -8,10 +8,10 @@ import play.mvc.*;
 import play.libs.*;
 import play.libs.F.*;
 import play.cache.Cache;
-
+import play.*;
 import models.*;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Users extends Index {
 	/** list of ids of people waiting to be matched up with someone to chat */
-	public static final Queue<Long> waitingRoom = new ConcurrentLinkedQueue<Long>();
+	public static final List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
 	public static AtomicLong nextRoomID = new AtomicLong(1);
 	
 	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom"})
@@ -72,9 +72,9 @@ public class Users extends Index {
 			user.avatar = avatar;
 		}
 		user.alias = alias == null ? "" : alias;
-		user.nextMessage = UserEvent.lastID();
 		user.login();
 		user.save();		
+		broadcastHeartbeat(user);
 		
 		// add heartbeat server into list
 		friendData.put(user.user_id.toString(), user);
@@ -96,6 +96,7 @@ public class Users extends Index {
 		} else {
 			returnFailed("user " + facebook_id + " not found", callback);
 		}
+		waitingRoom.remove(facebook_id);
 	}
 
 	/**
@@ -131,17 +132,13 @@ public class Users extends Index {
 	public static synchronized void requestRandomRoom (Long user_id, String callback) {
 		
 		if (waitingRoom.size() > 0) {
-			Long otherUserID = null;
-			if (waitingRoom.peek().equals(user_id)) {
-				for (Long id : waitingRoom) {
-					if (!id.equals(user_id)) {
-						otherUserID = id;
-						waitingRoom.remove(id);
-						break;
-					}
+		    Long otherUserID = null;
+			for (Long id : waitingRoom) {
+				if (!id.equals(user_id)) {
+					otherUserID = id;
+					waitingRoom.remove(id);
+					break;
 				}
-			} else {
-				otherUserID = waitingRoom.poll();
 			}
 			
 			if (otherUserID != null) {
@@ -156,6 +153,7 @@ public class Users extends Index {
 				
 				you.notifyJoined(otherUser, room_id);
 				otherUser.notifyJoined(you, room_id);
+				Logger.info("paired users in room " + room_id);
 				returnOkay(callback);
 			}
 		}
@@ -164,7 +162,32 @@ public class Users extends Index {
 		if (!waitingRoom.contains(user_id)) {
 			waitingRoom.add(user_id);
 		}
+		Logger.info("putting user " + user_id + " in the waiting room (" + waitingRoom.toString() + ")");		
 		returnOkay(callback);
+	}
+
+    /**
+     * Broadcast a heartbeat for the given User, either to this server if we are
+     * their heartbeat server, else send the request to the appropriate server.
+     * This function is called on login for a user, we heartbeat at their assigned server
+     * to catch the case where they login, receive a response, but fail before they begin to 
+     * heartbeat on their own
+     * @user the user to heartbeat for 
+     * @return true if the heartbeat is successfuly sent */
+	private static boolean broadcastHeartbeat (User user) {
+	    String heartbeatURI = user.getHeartbeatURI();
+	    String masterURI = Server.getMasterServer().uri;
+		if (masterURI.equals(heartbeatURI)) {
+		    User.heartbeats.put(user.user_id, new Date());
+		    return true;
+		} else {	
+			String url = heartbeatURI + "heartbeat";
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("for_user", user.user_id);
+			WS.HttpResponse resp = Utility.fetchUrl(url, params);
+			JsonObject json = resp.getJson().getAsJsonObject();
+			return json.get("status").getAsString().equals("okay");
+		}
 	}
 	
 	/**
@@ -173,11 +196,8 @@ public class Users extends Index {
 	 * @param room_id the room to remove them from
 	 * @param callback optional JSONP callback */
 	public static void leaveRoom (Long user_id, Long room_id, String callback) {
-		if (!Room.removeUserFrom(room_id, user_id)) {
-			returnFailed("user " + user_id + " or room " + room_id + " not found", callback);			
-		} else {
-			returnOkay(callback);
-		}
+		Room.removeUserFrom(room_id, user_id);
+		returnOkay(callback);
 	}
 	
 

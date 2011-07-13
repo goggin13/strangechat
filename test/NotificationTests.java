@@ -10,7 +10,7 @@ public class NotificationTests extends MyFunctionalTest {
 	private static Long fb_id_2 = 32701378L;
 	private static Long pmo_id = 24403414L;
 	private static Long k_id = 411183L;
-		
+			
 	@org.junit.Before
 	public void setUp() {
 	    GET("/mock/init");
@@ -23,14 +23,7 @@ public class NotificationTests extends MyFunctionalTest {
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 		
-		try {
-			System.out.println("sleeping");
-			Thread.sleep(12000);
-			System.out.println("waking up");			
-		} catch (InterruptedException e){
-			System.out.println(e.getMessage());
-		}
-		
+        goToSleep(12);		
 		JsonObject data = getListenResponse(pmo_id, 0);
 		assertEquals("userlogout", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("left_user").getAsString());
@@ -130,5 +123,29 @@ public class NotificationTests extends MyFunctionalTest {
 		assertEquals("helloworld", data.get("text").getAsString());			
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
 	}
+
+	@Test
+	public void testLoginAndDontHeartbeat () {
+    	// first id 2 logs in
+    	String url = "/signin?facebook_id=" + k_id + "&=Matthew Goggin&updatefriends=false";
+        JsonObject jsonObj = getAndValidateResponse(url);
+        
+    	// and now id 1 logs in
+    	url = "/signin?facebook_id=" + pmo_id + "&name=Matt Goggin&updatefriends=false";
+        jsonObj = getAndValidateResponse(url);
+
+        // a couple heartbeats to stay alive while kk fades out
+        for (int i = 1; i <= 4; i++) {
+            heartbeatFor(pmo_id);
+            goToSleep(3);
+        }
+        
+    	// there should be an event waiting for user 2 telling them that user 1
+    	// logged in
+    	JsonObject data = getListenResponse(pmo_id, 0);
+    	assertEquals("userlogout", data.get("type").getAsString());
+    	assertEquals(k_id.toString(), data.get("left_user").getAsString());
+    	assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
+	}	
 	
 }

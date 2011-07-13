@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="13.096" errors="0" skipped="0" tests="9" name="NotificationTests">
-  <testcase classname="NotificationTests" name="testHeartbeatFadeout" time="12.176">
+<testsuite failures="0" time="25.355" errors="0" skipped="0" tests="10" name="NotificationTests">
+  <testcase classname="NotificationTests" name="testHeartbeatFadeout" time="12.155">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.13">
+  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.128">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.14">
+  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.126">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.116">
+  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.131">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyChatMessage" time="0.106">
+  <testcase classname="NotificationTests" name="testNotifyChatMessage" time="0.138">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyJoined" time="0.108">
+  <testcase classname="NotificationTests" name="testNotifyJoined" time="0.13">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLeft" time="0.114">
+  <testcase classname="NotificationTests" name="testNotifyLeft" time="0.184">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyTyping" time="0.091">
+  <testcase classname="NotificationTests" name="testNotifyTyping" time="0.096">
       </testcase>
-  <testcase classname="NotificationTests" name="stub" time="0.115">
+  <testcase classname="NotificationTests" name="testLoginAndDontHeartbeat" time="12.157">
+      </testcase>
+  <testcase classname="NotificationTests" name="stub" time="0.11">
       </testcase>
 </testsuite>

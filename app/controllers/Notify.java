@@ -15,48 +15,41 @@ import models.*;
  * for the individual chat servers, as well as providing an interface for
  * clients to listen to. */  
 public class Notify extends Index {
-	private static HashMap<Long, List<Long>> userSeen = new HashMap<Long, List<Long>>();
-	
-	private static boolean userHasSeen (Long user_id, Long event_id) {
-		List<Long> seenEvents;
-		if (Notify.userSeen.containsKey(user_id)) {
-			seenEvents = userSeen.get(user_id);
-		} else {
-			seenEvents = new LinkedList<Long>();
-		}
-		boolean hasSeen = seenEvents.contains(event_id);
-		seenEvents.add(event_id);
-		Notify.userSeen.put(user_id, seenEvents);
-		return hasSeen;
-	}
 	
 	/**
 	 * Long poll for events relevant to <code>facebook_id</code>
 	 * @param facebook_id
-	 * @param lastReceived the id of the last event seen
+	 * @param lastReceived optional; the id of the last event seen. if omitted or zero,
+						   will assign to the most current event
 	 * @param callback optional JSONP callback
 	 */	
 	public static void listen (Long user_id, Long lastReceived, String callback) {
 		if (user_id == null) {
 			returnFailed("no user_id provided", callback);
 		}
+		if (lastReceived == null || lastReceived.equals(-1L)) {
+			lastReceived = UserEvent.lastID();
+		}
 		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
 		
 		do {
-			// System.out.println(user_id + " is waiting for events : " + lastReceived);
+			Logger.info(user_id + " is waiting for events : " + lastReceived);
 			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.userEvents.nextEvents(lastReceived));
-			// System.out.println(user_id + " is considering returned events : " + lastReceived);
+			// Logger.info(user_id + " is considering returned events : " + lastReceived);
 			
 			for (IndexedEvent<UserEvent.Event> e : events) {
-				if (e.data.user_id.equals(user_id) && !userHasSeen(user_id, e.id)) {
+				if (e.data.user_id.equals(user_id)) {
 					returnData.add(e);
-					// e.data.seen = true;
+					// if (e.data.type.equals("join")) {
+						// Logger.info("its a join for " + user_id);
+					// }
 				}
 				lastReceived = e.id;
 				
 			}			
 		} while (returnData.size() == 0);
 		
+		Logger.info("user " + user_id + " gets " + returnData.size() + " events back (" + callback + ")");
 		Users.renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
@@ -168,10 +161,10 @@ public class Notify extends Index {
 	 * @param callback optional JSONP callback */
 	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
 		User.heartbeats.put(for_user, new Date());
+		// Logger.info(room_ids == null ? "no ids" : room_ids.toString());
 		if (room_ids != null && room_ids.get(0) != null) {
 			for (Long rid : room_ids) {
 				User.beatInRoom(rid, for_user);
-				System.out.println("beat for " + for_user + " in " + rid);
 			}
 		}
 		returnOkay(callback);

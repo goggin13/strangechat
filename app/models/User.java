@@ -62,9 +62,6 @@ public class User extends Model {
 	 */	
 	public boolean online;
 
-	/** next messgae this user should poll for */
-	public Long nextMessage;
-
 	/**
 	 * Collection of servers this user is currently participating in chats on,
 	 */
@@ -121,6 +118,12 @@ public class User extends Model {
 		return this.user_id.toString() + " "
 			   + (this.heartbeatServer == null ? "no hb server" : this.heartbeatServer.uri) + " "
 			   + (this.online ? " - online" : "");
+	}
+	
+	/**
+	 * @return the URI of this users heartbeat server */ 
+	public String getHeartbeatURI () {
+	    return this.heartbeatServer.uri;
 	}
 	
 	/**

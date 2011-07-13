@@ -22,7 +22,7 @@ public class CheckPulses extends Job {
 		}
 		
 		// maybe help events from getting stuck in the queue?		
-		UserEvent.userEvents.publish(new UserEvent.Test());
+		// UserEvent.userEvents.publish(new UserEvent.Test());
 		
 		// check user heartbeats
 		for (Long user_id : User.heartbeats.keySet()) {
@@ -39,7 +39,6 @@ public class CheckPulses extends Job {
 		for (String key : User.roombeats.keySet()) {
 			Date lastBeat = User.roombeats.get(key);
 			Long diff = Utility.diffInSecs(new Date(), lastBeat);
-			System.out.println(key + " => " + diff);
 			if (diff > User.HEALTHY_HEARTBEAT) {
 				String parts[] = key.split("_");
 				User.roombeats.remove(key);
@@ -53,12 +52,7 @@ public class CheckPulses extends Job {
 
 	private static void broadcastLeaveRoom (Long room_id, Long user_id) {
 		if (Server.onMaster()) {
-			
-			if (Room.removeUserFrom(room_id, user_id)) {
-				System.out.println("1:removing " + user_id + " from " + room_id);
-			} else {
-				System.out.println("2:removing " + user_id + " from " + room_id);
-			}
+			Room.removeUserFrom(room_id, user_id);
 		} else {	
 			String url = Server.getMasterServer().uri + "leaveroom";
 			HashMap<String, Object> params = new HashMap<String, Object>();

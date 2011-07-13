@@ -24,8 +24,8 @@ public class UsersTest extends MyFunctionalTest {
 		// masterURI = Server.getMasterServer().uri;
 		// chatURI = Server.getAChatServer().uri;
 	}
-
-	@Test
+	    
+ 	@Test
 	public void testSigninResponse () {
 		
 		// first id 2 logs in
@@ -64,8 +64,9 @@ public class UsersTest extends MyFunctionalTest {
 		JsonObject data = getListenResponse(fb_id_2, 0);
 		assertEquals("userlogon", data.get("type").getAsString());
 		assertEquals(fb_id_1.toString(), data.get("new_user").getAsString());
-		assertEquals(fb_id_2.toString(), data.get("user_id").getAsString());		
-	}
+		assertEquals(fb_id_2.toString(), data.get("user_id").getAsString());
+		
+	} 
 
 	@Test
 	public void testBadTokenResponse () {		
@@ -106,10 +107,12 @@ public class UsersTest extends MyFunctionalTest {
 	
 	@Test
 	public void testMeetUpFunction () {
+        
 		// pmo registers to get paired
 		String url =  "/requestrandomroom?user_id=" + pmo_id;
 	    JsonObject jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
+
 
 		// // should be no issue if he registers twice (shouldnt be but it is)
 		// url =  "/requestrandomroom?user_id=" + pmo_id;
@@ -120,6 +123,7 @@ public class UsersTest extends MyFunctionalTest {
 		url =  "/requestrandomroom?user_id=" + k_id;
 	    jsonObj = getAndValidateResponse(url);
 		assertEquals("okay", jsonObj.get("status").getAsString());
+		
 		
 		// now they should both have events waiting for them about the other joining
 		
@@ -153,11 +157,18 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("okay", jsonObj.get("status").getAsString());
 		
 		// PMO should have an event waiting notifying him kk peaced
-		data = getListenResponse(pmo_id, 0);
-		System.out.println(data);
+		JsonArray events = getWholeListenResponse(pmo_id, 0);
+		
+		data = events.get(0).getAsJsonObject().get("data").getAsJsonObject();
 		assertEquals("leave", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("left_user").getAsString());
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());
+		
+		// and an additional one saying she logged out, since they are friends (awww)
+        data = events.get(1).getAsJsonObject().get("data").getAsJsonObject();
+		assertEquals("userlogout", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("left_user").getAsString());
+		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());		
 	}
 		    
 }

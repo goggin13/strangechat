@@ -1,17 +1,46 @@
-11 Jul 2011 18:08:48,543 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
-11 Jul 2011 18:08:48,545 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
-11 Jul 2011 18:08:48,546 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
-11 Jul 2011 18:08:48,546 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-11 Jul 2011 18:08:48,546 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
-11 Jul 2011 18:08:48,546 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
-11 Jul 2011 18:08:48,554 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
-11 Jul 2011 18:08:49,206 WARN  ~ You're running Play! in DEV mode
-11 Jul 2011 18:08:49,276 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-11 Jul 2011 18:08:59,606 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-11 Jul 2011 18:09:02,112 INFO  ~ Application 'strangechat' is now started !
-11 Jul 2011 18:09:02,356 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-11 Jul 2011 18:09:08,910 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-11 Jul 2011 18:09:59,916 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-11 Jul 2011 18:20:02,787 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-11 Jul 2011 18:39:31,633 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-11 Jul 2011 18:39:48,775 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+13 Jul 2011 19:44:37,123 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+13 Jul 2011 19:44:37,126 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+13 Jul 2011 19:44:37,127 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
+13 Jul 2011 19:44:37,127 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+13 Jul 2011 19:44:37,127 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+13 Jul 2011 19:44:37,127 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
+13 Jul 2011 19:44:37,137 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
+13 Jul 2011 19:44:37,722 WARN  ~ You're running Play! in DEV mode
+13 Jul 2011 19:44:37,799 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+13 Jul 2011 19:44:48,672 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+13 Jul 2011 19:44:51,219 INFO  ~ Application 'strangechat' is now started !
+13 Jul 2011 19:44:51,470 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+13 Jul 2011 19:44:57,800 INFO  ~ 32701378 is waiting for events : 0
+13 Jul 2011 19:44:57,802 INFO  ~ user 32701378 gets 1 events back (null)
+13 Jul 2011 19:44:58,039 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+13 Jul 2011 19:44:58,281 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:44:58,281 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:44:58,511 INFO  ~ putting user 24403414 in the waiting room ([24403414])
+13 Jul 2011 19:44:58,524 INFO  ~ publishing join for 411183, 24403414 in room 2
+13 Jul 2011 19:44:58,525 INFO  ~ publishing join for 24403414, 411183 in room 2
+13 Jul 2011 19:44:58,525 INFO  ~ paired users in room 2
+13 Jul 2011 19:44:58,531 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:44:58,531 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:44:58,537 INFO  ~ 411183 is waiting for events : 0
+13 Jul 2011 19:44:58,537 INFO  ~ user 411183 gets 1 events back (null)
+13 Jul 2011 19:44:58,564 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:44:58,565 INFO  ~ user 24403414 gets 2 events back (null)
+13 Jul 2011 19:45:11,399 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:11,399 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:11,529 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:11,529 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:11,655 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:11,655 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:11,784 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:11,784 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:11,921 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:11,922 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:12,046 INFO  ~ publishing join for 24403414, 411183 in room 14
+13 Jul 2011 19:45:12,053 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:12,053 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:12,237 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:12,237 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:12,333 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:12,333 INFO  ~ user 24403414 gets 1 events back (null)
+13 Jul 2011 19:45:24,489 INFO  ~ 24403414 is waiting for events : 0
+13 Jul 2011 19:45:24,490 INFO  ~ user 24403414 gets 2 events back (null)

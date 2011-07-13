@@ -54,11 +54,9 @@ public class Room extends Model {
 		Room room = Room.find("byRoom_id", room_id).first();
 		User user = User.find("byUser_id", user_id).first();
 		if (user == null) {
-			System.out.println("NO USER ID " + user_id);
 			return false;
 		}
 		if (room == null) {
-			System.out.println("NO ROOM ID " + room_id);
 			return false;
 		}
 		room.removeParticipant(user);

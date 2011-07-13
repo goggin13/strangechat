@@ -16,10 +16,21 @@ public class MyFunctionalTest extends FunctionalTest {
 	protected JsonObject getListenResponse (Long id, int lastReceived) {
 		String url = "/listen?user_id=" + id + "&lastReceived=" + lastReceived;
 	    JsonArray jsonArr = getAndValidateAsArray(url);
-	System.out.println(jsonArr);
-		JsonObject jsonObj = jsonArr.get(0).getAsJsonObject();
+	    System.out.println("listening response = " + jsonArr.toString());
+		JsonObject jsonObj = jsonArr.get(jsonArr.size() - 1).getAsJsonObject();
 		JsonObject data = jsonObj.get("data").getAsJsonObject();
 		return data;
+	}
+
+	protected JsonArray getWholeListenResponse (Long id, int lastReceived) {
+		String url = "/listen?user_id=" + id + "&lastReceived=" + lastReceived;
+	    return getAndValidateAsArray(url);
+	}
+	
+	protected void heartbeatFor (Long user_id) {
+	    String url = "/heartbeat?for_user=" + user_id;
+	    JsonObject jsonObj = getAndValidateResponse(url);
+		assertEquals("okay", jsonObj.get("status").getAsString());
 	}
 	
 	protected JsonArray getAndValidateAsArray (String url) {
@@ -40,9 +51,18 @@ public class MyFunctionalTest extends FunctionalTest {
 
 	protected JsonObject getAndValidateResponse (String url) {
 		String jsonStr = getAndValidateInner(url);
-		System.out.println("JSON = " + jsonStr);
 		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
 		return jsonObj;
+	}
+	
+	protected void goToSleep (int seconds) {
+	    try {
+			System.out.println("sleeping");
+			Thread.sleep(seconds * 1000);
+			System.out.println("waking up");			
+		} catch (InterruptedException e){
+			System.out.println(e.getMessage());
+		}
 	}
 	
 }

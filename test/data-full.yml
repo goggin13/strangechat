@@ -21,16 +21,17 @@ User(pmo):
   online: true
   heartbeatServer: chat1
 
+User(kristen):
+  user_id: 411183
+  name: "Kristen Diver"
+  online: true
+  friends: pmo
+  heartbeatServer: chat1
+     
 User(goggin):
   user_id: 100002292928724
   name: "Matthew Goggin"
   online: true
+  friends: kristen
   heartbeatServer: chat1
-
-User(kristen):
-   user_id: 411183
-   name: "Kristen Diver"
-   online: true
-   friends: pmo
-   heartbeatServer: chat1
       

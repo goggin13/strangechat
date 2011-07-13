@@ -11,9 +11,9 @@ public class Mock extends Index {
 
 	@Before
 	protected static void checkMode(String force) {
-        if (Play.mode != Play.Mode.DEV) {
-            notFound();
-        }
+        // if (Play.mode != Play.Mode.DEV) {
+            // notFound();
+        // }
     }
 
 	public static void resetEventQueue () {
