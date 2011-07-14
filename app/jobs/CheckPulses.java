@@ -21,8 +21,9 @@ public class CheckPulses extends Job {
 			return;
 		}
 		
-		// maybe help events from getting stuck in the queue?		
-		// UserEvent.userEvents.publish(new UserEvent.Test());
+		// this seems to be necessary to keep events popping off the queue in 
+		// a timely manner, though I hate it
+        UserEvent.userEvents.publish(new UserEvent.Test());
 		
 		// check user heartbeats
 		for (Long user_id : User.heartbeats.keySet()) {
@@ -34,6 +35,7 @@ public class CheckPulses extends Job {
 			}
 		}
 		
+		System.out.println(User.roombeats);
 		
 		// check heartbeats in rooms
 		for (String key : User.roombeats.keySet()) {
@@ -44,6 +46,7 @@ public class CheckPulses extends Job {
 				User.roombeats.remove(key);
 				Long room_id = Long.parseLong(parts[0]);
 				Long user_id = Long.parseLong(parts[1]);
+				Logger.info("broadcast leave room, " + user_id + " from " + room_id);
 				broadcastLeaveRoom(room_id, user_id);
 				
 			}

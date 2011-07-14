@@ -12,9 +12,9 @@ import play.*;
 import models.*;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * This controller is responsible for keeping track of users, updating their
@@ -22,8 +22,17 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Users extends Index {
 	/** list of ids of people waiting to be matched up with someone to chat */
-	public static final List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
-	public static AtomicLong nextRoomID = new AtomicLong(1);
+	public static List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
+	
+	/** How many meetings, 0 indexed, ago users must have interacted before they
+	 *  can be matched again.  0 means users can talk, then they have to talk to 
+	 *  at least one other perosn each.  -1 means they can be pairied in back
+	 *  to back rooms. */
+	public static int remeetEligible = -1;
+	
+	/**
+	 * Maximum number of pending spots in the waiting room a single user can occupy */
+	public static int spotsPerUser = 2;
 	
 	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom"})
 	public static void checkAuth () {
@@ -125,6 +134,15 @@ public class Users extends Index {
 	}
 	
 	/**
+	 * Helper for <code>requestRandomRoom</code>
+	 * @return true if these users are eligible to be paired in a room right now */
+	private static boolean canBePaired (Long user_id1, Long user_id2) {
+	    return !user_id1.equals(user_id2) 
+		        && (remeetEligible == -1 
+		            || !Room.hasMetRecently(user_id1, user_id2, remeetEligible));
+	}
+	
+	/**
 	 * For super hero chat, indicate you are ready to start chatting.  Someone else will be
 	 * paired with you immediately if they are available, or whenever they do become available
 	 * @param user_id your user_id, so the random returned user isn't you 
@@ -134,7 +152,7 @@ public class Users extends Index {
 		if (waitingRoom.size() > 0) {
 		    Long otherUserID = null;
 			for (Long id : waitingRoom) {
-				if (!id.equals(user_id)) {
+				if (canBePaired(id, user_id)) {
 					otherUserID = id;
 					waitingRoom.remove(id);
 					break;
@@ -142,27 +160,17 @@ public class Users extends Index {
 			}
 			
 			if (otherUserID != null) {
-				User otherUser = User.find("byUser_id", otherUserID).first();
-				User you = User.find("byUser_id", user_id).first();
-
-				Long room_id = nextRoomID.incrementAndGet();
-				Room r = new Room(room_id);
-				r.participants.add(otherUser);
-				r.participants.add(you);
-				r.save();
-				
-				you.notifyJoined(otherUser, room_id);
-				otherUser.notifyJoined(you, room_id);
-				Logger.info("paired users in room " + room_id);
+			    Room.createRoomFor(otherUserID, user_id);	
 				returnOkay(callback);
 			}
 		}
 		
 		// no one there yet!
-		if (!waitingRoom.contains(user_id)) {
-			waitingRoom.add(user_id);
+		if (Collections.frequency(waitingRoom, user_id) < spotsPerUser) {
+		    waitingRoom.add(user_id);
 		}
-		Logger.info("putting user " + user_id + " in the waiting room (" + waitingRoom.toString() + ")");		
+        System.out.println(waitingRoom);
+        // Logger.info("putting user " + user_id + " in the waiting room (" + waitingRoom.toString() + ")");    
 		returnOkay(callback);
 	}
 

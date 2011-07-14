@@ -4,6 +4,11 @@ import play.mvc.*;
 import play.mvc.Http.*;
 import models.*;
 import com.google.gson.*;
+import controllers.*;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 public class UsersTest extends MyFunctionalTest {
 	
@@ -17,12 +22,13 @@ public class UsersTest extends MyFunctionalTest {
 	private static Long k_id = 411183L;
 	private static String masterURI = "";
 	private static String chatURI = "http://localhost:9000/";
-	
+	private static Long rando_1 = 11L;
+	private static Long rando_2 = 12L;
+		
 	@org.junit.Before
 	public void setUp() {
 	    GET("/mock/init");
-		// masterURI = Server.getMasterServer().uri;
-		// chatURI = Server.getAChatServer().uri;
+	    Users.remeetEligible = -1;
 	}
 	    
  	@Test
@@ -169,6 +175,63 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("userlogout", data.get("type").getAsString());
 		assertEquals(k_id.toString(), data.get("left_user").getAsString());
 		assertEquals(pmo_id.toString(), data.get("user_id").getAsString());		
+	} 
+	
+	@Test
+	public void testMeetUpFunctionRespectsRemeetEligible () {	
+	    // reset meetings and waiting room, and turn eligible to require 1 meeting apart
+	    Users.remeetEligible = 0;	
+	    Users.waitingRoom = new CopyOnWriteArrayList<Long>(); 
+	    Room.recentMeetings = new ConcurrentHashMap<Long, List<Long>>();	    
+	    
+	    // pmo requests a room
+	    getAndValidateResponse("/requestrandomroom?user_id=" + pmo_id);
+		
+		// kk registers to get paired
+	    getAndValidateResponse("/requestrandomroom?user_id=" + k_id);
+		
+		// they should get matched up.
+		JsonObject data = getListenResponse(pmo_id, 0);
+		assertEquals("join", data.get("type").getAsString());
+		assertEquals(k_id.toString(), data.get("new_user").getAsString());
+
+		data = getListenResponse(k_id, 0);
+		assertEquals("join", data.get("type").getAsString());
+		assertEquals(pmo_id.toString(), data.get("new_user").getAsString());
+		
+		GET("/mock/reseteventqueue");
+		
+		// but if they go again, shouldn't get eachother
+	    getAndValidateResponse("/requestrandomroom?user_id=" + pmo_id);
+	    getAndValidateResponse("/requestrandomroom?user_id=" + k_id);
+	    
+	    // fb_1 registers to get paired and should get one of them
+	    getAndValidateResponse("/requestrandomroom?user_id=" + rando_1);
+	    data = getListenResponse(rando_1, 0);
+		assertEquals("join", data.get("type").getAsString());
+		Long newUser1 = data.get("new_user").getAsLong();
+		assertTrue(newUser1.equals(k_id) || newUser1.equals(pmo_id));
+		
+	    getAndValidateResponse("/requestrandomroom?user_id=" + rando_2);
+	    data = getListenResponse(rando_2, 0);
+		assertEquals("join", data.get("type").getAsString());
+		Long newUser2 = data.get("new_user").getAsLong();
+		assertTrue(newUser2.equals(k_id) || newUser2.equals(pmo_id));
+		assertFalse(newUser1.equals(newUser2));		
+		
+        GET("/mock/reseteventqueue");
+        
+        // But now they should be eligible again
+        getAndValidateResponse("/requestrandomroom?user_id=" + pmo_id);
+        getAndValidateResponse("/requestrandomroom?user_id=" + k_id);
+        
+        // they should get matched up.
+        data = getListenResponse(pmo_id, 0);
+        assertEquals("join", data.get("type").getAsString());
+        assertEquals(k_id.toString(), data.get("new_user").getAsString());
+        
+        data = getListenResponse(k_id, 0);
+        assertEquals("join", data.get("type").getAsString());
+        assertEquals(pmo_id.toString(), data.get("new_user").getAsString());
 	}
-		    
 }

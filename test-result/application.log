@@ -1,46 +1,53 @@
-13 Jul 2011 19:44:37,123 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
-13 Jul 2011 19:44:37,126 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
-13 Jul 2011 19:44:37,127 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
-13 Jul 2011 19:44:37,127 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-13 Jul 2011 19:44:37,127 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
-13 Jul 2011 19:44:37,127 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
-13 Jul 2011 19:44:37,137 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
-13 Jul 2011 19:44:37,722 WARN  ~ You're running Play! in DEV mode
-13 Jul 2011 19:44:37,799 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-13 Jul 2011 19:44:48,672 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-13 Jul 2011 19:44:51,219 INFO  ~ Application 'strangechat' is now started !
-13 Jul 2011 19:44:51,470 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-13 Jul 2011 19:44:57,800 INFO  ~ 32701378 is waiting for events : 0
-13 Jul 2011 19:44:57,802 INFO  ~ user 32701378 gets 1 events back (null)
-13 Jul 2011 19:44:58,039 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-13 Jul 2011 19:44:58,281 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:44:58,281 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:44:58,511 INFO  ~ putting user 24403414 in the waiting room ([24403414])
-13 Jul 2011 19:44:58,524 INFO  ~ publishing join for 411183, 24403414 in room 2
-13 Jul 2011 19:44:58,525 INFO  ~ publishing join for 24403414, 411183 in room 2
-13 Jul 2011 19:44:58,525 INFO  ~ paired users in room 2
-13 Jul 2011 19:44:58,531 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:44:58,531 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:44:58,537 INFO  ~ 411183 is waiting for events : 0
-13 Jul 2011 19:44:58,537 INFO  ~ user 411183 gets 1 events back (null)
-13 Jul 2011 19:44:58,564 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:44:58,565 INFO  ~ user 24403414 gets 2 events back (null)
-13 Jul 2011 19:45:11,399 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:11,399 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:11,529 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:11,529 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:11,655 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:11,655 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:11,784 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:11,784 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:11,921 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:11,922 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:12,046 INFO  ~ publishing join for 24403414, 411183 in room 14
-13 Jul 2011 19:45:12,053 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:12,053 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:12,237 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:12,237 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:12,333 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:12,333 INFO  ~ user 24403414 gets 1 events back (null)
-13 Jul 2011 19:45:24,489 INFO  ~ 24403414 is waiting for events : 0
-13 Jul 2011 19:45:24,490 INFO  ~ user 24403414 gets 2 events back (null)
+14 Jul 2011 16:20:02,462 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+14 Jul 2011 16:20:02,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+14 Jul 2011 16:20:02,465 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
+14 Jul 2011 16:20:02,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+14 Jul 2011 16:20:02,466 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+14 Jul 2011 16:20:02,466 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
+14 Jul 2011 16:20:02,466 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
+14 Jul 2011 16:20:03,035 WARN  ~ You're running Play! in DEV mode
+14 Jul 2011 16:20:03,114 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+14 Jul 2011 16:20:12,868 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+14 Jul 2011 16:20:15,398 INFO  ~ Application 'strangechat' is now started !
+14 Jul 2011 16:20:15,603 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+14 Jul 2011 16:20:19,379 INFO  ~ publishing join for 24403414, 411183 in room 1
+14 Jul 2011 16:20:19,380 INFO  ~ publishing join for 411183, 24403414 in room 1
+14 Jul 2011 16:20:19,388 INFO  ~ publishing join for 11, 411183 in room 2
+14 Jul 2011 16:20:19,389 INFO  ~ publishing join for 411183, 11 in room 2
+14 Jul 2011 16:20:19,397 INFO  ~ publishing join for 411183, 12 in room 6
+14 Jul 2011 16:20:19,398 INFO  ~ publishing join for 12, 411183 in room 6
+14 Jul 2011 16:20:19,405 INFO  ~ publishing join for 24403414, 11 in room 7
+14 Jul 2011 16:20:19,406 INFO  ~ publishing join for 11, 24403414 in room 7
+14 Jul 2011 16:20:19,414 INFO  ~ publishing join for 24403414, 12 in room 8
+14 Jul 2011 16:20:19,415 INFO  ~ publishing join for 12, 24403414 in room 8
+14 Jul 2011 16:20:25,468 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+14 Jul 2011 16:20:25,805 INFO  ~ publishing join for 24403414, 411183 in room 2
+14 Jul 2011 16:20:25,806 INFO  ~ publishing join for 411183, 24403414 in room 2
+14 Jul 2011 16:20:25,917 INFO  ~ publishing join for 24403414, 411183 in room 3
+14 Jul 2011 16:20:25,923 INFO  ~ publishing join for 411183, 24403414 in room 3
+14 Jul 2011 16:20:25,962 INFO  ~ publishing join for 24403414, 11 in room 4
+14 Jul 2011 16:20:25,963 INFO  ~ publishing join for 11, 24403414 in room 4
+14 Jul 2011 16:20:25,981 INFO  ~ publishing join for 411183, 12 in room 5
+14 Jul 2011 16:20:25,982 INFO  ~ publishing join for 12, 411183 in room 5
+14 Jul 2011 16:20:26,011 INFO  ~ publishing join for 24403414, 411183 in room 6
+14 Jul 2011 16:20:26,012 INFO  ~ publishing join for 411183, 24403414 in room 6
+14 Jul 2011 16:20:30,706 INFO  ~ broadcast leave room, 12 from 6
+14 Jul 2011 16:20:30,710 INFO  ~ broadcast leave room, 24403414 from 1
+14 Jul 2011 16:20:30,711 INFO  ~ broadcast leave room, 411183 from 1
+14 Jul 2011 16:20:30,713 INFO  ~ broadcast leave room, 11 from 7
+14 Jul 2011 16:20:30,714 INFO  ~ broadcast leave room, 24403414 from 7
+14 Jul 2011 16:20:30,715 INFO  ~ broadcast leave room, 24403414 from 8
+14 Jul 2011 16:20:30,716 INFO  ~ broadcast leave room, 12 from 8
+14 Jul 2011 16:20:30,717 INFO  ~ broadcast leave room, 11 from 2
+14 Jul 2011 16:20:35,735 INFO  ~ broadcast leave room, 24403414 from 3
+14 Jul 2011 16:20:35,736 INFO  ~ broadcast leave room, 411183 from 2
+14 Jul 2011 16:20:35,737 INFO  ~ broadcast leave room, 411183 from 3
+14 Jul 2011 16:20:35,739 INFO  ~ broadcast leave room, 24403414 from 6
+14 Jul 2011 16:20:35,740 INFO  ~ broadcast leave room, 24403414 from 4
+14 Jul 2011 16:20:35,741 INFO  ~ broadcast leave room, 24403414 from 2
+14 Jul 2011 16:20:35,742 INFO  ~ broadcast leave room, 411183 from 6
+14 Jul 2011 16:20:35,743 INFO  ~ broadcast leave room, 12 from 5
+14 Jul 2011 16:20:35,744 INFO  ~ broadcast leave room, 11 from 4
+14 Jul 2011 16:20:35,745 INFO  ~ broadcast leave room, 411183 from 5
+14 Jul 2011 16:20:39,017 INFO  ~ publishing join for 24403414, 411183 in room 14
+14 Jul 2011 16:20:50,767 INFO  ~ broadcast leave room, 24403414 from 14

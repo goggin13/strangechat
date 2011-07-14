@@ -30,6 +30,7 @@ public class UserEvent {
 	        this.type = type;
 			this.user_id = user_id;
 	        this.timestamp = System.currentTimeMillis();
+	        System.out.println(this);
 	    }
 	
 		public String toString () {
@@ -148,6 +149,11 @@ public class UserEvent {
 			this.alias = name;
 			this.server = server;
 			this.room_id = room_id;
+
+			// as soon as this event is created, we heartbeat for the given user; if they never received this event,
+			// we see their heartbeat fail and notify the other user
+            User.beatInRoom(room_id, this.user_id);			
+
 			Logger.info("publishing join for " + for_user + ", " + new_user + " in room " + room_id);
 			userEvents.publish(this);
         }

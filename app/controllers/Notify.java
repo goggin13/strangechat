@@ -33,7 +33,7 @@ public class Notify extends Index {
 		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
 		
 		do {
-			Logger.info(user_id + " is waiting for events : " + lastReceived);
+            // Logger.info(user_id + " is waiting for events : " + lastReceived);
 			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.userEvents.nextEvents(lastReceived));
 			// Logger.info(user_id + " is considering returned events : " + lastReceived);
 			
@@ -49,7 +49,7 @@ public class Notify extends Index {
 			}			
 		} while (returnData.size() == 0);
 		
-		Logger.info("user " + user_id + " gets " + returnData.size() + " events back (" + callback + ")");
+        // Logger.info("user " + user_id + " gets " + returnData.size() + " events back (" + callback + ")");
 		Users.renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
@@ -71,8 +71,7 @@ public class Notify extends Index {
 						   avatar,
 						   name,
 						   server,
-						   room_id);
-		User.beatInRoom(room_id, for_user);					
+						   room_id);				
 		returnOkay(null);	
 	}
 
@@ -161,7 +160,6 @@ public class Notify extends Index {
 	 * @param callback optional JSONP callback */
 	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
 		User.heartbeats.put(for_user, new Date());
-		// Logger.info(room_ids == null ? "no ids" : room_ids.toString());
 		if (room_ids != null && room_ids.get(0) != null) {
 			for (Long rid : room_ids) {
 				User.beatInRoom(rid, for_user);
