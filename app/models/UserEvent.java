@@ -8,7 +8,8 @@ import play.Logger;
  * A wrapper for the UserEvent classes.  See comment on {@link AnEvent} for 
  * more detail */
 public class UserEvent {
-	public static ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(100);
+    private static final int streamSize = 10000;
+	public static ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
 	
 	/**
 	 * UserEvents are dropped into the userEvents queue, which 
@@ -34,7 +35,7 @@ public class UserEvent {
 	    }
 	
 		public String toString () {
-			return this.user_id + " ( " + this.type + " )";
+			return this.timestamp + " : " + this.user_id + " ( " + this.type + " )";
 		}
 	}
 	
@@ -235,6 +236,7 @@ public class UserEvent {
     public static List<UserEvent.Event> currentMessages () {
 		List<UserEvent.Event> events = userEvents.archive();
 		Collections.reverse(events);
+		System.out.println("currently " + events.size());
         return events;
     }
 	
@@ -253,6 +255,6 @@ public class UserEvent {
 	/**
 	 * Reset the user event queue, flushing out existing events */
 	public static void resetEventQueue () {
-		UserEvent.userEvents = new ArchivedEventStream<UserEvent.Event>(100);
+		UserEvent.userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
 	}
 }

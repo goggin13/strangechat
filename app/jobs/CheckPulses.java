@@ -35,7 +35,7 @@ public class CheckPulses extends Job {
 			}
 		}
 		
-		System.out.println(User.roombeats);
+        // System.out.println(User.roombeats);
 		
 		// check heartbeats in rooms
 		for (String key : User.roombeats.keySet()) {

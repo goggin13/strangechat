@@ -51,3 +51,16 @@
 14 Jul 2011 16:20:35,745 INFO  ~ broadcast leave room, 411183 from 5
 14 Jul 2011 16:20:39,017 INFO  ~ publishing join for 24403414, 411183 in room 14
 14 Jul 2011 16:20:50,767 INFO  ~ broadcast leave room, 24403414 from 14
+14 Jul 2011 16:30:27,698 INFO  ~ publishing join for 32701378, 100002292928724 in room 7
+14 Jul 2011 16:30:27,699 INFO  ~ publishing join for 100002292928724, 32701378 in room 7
+14 Jul 2011 16:30:28,165 INFO  ~ publishing join for 32701378, 100002292928724 in room 8
+14 Jul 2011 16:30:28,166 INFO  ~ publishing join for 100002292928724, 32701378 in room 8
+14 Jul 2011 16:30:41,275 INFO  ~ broadcast leave room, 32701378 from 8
+14 Jul 2011 16:30:41,277 INFO  ~ broadcast leave room, 100002292928724 from 8
+14 Jul 2011 16:30:54,136 INFO  ~ publishing join for 32701378, 100002292928724 in room 9
+14 Jul 2011 16:30:54,137 INFO  ~ publishing join for 100002292928724, 32701378 in room 9
+14 Jul 2011 16:30:56,292 INFO  ~ broadcast leave room, 32701378 from 7
+14 Jul 2011 16:30:56,294 INFO  ~ broadcast leave room, 100002292928724 from 7
+14 Jul 2011 16:35:36,551 INFO  ~ broadcast leave room, 100002292928724 from 9
+14 Jul 2011 16:35:41,568 INFO  ~ broadcast leave room, 32701378 from 9
+14 Jul 2011 17:34:57,040 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true

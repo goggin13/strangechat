@@ -95,8 +95,7 @@ class Tester(Thread):
 
     def requestRoom (self):
         self.request("requestrandomroom", {
-            'user_id': self.id,
-            'lastReceived': self.lastReceived
+            'user_id': self.id
         })
 
     def request (self, path, data, base_server=True):
@@ -104,11 +103,15 @@ class Tester(Thread):
         h.force_exception_to_status_code = True         
         url = CHAT_ROOT if base_server else self.heartbeatServer
         url += path + "?" + urlencode(data)
+        start = datetime.now()
         resp, content = h.request(url, "GET")
         if (resp['status'] != "200"):
             print url
             print resp
             return None
+        end = datetime.now()
+        diff = end - start
+        self.request_times.append(diff.seconds)         
         return json.loads(content)
       
 h = httplib2.Http()

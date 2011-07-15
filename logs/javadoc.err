@@ -1,3 +1,4 @@
-/Users/goggin/Documents/CS/chatmaster/app/models/Server.java:68: warning - @Return is an unknown tag -- same as a known tag except for case.
-/Users/goggin/Documents/CS/chatmaster/app/models/Server.java:75: warning - @Return is an unknown tag -- same as a known tag except for case.
-/Users/goggin/Documents/CS/chatmaster/app/controllers/Notify.java:25: warning - @param argument "facebook_id" is not a parameter name.
+/Users/goggin/Documents/CS/chatmaster/app/models/Room.java:80: warning - @param argument "user1" is not a parameter name.
+/Users/goggin/Documents/CS/chatmaster/app/models/Room.java:80: warning - @param argument "user2" is not a parameter name.
+/Users/goggin/Documents/CS/chatmaster/app/models/Server.java:63: warning - @Return is an unknown tag -- same as a known tag except for case.
+/Users/goggin/Documents/CS/chatmaster/app/controllers/Notify.java:26: warning - @param argument "facebook_id" is not a parameter name.

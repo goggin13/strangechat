@@ -160,7 +160,7 @@ public class Notify extends Index {
 	 * @param callback optional JSONP callback */
 	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
 		User.heartbeats.put(for_user, new Date());
-		if (room_ids != null && room_ids.get(0) != null) {
+		if (room_ids != null && room_ids.size() > 0 && room_ids.get(0) != null) {
 			for (Long rid : room_ids) {
 				User.beatInRoom(rid, for_user);
 			}

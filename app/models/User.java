@@ -11,6 +11,7 @@ import play.*;
 import play.mvc.*;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import controllers.*;
 
 /**
@@ -22,10 +23,15 @@ import controllers.*;
 public class User extends Model {
 	/** Amount of time a user can go without heartbeating before they are removed */
 	public static final int HEALTHY_HEARTBEAT = 6;
+	
 	/** A map of all the latest user_ids to heartbeats on this server */
 	public static final AbstractMap<Long, Date> heartbeats = new ConcurrentHashMap<Long, Date>();
+	
 	/** A map of all the latest user_id_room_id to last heartbeat in that room on this server */
 	public static final AbstractMap<String, Date> roombeats = new ConcurrentHashMap<String, Date>();
+	
+	/** list of ids of people waiting to be matched up with someone to chat */
+	public static List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
 		
 	/**
 	 * The user_id, in this case will be the facebook_id
@@ -109,6 +115,7 @@ public class User extends Model {
 			friend.notifyMeLogout(this.user_id);
 		}
 		System.out.println("done logging " + this.user_id + " out");
+		User.removeFromWaitingRoom(this.user_id);
 	}	
 	
 	/**
@@ -323,6 +330,15 @@ public class User extends Model {
 		String key = room_id.toString() + "_" + user_id.toString();
 		User.roombeats.put(key, new Date());	
 	}
+	
+    /**
+     * Removes all occurences of the given user from the waiting room
+     * @param user_id the id to remove from the room */
+    public static void removeFromWaitingRoom (Long user_id) {
+        while (waitingRoom.contains(user_id)) {
+            waitingRoom.remove(user_id);
+        }
+    }
 
 	/** 
 	 * This class is used when serializing and deserializing JSON.  Its only 

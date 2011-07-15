@@ -11,8 +11,6 @@ import play.cache.Cache;
 import play.*;
 import models.*;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ConcurrentHashMap;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 
@@ -21,8 +19,6 @@ import com.google.gson.reflect.*;
  * status in the system, assigning them rooms, passing chat requests, etc..
  */
 public class Users extends Index {
-	/** list of ids of people waiting to be matched up with someone to chat */
-	public static List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
 	
 	/** How many meetings, 0 indexed, ago users must have interacted before they
 	 *  can be matched again.  0 means users can talk, then they have to talk to 
@@ -32,7 +28,7 @@ public class Users extends Index {
 	
 	/**
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
-	public static int spotsPerUser = 2;
+	public static int spotsPerUser = 100;
 	
 	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom"})
 	public static void checkAuth () {
@@ -95,7 +91,7 @@ public class Users extends Index {
 	}
 	
 	/**
-	 * Mark this user as offline
+	 * Mark this user as offline; remove them from the waiting room
 	 * @param facebook_id
 	 * @param callback optional JSONP callback
 	 */
@@ -105,7 +101,6 @@ public class Users extends Index {
 		} else {
 			returnFailed("user " + facebook_id + " not found", callback);
 		}
-		waitingRoom.remove(facebook_id);
 	}
 
 	/**
@@ -149,12 +144,12 @@ public class Users extends Index {
 	 * @param callback optional JSONP callback*/
 	public static synchronized void requestRandomRoom (Long user_id, String callback) {
 		
-		if (waitingRoom.size() > 0) {
+		if (User.waitingRoom.size() > 0) {
 		    Long otherUserID = null;
-			for (Long id : waitingRoom) {
+			for (Long id : User.waitingRoom) {
 				if (canBePaired(id, user_id)) {
 					otherUserID = id;
-					waitingRoom.remove(id);
+					User.removeFromWaitingRoom(id);
 					break;
 				}
 			}
@@ -166,10 +161,10 @@ public class Users extends Index {
 		}
 		
 		// no one there yet!
-		if (Collections.frequency(waitingRoom, user_id) < spotsPerUser) {
-		    waitingRoom.add(user_id);
+		if (Collections.frequency(User.waitingRoom, user_id) < spotsPerUser) {
+		    User.waitingRoom.add(user_id);
 		}
-        System.out.println(waitingRoom);
+        System.out.println(User.waitingRoom);
         // Logger.info("putting user " + user_id + " in the waiting room (" + waitingRoom.toString() + ")");    
 		returnOkay(callback);
 	}
