@@ -32,7 +32,7 @@ public class User extends Model {
 	
 	/** list of ids of people waiting to be matched up with someone to chat */
 	public static List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
-		
+    
 	/**
 	 * The user_id, in this case will be the facebook_id
 	 */
@@ -53,6 +53,9 @@ public class User extends Model {
 	 * the avatar to display for this user */
 	public String avatar;
 
+    /** String id of the most recent session we have for this user */ 
+    public String session_id;
+    
 	/**
 	 * this users alias */
 	public String alias;
@@ -84,6 +87,7 @@ public class User extends Model {
 		this.user_id = u;
 		this.facebook_token = "";
 		this.online = false;
+		this.session_id = "";
 		this.friends = new HashSet<User>();
 		this.chatServers = new HashSet<Server>();
 	}
@@ -220,7 +224,7 @@ public class User extends Model {
 			params.put("room_id", room_id);
 			notifyMe("left", params);   
         } else {
-			new UserEvent.Leave(this.user_id, user.user_id, room_id);
+			new UserEvent.Leave(this.user_id, user.user_id, room_id, this.session_id);
 		}
 	}
 
@@ -244,7 +248,8 @@ public class User extends Model {
 							   otherUser.avatar,
 							   otherUser.alias,
 							   otherUser.heartbeatServer.uri,
-							   room_id);
+							   room_id,
+							   this.session_id);
 		}
 	}
 
@@ -258,7 +263,7 @@ public class User extends Model {
 			params.put("left_user", left_user);		
 			notifyMe("logout", params);   
         } else {
-			new UserEvent.UserLogout(this.user_id, left_user);
+			new UserEvent.UserLogout(this.user_id, left_user, this.session_id);
 		}
 	}
 
@@ -276,7 +281,7 @@ public class User extends Model {
 			params.put("server", server);								
 			notifyMe("login", params);
 	    } else {
-			new UserEvent.UserLogon(this.user_id, newUser.user_id, name, server);
+			new UserEvent.UserLogon(this.user_id, newUser.user_id, name, server, this.session_id);
 		}		
 	}
 	
@@ -287,6 +292,7 @@ public class User extends Model {
 	 * @param params the parameters to pass along to that notified */	
 	private void notifyMe (String action, HashMap<String, Object> params) {
 		String url = this.heartbeatServer.uri + "notify/" + action;
+        params.put("session_id", this.session_id);
 		WS.HttpResponse resp = Utility.fetchUrl(url, params);
 		JsonObject json = resp.getJson().getAsJsonObject();		
 	}

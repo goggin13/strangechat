@@ -9,7 +9,9 @@ import java.text.Format;
 import com.google.gson.*;
 import play.cache.Cache;
 import java.text.SimpleDateFormat;
-
+import java.security.*;
+import play.Logger;
+import org.apache.commons.codec.digest.DigestUtils;
 /**
  * A collection of random, static utility functions */
 public class Utility {
@@ -89,6 +91,14 @@ public class Utility {
 	 	Format formatter = new SimpleDateFormat("HH:mm:ss a");
 		String str = formatter.format(date);
 		return str;
+	}
+	
+	/** 
+	 * the MD5 hash of a string 
+	 * @param str
+	 * @return the hashed string */
+	public static String md5 (String str) {
+	    return DigestUtils.md5Hex(str);
 	}
 	
 }

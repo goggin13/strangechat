@@ -43,6 +43,7 @@ public class UsersTest extends MyFunctionalTest {
 		JsonObject pmo = jsonObj.get(pmo_id.toString()).getAsJsonObject();
 		assertEquals("Patrick Moberg", pmo.get("name").getAsString());
 		assertEquals(chatURI, pmo.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
+		
 
 		JsonObject kk = jsonObj.get(k_id.toString()).getAsJsonObject();
 		assertEquals("Kristen Diver", kk.get("name").getAsString());
@@ -50,6 +51,7 @@ public class UsersTest extends MyFunctionalTest {
 				
 		JsonObject caller = jsonObj.get(fb_id_2.toString()).getAsJsonObject();
 		assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
+		String session_id = caller.get("session_id").getAsString();
 		
 		// and now id 1 logs in
 		url = "/signin?facebook_id=" + fb_id_1 + "&access_token=" + facebook_token_1 + "&name=Matt Goggin&updatefriends=true";
@@ -71,7 +73,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("userlogon", data.get("type").getAsString());
 		assertEquals(fb_id_1.toString(), data.get("new_user").getAsString());
 		assertEquals(fb_id_2.toString(), data.get("user_id").getAsString());
-		
+		assertEquals(session_id, data.get("session_id").getAsString());
 	} 
 
 	@Test
@@ -181,7 +183,7 @@ public class UsersTest extends MyFunctionalTest {
 	public void testMeetUpFunctionRespectsRemeetEligible () {	
 	    // reset meetings and waiting room, and turn eligible to require 1 meeting apart
 	    Users.remeetEligible = 0;	
-	    Users.waitingRoom = new CopyOnWriteArrayList<Long>(); 
+	    User.waitingRoom = new CopyOnWriteArrayList<Long>(); 
 	    Room.recentMeetings = new ConcurrentHashMap<Long, List<Long>>();	    
 	    
 	    // pmo requests a room

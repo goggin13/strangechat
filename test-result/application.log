@@ -1,66 +1,3013 @@
-14 Jul 2011 16:20:02,462 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
-14 Jul 2011 16:20:02,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
-14 Jul 2011 16:20:02,465 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
-14 Jul 2011 16:20:02,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-14 Jul 2011 16:20:02,466 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
-14 Jul 2011 16:20:02,466 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
-14 Jul 2011 16:20:02,466 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
-14 Jul 2011 16:20:03,035 WARN  ~ You're running Play! in DEV mode
-14 Jul 2011 16:20:03,114 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-14 Jul 2011 16:20:12,868 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-14 Jul 2011 16:20:15,398 INFO  ~ Application 'strangechat' is now started !
-14 Jul 2011 16:20:15,603 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-14 Jul 2011 16:20:19,379 INFO  ~ publishing join for 24403414, 411183 in room 1
-14 Jul 2011 16:20:19,380 INFO  ~ publishing join for 411183, 24403414 in room 1
-14 Jul 2011 16:20:19,388 INFO  ~ publishing join for 11, 411183 in room 2
-14 Jul 2011 16:20:19,389 INFO  ~ publishing join for 411183, 11 in room 2
-14 Jul 2011 16:20:19,397 INFO  ~ publishing join for 411183, 12 in room 6
-14 Jul 2011 16:20:19,398 INFO  ~ publishing join for 12, 411183 in room 6
-14 Jul 2011 16:20:19,405 INFO  ~ publishing join for 24403414, 11 in room 7
-14 Jul 2011 16:20:19,406 INFO  ~ publishing join for 11, 24403414 in room 7
-14 Jul 2011 16:20:19,414 INFO  ~ publishing join for 24403414, 12 in room 8
-14 Jul 2011 16:20:19,415 INFO  ~ publishing join for 12, 24403414 in room 8
-14 Jul 2011 16:20:25,468 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-14 Jul 2011 16:20:25,805 INFO  ~ publishing join for 24403414, 411183 in room 2
-14 Jul 2011 16:20:25,806 INFO  ~ publishing join for 411183, 24403414 in room 2
-14 Jul 2011 16:20:25,917 INFO  ~ publishing join for 24403414, 411183 in room 3
-14 Jul 2011 16:20:25,923 INFO  ~ publishing join for 411183, 24403414 in room 3
-14 Jul 2011 16:20:25,962 INFO  ~ publishing join for 24403414, 11 in room 4
-14 Jul 2011 16:20:25,963 INFO  ~ publishing join for 11, 24403414 in room 4
-14 Jul 2011 16:20:25,981 INFO  ~ publishing join for 411183, 12 in room 5
-14 Jul 2011 16:20:25,982 INFO  ~ publishing join for 12, 411183 in room 5
-14 Jul 2011 16:20:26,011 INFO  ~ publishing join for 24403414, 411183 in room 6
-14 Jul 2011 16:20:26,012 INFO  ~ publishing join for 411183, 24403414 in room 6
-14 Jul 2011 16:20:30,706 INFO  ~ broadcast leave room, 12 from 6
-14 Jul 2011 16:20:30,710 INFO  ~ broadcast leave room, 24403414 from 1
-14 Jul 2011 16:20:30,711 INFO  ~ broadcast leave room, 411183 from 1
-14 Jul 2011 16:20:30,713 INFO  ~ broadcast leave room, 11 from 7
-14 Jul 2011 16:20:30,714 INFO  ~ broadcast leave room, 24403414 from 7
-14 Jul 2011 16:20:30,715 INFO  ~ broadcast leave room, 24403414 from 8
-14 Jul 2011 16:20:30,716 INFO  ~ broadcast leave room, 12 from 8
-14 Jul 2011 16:20:30,717 INFO  ~ broadcast leave room, 11 from 2
-14 Jul 2011 16:20:35,735 INFO  ~ broadcast leave room, 24403414 from 3
-14 Jul 2011 16:20:35,736 INFO  ~ broadcast leave room, 411183 from 2
-14 Jul 2011 16:20:35,737 INFO  ~ broadcast leave room, 411183 from 3
-14 Jul 2011 16:20:35,739 INFO  ~ broadcast leave room, 24403414 from 6
-14 Jul 2011 16:20:35,740 INFO  ~ broadcast leave room, 24403414 from 4
-14 Jul 2011 16:20:35,741 INFO  ~ broadcast leave room, 24403414 from 2
-14 Jul 2011 16:20:35,742 INFO  ~ broadcast leave room, 411183 from 6
-14 Jul 2011 16:20:35,743 INFO  ~ broadcast leave room, 12 from 5
-14 Jul 2011 16:20:35,744 INFO  ~ broadcast leave room, 11 from 4
-14 Jul 2011 16:20:35,745 INFO  ~ broadcast leave room, 411183 from 5
-14 Jul 2011 16:20:39,017 INFO  ~ publishing join for 24403414, 411183 in room 14
-14 Jul 2011 16:20:50,767 INFO  ~ broadcast leave room, 24403414 from 14
-14 Jul 2011 16:30:27,698 INFO  ~ publishing join for 32701378, 100002292928724 in room 7
-14 Jul 2011 16:30:27,699 INFO  ~ publishing join for 100002292928724, 32701378 in room 7
-14 Jul 2011 16:30:28,165 INFO  ~ publishing join for 32701378, 100002292928724 in room 8
-14 Jul 2011 16:30:28,166 INFO  ~ publishing join for 100002292928724, 32701378 in room 8
-14 Jul 2011 16:30:41,275 INFO  ~ broadcast leave room, 32701378 from 8
-14 Jul 2011 16:30:41,277 INFO  ~ broadcast leave room, 100002292928724 from 8
-14 Jul 2011 16:30:54,136 INFO  ~ publishing join for 32701378, 100002292928724 in room 9
-14 Jul 2011 16:30:54,137 INFO  ~ publishing join for 100002292928724, 32701378 in room 9
-14 Jul 2011 16:30:56,292 INFO  ~ broadcast leave room, 32701378 from 7
-14 Jul 2011 16:30:56,294 INFO  ~ broadcast leave room, 100002292928724 from 7
-14 Jul 2011 16:35:36,551 INFO  ~ broadcast leave room, 100002292928724 from 9
-14 Jul 2011 16:35:41,568 INFO  ~ broadcast leave room, 32701378 from 9
-14 Jul 2011 17:34:57,040 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:25:04,450 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+18 Jul 2011 11:25:04,453 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+18 Jul 2011 11:25:04,453 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
+18 Jul 2011 11:25:04,453 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+18 Jul 2011 11:25:04,453 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+18 Jul 2011 11:25:04,453 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
+18 Jul 2011 11:25:04,454 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
+18 Jul 2011 11:25:05,007 WARN  ~ You're running Play! in DEV mode
+18 Jul 2011 11:25:05,092 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+18 Jul 2011 11:25:12,251 ERROR ~ 
+
+@675mpefcn
+Internal Server Error (500) for request GET /heartbeat?callback=jsonp1311002197049&for_user=100002292928724&room_ids=
+
+Compilation error (In /test/UsersTest.java around line 184)
+The file /test/UsersTest.java could not be compiled. Error raised is : waitingRoom cannot be resolved or is not a field
+
+play.exceptions.CompilationException: waitingRoom cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 11:25:13,970 ERROR ~ 
+
+@675mpefco
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /test/UsersTest.java around line 184)
+The file /test/UsersTest.java could not be compiled. Error raised is : waitingRoom cannot be resolved or is not a field
+
+play.exceptions.CompilationException: waitingRoom cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 11:26:16,863 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+18 Jul 2011 11:26:19,421 INFO  ~ Application 'strangechat' is now started !
+18 Jul 2011 11:26:19,661 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:26:22,552 INFO  ~ publishing join for 24403414, 411183 in room 1
+18 Jul 2011 11:26:22,553 INFO  ~ publishing join for 411183, 24403414 in room 1
+18 Jul 2011 11:26:22,561 INFO  ~ publishing join for 11, 411183 in room 2
+18 Jul 2011 11:26:22,562 INFO  ~ publishing join for 411183, 11 in room 2
+18 Jul 2011 11:26:22,570 INFO  ~ publishing join for 411183, 12 in room 6
+18 Jul 2011 11:26:22,571 INFO  ~ publishing join for 12, 411183 in room 6
+18 Jul 2011 11:26:22,579 INFO  ~ publishing join for 24403414, 11 in room 7
+18 Jul 2011 11:26:22,580 INFO  ~ publishing join for 11, 24403414 in room 7
+18 Jul 2011 11:26:22,588 INFO  ~ publishing join for 24403414, 12 in room 8
+18 Jul 2011 11:26:22,589 INFO  ~ publishing join for 12, 24403414 in room 8
+18 Jul 2011 11:26:25,887 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+18 Jul 2011 11:26:26,426 INFO  ~ publishing join for 24403414, 411183 in room 2
+18 Jul 2011 11:26:26,426 INFO  ~ publishing join for 411183, 24403414 in room 2
+18 Jul 2011 11:26:26,599 INFO  ~ publishing join for 24403414, 411183 in room 3
+18 Jul 2011 11:26:26,628 INFO  ~ publishing join for 411183, 24403414 in room 3
+18 Jul 2011 11:26:26,676 INFO  ~ publishing join for 24403414, 11 in room 4
+18 Jul 2011 11:26:26,677 INFO  ~ publishing join for 11, 24403414 in room 4
+18 Jul 2011 11:26:26,698 INFO  ~ publishing join for 411183, 12 in room 5
+18 Jul 2011 11:26:26,698 INFO  ~ publishing join for 12, 411183 in room 5
+18 Jul 2011 11:26:26,731 INFO  ~ publishing join for 24403414, 411183 in room 6
+18 Jul 2011 11:26:26,731 INFO  ~ publishing join for 411183, 24403414 in room 6
+18 Jul 2011 11:26:29,725 INFO  ~ broadcast leave room, 12 from 6
+18 Jul 2011 11:26:29,729 INFO  ~ broadcast leave room, 24403414 from 1
+18 Jul 2011 11:26:29,731 INFO  ~ broadcast leave room, 411183 from 1
+18 Jul 2011 11:26:29,732 INFO  ~ broadcast leave room, 11 from 7
+18 Jul 2011 11:26:29,733 INFO  ~ broadcast leave room, 24403414 from 7
+18 Jul 2011 11:26:29,734 INFO  ~ broadcast leave room, 24403414 from 8
+18 Jul 2011 11:26:29,736 INFO  ~ broadcast leave room, 12 from 8
+18 Jul 2011 11:26:29,737 INFO  ~ broadcast leave room, 11 from 2
+18 Jul 2011 11:26:34,754 INFO  ~ broadcast leave room, 24403414 from 3
+18 Jul 2011 11:26:34,756 INFO  ~ broadcast leave room, 411183 from 2
+18 Jul 2011 11:26:34,757 INFO  ~ broadcast leave room, 411183 from 3
+18 Jul 2011 11:26:34,758 INFO  ~ broadcast leave room, 24403414 from 6
+18 Jul 2011 11:26:34,759 INFO  ~ broadcast leave room, 24403414 from 4
+18 Jul 2011 11:26:34,760 INFO  ~ broadcast leave room, 24403414 from 2
+18 Jul 2011 11:26:34,761 INFO  ~ broadcast leave room, 411183 from 6
+18 Jul 2011 11:26:34,762 INFO  ~ broadcast leave room, 12 from 5
+18 Jul 2011 11:26:34,764 INFO  ~ broadcast leave room, 11 from 4
+18 Jul 2011 11:26:34,765 INFO  ~ broadcast leave room, 411183 from 5
+18 Jul 2011 11:26:40,338 INFO  ~ publishing join for 24403414, 411183 in room 14
+18 Jul 2011 11:26:49,796 INFO  ~ broadcast leave room, 24403414 from 14
+18 Jul 2011 11:35:09,954 INFO  ~ publishing join for 24403414, 411183 in room 1
+18 Jul 2011 11:35:09,957 INFO  ~ publishing join for 411183, 24403414 in room 1
+18 Jul 2011 11:35:09,962 INFO  ~ publishing join for 11, 411183 in room 2
+18 Jul 2011 11:35:09,962 INFO  ~ publishing join for 411183, 11 in room 2
+18 Jul 2011 11:35:09,967 INFO  ~ publishing join for 411183, 12 in room 6
+18 Jul 2011 11:35:09,968 INFO  ~ publishing join for 12, 411183 in room 6
+18 Jul 2011 11:35:09,972 INFO  ~ publishing join for 24403414, 11 in room 7
+18 Jul 2011 11:35:09,973 INFO  ~ publishing join for 11, 24403414 in room 7
+18 Jul 2011 11:35:09,977 INFO  ~ publishing join for 24403414, 12 in room 8
+18 Jul 2011 11:35:09,978 INFO  ~ publishing join for 12, 24403414 in room 8
+18 Jul 2011 11:35:12,675 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+18 Jul 2011 11:35:13,145 INFO  ~ publishing join for 24403414, 411183 in room 7
+18 Jul 2011 11:35:13,146 INFO  ~ publishing join for 411183, 24403414 in room 7
+18 Jul 2011 11:35:13,290 INFO  ~ publishing join for 24403414, 411183 in room 8
+18 Jul 2011 11:35:13,291 INFO  ~ publishing join for 411183, 24403414 in room 8
+18 Jul 2011 11:35:13,335 INFO  ~ publishing join for 24403414, 11 in room 9
+18 Jul 2011 11:35:13,336 INFO  ~ publishing join for 11, 24403414 in room 9
+18 Jul 2011 11:35:13,352 INFO  ~ publishing join for 411183, 12 in room 10
+18 Jul 2011 11:35:13,353 INFO  ~ publishing join for 12, 411183 in room 10
+18 Jul 2011 11:35:13,378 INFO  ~ publishing join for 24403414, 411183 in room 11
+18 Jul 2011 11:35:13,379 INFO  ~ publishing join for 411183, 24403414 in room 11
+18 Jul 2011 11:35:20,258 INFO  ~ broadcast leave room, 12 from 6
+18 Jul 2011 11:35:20,260 INFO  ~ broadcast leave room, 24403414 from 1
+18 Jul 2011 11:35:20,261 INFO  ~ broadcast leave room, 411183 from 2
+18 Jul 2011 11:35:20,262 INFO  ~ broadcast leave room, 411183 from 1
+18 Jul 2011 11:35:20,263 INFO  ~ broadcast leave room, 11 from 7
+18 Jul 2011 11:35:20,264 INFO  ~ broadcast leave room, 24403414 from 7
+18 Jul 2011 11:35:20,265 INFO  ~ broadcast leave room, 12 from 8
+18 Jul 2011 11:35:20,266 INFO  ~ broadcast leave room, 411183 from 6
+18 Jul 2011 11:35:20,267 INFO  ~ broadcast leave room, 11 from 2
+18 Jul 2011 11:35:20,268 INFO  ~ broadcast leave room, 411183 from 7
+18 Jul 2011 11:35:25,278 INFO  ~ broadcast leave room, 411183 from 11
+18 Jul 2011 11:35:25,280 INFO  ~ broadcast leave room, 411183 from 8
+18 Jul 2011 11:35:25,281 INFO  ~ broadcast leave room, 24403414 from 11
+18 Jul 2011 11:35:25,281 INFO  ~ broadcast leave room, 24403414 from 8
+18 Jul 2011 11:35:25,282 INFO  ~ broadcast leave room, 411183 from 10
+18 Jul 2011 11:35:25,283 INFO  ~ broadcast leave room, 24403414 from 9
+18 Jul 2011 11:35:25,284 INFO  ~ broadcast leave room, 12 from 10
+18 Jul 2011 11:35:25,285 INFO  ~ broadcast leave room, 11 from 9
+18 Jul 2011 11:35:26,828 INFO  ~ publishing join for 24403414, 411183 in room 14
+18 Jul 2011 11:35:35,299 INFO  ~ broadcast leave room, 24403414 from 14
+18 Jul 2011 11:36:43,124 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:36:48,147 ERROR ~ 
+
+@675mpefcp
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 82)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved to a variable
+
+play.exceptions.CompilationException: session_id cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:36:53,168 ERROR ~ 
+
+@675mpefd0
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 82)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved to a variable
+
+play.exceptions.CompilationException: session_id cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:36:58,193 ERROR ~ 
+
+@675mpefd1
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:03,214 ERROR ~ 
+
+@675mpefd2
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:08,235 ERROR ~ 
+
+@675mpefd3
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:13,256 ERROR ~ 
+
+@675mpefd4
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:18,281 ERROR ~ 
+
+@675mpefd5
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:23,302 ERROR ~ 
+
+@675mpefd6
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:28,323 ERROR ~ 
+
+@675mpefd7
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:33,343 ERROR ~ 
+
+@675mpefd8
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:38,367 ERROR ~ 
+
+@675mpefd9
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 83)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved or is not a field
+
+play.exceptions.CompilationException: session_id cannot be resolved or is not a field
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:37:46,292 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:39:01,956 ERROR ~ 
+
+@675mpefda
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/User.java around line 265)
+The file /app/models/User.java could not be compiled. Error raised is : The constructor UserEvent.UserLogout(Long, Long, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.UserLogout(Long, Long, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:07,014 ERROR ~ 
+
+@675mpefdb
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/User.java around line 246)
+The file /app/models/User.java could not be compiled. Error raised is : The constructor UserEvent.Join(Long, Long, String, String, String, Long, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Join(Long, Long, String, String, String, Long, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:12,070 ERROR ~ 
+
+@675mpefdc
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/User.java around line 227)
+The file /app/models/User.java could not be compiled. Error raised is : The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:17,125 ERROR ~ 
+
+@675mpefdd
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/User.java around line 227)
+The file /app/models/User.java could not be compiled. Error raised is : The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:22,177 ERROR ~ 
+
+@675mpefde
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/User.java around line 227)
+The file /app/models/User.java could not be compiled. Error raised is : The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:27,231 ERROR ~ 
+
+@675mpefdf
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/User.java around line 227)
+The file /app/models/User.java could not be compiled. Error raised is : The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:32,286 ERROR ~ 
+
+@675mpefdg
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/User.java around line 227)
+The file /app/models/User.java could not be compiled. Error raised is : The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Leave(Long, Long, Long, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:37,311 ERROR ~ 
+
+@675mpefdh
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:42,335 ERROR ~ 
+
+@675mpefdi
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:47,362 ERROR ~ 
+
+@675mpefdj
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:52,386 ERROR ~ 
+
+@675mpefdk
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:39:57,410 ERROR ~ 
+
+@675mpefdl
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:02,437 ERROR ~ 
+
+@675mpefdm
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:07,461 ERROR ~ 
+
+@675mpefdn
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:12,485 ERROR ~ 
+
+@675mpefdo
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:17,511 ERROR ~ 
+
+@675mpefdp
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:22,535 ERROR ~ 
+
+@675mpefe0
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:27,559 ERROR ~ 
+
+@675mpefe1
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:32,584 ERROR ~ 
+
+@675mpefe2
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:37,608 ERROR ~ 
+
+@675mpefe3
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 55)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:42,632 ERROR ~ 
+
+@675mpefe4
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 33)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The blank final field session_id may not have been initialized
+
+play.exceptions.CompilationException: The blank final field session_id may not have been initialized
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:47,648 ERROR ~ 
+
+@675mpefe5
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 59)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:52,662 ERROR ~ 
+
+@675mpefe6
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 59)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:40:57,677 ERROR ~ 
+
+@675mpefe7
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 60)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:02,691 ERROR ~ 
+
+@675mpefe8
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 58)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:07,706 ERROR ~ 
+
+@675mpefe9
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 78)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:12,722 ERROR ~ 
+
+@675mpefea
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 78)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:17,737 ERROR ~ 
+
+@675mpefeb
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 78)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:22,752 ERROR ~ 
+
+@675mpefec
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:27,767 ERROR ~ 
+
+@675mpefed
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:32,784 ERROR ~ 
+
+@675mpefee
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:37,815 ERROR ~ 
+
+@675mpefef
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : Syntax error on token ",", delete this token
+
+play.exceptions.CompilationException: Syntax error on token ",", delete this token
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:42,834 ERROR ~ 
+
+@675mpefeg
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : Syntax error on token ",", delete this token
+
+play.exceptions.CompilationException: Syntax error on token ",", delete this token
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:46,002 ERROR ~ 
+
+@675mpefeh
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : Syntax error on token ",", delete this token
+
+play.exceptions.CompilationException: Syntax error on token ",", delete this token
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 11:41:47,853 ERROR ~ 
+
+@675mpefei
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : Syntax error on token ",", delete this token
+
+play.exceptions.CompilationException: Syntax error on token ",", delete this token
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:52,870 ERROR ~ 
+
+@675mpefej
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : Syntax error on token ",", delete this token
+
+play.exceptions.CompilationException: Syntax error on token ",", delete this token
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:41:57,889 ERROR ~ 
+
+@675mpefek
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : Syntax error on token ",", delete this token
+
+play.exceptions.CompilationException: Syntax error on token ",", delete this token
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:42:02,906 ERROR ~ 
+
+@675mpefel
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 151)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : Syntax error on token ",", delete this token
+
+play.exceptions.CompilationException: Syntax error on token ",", delete this token
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:42:05,171 ERROR ~ 
+
+@675mpefem
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/UserEvent.java around line 199)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 11:42:07,929 ERROR ~ 
+
+@675mpefen
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/UserEvent.java around line 199)
+The file /app/models/UserEvent.java could not be compiled. Error raised is : The constructor UserEvent.Event(String, long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Event(String, long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:42:13,779 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:42:16,333 INFO  ~ publishing join for 24403414, 411183 in room 1
+18 Jul 2011 11:42:16,334 INFO  ~ publishing join for 411183, 24403414 in room 1
+18 Jul 2011 11:42:16,339 INFO  ~ publishing join for 11, 411183 in room 2
+18 Jul 2011 11:42:16,339 INFO  ~ publishing join for 411183, 11 in room 2
+18 Jul 2011 11:42:16,343 INFO  ~ publishing join for 411183, 12 in room 6
+18 Jul 2011 11:42:16,344 INFO  ~ publishing join for 12, 411183 in room 6
+18 Jul 2011 11:42:16,348 INFO  ~ publishing join for 24403414, 11 in room 7
+18 Jul 2011 11:42:16,348 INFO  ~ publishing join for 11, 24403414 in room 7
+18 Jul 2011 11:42:16,352 INFO  ~ publishing join for 24403414, 12 in room 8
+18 Jul 2011 11:42:16,353 INFO  ~ publishing join for 12, 24403414 in room 8
+18 Jul 2011 11:42:18,959 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+18 Jul 2011 11:42:19,414 INFO  ~ publishing join for 24403414, 411183 in room 2
+18 Jul 2011 11:42:19,415 INFO  ~ publishing join for 411183, 24403414 in room 2
+18 Jul 2011 11:42:19,573 INFO  ~ publishing join for 24403414, 411183 in room 3
+18 Jul 2011 11:42:19,582 INFO  ~ publishing join for 411183, 24403414 in room 3
+18 Jul 2011 11:42:19,619 INFO  ~ publishing join for 24403414, 11 in room 4
+18 Jul 2011 11:42:19,620 INFO  ~ publishing join for 11, 24403414 in room 4
+18 Jul 2011 11:42:19,636 INFO  ~ publishing join for 411183, 12 in room 5
+18 Jul 2011 11:42:19,637 INFO  ~ publishing join for 12, 411183 in room 5
+18 Jul 2011 11:42:19,663 INFO  ~ publishing join for 24403414, 411183 in room 6
+18 Jul 2011 11:42:19,664 INFO  ~ publishing join for 411183, 24403414 in room 6
+18 Jul 2011 11:42:23,788 INFO  ~ broadcast leave room, 12 from 6
+18 Jul 2011 11:42:23,792 INFO  ~ broadcast leave room, 24403414 from 1
+18 Jul 2011 11:42:23,793 INFO  ~ broadcast leave room, 411183 from 1
+18 Jul 2011 11:42:23,794 INFO  ~ broadcast leave room, 11 from 7
+18 Jul 2011 11:42:23,795 INFO  ~ broadcast leave room, 24403414 from 7
+18 Jul 2011 11:42:23,796 INFO  ~ broadcast leave room, 24403414 from 8
+18 Jul 2011 11:42:23,797 INFO  ~ broadcast leave room, 12 from 8
+18 Jul 2011 11:42:23,798 INFO  ~ broadcast leave room, 11 from 2
+18 Jul 2011 11:42:28,819 INFO  ~ broadcast leave room, 24403414 from 3
+18 Jul 2011 11:42:28,820 INFO  ~ broadcast leave room, 411183 from 2
+18 Jul 2011 11:42:28,821 INFO  ~ broadcast leave room, 411183 from 3
+18 Jul 2011 11:42:28,822 INFO  ~ broadcast leave room, 24403414 from 6
+18 Jul 2011 11:42:28,823 INFO  ~ broadcast leave room, 24403414 from 4
+18 Jul 2011 11:42:28,824 INFO  ~ broadcast leave room, 24403414 from 2
+18 Jul 2011 11:42:28,825 INFO  ~ broadcast leave room, 411183 from 6
+18 Jul 2011 11:42:28,826 INFO  ~ broadcast leave room, 12 from 5
+18 Jul 2011 11:42:28,827 INFO  ~ broadcast leave room, 11 from 4
+18 Jul 2011 11:42:28,828 INFO  ~ broadcast leave room, 411183 from 5
+18 Jul 2011 11:49:29,234 ERROR ~ 
+
+@675mpeff2
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Notify.java around line 69)
+The file /app/controllers/Notify.java could not be compiled. Error raised is : The constructor UserEvent.Join(Long, Long, String, String, String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Join(Long, Long, String, String, String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:49:34,259 ERROR ~ 
+
+@675mpeff3
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Notify.java around line 69)
+The file /app/controllers/Notify.java could not be compiled. Error raised is : The constructor UserEvent.Join(Long, Long, String, String, String, Long) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.Join(Long, Long, String, String, String, Long) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:49:42,090 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:50:48,642 INFO  ~ publishing join for 24403414, 411183 in room 14
+18 Jul 2011 11:50:58,611 INFO  ~ broadcast leave room, 24403414 from 14
+18 Jul 2011 11:53:56,486 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:54:41,721 INFO  ~ publishing join for 24403414, 411183 in room 14
+18 Jul 2011 11:54:51,704 INFO  ~ broadcast leave room, 24403414 from 14
+18 Jul 2011 11:55:07,105 INFO  ~ publishing join for 24403414, 411183 in room 1
+18 Jul 2011 11:55:07,111 INFO  ~ publishing join for 411183, 24403414 in room 1
+18 Jul 2011 11:55:07,115 INFO  ~ publishing join for 11, 411183 in room 2
+18 Jul 2011 11:55:07,115 INFO  ~ publishing join for 411183, 11 in room 2
+18 Jul 2011 11:55:07,119 INFO  ~ publishing join for 411183, 12 in room 6
+18 Jul 2011 11:55:07,120 INFO  ~ publishing join for 12, 411183 in room 6
+18 Jul 2011 11:55:07,124 INFO  ~ publishing join for 24403414, 11 in room 7
+18 Jul 2011 11:55:07,124 INFO  ~ publishing join for 11, 24403414 in room 7
+18 Jul 2011 11:55:07,128 INFO  ~ publishing join for 24403414, 12 in room 8
+18 Jul 2011 11:55:07,129 INFO  ~ publishing join for 12, 24403414 in room 8
+18 Jul 2011 11:55:09,831 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+18 Jul 2011 11:55:10,230 INFO  ~ publishing join for 24403414, 411183 in room 2
+18 Jul 2011 11:55:10,230 INFO  ~ publishing join for 411183, 24403414 in room 2
+18 Jul 2011 11:55:10,372 INFO  ~ publishing join for 24403414, 411183 in room 3
+18 Jul 2011 11:55:10,372 INFO  ~ publishing join for 411183, 24403414 in room 3
+18 Jul 2011 11:55:10,407 INFO  ~ publishing join for 24403414, 11 in room 4
+18 Jul 2011 11:55:10,408 INFO  ~ publishing join for 11, 24403414 in room 4
+18 Jul 2011 11:55:10,422 INFO  ~ publishing join for 411183, 12 in room 5
+18 Jul 2011 11:55:10,422 INFO  ~ publishing join for 12, 411183 in room 5
+18 Jul 2011 11:55:10,447 INFO  ~ publishing join for 24403414, 411183 in room 6
+18 Jul 2011 11:55:10,448 INFO  ~ publishing join for 411183, 24403414 in room 6
+18 Jul 2011 11:55:16,732 INFO  ~ broadcast leave room, 12 from 6
+18 Jul 2011 11:55:16,734 INFO  ~ broadcast leave room, 24403414 from 1
+18 Jul 2011 11:55:16,735 INFO  ~ broadcast leave room, 411183 from 1
+18 Jul 2011 11:55:16,736 INFO  ~ broadcast leave room, 11 from 7
+18 Jul 2011 11:55:16,737 INFO  ~ broadcast leave room, 24403414 from 7
+18 Jul 2011 11:55:16,738 INFO  ~ broadcast leave room, 24403414 from 8
+18 Jul 2011 11:55:16,739 INFO  ~ broadcast leave room, 12 from 8
+18 Jul 2011 11:55:16,740 INFO  ~ broadcast leave room, 11 from 2
+18 Jul 2011 11:55:21,745 INFO  ~ broadcast leave room, 24403414 from 3
+18 Jul 2011 11:55:21,747 INFO  ~ broadcast leave room, 411183 from 2
+18 Jul 2011 11:55:21,748 INFO  ~ broadcast leave room, 411183 from 3
+18 Jul 2011 11:55:21,749 INFO  ~ broadcast leave room, 24403414 from 6
+18 Jul 2011 11:55:21,750 INFO  ~ broadcast leave room, 24403414 from 4
+18 Jul 2011 11:55:21,751 INFO  ~ broadcast leave room, 24403414 from 2
+18 Jul 2011 11:55:21,752 INFO  ~ broadcast leave room, 411183 from 6
+18 Jul 2011 11:55:21,754 INFO  ~ broadcast leave room, 12 from 5
+18 Jul 2011 11:55:21,755 INFO  ~ broadcast leave room, 11 from 4
+18 Jul 2011 11:55:21,756 INFO  ~ broadcast leave room, 411183 from 5
+18 Jul 2011 11:56:06,816 ERROR ~ 
+
+@675mpeff9
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 81)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved to a variable
+
+play.exceptions.CompilationException: session_id cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:56:09,500 ERROR ~ 
+
+@675mpeffa
+Internal Server Error (500) for request GET /heartbeat?callback=jsonp1311004544171&for_user=32701378&room_ids=
+
+Compilation error (In /app/controllers/Users.java around line 81)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved to a variable
+
+play.exceptions.CompilationException: session_id cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 11:56:11,837 ERROR ~ 
+
+@675mpeffb
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved to a variable
+
+play.exceptions.CompilationException: session_id cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:56:16,856 ERROR ~ 
+
+@675mpeffc
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : session_id cannot be resolved to a variable
+
+play.exceptions.CompilationException: session_id cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:56:21,128 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:57:08,417 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 11:57:10,466 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+18 Jul 2011 11:57:10,905 INFO  ~ publishing join for 24403414, 411183 in room 2
+18 Jul 2011 11:57:10,906 INFO  ~ publishing join for 411183, 24403414 in room 2
+18 Jul 2011 11:57:11,039 INFO  ~ publishing join for 24403414, 411183 in room 3
+18 Jul 2011 11:57:11,040 INFO  ~ publishing join for 411183, 24403414 in room 3
+18 Jul 2011 11:57:11,075 INFO  ~ publishing join for 24403414, 11 in room 4
+18 Jul 2011 11:57:11,075 INFO  ~ publishing join for 11, 24403414 in room 4
+18 Jul 2011 11:57:11,096 INFO  ~ publishing join for 411183, 12 in room 5
+18 Jul 2011 11:57:11,105 INFO  ~ publishing join for 12, 411183 in room 5
+18 Jul 2011 11:57:11,131 INFO  ~ publishing join for 24403414, 411183 in room 6
+18 Jul 2011 11:57:11,132 INFO  ~ publishing join for 411183, 24403414 in room 6
+18 Jul 2011 11:57:18,432 INFO  ~ broadcast leave room, 24403414 from 3
+18 Jul 2011 11:57:18,435 INFO  ~ broadcast leave room, 411183 from 2
+18 Jul 2011 11:57:18,436 INFO  ~ broadcast leave room, 411183 from 3
+18 Jul 2011 11:57:18,436 INFO  ~ broadcast leave room, 24403414 from 6
+18 Jul 2011 11:57:18,437 INFO  ~ broadcast leave room, 411183 from 6
+18 Jul 2011 11:57:18,438 INFO  ~ broadcast leave room, 24403414 from 4
+18 Jul 2011 11:57:18,439 INFO  ~ broadcast leave room, 24403414 from 2
+18 Jul 2011 11:57:18,440 INFO  ~ broadcast leave room, 12 from 5
+18 Jul 2011 11:57:18,441 INFO  ~ broadcast leave room, 11 from 4
+18 Jul 2011 11:57:18,442 INFO  ~ broadcast leave room, 411183 from 5
+18 Jul 2011 11:59:43,585 ERROR ~ 
+
+@675mpeffn
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : MessageDigest cannot be resolved to a type
+
+play.exceptions.CompilationException: MessageDigest cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:59:44,130 ERROR ~ 
+
+@675mpeffo
+Internal Server Error (500) for request GET /heartbeat?callback=jsonp1311004578782&for_user=32701378&room_ids=
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : MessageDigest cannot be resolved to a type
+
+play.exceptions.CompilationException: MessageDigest cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 11:59:48,605 ERROR ~ 
+
+@675mpeffp
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : MessageDigest cannot be resolved to a type
+
+play.exceptions.CompilationException: MessageDigest cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:59:53,625 ERROR ~ 
+
+@675mpefg0
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : MessageDigest cannot be resolved to a type
+
+play.exceptions.CompilationException: MessageDigest cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 11:59:57,792 ERROR ~ 
+
+@675mpefg1
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 11:59:58,648 ERROR ~ 
+
+@675mpefg2
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:03,670 ERROR ~ 
+
+@675mpefg3
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:08,695 ERROR ~ 
+
+@675mpefg4
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:13,718 ERROR ~ 
+
+@675mpefg5
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:18,741 ERROR ~ 
+
+@675mpefg6
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:23,765 ERROR ~ 
+
+@675mpefg7
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:28,787 ERROR ~ 
+
+@675mpefg8
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:33,810 ERROR ~ 
+
+@675mpefg9
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:38,835 ERROR ~ 
+
+@675mpefga
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:43,857 ERROR ~ 
+
+@675mpefgb
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 100)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type UnsupportedEncodingException
+
+play.exceptions.CompilationException: Unhandled exception type UnsupportedEncodingException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:46,507 ERROR ~ 
+
+@675mpefgc
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Syntax error, insert ";" to complete BlockStatements
+
+play.exceptions.CompilationException: Syntax error, insert ";" to complete BlockStatements
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:474)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:00:48,880 ERROR ~ 
+
+@675mpefgd
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Syntax error, insert ";" to complete BlockStatements
+
+play.exceptions.CompilationException: Syntax error, insert ";" to complete BlockStatements
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:474)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:53,728 ERROR ~ 
+
+@675mpefge
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Logger cannot be resolved
+
+play.exceptions.CompilationException: Logger cannot be resolved
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:00:53,903 ERROR ~ 
+
+@675mpefgf
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Logger cannot be resolved
+
+play.exceptions.CompilationException: Logger cannot be resolved
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:00:58,927 ERROR ~ 
+
+@675mpefgg
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Logger cannot be resolved
+
+play.exceptions.CompilationException: Logger cannot be resolved
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:03,940 ERROR ~ 
+
+@675mpefgh
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 13)
+The file /app/models/Utility.java could not be compiled. Error raised is : play.logger cannot be resolved
+
+play.exceptions.CompilationException: play.logger cannot be resolved
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:06,416 ERROR ~ 
+
+@675mpefgi
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 107)
+The file /app/models/Utility.java could not be compiled. Error raised is : bytesOfMessage cannot be resolved to a variable
+
+play.exceptions.CompilationException: bytesOfMessage cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:01:08,964 ERROR ~ 
+
+@675mpefgj
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 107)
+The file /app/models/Utility.java could not be compiled. Error raised is : bytesOfMessage cannot be resolved to a variable
+
+play.exceptions.CompilationException: bytesOfMessage cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:13,989 ERROR ~ 
+
+@675mpefgk
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 107)
+The file /app/models/Utility.java could not be compiled. Error raised is : bytesOfMessage cannot be resolved to a variable
+
+play.exceptions.CompilationException: bytesOfMessage cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:19,011 ERROR ~ 
+
+@675mpefgl
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : Syntax error on token "';'", ; expected
+
+play.exceptions.CompilationException: Syntax error on token "';'", ; expected
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:474)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:24,035 ERROR ~ 
+
+@675mpefgm
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 107)
+The file /app/models/Utility.java could not be compiled. Error raised is : bytesOfMessage cannot be resolved to a variable
+
+play.exceptions.CompilationException: bytesOfMessage cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:29,061 ERROR ~ 
+
+@675mpefgn
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:34,085 ERROR ~ 
+
+@675mpefgo
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:39,109 ERROR ~ 
+
+@675mpefgp
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:44,136 ERROR ~ 
+
+@675mpefh0
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:49,161 ERROR ~ 
+
+@675mpefh1
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:54,185 ERROR ~ 
+
+@675mpefh2
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:01:59,210 ERROR ~ 
+
+@675mpefh3
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:04,234 ERROR ~ 
+
+@675mpefh4
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:09,261 ERROR ~ 
+
+@675mpefh5
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:14,285 ERROR ~ 
+
+@675mpefh6
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:19,309 ERROR ~ 
+
+@675mpefh7
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:24,335 ERROR ~ 
+
+@675mpefh8
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:29,359 ERROR ~ 
+
+@675mpefh9
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:34,383 ERROR ~ 
+
+@675mpefha
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Unhandled exception type NoSuchAlgorithmException
+
+play.exceptions.CompilationException: Unhandled exception type NoSuchAlgorithmException
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:39,418 ERROR ~ 
+
+@675mpefhb
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 105)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:44,441 ERROR ~ 
+
+@675mpefhc
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 105)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:49,465 ERROR ~ 
+
+@675mpefhd
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 105)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:54,489 ERROR ~ 
+
+@675mpefhe
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 105)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:02:59,512 ERROR ~ 
+
+@675mpefhf
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 105)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:04,535 ERROR ~ 
+
+@675mpefhg
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 105)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:09,560 ERROR ~ 
+
+@675mpefhh
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 108)
+The file /app/models/Utility.java could not be compiled. Error raised is : bytesOfMessage cannot be resolved to a variable
+
+play.exceptions.CompilationException: bytesOfMessage cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:14,584 ERROR ~ 
+
+@675mpefhi
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 108)
+The file /app/models/Utility.java could not be compiled. Error raised is : bytesOfMessage cannot be resolved to a variable
+
+play.exceptions.CompilationException: bytesOfMessage cannot be resolved to a variable
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:19,604 ERROR ~ 
+
+@675mpefhj
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Duplicate local variable bytesOfMessage
+
+play.exceptions.CompilationException: Duplicate local variable bytesOfMessage
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:24,582 ERROR ~ 
+
+@675mpefhk
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Duplicate local variable bytesOfMessage
+
+play.exceptions.CompilationException: Duplicate local variable bytesOfMessage
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:03:24,626 ERROR ~ 
+
+@675mpefhl
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Duplicate local variable bytesOfMessage
+
+play.exceptions.CompilationException: Duplicate local variable bytesOfMessage
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:29,646 ERROR ~ 
+
+@675mpefhm
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 103)
+The file /app/models/Utility.java could not be compiled. Error raised is : Duplicate local variable bytesOfMessage
+
+play.exceptions.CompilationException: Duplicate local variable bytesOfMessage
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:30,502 ERROR ~ 
+
+@675mpefhn
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:03:34,670 ERROR ~ 
+
+@675mpefho
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:39,694 ERROR ~ 
+
+@675mpefhp
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:44,724 ERROR ~ 
+
+@675mpefi0
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:49,750 ERROR ~ 
+
+@675mpefi1
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:54,096 ERROR ~ 
+
+@675mpefi2
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:03:54,777 ERROR ~ 
+
+@675mpefi3
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:03:59,802 ERROR ~ 
+
+@675mpefi4
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 110)
+The file /app/models/Utility.java could not be compiled. Error raised is : BigInteger cannot be resolved to a type
+
+play.exceptions.CompilationException: BigInteger cannot be resolved to a type
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:04:07,402 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+18 Jul 2011 12:04:35,315 ERROR ~ 
+
+@675mpefi5
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type Utility
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type Utility
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:04:37,445 ERROR ~ 
+
+@675mpefi6
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type Utility
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type Utility
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:04:42,466 ERROR ~ 
+
+@675mpefi7
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type DigestUtils
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type DigestUtils
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:04:43,075 ERROR ~ 
+
+@675mpefi8
+Internal Server Error (500) for request GET /@tests
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type DigestUtils
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type DigestUtils
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:04:47,489 ERROR ~ 
+
+@675mpefi9
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type DigestUtils
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type DigestUtils
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:04:52,510 ERROR ~ 
+
+@675mpefia
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type DigestUtils
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type DigestUtils
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:04:57,530 ERROR ~ 
+
+@675mpefib
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type DigestUtils
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type DigestUtils
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:02,554 ERROR ~ 
+
+@675mpefic
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/models/Utility.java around line 101)
+The file /app/models/Utility.java could not be compiled. Error raised is : The method md5hex(String) is undefined for the type DigestUtils
+
+play.exceptions.CompilationException: The method md5hex(String) is undefined for the type DigestUtils
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:22,653 ERROR ~ 
+
+@675mpefid
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:27,673 ERROR ~ 
+
+@675mpefie
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:32,693 ERROR ~ 
+
+@675mpefif
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:37,716 ERROR ~ 
+
+@675mpefig
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:42,736 ERROR ~ 
+
+@675mpefih
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:47,756 ERROR ~ 
+
+@675mpefii
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:52,776 ERROR ~ 
+
+@675mpefij
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:05:57,799 ERROR ~ 
+
+@675mpefik
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:02,819 ERROR ~ 
+
+@675mpefil
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:07,839 ERROR ~ 
+
+@675mpefim
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5() is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5() is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:12,862 ERROR ~ 
+
+@675mpefin
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : Cannot invoke toString() on the primitive type long
+
+play.exceptions.CompilationException: Cannot invoke toString() on the primitive type long
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:16,485 ERROR ~ 
+
+@675mpefio
+Internal Server Error (500) for request GET /@tests/init
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : Cannot invoke toString() on the primitive type long
+
+play.exceptions.CompilationException: Cannot invoke toString() on the primitive type long
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:06:16,549 ERROR ~ 
+
+@675mpefip
+Internal Server Error (500) for request GET /@tests?select=UsersTest.class
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : Cannot invoke toString() on the primitive type long
+
+play.exceptions.CompilationException: Cannot invoke toString() on the primitive type long
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:06:16,580 ERROR ~ 
+
+@675mpefj0
+Internal Server Error (500) for request GET /@tests/end?result=passed
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : Cannot invoke toString() on the primitive type long
+
+play.exceptions.CompilationException: Cannot invoke toString() on the primitive type long
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:06:17,883 ERROR ~ 
+
+@675mpefj1
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : Cannot invoke toString() on the primitive type long
+
+play.exceptions.CompilationException: Cannot invoke toString() on the primitive type long
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:22,904 ERROR ~ 
+
+@675mpefj2
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : Cannot invoke toString() on the primitive type long
+
+play.exceptions.CompilationException: Cannot invoke toString() on the primitive type long
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:24,837 ERROR ~ 
+
+@675mpefj3
+Internal Server Error (500) for request GET /@tests?select=UsersTest.class
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5(String) is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5(String) is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at Invocation.HTTP Request(Play!)
+18 Jul 2011 12:06:27,927 ERROR ~ 
+
+@675mpefj4
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5(String) is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5(String) is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:32,949 ERROR ~ 
+
+@675mpefj5
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5(String) is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5(String) is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:37,971 ERROR ~ 
+
+@675mpefj6
+Error during job execution (jobs.CheckPulses)
+
+Compilation error (In /app/controllers/Users.java around line 79)
+The file /app/controllers/Users.java could not be compiled. Error raised is : The method md5(String) is undefined for the type Util
+
+play.exceptions.CompilationException: The method md5(String) is undefined for the type Util
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClasses$ApplicationClass.compile(ApplicationClasses.java:249)
+	at play.classloading.ApplicationClassloader.detectChanges(ApplicationClassloader.java:304)
+	at play.Play.detectChanges(Play.java:560)
+	at play.Invoker$Invocation.init(Invoker.java:186)
+	at play.jobs.Job.call(Job.java:143)
+	at Invocation.Job(Play!)
+18 Jul 2011 12:06:47,474 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+18 Jul 2011 12:06:48,048 INFO  ~ publishing join for 24403414, 411183 in room 2
+18 Jul 2011 12:06:48,049 INFO  ~ publishing join for 411183, 24403414 in room 2
+18 Jul 2011 12:06:48,194 INFO  ~ publishing join for 24403414, 411183 in room 3
+18 Jul 2011 12:06:48,195 INFO  ~ publishing join for 411183, 24403414 in room 3
+18 Jul 2011 12:06:48,242 INFO  ~ publishing join for 24403414, 11 in room 4
+18 Jul 2011 12:06:48,243 INFO  ~ publishing join for 11, 24403414 in room 4
+18 Jul 2011 12:06:48,274 INFO  ~ publishing join for 411183, 12 in room 5
+18 Jul 2011 12:06:48,284 INFO  ~ publishing join for 12, 411183 in room 5
+18 Jul 2011 12:06:48,308 INFO  ~ publishing join for 24403414, 411183 in room 6
+18 Jul 2011 12:06:48,308 INFO  ~ publishing join for 411183, 24403414 in room 6
+18 Jul 2011 12:06:57,993 INFO  ~ broadcast leave room, 24403414 from 3
+18 Jul 2011 12:06:57,994 INFO  ~ broadcast leave room, 411183 from 2
+18 Jul 2011 12:06:57,995 INFO  ~ broadcast leave room, 411183 from 3
+18 Jul 2011 12:06:57,996 INFO  ~ broadcast leave room, 24403414 from 6
+18 Jul 2011 12:06:57,997 INFO  ~ broadcast leave room, 411183 from 6
+18 Jul 2011 12:06:57,998 INFO  ~ broadcast leave room, 24403414 from 4
+18 Jul 2011 12:06:57,998 INFO  ~ broadcast leave room, 24403414 from 2
+18 Jul 2011 12:06:57,999 INFO  ~ broadcast leave room, 12 from 5
+18 Jul 2011 12:06:58,000 INFO  ~ broadcast leave room, 11 from 4
+18 Jul 2011 12:06:58,001 INFO  ~ broadcast leave room, 411183 from 5
+18 Jul 2011 12:11:56,916 INFO  ~ publishing join for 32701378, 100002292928724 in room 7
+18 Jul 2011 12:11:56,916 INFO  ~ publishing join for 100002292928724, 32701378 in room 7
+18 Jul 2011 12:12:08,269 INFO  ~ broadcast leave room, 32701378 from 7
+18 Jul 2011 12:12:08,274 INFO  ~ broadcast leave room, 100002292928724 from 7
+18 Jul 2011 12:12:37,653 INFO  ~ publishing join for 32701378, 100002292928724 in room 8
+18 Jul 2011 12:12:37,654 INFO  ~ publishing join for 100002292928724, 32701378 in room 8
+18 Jul 2011 12:13:01,704 INFO  ~ publishing join for 100002292928724, 32701378 in room 9
+18 Jul 2011 12:13:01,705 INFO  ~ publishing join for 32701378, 100002292928724 in room 9
+18 Jul 2011 12:13:08,330 INFO  ~ broadcast leave room, 32701378 from 8
+18 Jul 2011 12:13:08,333 INFO  ~ broadcast leave room, 100002292928724 from 8
+18 Jul 2011 12:13:13,346 INFO  ~ broadcast leave room, 32701378 from 9
+18 Jul 2011 12:13:13,347 INFO  ~ broadcast leave room, 100002292928724 from 9
+18 Jul 2011 12:13:25,631 INFO  ~ publishing join for 32701378, 100002292928724 in room 10
+18 Jul 2011 12:13:25,631 INFO  ~ publishing join for 100002292928724, 32701378 in room 10
+18 Jul 2011 12:13:33,373 INFO  ~ broadcast leave room, 100002292928724 from 10
+18 Jul 2011 12:13:43,383 INFO  ~ broadcast leave room, 32701378 from 10

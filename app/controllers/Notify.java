@@ -64,14 +64,16 @@ public class Notify extends Index {
 	 * @param name the name to be passed with the new user
 	 * @param server the uri the new user is located on
 	 * @param avatar url to display for the new user
-	 * @param room_id the id of the room to join */
-	public static void joined (Long for_user, Long new_user, String name, String server, String avatar, Long room_id) {
+	 * @param room_id the id of the room to join 
+	 * @param session_id current session id this event is pertinent	 */
+	public static void joined (Long for_user, Long new_user, String name, String server, String avatar, Long room_id, String session_id) {
 		new UserEvent.Join(for_user, 
 						   new_user, 
 						   avatar,
 						   name,
 						   server,
-						   room_id);				
+						   room_id, 
+						   session_id);				
 		returnOkay(null);	
 	}
 
@@ -79,9 +81,10 @@ public class Notify extends Index {
 	 * Creates a new event signifying a user has left a room.  
 	 * @param for_user the user id who will recieve this notification
 	 * @param left_user the user id of the user who has left
-	 * @param room_id the id of the room being left */	
-	public static void left (Long for_user, Long left_user, Long room_id) {
-		new UserEvent.Leave(for_user, left_user, room_id);
+	 * @param room_id the id of the room being left
+	 * @param session_id current session id this event is pertinent	  */	
+	public static void left (Long for_user, Long left_user, Long room_id, String session_id) {
+		new UserEvent.Leave(for_user, left_user, room_id, session_id);
 		returnOkay(null);	
 	}
 
@@ -91,18 +94,20 @@ public class Notify extends Index {
 	 * @param for_user the user id who will recieve this notification
 	 * @param new_user the user id of the user who just logged on
 	 * @param name the name to be passed with the new user
-	 * @param server the uri the new user is located on */
-	public static void login (Long for_user, Long new_user, String name, String server) {
-		new UserEvent.UserLogon(for_user, new_user, name, server);
+	 * @param server the uri the new user is located on 
+	 * @param session_id current session id this event is pertinent	 */
+	public static void login (Long for_user, Long new_user, String name, String server, String session_id) {
+		new UserEvent.UserLogon(for_user, new_user, name, server, session_id);
 		returnOkay(null);	
 	}
 
 	/**
 	 * Creates a new event signifying a user has logged out of the system
 	 * @param for_user the user id who will recieve this notification
-	 * @param left_user the user id of the user who has left */	
-	public static void logout (Long for_user, Long left_user) {
-		new UserEvent.UserLogout(for_user, left_user);
+	 * @param left_user the user id of the user who has left 
+	 * @param session_id current session id this event is pertinent	 */	
+	public static void logout (Long for_user, Long left_user, String session_id) {
+		new UserEvent.UserLogout(for_user, left_user, session_id);
 		returnOkay(null);	
 	}
 

@@ -76,6 +76,7 @@ public class Users extends Index {
 		if (avatar != null) {
 			user.avatar = avatar;
 		}
+		user.session_id = Utility.md5(facebook_id.toString() + System.currentTimeMillis());
 		user.alias = alias == null ? "" : alias;
 		user.login();
 		user.save();		

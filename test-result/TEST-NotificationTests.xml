@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="24.629" errors="0" skipped="0" tests="10" name="NotificationTests">
-  <testcase classname="NotificationTests" name="testHeartbeatFadeout" time="12.058">
+<testsuite failures="0" time="25.264" errors="0" skipped="0" tests="10" name="NotificationTests">
+  <testcase classname="NotificationTests" name="testHeartbeatFadeout" time="12.133">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.058">
+  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.105">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.059">
+  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.105">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.056">
+  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.113">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyChatMessage" time="0.067">
+  <testcase classname="NotificationTests" name="testNotifyChatMessage" time="0.146">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyJoined" time="0.065">
+  <testcase classname="NotificationTests" name="testNotifyJoined" time="0.129">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLeft" time="0.065">
+  <testcase classname="NotificationTests" name="testNotifyLeft" time="0.129">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyTyping" time="0.06">
+  <testcase classname="NotificationTests" name="testNotifyTyping" time="0.077">
       </testcase>
-  <testcase classname="NotificationTests" name="testLoginAndDontHeartbeat" time="12.097">
+  <testcase classname="NotificationTests" name="testLoginAndDontHeartbeat" time="12.159">
       </testcase>
-  <testcase classname="NotificationTests" name="stub" time="0.044">
+  <testcase classname="NotificationTests" name="stub" time="0.168">
       </testcase>
 </testsuite>

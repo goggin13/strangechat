@@ -27,9 +27,13 @@ public class UserEvent {
 		/** timestamp the event was created */
 		final public Long timestamp;
 		
-		public Event (String type, Long user_id) {
+		/** current session id, optional */
+		final public String session_id;		
+		
+		public Event (String type, Long user_id, String session_id) {
 	        this.type = type;
 			this.user_id = user_id;
+			this.session_id = session_id;
 	        this.timestamp = System.currentTimeMillis();
 	        System.out.println(this);
 	    }
@@ -50,8 +54,8 @@ public class UserEvent {
 		/** server this user is located on */
 		final public String server;
 		
-		public UserLogon (Long user_id, Long new_user, String name, String server) {
-			super("userlogon", user_id);
+		public UserLogon (Long user_id, Long new_user, String name, String server, String session_id) {
+			super("userlogon", user_id, session_id);
 			this.new_user = new_user;
 			this.name = name;
 			this.server = server;
@@ -70,8 +74,8 @@ public class UserEvent {
 		/** The user id of the user who just logged out */
 		public final Long left_user;
 		
-		public UserLogout (Long user_id, Long left_user) {
-			super("userlogout", user_id);
+		public UserLogout (Long user_id, Long left_user, String session_id) {
+			super("userlogout", user_id, session_id);
 			this.left_user = left_user;
 			userEvents.publish(this);
 		}
@@ -90,7 +94,7 @@ public class UserEvent {
  		public final String text;
 		
         public DirectMessage(Long to, Long from, String msg) {
-            super("directmessage", to);
+            super("directmessage", to, "");
             this.from = from;
             this.text = msg;
 			userEvents.publish(this);
@@ -114,7 +118,7 @@ public class UserEvent {
 		public final Long room_id;
 		
         public RoomMessage(Long to, Long from, Long room_id, String msg) {
-            super("roommessage", to);
+            super("roommessage", to, "");
             this.from = from;
             this.text = msg;
 			this.room_id = room_id;
@@ -143,8 +147,8 @@ public class UserEvent {
 		/** the room id that you are now chatting in */
 		public final Long room_id;
 		
-        public Join (Long for_user, Long new_user, String avatar, String name, String server, Long room_id) {
-			super("join", for_user);
+        public Join (Long for_user, Long new_user, String avatar, String name, String server, Long room_id, String session_id) {
+			super("join", for_user, session_id);
             this.new_user = new_user;
 			this.avatar = avatar;
 			this.alias = name;
@@ -176,7 +180,7 @@ public class UserEvent {
 		final public String text;
 		
         public UserIsTyping (Long for_user, Long typing_user, String text, Long room_id) {
-            super("useristyping", for_user);
+            super("useristyping", for_user, "");
             this.typing_user = typing_user;
 			this.room_id = room_id;
 			this.text = text;
@@ -192,7 +196,7 @@ public class UserEvent {
 	 * Represents a users heartbeat in a room */
     public static class Test extends Event {		
         public Test () {
-            super("nothing", -1L);
+            super("nothing", -1L, "");
 			userEvents.publish(this);
         }
     }
@@ -205,8 +209,8 @@ public class UserEvent {
         /** room id that was left */
 		final public Long room_id;
 		
-        public Leave(Long for_user, Long left_user, Long room_id) {
-            super("leave", for_user);
+        public Leave(Long for_user, Long left_user, Long room_id, String session_id) {
+            super("leave", for_user, session_id);
             this.left_user = left_user;
 			this.room_id = room_id;
 			userEvents.publish(this);
