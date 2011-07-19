@@ -158,11 +158,12 @@ public class Users extends Index {
 	    String masterURI = Server.getMasterServer().uri;
 		if (masterURI.equals(heartbeatURI)) {
 		    User.heartbeats.put(user.id, new Date());
+		    new UserEvent.HeartBeat(user.id);		    
 		    return true;
 		} else {	
 			String url = heartbeatURI + "heartbeat";
-			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", user.id);
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("for_user", user.id.toString());
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			JsonObject json = resp.getJson().getAsJsonObject();
 			return json.get("status").getAsString().equals("okay");

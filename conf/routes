@@ -7,19 +7,20 @@ GET     /                                       Application.index
 GET     /demo																		Application.demo
 
 # User actions
-GET     /signin																	Users.signin
-GET     /signout																Users.signout
-GET     /requestrandomroom 											Users.requestRandomRoom
-GET     /leaveroom															Users.leaveRoom
+*		     /signin																Users.signin
+*		     /signout																Users.signout
+*        /requestrandomroom 										Users.requestRandomRoom
+*        /leaveroom															Users.leaveRoom
 
 # Chat actions
-GET     /listen																  Notify.listen
-POST     /newpower																Notify.newPower
-GET     /adminlisten														Notify.adminListen
-GET     /message																Notify.message
-GET     /roommessage														Notify.roomMessage
-GET 	  /heartbeat															Notify.heartbeat
-GET			/imtyping																Notify.userIsTyping
+GET   /listen																  Notify.listen
+GET   /adminlisten														Notify.adminListen
+*    	/newpower																Notify.newPower
+*    	/message																Notify.message
+*   	/roommessage														Notify.roomMessage
+* 	  /heartbeat															Notify.heartbeat
+*			/imtyping																Notify.userIsTyping
+*     /joined																	Notify.joined
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

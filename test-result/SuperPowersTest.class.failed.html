@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Test results for ApplicationTests.class</title>
+        <title>Test results for SuperPowersTest.class</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <style type="text/css">
             body {
@@ -61,12 +61,12 @@
     </head>
     <body>
         
-        <div id="header" class="block success">
+        <div id="header" class="block failed">
             <h1>
-                ApplicationTests.class
+                SuperPowersTest.class
             </h1>
             <p>
-                SUCCESS
+                FAILED
             </p>
         </div>
         
@@ -74,13 +74,34 @@
             <table>
                                 <tr>
                     <td width="20%" class="passed" valign="top">
-                        <span>testSelfRequest</span>
+                        <span>testGetAdminEvents</span>
                     </td>
                     <td class="" valign="top">
                                                                         Ok
                                             </td>
                     <td width="5%" align="right" class="time" valign="top">
-                        60 ms
+                        169 ms
+                    </td>
+                </tr>
+                                <tr>
+                    <td width="20%" class="failed" valign="top">
+                        <span>testXRayVision</span>
+                    </td>
+                    <td class="error" valign="top">
+                                                <strong>Failure, expected:&lt;58&gt; but was:&lt;60&gt;</strong>
+                                                <div class="source">
+                            <span>In /test/SuperPowersTest.java, line 107 :</span>
+                        </div>
+                        <div class="sourceLine">
+                            <span>
+                                <a href="txmt://open?url=file:///Users/goggin/Documents/CS/chatmaster/test/SuperPowersTest.java&line=107">
+                                    		assertEquals(msgCount + 3, events.size());
+                                </a>
+                            </span>
+                        </div>
+                                                                                                                    </td>
+                    <td width="5%" align="right" class="time" valign="top">
+                        546 ms
                     </td>
                 </tr>
                                 <tr>
@@ -91,7 +112,7 @@
                                                                         Ok
                                             </td>
                     <td width="5%" align="right" class="time" valign="top">
-                        54 ms
+                        61 ms
                     </td>
                 </tr>
                             </table>

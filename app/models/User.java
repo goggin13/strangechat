@@ -10,6 +10,9 @@ import play.libs.WS;
 import play.*;
 import play.mvc.*;
 import java.lang.reflect.Modifier;
+import java.lang.reflect .*;
+import com.google.gson.*;
+import com.google.gson.reflect.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import controllers.*;
@@ -262,9 +265,11 @@ public class User extends Model {
 	 * @param power the new power they have received */
 	public void notifyNewPower (StoredPower storedPower) {
 		if (!this.imOnMaster()) {
-          	// TODO add in code from test here
+		    HashMap<String, String> params 
+		        = Notify.getNotifyNewPowerParams(this.id, storedPower, this.session_id);
+    		notifyMe("newpower", params);            
         } else {
-			new UserEvent.NewPower(this.id, storedPower.power, storedPower.id, this.session_id);
+			new UserEvent.NewPower(this.id, storedPower.power.getSuperPower(), storedPower.id, this.session_id);
 		}
 	}
 
@@ -275,10 +280,8 @@ public class User extends Model {
 	 * @param room_id the id of the room */
 	public void notifyLeftRoom (User user, Long room_id) {
 		if (!this.imOnMaster()) {
-          	HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.id);
-			params.put("left_user", user.id);		
-			params.put("room_id", room_id);
+          	HashMap<String, String> params 
+          	    = Notify.getNotifyLeftParams(this.id, user.id, room_id);
 			notifyMe("left", params);   
         } else {
 			new UserEvent.Leave(this.id, user.id, room_id, this.session_id);
@@ -291,13 +294,14 @@ public class User extends Model {
 	 * @param room_id the id of the room being joined */
 	public void notifyJoined (User otherUser, Long room_id) {
 		if (!this.imOnMaster()) {
-          	HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.id);
-			params.put("new_user", otherUser.id);		
-			params.put("avatar", otherUser.avatar);
-			params.put("name", otherUser.alias);
-			params.put("room_id", room_id);
-			params.put("server", otherUser.heartbeatServer.uri);
+          	HashMap<String, String> params 
+          	    = Notify.getNotifyJoinedParams(this.id, 
+          	                                   otherUser.id, 
+          	                                   otherUser.avatar, 
+          	                                   otherUser.alias, 
+          	                                   otherUser.heartbeatServer.uri, 
+          	                                   room_id, 
+          	                                   this.session_id);
 			notifyMe("joined", params);   
         } else {
 			new UserEvent.Join(this.id, 
@@ -315,9 +319,8 @@ public class User extends Model {
 	 * @param left_user the user_id of the user who has left */
 	public void notifyMeLogout (Long left_user) {
 		if (!this.imOnMaster()) {
-          	HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.id);
-			params.put("left_user", left_user);		
+          	HashMap<String, String> params 
+          	    = Notify.getNotifyLogoutParams(this.id, left_user);
 			notifyMe("logout", params);   
         } else {
 			new UserEvent.UserLogout(this.id, left_user, this.session_id);
@@ -331,11 +334,8 @@ public class User extends Model {
 		String name = newUser.name;
 		String server = newUser.heartbeatServer.uri;
 		if (!this.imOnMaster()) {
-			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.id);
-			params.put("new_user", newUser.id);
-			params.put("name", name);
-			params.put("server", server);								
+			HashMap<String, String> params
+			    = Notify.getNotifyLoginParams(this.id, newUser.id, name, server);
 			notifyMe("login", params);
 	    } else {
 			new UserEvent.UserLogon(this.id, newUser.id, name, server, this.session_id);
@@ -347,7 +347,7 @@ public class User extends Model {
 	 * to the /notify/<code>action</code> url of this users heartbeat server
 	 * @param action the notify action to take, eg <code>login</code>, <code>logout</code>, etc...
 	 * @param params the parameters to pass along to that notified */	
-	private void notifyMe (String action, HashMap<String, Object> params) {
+	private void notifyMe (String action, HashMap<String, String> params) {
 		String url = this.heartbeatServer.uri + "notify/" + action;
         params.put("session_id", this.session_id);
 		WS.HttpResponse resp = Utility.fetchUrl(url, params);

@@ -2,9 +2,12 @@ import play.test.*;
 import play.mvc.*;
 import play.mvc.Http.*;
 import org.junit.*;
+import java.util.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import models.*;
+import java.lang.reflect .*;
+import controllers.Notify;
 
 public class MyFunctionalTest extends FunctionalTest {
 	
@@ -58,14 +61,17 @@ public class MyFunctionalTest extends FunctionalTest {
 	}
 	
 	protected void heartbeatFor (Long user_id) {
-	    String url = "/heartbeat?for_user=" + user_id;
-	    JsonObject jsonObj = getAndValidateResponse(url);
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("for_user", user_id.toString());
+	    JsonObject jsonObj = postAndValidateResponse("/heartbeat", params);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 	}
 	
 	protected void heartbeatForRoom (Long user_id, Long room_id) {
-	    String url = "/heartbeat?for_user=" + user_id + "&room_ids=" + room_id;
-	    JsonObject jsonObj = getAndValidateResponse(url);
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("for_user", user_id.toString());
+	    params.put("room_ids", room_id.toString());	    
+	    JsonObject jsonObj = postAndValidateResponse("/heartbeat", params);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 	}	
 	
@@ -85,11 +91,91 @@ public class MyFunctionalTest extends FunctionalTest {
 		return jsonStr;
 	}
 
+	protected String postAndValidateInner (String url, HashMap<String, String> params) {
+		System.out.println("POST " + url);
+		Response response = POST(url, params);
+	    assertIsOk(response);
+	    assertContentType("application/json", response);
+	    assertCharset("utf-8", response);
+	    System.out.println("RESP : ");
+	    System.out.println(response.out.toString());	
+		return response.out.toString();
+	}
+
+    protected void postAndAssertOkay (String url, HashMap<String, String> params) {
+        String jsonStr = postAndValidateInner(url, params);
+		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
+		assertEquals("okay", jsonObj.get("status").getAsString());
+    }
+
+    protected void getAndAssertOkay (String url, HashMap<String, String> params) {
+        url += "?";
+        for (String k : params.keySet()) {
+            String v = params.get(k);
+            url += k + "=" + k + "&";
+        }
+        String jsonStr = getAndValidateInner(url);
+		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
+		assertEquals("okay", jsonObj.get("status").getAsString());
+    }
+
+	protected JsonObject postAndValidateResponse (String url, HashMap<String, String> params) {
+		String jsonStr = postAndValidateInner(url, params);
+		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
+		return jsonObj;
+	}
+
 	protected JsonObject getAndValidateResponse (String url) {
 		String jsonStr = getAndValidateInner(url);
 		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
 		return jsonObj;
 	}
+	
+	protected void requestRoomFor (Long user_id) {
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("user_id", user_id.toString());
+		postAndAssertOkay("/requestrandomroom", params);
+	}
+	
+	protected void notifyLogout (Long for_user, Long left_user) {
+	    HashMap<String, String> params = Notify.getNotifyLogoutParams(for_user, left_user);
+		postAndAssertOkay("/notify/logout", params);
+	}
+	
+	protected void notifyLogin (Long for_user, Long new_user) {
+	    HashMap<String, String> params = Notify.getNotifyLoginParams(for_user, new_user, "name", "server");
+		postAndAssertOkay("/notify/login", params);
+	}	
+
+    protected void notifyMessage (Long for_user, Long from_user, String msg) {
+        HashMap<String, String> params = Notify.getNotifyMessageParams(from_user, for_user, msg);
+		postAndAssertOkay("/notify/message", params);
+    }
+
+    protected void notifyChatMessage (Long from_user, Long for_user, String msg, Long room_id) {
+		HashMap<String, String> params = Notify.getNotifyChatMessageParams(from_user, for_user, msg, room_id);
+		postAndAssertOkay("/notify/roommessage", params);        
+    }
+
+    protected void notifyJoined (Long for_user, Long new_user, String avatar, String name, String server, Long room_id, String session_id) {
+        HashMap<String, String> params = Notify.getNotifyJoinedParams(for_user, new_user, avatar, name, server, room_id, session_id);
+    	postAndAssertOkay("/notify/joined", params);        
+    }
+     
+    protected void notifyLeft (Long for_user, Long left_user, Long room_id) {
+        HashMap<String, String> params = Notify.getNotifyLeftParams(for_user, left_user, room_id);
+		postAndAssertOkay("/notify/left", params);
+    }
+
+    protected void notifyNewPower(Long for_user, StoredPower storedPower, String session_id) {
+        HashMap<String, String> params = Notify.getNotifyNewPowerParams(for_user, storedPower, session_id);
+        postAndAssertOkay("/notify/newpower", params);
+    }
+
+    protected void notifyTyping (Long for_user, Long user_id, Long room_id, String txt) {
+		HashMap<String, String> params = Notify.getNotifyTypingParams(for_user, user_id, room_id, txt);
+		postAndAssertOkay("/notify/useristyping", params);        
+    }
 	
 	protected void goToSleep (int seconds) {
 	    try {

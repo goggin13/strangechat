@@ -3,17 +3,20 @@ import models.*;
 
 // Creating a new SuperPower
 // 1: Create a new member in this class
-// 2: Extend SuperPowerType.java and define qualifying function for new power
+// 2: The string name of the power MUST (MUST!) MATCH THE ENUM CONSTANT!!!
+//      (after all uppers and spaces translated to "_")
+//      e.g. "Ice Breaker" must have an enum constant ICE_BREAKER, etc..
+// 3: Extend SuperPower.java and define qualifying function for new power
 
 public enum Power {
-	ICE_BREAKER("Ice Breaker", new IceBreaker()), 
-	X_RAY_LEVEL_1("Level 1 X-Ray Vision", new XRayLevelOne());
+	ICE_BREAKER(new IceBreaker()), 
+	X_RAY_LEVEL_1(new XRayLevelOne());
 
 	private String str; 
 	private SuperPower sp;
 	
-	Power (String str, SuperPower sp) { 
-		this.str = str; 
+	Power (SuperPower sp) { 
+		this.str = sp.name; 
 		this.sp = sp;
 	}
 	

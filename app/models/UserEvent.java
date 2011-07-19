@@ -4,6 +4,9 @@ import java.util.*;
 import play.libs.F.*;
 import play.Logger;
 import enums.Power;
+import com.google.gson.*;
+import java.lang.reflect .*;
+import com.google.gson.reflect.*;
 
 /* 
  * A wrapper for the UserEvent classes.  See comment on {@link AnEvent} for 
@@ -197,6 +200,23 @@ public class UserEvent {
 	}
 
 	/**
+	 * Indicates that the user is heartbeating; only used for admin tracking purposes */
+	public static class HeartBeat extends Event {
+        /** user id of the user heart beating */
+        final public Long for_user_id;
+		
+        public HeartBeat (Long for_user) {
+            super("heartbeat", -1L, "");
+            this.for_user_id = for_user;
+			publishMe();
+        }
+
+		public String toString () {
+			return super.toString() + " : " + "heartbeat";
+		}		
+	}
+
+	/**
 	 * Dummy event, seems to help keep things popping off stack */
     public static class KeepItMoving extends Event {		
         public KeepItMoving () {
@@ -228,22 +248,84 @@ public class UserEvent {
 	/** 
 	 * Notifies a user that they have recieved a new super power */
 	public static class NewPower extends Event {
-	    /** the stored power they are receiving */
-	    final public Power power;
-	    /** the stored power they are receiving */
-	    final public String powerName;	    
-	    /** db id of the power for when they use it */
+   	    /** db id of the power for when they use it */
 	    final public Long power_id;
 	    /** details about the super power */
 	    final public SuperPower superPower;
 	    
-	    public NewPower (Long for_user, Power p, Long power_id, String session_id) {
+	    public NewPower (Long for_user, SuperPower sp, Long power_id, String session_id) {
 	        super("newpower", for_user, session_id);
-	        this.power = p;
-	        this.powerName = p.toString();
-	        this.superPower = p.getSuperPower();
+	        this.superPower = sp;
 	        this.power_id = power_id;
 	        publishMe();
+	    }
+	    
+		public String toString () {
+			return super.toString() + " : " + this.superPower.name + " awarded";
+		}	    
+	}
+
+    /**
+     * Takes a JSON string and deserializes it into a list of events 
+     * @param jsonStr the string of JSON to convert
+     * @return list of deserialized events */
+    public static List<UserEvent.Event> deserializeEvents (String jsonStr) {
+        Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(SuperPower.class, new SuperPowerDeserializer())
+                    .create();
+                    
+        JsonParser parser = new JsonParser();
+        JsonArray array = parser.parse(jsonStr).getAsJsonArray();
+
+        List<UserEvent.Event> events = new LinkedList<UserEvent.Event>();
+        for (JsonElement e : array) {
+            String type = e.getAsJsonObject().get("type").getAsString();
+            Type t = typeStringToType(type);
+            if (t != null) {
+                UserEvent.Event event = gson.fromJson(e, t);
+                events.add(event);
+            }
+        }     
+        return events;
+    }
+	    
+	/**
+	 * Get the type token, used for JSON serializing, from the string
+	 * describing the type of the class 
+	 * @param type description of one of the inner classes of UserEvent
+	 * @return the appropriate TypeToken, or null if there was no match */
+    public static Type typeStringToType (String type) {
+        Type t = null;
+        
+        if (type.equals("heartbeat")) {
+            t = new TypeToken<UserEvent.HeartBeat>() {}.getType();
+        } else if (type.equals("join")) {
+            t = new TypeToken<UserEvent.Join>() {}.getType();   
+        } else if (type.equals("leave")) {
+            t = new TypeToken<UserEvent.Leave>() {}.getType(); 
+        } else if (type.equals("useristyping")) {
+            t = new TypeToken<UserEvent.UserIsTyping>() {}.getType(); 
+        } else if (type.equals("userlogon")) {
+            t = new TypeToken<UserEvent.UserLogon>() {}.getType(); 
+        } else if (type.equals("userlogout")) {   
+            t = new TypeToken<UserEvent.UserLogout>() {}.getType();                                                                           
+        } else if (type.equals("directmessage")) {  
+            t = new TypeToken<UserEvent.DirectMessage>() {}.getType();                                                                                            
+        } else if (type.equals("roommessage")) {
+            t = new TypeToken<UserEvent.RoomMessage>() {}.getType(); 
+        } else if (type.equals("newpower")) {    
+            t = new TypeToken<UserEvent.NewPower>() {}.getType();             
+        }
+        
+        return t;
+    }
+	
+	/**
+	 */
+	public static class SuperPowerDeserializer implements JsonDeserializer<SuperPower> {
+	    public SuperPower deserialize (JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+            String name = json.getAsJsonObject().get("name").getAsString();
+            return Power.valueOf(name.replace(' ', '_').toUpperCase()).getSuperPower();
 	    }
 	}
 	

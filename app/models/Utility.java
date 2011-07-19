@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.security.*;
 import play.Logger;
 import org.apache.commons.codec.digest.DigestUtils;
+
+
 /**
  * A collection of random, static utility functions */
 public class Utility {
@@ -22,11 +24,15 @@ public class Utility {
      * @param params to be added the request
 	 * @return a response object from the given url
 	 */
-	public static WS.HttpResponse fetchUrl (String url, HashMap<String, Object> params) {
+	public static WS.HttpResponse fetchUrl (String url, HashMap<String, String> params) {
 		System.out.println("GET " + url);
+		HashMap<String, Object> objs = new HashMap<String, Object>();
+		for (String s : params.keySet()) {
+		    objs.put(s, (Object)params.get(s));
+		}
 		WS.HttpResponse resp = 
 				WS.url(url)
-			   .params(params)
+			   .params(objs)
 			   .setHeader("content-type", "application/json")
 			   .get();
 		return resp;
@@ -39,11 +45,15 @@ public class Utility {
      * @param params to be added the request
 	 * @return a response object from the given url
 	 */
-	public static WS.HttpResponse fetchPostUrl (String url, HashMap<String, Object> params) {
+	public static WS.HttpResponse fetchPostUrl (String url, HashMap<String, String> params) {
 		System.out.println("POST " + url);
+		HashMap<String, Object> objs = new HashMap<String, Object>();
+		for (String s : params.keySet()) {
+		    objs.put(s, (Object)params.get(s));
+		}		
 		WS.HttpResponse resp = 
 				WS.url(url)
-			   .params(params)
+			   .params(objs)
 			   .setHeader("content-type", "application/json")
 			   .post();
 		return resp;
@@ -62,7 +72,7 @@ public class Utility {
 		JsonObject friends = Cache.get(cacheKey, JsonObject.class);
 		if (friends == null) {
 			String url = "https://graph.facebook.com/" + facebook_id + "/friends";
-			HashMap<String, Object> params = new HashMap<String, Object>();
+			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("access_token", access_token);
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			friends = resp.getJson().getAsJsonObject();

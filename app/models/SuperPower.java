@@ -6,12 +6,17 @@ import play.data.validation.*;
 
 public abstract class SuperPower {
 	
-	@Required
+	/** Icon for this super power */
 	public final String image;
+	/** Short description to display to the user */
 	public final String description;
+	/** True if this power never wears out */
 	public final boolean infinite;
+	/** Name of this superpower */
+	public final String name;	
 	
-	public SuperPower (String im, String d, boolean i) {
+	public SuperPower (String n, String im, String d, boolean i) {
+        this.name = n;
 		this.image = im;
 		this.description = d;
 		this.infinite = i;
@@ -31,7 +36,6 @@ public abstract class SuperPower {
 	* @return
 	**/
 	public abstract Power getPower();
-	
 	
     /**
     * Test whether <code>userStat</code> has earned another instance

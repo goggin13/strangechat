@@ -59,9 +59,9 @@ public class CheckPulses extends Job {
 			Room.removeUserFrom(room_id, user_id);
 		} else {	
 			String url = Server.getMasterServer().uri + "leaveroom";
-			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("user_id", user_id);
-			params.put("room_id", room_id);
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("user_id", user_id.toString());
+			params.put("room_id", room_id.toString());
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			JsonObject json = resp.getJson().getAsJsonObject();
 		}
@@ -72,8 +72,8 @@ public class CheckPulses extends Job {
 			User.logOutUser(user_id);
 		} else {	
 			String url = Server.getMasterServer().uri + "signout";
-			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("facebook_id", user_id);
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("facebook_id", user_id.toString());
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			JsonObject json = resp.getJson().getAsJsonObject();
 		}

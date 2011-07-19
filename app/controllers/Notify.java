@@ -22,11 +22,21 @@ public class Notify extends Index {
 	 * @param lastReceived optional; the id of the last event seen. If zero, all events returned
 	 */	
 	public static void adminListen (Long lastReceived) {
-		renderJSONP(
-			UserEvent.userEvents.availableEvents(lastReceived), 
-			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
-			null
-		);
+        List<IndexedEvent> events = UserEvent.userEvents.availableEvents(lastReceived);
+        List<UserEvent.Event> data = new LinkedList<UserEvent.Event>();
+        
+        for (IndexedEvent e : events) {
+            if (e.data instanceof UserEvent.Event) {
+                data.add((UserEvent.Event)e.data);
+            }
+        }
+        
+        // still need to pass last recieved to admin listener, so do it here
+        int count = events.size();
+        lastReceived = count > 0 ? events.get(count - 1).id : 0L;
+        data.add(new UserEvent.DirectMessage(-1L, -1L, lastReceived.toString()));
+        
+        renderJSON(new Gson().toJson(data));
 	}
 
 	/**
@@ -87,7 +97,7 @@ public class Notify extends Index {
 						   server,
 						   room_id, 
 						   session_id);				
-		returnOkay(null);	
+        returnOkay(null);    
 	}
 
 	/**
@@ -170,11 +180,14 @@ public class Notify extends Index {
 	 * @param for_user the user who should read this event 	 
 	 * @param storedPower the power they just got hooked up with 
 	 * @param session_id current session id this event is pertinent	to */		 
-	 public static void newPower (Long for_user, String storedPowerJSON, String session_id) {
-         Gson gson = new Gson();
-         Type powerType = new TypeToken<StoredPower>() {}.getType();
-         StoredPower storedPower = gson.fromJson(storedPowerJSON, powerType);	     
-         new UserEvent.NewPower(for_user, storedPower.power, storedPower.id, session_id);
+	 public static void newPower (Long for_user, String superPowerJSON, Long power_id, String session_id) {
+         Gson gson = new GsonBuilder()
+                     .setExclusionStrategies(new User.ChatExclusionStrategy())
+                     .registerTypeAdapter(SuperPower.class, new UserEvent.SuperPowerDeserializer())
+                     .create();
+         Type powerType = new TypeToken<SuperPower>() {}.getType();
+         SuperPower superPower = gson.fromJson(superPowerJSON, powerType);	     
+         new UserEvent.NewPower(for_user, superPower, power_id, session_id);
          returnOkay(null);
 	 }
 	 
@@ -191,6 +204,7 @@ public class Notify extends Index {
 	 * @param callback optional JSONP callback */
 	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
 		User.heartbeats.put(for_user, new Date());
+		new UserEvent.HeartBeat(for_user);
 		if (room_ids != null && room_ids.size() > 0 && room_ids.get(0) != null) {
 			for (Long rid : room_ids) {
 				User.beatInRoom(rid, for_user);
@@ -198,5 +212,91 @@ public class Notify extends Index {
 		}
 		returnOkay(callback);
 	}
+	
+    public static HashMap<String, String> getNotifyLeftParams (Long for_user, Long left_user, Long room_id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user.toString());
+        params.put("left_user", left_user.toString());
+        params.put("room_id", room_id.toString());
+        return params;
+    }
+
+    public static HashMap<String, String> getNotifyNewPowerParams (Long for_user, StoredPower storedPower, String session_id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+    	Gson gson = new GsonBuilder()
+    	            .setExclusionStrategies(new User.ChatExclusionStrategy())
+    	            .create();		    
+        params.put("superPowerJSON", gson.toJson(
+            storedPower.power.getSuperPower(), 
+            new TypeToken<SuperPower>() {}.getType()
+        ));
+        params.put("for_user", for_user.toString());
+        params.put("power_id", storedPower.id.toString());
+        params.put("session_id", session_id);
+
+        return params;
+    }
+
+    public static HashMap<String, String> getNotifyTypingParams (Long for_user, Long user_id, Long room_id, String txt) {
+    	HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user.toString());
+        params.put("user_id", user_id.toString());
+        params.put("room_id", room_id.toString());
+        params.put("text", "helloworld");
+        return params;
+    }
+
+    public static HashMap<String, String> getNotifyLogoutParams (Long for_user, Long left_user) {
+    	HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user.toString());
+        params.put("left_user", left_user.toString());
+        return params;
+    }
+
+    public static HashMap<String, String> getNotifyLoginParams (Long for_user, Long new_user, String name, String server) {
+    	HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user.toString());
+        params.put("new_user", new_user.toString());
+        params.put("name", name);
+        params.put("server", server);                
+        return params;
+    }
+
+    public static HashMap<String, String> getNotifyMessageParams (Long from_user, Long for_user, String msg) {
+    	HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user.toString());
+        params.put("from_user", from_user.toString());
+        params.put("msg", msg);
+        return params;
+    }
+
+    public static HashMap<String, String> getNotifyChatMessageParams (Long from_user, Long for_user, String msg, Long room_id) {
+    	HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user.toString());
+        params.put("from_user", from_user.toString());
+        params.put("msg", msg);
+        params.put("room_id", room_id.toString());
+        return params;
+    }
+
+
+    public static HashMap<String, String> getNotifyJoinedParams (Long for_user, 
+                                                                  Long new_user, 
+                                                                  String avatar, 
+                                                                  String name, 
+                                                                  String server, 
+                                                                  Long room_id, 
+                                                                  String session_id) 
+    {
+    	HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user.toString());
+        params.put("new_user", new_user.toString());
+        params.put("avatar", avatar);
+        params.put("name", name);
+        params.put("server", server);
+        params.put("room_id", room_id.toString());	    
+        params.put("session_id", session_id);
+        return params;
+    }	
 	
 }

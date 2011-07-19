@@ -22,9 +22,11 @@ public class Mock extends Index {
 	}
 
     public static void init () {
+        System.out.println("INIT!!");
 		UserEvent.resetEventQueue();
 		Fixtures.deleteAll();
         Fixtures.load("data-full.yml");
+        System.out.println("SP COUNT : " + StoredPower.count());           
     }
 
 }

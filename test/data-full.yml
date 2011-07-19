@@ -50,4 +50,12 @@ User(rando2):
 StoredPower(sp):
   power: "ICE_BREAKER"
   owner: rando2
+  
+StoredPower(sp2):
+  power: "X_RAY_LEVEL_1"
+  owner: rando2
+  
+StoredPower(sp3):
+  power: "X_RAY_LEVEL_1"
+  owner: rando2
  
