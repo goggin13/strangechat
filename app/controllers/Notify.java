@@ -7,7 +7,7 @@ import play.libs.F.*;
 import java.util.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
-
+import java.lang.reflect .*;
 import models.*;
 
 /**
@@ -16,6 +16,19 @@ import models.*;
  * clients to listen to. */  
 public class Notify extends Index {
 	
+	/**
+	 * This is the admin function for listening to events on this server.  It does not long poll.
+	 * All available events are returned immediately 
+	 * @param lastReceived optional; the id of the last event seen. If zero, all events returned
+	 */	
+	public static void adminListen (Long lastReceived) {
+		renderJSONP(
+			UserEvent.userEvents.availableEvents(lastReceived), 
+			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
+			null
+		);
+	}
+
 	/**
 	 * Long poll for events relevant to <code>facebook_id</code>
 	 * @param facebook_id
@@ -50,7 +63,7 @@ public class Notify extends Index {
 		} while (returnData.size() == 0);
 		
         // Logger.info("user " + user_id + " gets " + returnData.size() + " events back (" + callback + ")");
-		Users.renderJSONP(
+		renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
 			callback
@@ -152,6 +165,19 @@ public class Notify extends Index {
 		returnOkay(callback);
 	}	
 	
+	/**
+	 * Create an event telling a user they have a new superpower 
+	 * @param for_user the user who should read this event 	 
+	 * @param storedPower the power they just got hooked up with 
+	 * @param session_id current session id this event is pertinent	to */		 
+	 public static void newPower (Long for_user, String storedPowerJSON, String session_id) {
+         Gson gson = new Gson();
+         Type powerType = new TypeToken<StoredPower>() {}.getType();
+         StoredPower storedPower = gson.fromJson(storedPowerJSON, powerType);	     
+         new UserEvent.NewPower(for_user, storedPower.power, storedPower.id, session_id);
+         returnOkay(null);
+	 }
+	 
 	
 	/**
 	 * http://localhost:9000/heartbeat?for_user=1&room_ids[0]=1&room_ids[1]=2&room_ids[2]=3

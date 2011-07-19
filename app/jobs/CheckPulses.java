@@ -23,7 +23,8 @@ public class CheckPulses extends Job {
 		
 		// this seems to be necessary to keep events popping off the queue in 
 		// a timely manner, though I hate it
-        UserEvent.userEvents.publish(new UserEvent.Test());
+        UserEvent.userEvents.publish(new UserEvent.KeepItMoving());
+		
 		
 		// check user heartbeats
 		for (Long user_id : User.heartbeats.keySet()) {

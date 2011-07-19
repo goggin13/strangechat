@@ -46,4 +46,8 @@ User(rando2):
   name: "Jane Doe"
   online: true
   heartbeatServer: chat1
-      
+  
+StoredPower(sp):
+  power: "ICE_BREAKER"
+  owner: rando2
+ 

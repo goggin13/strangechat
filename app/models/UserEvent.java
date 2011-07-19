@@ -3,6 +3,7 @@ package models;
 import java.util.*;
 import play.libs.F.*;
 import play.Logger;
+import enums.Power;
 
 /* 
  * A wrapper for the UserEvent classes.  See comment on {@link AnEvent} for 
@@ -10,6 +11,7 @@ import play.Logger;
 public class UserEvent {
     private static final int streamSize = 10000;
 	public static ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
+	public static ArchivedEventStream<UserEvent.Event> adminEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);	
 	
 	/**
 	 * UserEvents are dropped into the userEvents queue, which 
@@ -35,11 +37,15 @@ public class UserEvent {
 			this.user_id = user_id;
 			this.session_id = session_id;
 	        this.timestamp = System.currentTimeMillis();
-	        System.out.println(this);
 	    }
 	
+	    public void publishMe () {
+	        System.out.println(this);
+	        userEvents.publish(this);
+	    }
+	    
 		public String toString () {
-			return this.timestamp + " : " + this.user_id + " ( " + this.type + " )";
+			return this.user_id + " ( " + this.type + " )";
 		}
 	}
 	
@@ -59,7 +65,7 @@ public class UserEvent {
 			this.new_user = new_user;
 			this.name = name;
 			this.server = server;
-			userEvents.publish(this);
+			publishMe();
 		}
 		
 		public String toString () {
@@ -77,7 +83,7 @@ public class UserEvent {
 		public UserLogout (Long user_id, Long left_user, String session_id) {
 			super("userlogout", user_id, session_id);
 			this.left_user = left_user;
-			userEvents.publish(this);
+			publishMe();
 		}
 		
 		public String toString () {
@@ -97,7 +103,7 @@ public class UserEvent {
             super("directmessage", to, "");
             this.from = from;
             this.text = msg;
-			userEvents.publish(this);
+			publishMe();
         }
 
 		public String toString () {
@@ -122,7 +128,7 @@ public class UserEvent {
             this.from = from;
             this.text = msg;
 			this.room_id = room_id;
-			userEvents.publish(this);
+			publishMe();
         }
 
 		public String toString () {
@@ -157,10 +163,8 @@ public class UserEvent {
 
 			// as soon as this event is created, we heartbeat for the given user; if they never received this event,
 			// we see their heartbeat fail and notify the other user
-            User.beatInRoom(room_id, this.user_id);			
-
-			Logger.info("publishing join for " + for_user + ", " + new_user + " in room " + room_id);
-			userEvents.publish(this);
+            User.beatInRoom(room_id, this.user_id);		
+			publishMe();
         }
 
 		public String toString () {
@@ -184,7 +188,7 @@ public class UserEvent {
             this.typing_user = typing_user;
 			this.room_id = room_id;
 			this.text = text;
-			userEvents.publish(this);
+			publishMe();
         }
 
 		public String toString () {
@@ -193,11 +197,11 @@ public class UserEvent {
 	}
 
 	/**
-	 * Represents a users heartbeat in a room */
-    public static class Test extends Event {		
-        public Test () {
+	 * Dummy event, seems to help keep things popping off stack */
+    public static class KeepItMoving extends Event {		
+        public KeepItMoving () {
             super("nothing", -1L, "");
-			userEvents.publish(this);
+			publishMe();
         }
     }
     
@@ -213,13 +217,35 @@ public class UserEvent {
             super("leave", for_user, session_id);
             this.left_user = left_user;
 			this.room_id = room_id;
-			userEvents.publish(this);
+			publishMe();
         }
 
 		public String toString () {
 			return super.toString() + " : " + this.left_user + " left room " + this.room_id;
 		}
     }
+	
+	/** 
+	 * Notifies a user that they have recieved a new super power */
+	public static class NewPower extends Event {
+	    /** the stored power they are receiving */
+	    final public Power power;
+	    /** the stored power they are receiving */
+	    final public String powerName;	    
+	    /** db id of the power for when they use it */
+	    final public Long power_id;
+	    /** details about the super power */
+	    final public SuperPower superPower;
+	    
+	    public NewPower (Long for_user, Power p, Long power_id, String session_id) {
+	        super("newpower", for_user, session_id);
+	        this.power = p;
+	        this.powerName = p.toString();
+	        this.superPower = p.getSuperPower();
+	        this.power_id = power_id;
+	        publishMe();
+	    }
+	}
 	
 	/**
      * For long polling, as we are sometimes disconnected, we need to pass 

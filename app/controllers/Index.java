@@ -1,7 +1,10 @@
 package controllers;
 
 import java.util.*;
+
 import java.lang.reflect .*;
+import com.google.gson.*;
+import com.google.gson.reflect.*;
 
 import play.*;
 import play.mvc.*;
@@ -9,9 +12,6 @@ import play.libs.*;
 import play.libs.F.*;
 
 import models.*;
-
-import com.google.gson.*;
-import com.google.gson.reflect.*;
 
 /**
  * A convenience class to hold common methods used

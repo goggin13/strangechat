@@ -58,6 +58,12 @@ public class Server extends Model {
 		return next;
 	}
 	
+	/**
+	 * Return true if this server is the master server */
+	public boolean iAmMaster () {
+	    return getMasterServer().uri.equals(this.uri);
+	}
+	
 	/** 
 	 * @Return the master server instance */
 	public static Server getMasterServer () {
@@ -98,5 +104,10 @@ public class Server extends Model {
 		Server heartbeat = Server.find("byIsMaster", false).first();
 		return heartbeat;
 	}
-	
+
+	/**
+	 * @return a List of chat servers */
+	public static List<Server> getChatServers () {
+	    return Server.find("byIsMaster", false).fetch(100);
+	}
 }

@@ -83,7 +83,7 @@ public class Users extends Index {
 		broadcastHeartbeat(user);
 		
 		// add heartbeat server into list
-		friendData.put(user.user_id.toString(), user);
+		friendData.put(user.id.toString(), user);
 		Users.renderJSONP(
 			friendData, 
 			new TypeToken<HashMap<String, User>>() {}.getType(),
@@ -93,40 +93,15 @@ public class Users extends Index {
 	
 	/**
 	 * Mark this user as offline; remove them from the waiting room
-	 * @param facebook_id
+	 * @param user_id
 	 * @param callback optional JSONP callback
 	 */
-	public static void signout (Long facebook_id, String callback) {
-		if (User.logOutUser(facebook_id)) {
+	public static void signout (Long user_id, String callback) {
+		if (User.logOutUser(user_id)) {
 			returnOkay(callback);
 		} else {
-			returnFailed("user " + facebook_id + " not found", callback);
-		}
-	}
-
-	/**
-	 * Return a random user to chat with 
-	 * @param user_id your user_id, so the random returned user isn't you 
-	 * @param callback optional JSONP callback*/
-	public static void random (Long user_id, String callback) {
-		User you = User.find("byUser_id", user_id).first();
-		if (you == null) {
 			returnFailed("user " + user_id + " not found", callback);
 		}
-		User rando = you.getRandom();
-		if (!rando.friends.contains(you)) {
-			rando.friends.add(you);
-			rando.save();
-		}
-		if (!you.friends.contains(rando)) {
-			you.friends.add(you);
-			you.save();
-		}
-		Users.renderJSONP(
-			rando, 
-			new TypeToken<User>() {}.getType(),
-			callback
-		);
 	}
 	
 	/**
@@ -182,12 +157,12 @@ public class Users extends Index {
 	    String heartbeatURI = user.getHeartbeatURI();
 	    String masterURI = Server.getMasterServer().uri;
 		if (masterURI.equals(heartbeatURI)) {
-		    User.heartbeats.put(user.user_id, new Date());
+		    User.heartbeats.put(user.id, new Date());
 		    return true;
 		} else {	
 			String url = heartbeatURI + "heartbeat";
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", user.user_id);
+			params.put("for_user", user.id);
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			JsonObject json = resp.getJson().getAsJsonObject();
 			return json.get("status").getAsString().equals("okay");

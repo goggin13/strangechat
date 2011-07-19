@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<testsuite failures="0" time="12.474" errors="0" skipped="0" tests="2" name="SuperPowersTest">
+  <testcase classname="SuperPowersTest" name="testXRayVision" time="12.425">
+      </testcase>
+  <testcase classname="SuperPowersTest" name="stub" time="0.049">
+      </testcase>
+</testsuite>

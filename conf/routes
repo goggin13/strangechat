@@ -9,12 +9,13 @@ GET     /demo																		Application.demo
 # User actions
 GET     /signin																	Users.signin
 GET     /signout																Users.signout
-GET		  /random																	Users.random
 GET     /requestrandomroom 											Users.requestRandomRoom
 GET     /leaveroom															Users.leaveRoom
 
 # Chat actions
 GET     /listen																  Notify.listen
+POST     /newpower																Notify.newPower
+GET     /adminlisten														Notify.adminListen
 GET     /message																Notify.message
 GET     /roommessage														Notify.roomMessage
 GET 	  /heartbeat															Notify.heartbeat

@@ -40,15 +40,15 @@ public class Room extends Model {
      * @param user_id1
      * @param user_id2 */
 	public void addUsers (Long user_id1, Long user_id2) {
-    	User user1 = User.find("byUser_id", user_id1).first();
-    	User user2 = User.find("byUser_id", user_id2).first();
-    	this.participants.add(user1);
-    	this.participants.add(user2);
-    	this.save();
+    	User user1 = User.findById(user_id1);
+    	User user2 = User.findById(user_id2);
+        this.participants.add(user1);
+        this.participants.add(user2);
+        this.save();
     	user1.notifyJoined(user2, room_id);
     	user2.notifyJoined(user1, room_id);
-	    Room.updateRecentMeetingsFor(user1.user_id, user2.user_id);
-	    Room.updateRecentMeetingsFor(user2.user_id, user1.user_id);	    
+	    Room.updateRecentMeetingsFor(user1.id, user2.id);
+	    Room.updateRecentMeetingsFor(user2.id, user1.id);	    
 	}
 			
 	/**
@@ -133,7 +133,7 @@ public class Room extends Model {
 	 * @return true on success, false if user_id or room_id does not exist */
 	public static boolean removeUserFrom (Long room_id, Long user_id) {
 		Room room = Room.find("byRoom_id", room_id).first();
-		User user = User.find("byUser_id", user_id).first();
+		User user = User.findById(user_id);
 		if (user == null) {
 			return false;
 		}

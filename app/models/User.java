@@ -13,6 +13,7 @@ import java.lang.reflect.Modifier;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import controllers.*;
+import enums.Power;
 
 /**
  * A chat user in the system, who can be online or off, and the maintained meta
@@ -44,10 +45,10 @@ public class User extends Model {
 	@Required
 	public String name;
 	
-	/**
-	 * The most current faceook token we used for this user
-	 */
-	public String facebook_token;
+    // /**
+    //  * The most current faceook token we used for this user
+    //  */
+    // public String facebook_token;
 	
 	/**
 	 * the avatar to display for this user */
@@ -65,17 +66,38 @@ public class User extends Model {
 	 */
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	public Set<User> friends;
+
+    /** 
+     * Collection of the superpowers this user has, including
+     * ones that have already been used */ 
+    @OneToMany(cascade=CascadeType.REMOVE)
+    public List<StoredPower> superpowers;
 	
 	/**
 	 * True if this user is currently online
 	 */	
 	public boolean online;
 
-	/**
-	 * Collection of servers this user is currently participating in chats on,
-	 */
-	@OneToMany(fetch=FetchType.LAZY)
-	public Set<Server> chatServers;
+    /** total seconds chatting */
+    public Long chatTime;  		
+
+    /** total messages sent */
+    public int messageCount;  		
+
+    /** total messages received */
+    public int gotMessageCount;
+
+    /** total joins by this user */
+    public int joinCount;
+     
+    /** offers to reveal made */
+    public int offersMadeCount; 		 
+
+    /** offers to reveal received */
+    public int offersReceivedCount;  	 
+
+    /** mutual offers to receive */
+    public int revealCount; 			
 
 	/**
 	 * The server this user was assigned to heartbeat on
@@ -85,11 +107,16 @@ public class User extends Model {
 	
 	public User (Long u) {
 		this.user_id = u;
-		this.facebook_token = "";
+        // this.facebook_token = "";
 		this.online = false;
 		this.session_id = "";
 		this.friends = new HashSet<User>();
-		this.chatServers = new HashSet<Server>();
+		this.chatTime = 0L;
+		this.messageCount = 0;
+		this.joinCount = 0;
+		this.offersMadeCount = 0;
+		this.offersReceivedCount = 0;
+		this.revealCount = 0;
 	}
 	
 	/**
@@ -116,7 +143,7 @@ public class User extends Model {
 		}
 		for (User friend : this.friends) {
 			System.out.println("tell " + friend.user_id + " I'm logging out");
-			friend.notifyMeLogout(this.user_id);
+			friend.notifyMeLogout(this.id);
 		}
 		System.out.println("done logging " + this.user_id + " out");
 		User.removeFromWaitingRoom(this.user_id);
@@ -147,16 +174,6 @@ public class User extends Model {
 	}
 	
 	/**
-	 * add the given server to this users collection of chat servers
-	 * @param server */
-	public void addChatServer (Server server) {
-		if (!this.chatServers.contains(server)) {
-			System.out.println("adding " + server.name + " to " + this.user_id);
-			this.chatServers.add(server);
-		}
-	}
-	
-	/**
 	 * All the rooms this user is in
 	 * @return a list of all the rooms this user is participating in */
 	public List<Room> getRooms () {
@@ -183,7 +200,7 @@ public class User extends Model {
 				User friend = User.find("byUser_id", friendID).first();
 				if (friend != null && friend.online) {
 					this.friends.add(friend);
-					friendData.put(friendID.toString(), friend);
+					friendData.put(friend.id.toString(), friend);
 				}
 			} catch (Exception e) {
 				System.out.println("EXCEPTION " + e);
@@ -212,6 +229,46 @@ public class User extends Model {
 	}
 
 	/**
+	* Count how many {@link StoredPower} instances of <code>type</code>
+	* this user has
+	* @param type the type of {@link SuperPower} to count
+	* @param countUsed if <code>true</code>, then powers that have already been
+	*				   consumed will also be included in the count
+	* @return number of powers matching <code>type</code>
+	*/
+	public Long countPowers (Power p, boolean countUsed) {
+		if (countUsed) {
+			return StoredPower.count("byOwnerAndPower", this, p);
+		} else {
+			return StoredPower.count("byOwnerAndPowerAndUsed", this, p, false);
+		}
+	}
+
+
+    /**
+     * Check all of the super powers and see if I am eligible for any
+     * new ones; if so, assign them to me, and put notification events in
+     * the stream */
+    public void checkForNewPowers () {
+        Power[] powers = Power.values(); 
+		for (Power power : powers) {
+		    SuperPower superPower = power.getSuperPower();
+		    superPower.awardIfQualified(this);
+		}
+    }
+
+	/**
+	 * Send this user a notification that they have recieved a new power
+	 * @param power the new power they have received */
+	public void notifyNewPower (StoredPower storedPower) {
+		if (!this.imOnMaster()) {
+          	// TODO add in code from test here
+        } else {
+			new UserEvent.NewPower(this.id, storedPower.power, storedPower.id, this.session_id);
+		}
+	}
+
+	/**
 	 * Send this user a notification that someone in the room
 	 * they were chatting in has left 
 	 * @param user the user who left the room
@@ -219,12 +276,12 @@ public class User extends Model {
 	public void notifyLeftRoom (User user, Long room_id) {
 		if (!this.imOnMaster()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.user_id);
-			params.put("left_user", user.user_id);		
+			params.put("for_user", this.id);
+			params.put("left_user", user.id);		
 			params.put("room_id", room_id);
 			notifyMe("left", params);   
         } else {
-			new UserEvent.Leave(this.user_id, user.user_id, room_id, this.session_id);
+			new UserEvent.Leave(this.id, user.id, room_id, this.session_id);
 		}
 	}
 
@@ -235,16 +292,16 @@ public class User extends Model {
 	public void notifyJoined (User otherUser, Long room_id) {
 		if (!this.imOnMaster()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.user_id);
-			params.put("new_user", otherUser.user_id);		
+			params.put("for_user", this.id);
+			params.put("new_user", otherUser.id);		
 			params.put("avatar", otherUser.avatar);
 			params.put("name", otherUser.alias);
 			params.put("room_id", room_id);
 			params.put("server", otherUser.heartbeatServer.uri);
 			notifyMe("joined", params);   
         } else {
-			new UserEvent.Join(this.user_id, 
-							   otherUser.user_id, 
+			new UserEvent.Join(this.id, 
+							   otherUser.id, 
 							   otherUser.avatar,
 							   otherUser.alias,
 							   otherUser.heartbeatServer.uri,
@@ -259,11 +316,11 @@ public class User extends Model {
 	public void notifyMeLogout (Long left_user) {
 		if (!this.imOnMaster()) {
           	HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.user_id);
+			params.put("for_user", this.id);
 			params.put("left_user", left_user);		
 			notifyMe("logout", params);   
         } else {
-			new UserEvent.UserLogout(this.user_id, left_user, this.session_id);
+			new UserEvent.UserLogout(this.id, left_user, this.session_id);
 		}
 	}
 
@@ -275,13 +332,13 @@ public class User extends Model {
 		String server = newUser.heartbeatServer.uri;
 		if (!this.imOnMaster()) {
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("for_user", this.user_id);
-			params.put("new_user", newUser.user_id);
+			params.put("for_user", this.id);
+			params.put("new_user", newUser.id);
 			params.put("name", name);
 			params.put("server", server);								
 			notifyMe("login", params);
 	    } else {
-			new UserEvent.UserLogon(this.user_id, newUser.user_id, name, server, this.session_id);
+			new UserEvent.UserLogon(this.id, newUser.id, name, server, this.session_id);
 		}		
 	}
 	
@@ -294,7 +351,10 @@ public class User extends Model {
 		String url = this.heartbeatServer.uri + "notify/" + action;
         params.put("session_id", this.session_id);
 		WS.HttpResponse resp = Utility.fetchUrl(url, params);
-		JsonObject json = resp.getJson().getAsJsonObject();		
+		JsonObject json = resp.getJson().getAsJsonObject();	
+		if (!json.get("status").getAsString().equals("okay")) {
+		    Logger.error("bad response from notification (%s)", url);
+		}	
 	}
 		
 	/**
@@ -302,7 +362,7 @@ public class User extends Model {
 	 * @param user_id the user_id of the user to log out
 	 * @return true on success, false if the user is not found */
 	public static boolean logOutUser (Long user_id) {
-		User user = User.find("byUser_id", user_id).first();
+		User user = User.findById(user_id);
 		if (user != null) {
 			user.removeMeFromRooms();
 			user.logout();
@@ -362,7 +422,9 @@ public class User extends Model {
 		/**
 		 * Indicate which fieds to skip; for now, just friends */
 		public boolean shouldSkipField(FieldAttributes f) {
-		  return f.getName().equals("friends");
+		  return f.getName().equals("friends")
+                 || f.getName().equals("user_id")
+                 || f.getName().equals("owner");
 		}
  	}
 		
