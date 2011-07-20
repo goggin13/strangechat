@@ -22,13 +22,12 @@ public class CheckPowers extends Job {
 	private static final String DATA_CODE = "*&^%$!";
 	private static final int HEARTBEAT_INTERVAL = 5;	
 	
-	public void doJob() {
+	public void doJob () {
 		
 		if (!Server.onMaster()) {
 			return;
 		}
 		
-		System.out.println("CHECKPOWERS");
 		List<Server> chatServers = Server.getChatServers();
 		for (Server s : chatServers) {
 		    processUpdates(getEvents(s));
@@ -36,19 +35,15 @@ public class CheckPowers extends Job {
 		for (Long id : myUsers.keySet()) {
 		    User u = User.findById(id);
 		    if (u != null) {
-		        System.out.println("saving user " + u.id);    
 		        u.save();
 	        }
 	        u.checkForNewPowers();
 		}
 		myUsers.clear();
-		System.out.println("DONE CHECKPOWERS");
-		
     }
     
     private static void processUpdates (List<UserEvent.Event> events) {
         for (UserEvent.Event event : events) {
-            // System.out.println("processing event : " + event);
             if (event instanceof UserEvent.RoomMessage) {
                 UserEvent.RoomMessage rm = (UserEvent.RoomMessage)event;
                 if (rm.user_id == -1 || rm.from == -1) {

@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="1" time="0.776" errors="0" skipped="0" tests="2" name="SuperPowersTest">
-  <testcase classname="SuperPowersTest" name="testGetAdminEvents" time="0.169">
+<testsuite failures="0" time="2.636" errors="0" skipped="0" tests="4" name="SuperPowersTest">
+  <testcase classname="SuperPowersTest" name="testEnumsMatchPowers" time="0.056">
       </testcase>
-  <testcase classname="SuperPowersTest" name="testXRayVision" time="0.546">
-                  <failure type="" message="Failure, expected:&lt;58&gt; but was:&lt;60&gt;">
-        <![CDATA[
-          In /test/SuperPowersTest.java, line 107
-          <a href="txmt://open?url=file:///Users/goggin/Documents/CS/chatmaster/test/SuperPowersTest.java&line=107">
-              		assertEquals(msgCount + 3, events.size()); :
-          </a>
-        ]]>
-        </failure>
-        }
-                  </testcase>
-  <testcase classname="SuperPowersTest" name="stub" time="0.061">
+  <testcase classname="SuperPowersTest" name="testGetAdminEvents" time="0.129">
+      </testcase>
+  <testcase classname="SuperPowersTest" name="testUsePowers" time="2.389">
+      </testcase>
+  <testcase classname="SuperPowersTest" name="stub" time="0.062">
       </testcase>
 </testsuite>

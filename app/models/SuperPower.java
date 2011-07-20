@@ -3,6 +3,9 @@ import java.util.*;
 import enums.Power;
 import play.test.*;
 import play.data.validation.*;
+import com.google.gson.*;
+import com.google.gson.reflect.*;
+import java.lang.reflect .*;
 
 public abstract class SuperPower {
 	
@@ -33,9 +36,10 @@ public abstract class SuperPower {
 	/**
 	* Return the enumerated Power associated with this
 	* SuperPower  
-	* @return
-	**/
-	public abstract Power getPower();
+	* @return **/
+	public Power getPower () {
+	    return Power.valueOf(this.name.replace(' ', '_').toUpperCase());
+	}
 	
     /**
     * Test whether <code>userStat</code> has earned another instance
@@ -48,12 +52,10 @@ public abstract class SuperPower {
     public boolean awardIfQualified (User user) {
     	boolean qualified = isQualified(user);
     	if (qualified) {
-    	    System.out.println("award to " + user.id);
     		grantTo(user);
     	}
     	return qualified;
     }
-
 
     /**
     * Create a {@link SuperPower} instance of this type, and grant it
@@ -61,10 +63,38 @@ public abstract class SuperPower {
     * @param userStat
     */
     public void grantTo (User user) {
-    	StoredPower power = new StoredPower(this.getPower(), user);
-    	power.save();
-    	user.superpowers.add(power);
-    	user.save();
-    	user.notifyNewPower(power);
+        Power p = this.getPower();
+        StoredPower sp = StoredPower.incrementPowerForUser(p, user);
+    	user.notifyNewPower(sp);
     } 
+    
+    /**
+     * This function returns a string after the power is used;
+     * this string will be sent back to the chat clients, so it can
+     * be anything, so long as it coordinates with what clients expect.
+     * E.G. "used", "fail", etc.  Subclasses superpowers may return any
+     * string they wish 
+     * @return */
+    public String use () {
+        return "used";
+    }
+    
+    /** @return JSON representing this object */
+    public String toJSON () {
+        Gson gson = new GsonBuilder()
+    	            .setExclusionStrategies(new User.ChatExclusionStrategy())
+    	            .create();		    
+        return gson.toJson(this, new TypeToken<SuperPower>() {}.getType());
+    }
+    
+    /** @return deserialized object from string */
+    public static SuperPower fromJSON (String superPowerJSON) {
+        Gson gson = new GsonBuilder()
+                     .setExclusionStrategies(new User.ChatExclusionStrategy())
+                     .registerTypeAdapter(SuperPower.class, new UserEvent.SuperPowerDeserializer())
+                     .create();
+         Type powerType = new TypeToken<SuperPower>() {}.getType();
+         SuperPower superPower = gson.fromJson(superPowerJSON, powerType);
+         return superPower;
+    }
 }

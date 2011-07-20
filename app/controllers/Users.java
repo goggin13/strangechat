@@ -30,7 +30,7 @@ public class Users extends Index {
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
 	public static int spotsPerUser = 100;
 	
-	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom"})
+	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom", "usePower"})
 	public static void checkAuth () {
 		Index.checkAuthentication();
 	}
@@ -140,8 +140,6 @@ public class Users extends Index {
 		if (Collections.frequency(User.waitingRoom, user_id) < spotsPerUser) {
 		    User.waitingRoom.add(user_id);
 		}
-        System.out.println(User.waitingRoom);
-        // Logger.info("putting user " + user_id + " in the waiting room (" + waitingRoom.toString() + ")");    
 		returnOkay(callback);
 	}
 
@@ -180,5 +178,38 @@ public class Users extends Index {
 		returnOkay(callback);
 	}
 	
+	/**
+	 * Use the given power, and notify the relevant users.
+	 * @param power_id the id of a {@link StoredPower} to use
+	 * @param user_id the user using the power
+	 * @param other_id the other user in the room
+	 * @param room_id optional, the room the event is in
+	 * @param callback optional jsonp callback */
+	public static void usePower (Long power_id, Long user_id, Long other_id, Long room_id, String callback) { 
+	    if (power_id == null || user_id == null || other_id == null) {
+	        returnFailed("power_id, user_id, other_id are all required", callback);
+	    }
+	    User user = User.findById(user_id);
+	    User other = User.findById(other_id);
+	    if (user == null || other == null) {
+	        returnFailed("both user_id and other_id must map to existing users", callback);
+	    }
+	    
+        StoredPower storedPower = StoredPower.findById(power_id);
+        if (storedPower == null) {
+            returnFailed("no power by that ID exists", callback);
+        } else if (!storedPower.canUse()) {
+            returnFailed("You don't have any of that power remaining!", callback);
+        } else {
+            SuperPower sp = storedPower.getSuperPower();
+            String result = storedPower.use();
+            user.notifyUsedPower(user_id, room_id, sp, result);
+            other.notifyUsedPower(user_id, room_id, sp, result);            
+            returnOkay(callback);
+        }
+        
+
+        
+	}
 
 }

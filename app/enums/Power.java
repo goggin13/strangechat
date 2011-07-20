@@ -1,5 +1,6 @@
 package enums;
 import models.*;
+import models.powers.*;
 
 // Creating a new SuperPower
 // 1: Create a new member in this class
@@ -10,8 +11,9 @@ import models.*;
 
 public enum Power {
 	ICE_BREAKER(new IceBreaker()), 
+	MIND_READER(new MindReader()),
 	X_RAY_LEVEL_1(new XRayLevelOne());
-
+    
 	private String str; 
 	private SuperPower sp;
 	

@@ -12,6 +12,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import play.libs.*;
 import play.libs.F.*;
+import enums.*;
+import models.powers.*;
+import jobs.*;
 
 public class SuperPowersTest extends MyFunctionalTest {
 		
@@ -21,6 +24,13 @@ public class SuperPowersTest extends MyFunctionalTest {
 	    Users.remeetEligible = -1;
 	}
 	       
+    @Test
+    public void testEnumsMatchPowers () {
+        assertEquals(Power.ICE_BREAKER, new IceBreaker().getPower());
+        assertEquals(Power.MIND_READER, new MindReader().getPower());                
+        assertEquals(Power.X_RAY_LEVEL_1, new XRayLevelOne().getPower());        
+    }
+    
 	@Test
 	public void testGetAdminEvents () {
 	    // put some events in there
@@ -33,12 +43,12 @@ public class SuperPowersTest extends MyFunctionalTest {
         notifyJoined(pmo_db_id, k_db_id, "www.avatar.com", "kristen", "chat1.com", 15L, "asdfsadf");
         notifyLeft(pmo_db_id, k_db_id, 15L);
         
-        System.out.println("SP COUNT : " + StoredPower.count());    
         StoredPower sp = StoredPower.all().first();
         notifyNewPower(rando_1_db, sp, "sadfasdf");
-        sp = (StoredPower)StoredPower.all().from(1).fetch(1).get(0);
+        sp = (StoredPower)StoredPower.all().from(2).fetch(1).get(0);
         notifyNewPower(rando_1_db, sp, "sadfasdf");
 
+        // now get the events and check they match up
         String url = "/adminlisten?lastReceived=0";
         String jsonStr = getAndValidateInner(url);
         List<UserEvent.Event> events = UserEvent.deserializeEvents(jsonStr);
@@ -77,47 +87,52 @@ public class SuperPowersTest extends MyFunctionalTest {
         JsonObject newPower = data.get("superPower").getAsJsonObject();
         assertEquals("X Ray Level 1", newPower.get("name").getAsString());        
 	}    
-	
- 	@Test
-	public void testXRayVision () {
-		// pmo and kk register to for rooms
-	    requestRoomFor(pmo_db_id);
-	    requestRoomFor(k_db_id);
-	    
-		// PMO should have an event waiting notifying him kk joined
-		JsonObject data = getListenResponse(pmo_db_id, 0);
-		assertEquals("join", data.get("type").getAsString());
-		Long room_id = data.get("room_id").getAsLong();
-		String with_user = data.get("new_user").getAsString();
-		
-		// chat 20 messages so we can get a new power (woo hoo!)
-		int msgCount = 55;
-		for (int i = 0; i < msgCount; i++) {
-     		HashMap<String, String> params = new HashMap<String, String>();
-     	    params.put("for_user", with_user.toString());
-     	    params.put("from_user", pmo_db_id.toString());
-     	    params.put("msg", "hello,world");
-     	    params.put("room_id", room_id.toString());
-     		postAndAssertOkay("/roommessage", params);		                                 
-		}
-		
-		// if we listen to the admin stream, there should be msgCount + 3 events
-		// 1 for each message + 2 joins + 1 for extra admin message (lastReceived)
-		JsonArray events = getAdminListenResponse(0);
-		assertEquals(msgCount + 3, events.size());
 
-        // keep them alive and wait for checkpowers to run
-		for (int i = 0; i < 4; i++) {
-		    heartbeatForRoom(pmo_db_id, room_id);
-		    heartbeatForRoom(k_db_id, room_id);
-		    goToSleep(3);
-		}
-		
-		// and now after we wait, PMO should have a superpower notifications
-		data = getListenResponse(pmo_db_id, 0);
-		assertEquals("newpower", data.get("type").getAsString());
-        JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("Ice Breaker", newPower.get("name").getAsString());		
-	} 
+	protected JsonObject usePower (Long power_id, Long user_id, Long other_id, Long room_id) {
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("power_id", power_id.toString());
+	    params.put("user_id", user_id.toString());
+	    params.put("other_id", other_id.toString());
+	    params.put("room_id", room_id.toString());
+	    return postAndValidateResponse("/usepower", params);
+	}
 	
+	@Test
+	public void testUsePowers () {
+        // first lets earn some x-ray-vision
+        for (int i = 0; i < 55; i++) {
+            notifyChatMessage(rando_1_db, rando_2_db, "hello world", 15L);
+        }
+        Promise<String> p = new CheckPowers().now();
+        goToSleep(2);
+
+        // and now after we wait, should have a superpower notifications
+        JsonObject data = getListenResponse(rando_1_db, 0);
+        assertEquals("newpower", data.get("type").getAsString());
+        JsonObject newPower = data.get("superPower").getAsJsonObject();
+        assertEquals("X Ray Level 1", newPower.get("name").getAsString());
+        Long power_id = data.get("power_id").getAsLong();
+
+        // now use it!
+        JsonObject json = usePower (power_id, rando_1_db, rando_2_db, 15L);
+        assertEquals("okay", json.get("message").getAsString());
+        assertEquals("okay", json.get("status").getAsString());
+    
+        // twice wont work though
+        json = usePower (power_id, rando_1_db, rando_2_db, 15L);
+        assertEquals("You don't have any of that power remaining!", json.get("message").getAsString());
+        assertEquals("error", json.get("status").getAsString());
+        
+        // both users should have events waiting for them about the use of it
+        data = getListenResponse(rando_2_db, 0);
+        assertEquals("usedpower", data.get("type").getAsString());
+        assertEquals("15", data.get("room_id").getAsString());
+        assertEquals("X-Ray", data.get("result").getAsString());
+        JsonObject power = data.get("superPower").getAsJsonObject();
+        assertEquals("X Ray Level 1", power.get("name").getAsString());
+        
+        data = getListenResponse(rando_1_db, 0);
+        assertEquals("usedpower", data.get("type").getAsString());               
+	}
+		
 }

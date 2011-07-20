@@ -56,14 +56,12 @@ public class Room extends Model {
 	 * @param user the user to remove */
 	public void removeParticipant (User user) {
 		if (!this.participants.contains(user)) {
-		    System.out.println("not in room");
 			return;
 		}
 		this.participants.remove(user);
 		if (this.participants.size() > 0) {
 			this.save();
 			for (User u : this.participants) {
-		    System.out.println("tell " + u.user_id + " I peaced " + room_id);
 				u.notifyLeftRoom(user, room_id);
 			}			
 		} else {

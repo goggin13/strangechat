@@ -12,7 +12,7 @@ import com.google.gson.reflect.*;
  * A wrapper for the UserEvent classes.  See comment on {@link AnEvent} for 
  * more detail */
 public class UserEvent {
-    private static final int streamSize = 10000;
+    private static final int streamSize = 1000;
 	public static ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
 	public static ArchivedEventStream<UserEvent.Event> adminEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);	
 	
@@ -248,7 +248,7 @@ public class UserEvent {
 	/** 
 	 * Notifies a user that they have recieved a new super power */
 	public static class NewPower extends Event {
-   	    /** db id of the power for when they use it */
+	    /** the id of the stored power to hit when you use it */
 	    final public Long power_id;
 	    /** details about the super power */
 	    final public SuperPower superPower;
@@ -262,6 +262,32 @@ public class UserEvent {
 	    
 		public String toString () {
 			return super.toString() + " : " + this.superPower.name + " awarded";
+		}	    
+	}
+
+	/** 
+	 * Notifies a user that a super power was used */
+	public static class UsedPower extends Event {
+	    /** the id of the user who used the power */
+	    final public Long by_user;
+	    /** details about the super power */
+	    final public SuperPower superPower;
+	    /** optionally, the room_id this was used */
+	    final public Long room_id;
+	    /** the result of using the power */
+	    final public String result;
+	    
+	    public UsedPower (Long for_user, Long by_user, Long room_id, SuperPower sp, String result, String session_id) {
+	        super("usedpower", for_user, session_id);
+	        this.superPower = sp;
+	        this.by_user = by_user;
+	        this.room_id = room_id;
+	        this.result = result;
+	        publishMe();
+	    }
+	    
+		public String toString () {
+			return super.toString() + " : " + this.superPower.name + " was used by " + this.by_user + " => " + this.result;
 		}	    
 	}
 
@@ -348,7 +374,6 @@ public class UserEvent {
     public static List<UserEvent.Event> currentMessages () {
 		List<UserEvent.Event> events = userEvents.archive();
 		Collections.reverse(events);
-		System.out.println("currently " + events.size());
         return events;
     }
 	

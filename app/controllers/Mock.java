@@ -10,7 +10,7 @@ import models.*;
 public class Mock extends Index {
 
 	@Before
-	protected static void checkMode(String force) {
+	protected static void checkMode() {
         // if (Play.mode != Play.Mode.DEV) {
             // notFound();
         // }
@@ -22,11 +22,13 @@ public class Mock extends Index {
 	}
 
     public static void init () {
-        System.out.println("INIT!!");
 		UserEvent.resetEventQueue();
 		Fixtures.deleteAll();
         Fixtures.load("data-full.yml");
-        System.out.println("SP COUNT : " + StoredPower.count());           
     }
-
+    
+    public static void loaddummyicebreakers() {
+        Fixtures.load("dummy-icebreakers.yml");
+    }
+    
 }

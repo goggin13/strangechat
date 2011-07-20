@@ -9,6 +9,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.*;
 import java.lang.reflect .*;
 import models.*;
+import enums.*;
 
 /**
  * This controller is in charge of pushing events into the event streams
@@ -178,19 +179,27 @@ public class Notify extends Index {
 	/**
 	 * Create an event telling a user they have a new superpower 
 	 * @param for_user the user who should read this event 	 
-	 * @param storedPower the power they just got hooked up with 
+ 	 * @param superPowerJSON serialized power  	 
 	 * @param session_id current session id this event is pertinent	to */		 
 	 public static void newPower (Long for_user, String superPowerJSON, Long power_id, String session_id) {
-         Gson gson = new GsonBuilder()
-                     .setExclusionStrategies(new User.ChatExclusionStrategy())
-                     .registerTypeAdapter(SuperPower.class, new UserEvent.SuperPowerDeserializer())
-                     .create();
-         Type powerType = new TypeToken<SuperPower>() {}.getType();
-         SuperPower superPower = gson.fromJson(superPowerJSON, powerType);	     
+         SuperPower superPower = SuperPower.fromJSON(superPowerJSON);
          new UserEvent.NewPower(for_user, superPower, power_id, session_id);
          returnOkay(null);
 	 }
 	 
+ 	/**
+ 	 * Create an event telling a user that a superpower was used
+ 	 * @param for_user the user who should read this event 	 
+ 	 * @param by_user the user who used the power
+ 	 * @param room_id optional, the room_id that it was used in
+ 	 * @param superPowerJSON serialized power  
+ 	 * @param result the result of superpower.use()
+ 	 * @param session_id current session id this event is pertinent	to */		 
+ 	 public static void usedPower (Long for_user, Long by_user, Long room_id, String superPowerJSON, String result, String session_id) {
+         SuperPower superPower = SuperPower.fromJSON(superPowerJSON);	     
+         new UserEvent.UsedPower(for_user, by_user, room_id, superPower, result, session_id);
+         returnOkay(null);
+ 	 }
 	
 	/**
 	 * http://localhost:9000/heartbeat?for_user=1&room_ids[0]=1&room_ids[1]=2&room_ids[2]=3
@@ -221,19 +230,23 @@ public class Notify extends Index {
         return params;
     }
 
-    public static HashMap<String, String> getNotifyNewPowerParams (Long for_user, StoredPower storedPower, String session_id) {
+    public static HashMap<String, String> getNotifyUsedPowerParams (Long for_user, Long by_user, Long room_id, SuperPower power, String result, String session_id) {
         HashMap<String, String> params = new HashMap<String, String>();
-    	Gson gson = new GsonBuilder()
-    	            .setExclusionStrategies(new User.ChatExclusionStrategy())
-    	            .create();		    
-        params.put("superPowerJSON", gson.toJson(
-            storedPower.power.getSuperPower(), 
-            new TypeToken<SuperPower>() {}.getType()
-        ));
+        params.put("superPowerJSON", power.toJSON());
+        params.put("by_user", by_user.toString());
+        params.put("result", result);        
+        params.put("room_id", room_id.toString());
         params.put("for_user", for_user.toString());
-        params.put("power_id", storedPower.id.toString());
         params.put("session_id", session_id);
+        return params;        
+    }
 
+    public static HashMap<String, String> getNotifyNewPowerParams (Long for_user, SuperPower p, Long power_id, String session_id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("superPowerJSON", p.toJSON());
+        params.put("power_id", power_id.toString());
+        params.put("for_user", for_user.toString());
+        params.put("session_id", session_id);
         return params;
     }
 

@@ -1,71 +1,152 @@
-19 Jul 2011 18:21:25,410 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
-19 Jul 2011 18:21:25,413 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
-19 Jul 2011 18:21:25,413 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
-19 Jul 2011 18:21:25,413 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-19 Jul 2011 18:21:25,414 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
-19 Jul 2011 18:21:25,414 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
-19 Jul 2011 18:21:25,414 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
-19 Jul 2011 18:21:25,968 WARN  ~ You're running Play! in DEV mode
-19 Jul 2011 18:21:26,040 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-19 Jul 2011 18:22:14,291 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-19 Jul 2011 18:22:16,930 INFO  ~ Application 'strangechat' is now started !
-19 Jul 2011 18:22:17,137 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-19 Jul 2011 18:22:23,303 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-19 Jul 2011 18:22:27,205 INFO  ~ broadcast leave room, 1 from 8
-19 Jul 2011 18:22:27,210 INFO  ~ broadcast leave room, 2 from 1
-19 Jul 2011 18:22:27,211 INFO  ~ broadcast leave room, 1 from 1
-19 Jul 2011 18:22:27,211 INFO  ~ broadcast leave room, 4 from 7
-19 Jul 2011 18:22:27,214 INFO  ~ broadcast leave room, 4 from 2
-19 Jul 2011 18:22:27,214 INFO  ~ broadcast leave room, 5 from 6
-19 Jul 2011 18:22:27,216 INFO  ~ broadcast leave room, 5 from 8
-19 Jul 2011 18:22:32,227 INFO  ~ broadcast leave room, 1 from 6
-19 Jul 2011 18:22:32,229 INFO  ~ broadcast leave room, 1 from 3
-19 Jul 2011 18:22:32,229 INFO  ~ broadcast leave room, 4 from 4
-19 Jul 2011 18:22:32,230 INFO  ~ broadcast leave room, 2 from 6
-19 Jul 2011 18:22:32,231 INFO  ~ broadcast leave room, 2 from 3
-19 Jul 2011 18:22:32,232 INFO  ~ broadcast leave room, 2 from 2
-19 Jul 2011 18:22:32,232 INFO  ~ broadcast leave room, 1 from 4
-19 Jul 2011 18:22:32,233 INFO  ~ broadcast leave room, 1 from 2
-19 Jul 2011 18:22:32,233 INFO  ~ broadcast leave room, 5 from 5
-19 Jul 2011 18:22:32,234 INFO  ~ broadcast leave room, 1 from 15
-19 Jul 2011 18:22:32,235 INFO  ~ broadcast leave room, 2 from 5
-19 Jul 2011 18:22:42,253 INFO  ~ broadcast leave room, 1 from 7
-19 Jul 2011 18:22:42,253 INFO  ~ broadcast leave room, 2 from 7
-19 Jul 2011 18:23:39,563 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-19 Jul 2011 18:23:39,572 ERROR ~ 
+20 Jul 2011 18:58:38,173 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+20 Jul 2011 18:58:38,176 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+20 Jul 2011 18:58:38,176 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
+20 Jul 2011 18:58:38,176 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+20 Jul 2011 18:58:38,176 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+20 Jul 2011 18:58:38,177 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
+20 Jul 2011 18:58:38,177 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
+20 Jul 2011 18:58:38,783 WARN  ~ You're running Play! in DEV mode
+20 Jul 2011 18:58:38,867 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+20 Jul 2011 18:58:42,686 ERROR ~ 
 
-@67669f27d
+@676dl6dim
+Internal Server Error (500) for request GET /@tests?select=NotificationTests.class
+
+Compilation error (In /app/controllers/Notify.java around line 199)
+The file /app/controllers/Notify.java could not be compiled. Error raised is : The constructor UserEvent.UsedPower(Long, Long, Long, SuperPower, String) is undefined
+
+play.exceptions.CompilationException: The constructor UserEvent.UsedPower(Long, Long, Long, SuperPower, String) is undefined
+	at play.classloading.ApplicationCompiler$2.acceptResult(ApplicationCompiler.java:246)
+	at org.eclipse.jdt.internal.compiler.Compiler.handleInternalException(Compiler.java:672)
+	at org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:516)
+	at play.classloading.ApplicationCompiler.compile(ApplicationCompiler.java:278)
+	at play.classloading.ApplicationClassloader.getAllClasses(ApplicationClassloader.java:406)
+	at play.classloading.ApplicationClassloader.getAssignableClasses(ApplicationClassloader.java:433)
+	at {module:crud}/app/views/tags/crud/types.tag.(line:3)
+	at play.templates.GroovyTemplate.internalRender(GroovyTemplate.java:213)
+	at play.templates.GroovyTemplate$ExecutableTemplate.invokeTag(GroovyTemplate.java:347)
+	at {module:crud}/conf/routes.(line:4)
+	at play.templates.GroovyTemplate.internalRender(GroovyTemplate.java:213)
+	at play.templates.Template.render(Template.java:26)
+	at play.mvc.Router.parse(Router.java:162)
+	at play.mvc.Router.parse(Router.java:190)
+	at play.mvc.Router.parse(Router.java:164)
+	at play.mvc.Router.load(Router.java:50)
+	at play.mvc.Router.detectChanges(Router.java:219)
+	at Invocation.HTTP Request(Play!)
+20 Jul 2011 18:59:13,852 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+20 Jul 2011 18:59:16,415 INFO  ~ Application 'strangechat' is now started !
+20 Jul 2011 18:59:16,599 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+20 Jul 2011 18:59:38,876 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+20 Jul 2011 18:59:38,887 ERROR ~ 
+
+@676dl6din
 Error during job execution (jobs.CheckPowers)
 
-Execution exception (In /app/jobs/CheckPowers.java around line 33)
+Execution exception (In /app/jobs/CheckPowers.java around line 32)
 ClassCastException occured : models.Server cannot be cast to models.Server
 
 play.exceptions.JavaExecutionException: models.Server cannot be cast to models.Server
 	at play.jobs.Job.call(Job.java:166)
 	at Invocation.Job(Play!)
 Caused by: java.lang.ClassCastException: models.Server cannot be cast to models.Server
-	at jobs.CheckPowers.doJob(CheckPowers.java:33)
+	at jobs.CheckPowers.doJob(CheckPowers.java:32)
 	at play.jobs.Job.doJobWithResult(Job.java:55)
 	at play.jobs.Job.call(Job.java:157)
 	... 1 more
-19 Jul 2011 18:23:42,493 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-19 Jul 2011 18:23:49,585 INFO  ~ broadcast leave room, 1 from 8
-19 Jul 2011 18:23:49,588 INFO  ~ broadcast leave room, 2 from 1
-19 Jul 2011 18:23:49,588 INFO  ~ broadcast leave room, 1 from 1
-19 Jul 2011 18:23:49,589 INFO  ~ broadcast leave room, 4 from 7
-19 Jul 2011 18:23:49,590 INFO  ~ broadcast leave room, 4 from 2
-19 Jul 2011 18:23:49,590 INFO  ~ broadcast leave room, 5 from 6
-19 Jul 2011 18:23:49,592 INFO  ~ broadcast leave room, 5 from 8
-19 Jul 2011 18:23:54,601 INFO  ~ broadcast leave room, 1 from 6
-19 Jul 2011 18:23:54,601 INFO  ~ broadcast leave room, 1 from 3
-19 Jul 2011 18:23:54,602 INFO  ~ broadcast leave room, 4 from 4
-19 Jul 2011 18:23:54,603 INFO  ~ broadcast leave room, 2 from 6
-19 Jul 2011 18:23:54,604 INFO  ~ broadcast leave room, 2 from 3
-19 Jul 2011 18:23:54,604 INFO  ~ broadcast leave room, 2 from 2
-19 Jul 2011 18:23:54,605 INFO  ~ broadcast leave room, 1 from 4
-19 Jul 2011 18:23:54,605 INFO  ~ broadcast leave room, 1 from 7
-19 Jul 2011 18:23:54,606 INFO  ~ broadcast leave room, 1 from 2
-19 Jul 2011 18:23:54,606 INFO  ~ broadcast leave room, 5 from 5
-19 Jul 2011 18:23:54,607 INFO  ~ broadcast leave room, 2 from 7
-19 Jul 2011 18:23:54,608 INFO  ~ broadcast leave room, 1 from 15
-19 Jul 2011 18:23:54,608 INFO  ~ broadcast leave room, 2 from 5
+20 Jul 2011 18:59:50,924 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+20 Jul 2011 18:59:58,904 INFO  ~ broadcast leave room, 2 from 1
+20 Jul 2011 18:59:58,906 INFO  ~ broadcast leave room, 1 from 6
+20 Jul 2011 18:59:58,908 INFO  ~ broadcast leave room, 1 from 1
+20 Jul 2011 18:59:58,908 INFO  ~ broadcast leave room, 1 from 3
+20 Jul 2011 18:59:58,909 INFO  ~ broadcast leave room, 4 from 4
+20 Jul 2011 18:59:58,910 INFO  ~ broadcast leave room, 4 from 7
+20 Jul 2011 18:59:58,911 INFO  ~ broadcast leave room, 4 from 2
+20 Jul 2011 18:59:58,911 INFO  ~ broadcast leave room, 5 from 6
+20 Jul 2011 18:59:58,913 INFO  ~ broadcast leave room, 2 from 6
+20 Jul 2011 18:59:58,913 INFO  ~ broadcast leave room, 2 from 3
+20 Jul 2011 18:59:58,914 INFO  ~ broadcast leave room, 2 from 2
+20 Jul 2011 18:59:58,914 INFO  ~ broadcast leave room, 5 from 8
+20 Jul 2011 18:59:58,916 INFO  ~ broadcast leave room, 1 from 4
+20 Jul 2011 18:59:58,916 INFO  ~ broadcast leave room, 1 from 2
+20 Jul 2011 18:59:58,917 INFO  ~ broadcast leave room, 5 from 5
+20 Jul 2011 18:59:58,917 INFO  ~ broadcast leave room, 2 from 5
+20 Jul 2011 19:00:03,928 INFO  ~ broadcast leave room, 1 from 8
+20 Jul 2011 19:00:03,928 INFO  ~ broadcast leave room, 2 from 8
+20 Jul 2011 19:00:03,929 INFO  ~ broadcast leave room, 1 from 7
+20 Jul 2011 19:00:03,929 INFO  ~ broadcast leave room, 2 from 7
+20 Jul 2011 19:00:08,934 INFO  ~ broadcast leave room, 1 from 10
+20 Jul 2011 19:00:08,936 INFO  ~ broadcast leave room, 2 from 9
+20 Jul 2011 19:00:08,937 INFO  ~ broadcast leave room, 1 from 9
+20 Jul 2011 19:00:08,938 INFO  ~ broadcast leave room, 2 from 10
+20 Jul 2011 19:00:13,947 INFO  ~ broadcast leave room, 1 from 15
+20 Jul 2011 19:00:24,972 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+20 Jul 2011 19:00:34,029 INFO  ~ broadcast leave room, 2 from 15
+20 Jul 2011 19:00:34,030 INFO  ~ broadcast leave room, 1 from 11
+20 Jul 2011 19:00:34,031 INFO  ~ broadcast leave room, 1 from 8
+20 Jul 2011 19:00:34,031 INFO  ~ broadcast leave room, 2 from 1
+20 Jul 2011 19:00:34,032 INFO  ~ broadcast leave room, 1 from 1
+20 Jul 2011 19:00:34,032 INFO  ~ broadcast leave room, 4 from 7
+20 Jul 2011 19:00:34,033 INFO  ~ broadcast leave room, 2 from 12
+20 Jul 2011 19:00:34,034 INFO  ~ broadcast leave room, 1 from 13
+20 Jul 2011 19:00:34,034 INFO  ~ broadcast leave room, 4 from 2
+20 Jul 2011 19:00:34,035 INFO  ~ broadcast leave room, 2 from 14
+20 Jul 2011 19:00:34,035 INFO  ~ broadcast leave room, 5 from 6
+20 Jul 2011 19:00:34,036 INFO  ~ broadcast leave room, 4 from 13
+20 Jul 2011 19:00:34,037 INFO  ~ broadcast leave room, 2 from 6
+20 Jul 2011 19:00:34,037 INFO  ~ broadcast leave room, 1 from 12
+20 Jul 2011 19:00:34,038 INFO  ~ broadcast leave room, 1 from 16
+20 Jul 2011 19:00:34,038 INFO  ~ broadcast leave room, 2 from 11
+20 Jul 2011 19:00:34,039 INFO  ~ broadcast leave room, 2 from 2
+20 Jul 2011 19:00:34,039 INFO  ~ broadcast leave room, 5 from 8
+20 Jul 2011 19:00:34,040 INFO  ~ broadcast leave room, 2 from 16
+20 Jul 2011 19:00:34,040 INFO  ~ broadcast leave room, 1 from 7
+20 Jul 2011 19:00:34,041 INFO  ~ broadcast leave room, 5 from 14
+20 Jul 2011 19:00:34,041 INFO  ~ broadcast leave room, 1 from 15
+20 Jul 2011 19:00:39,046 INFO  ~ broadcast leave room, 1 from 17
+20 Jul 2011 19:00:39,048 INFO  ~ broadcast leave room, 2 from 17
+20 Jul 2011 19:00:44,167 INFO  ~ broadcast leave room, 1 from 19
+20 Jul 2011 19:00:44,167 INFO  ~ broadcast leave room, 2 from 18
+20 Jul 2011 19:00:44,169 INFO  ~ broadcast leave room, 2 from 19
+20 Jul 2011 19:00:44,170 INFO  ~ broadcast leave room, 1 from 18
+20 Jul 2011 19:00:44,170 INFO  ~ broadcast leave room, 1 from 15
+20 Jul 2011 19:00:59,190 INFO  ~ broadcast leave room, 1 from 15
+20 Jul 2011 19:01:41,491 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+20 Jul 2011 19:01:41,498 ERROR ~ 
+
+@676dl6dio
+Error during job execution (jobs.CheckPowers)
+
+Execution exception (In /app/jobs/CheckPowers.java around line 32)
+ClassCastException occured : models.Server cannot be cast to models.Server
+
+play.exceptions.JavaExecutionException: models.Server cannot be cast to models.Server
+	at play.jobs.Job.call(Job.java:166)
+	at Invocation.Job(Play!)
+Caused by: java.lang.ClassCastException: models.Server cannot be cast to models.Server
+	at jobs.CheckPowers.doJob(CheckPowers.java:32)
+	at play.jobs.Job.doJobWithResult(Job.java:55)
+	at play.jobs.Job.call(Job.java:157)
+	... 1 more
+20 Jul 2011 19:02:06,736 INFO  ~ broadcast leave room, 1 from 15
+20 Jul 2011 19:02:16,751 INFO  ~ broadcast leave room, 1 from 15
+20 Jul 2011 19:02:51,798 INFO  ~ broadcast leave room, 1 from 15
+20 Jul 2011 19:08:04,101 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+20 Jul 2011 19:08:04,107 ERROR ~ 
+
+@676dl6dip
+Error during job execution (jobs.CheckPowers)
+
+Execution exception (In /app/jobs/CheckPowers.java around line 32)
+ClassCastException occured : models.Server cannot be cast to models.Server
+
+play.exceptions.JavaExecutionException: models.Server cannot be cast to models.Server
+	at play.jobs.Job.call(Job.java:166)
+	at Invocation.Job(Play!)
+Caused by: java.lang.ClassCastException: models.Server cannot be cast to models.Server
+	at jobs.CheckPowers.doJob(CheckPowers.java:32)
+	at play.jobs.Job.doJobWithResult(Job.java:55)
+	at play.jobs.Job.call(Job.java:157)
+	... 1 more
+20 Jul 2011 19:09:04,153 INFO  ~ broadcast leave room, 1 from 2
+20 Jul 2011 19:09:09,161 INFO  ~ broadcast leave room, 2 from 2

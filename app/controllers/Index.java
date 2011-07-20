@@ -54,10 +54,18 @@ public class Index extends CRUD {
 	/**
 	 * @return a hashmap with a JSON status => okay response */
 	protected static HashMap<String, String> getOkayResponse () {
+		return getOkayResponse("okay");
+	}
+
+	/**
+	 * @return a hashmap with a JSON status => okay response */
+	protected static HashMap<String, String> getOkayResponse (String msg) {
 		HashMap<String, String> resp = new HashMap<String, String>();
 		resp.put("status", "okay");
+		resp.put("message", msg);
 		return resp;
 	}
+
 
 	/**
 	 * renders a JSON status error response
@@ -65,6 +73,17 @@ public class Index extends CRUD {
 	protected static void returnFailed (String msg, String callback) {
 		Users.renderJSONP(
 			getErrorResponse(msg), 
+			new TypeToken<HashMap<String, String>>() {}.getType(),
+			callback
+		);
+	}
+
+	/**
+	 * renders a JSON status okay response
+	 * @param callback optional, used for cross domain requests */
+	protected static void returnOkay (String msg, String callback) {
+		Users.renderJSONP(
+			getOkayResponse(msg), 
 			new TypeToken<HashMap<String, String>>() {}.getType(),
 			callback
 		);

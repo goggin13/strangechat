@@ -11,6 +11,9 @@ import com.google.gson.*;
 import com.google.gson.reflect.*;
 import java.net.URLEncoder;
 import java.io.UnsupportedEncodingException;
+import jobs.*;
+import play.libs.F.*;
+import models.powers.*;
 
 public class NotificationTests extends MyFunctionalTest {
 			
@@ -26,7 +29,10 @@ public class NotificationTests extends MyFunctionalTest {
 	    params.put("for_user", k_db_id.toString());
 		postAndAssertOkay("/heartbeat", params);
 		
-        goToSleep(12);		
+		goToSleep(9);
+        Promise<String> p = new CheckPulses().now();
+        goToSleep(2);		
+        
 		JsonObject data = getListenResponse(pmo_db_id, 0);
 		assertEquals("userlogout", data.get("type").getAsString());
 		assertEquals(k_db_id.toString(), data.get("left_user").getAsString());
@@ -126,6 +132,8 @@ public class NotificationTests extends MyFunctionalTest {
             heartbeatFor(pmo_db_id);
             goToSleep(3);
         }
+        Promise<String> p = new CheckPulses().now();
+        goToSleep(2);
         
     	// there should be an event waiting for user 2 telling them that user 1
     	// logged in
@@ -133,5 +141,18 @@ public class NotificationTests extends MyFunctionalTest {
     	assertEquals("userlogout", data.get("type").getAsString());
     	assertEquals(k_db_id.toString(), data.get("left_user").getAsString());
 	}
+
+	@Test
+	public void testNotifyUsedPower () {
+	    SuperPower sp = new IceBreaker();
+        notifyUsedPower(pmo_db_id, k_db_id, 15L, sp, "resultstring", "sessionid");
+        
+		JsonObject data = getListenResponse(pmo_db_id, 0);
+		assertEquals("usedpower", data.get("type").getAsString());
+		assertEquals(k_db_id.toString(), data.get("by_user").getAsString());
+		assertEquals("15", data.get("room_id").getAsString());	
+		assertEquals("sessionid", data.get("session_id").getAsString());			
+		assertEquals("resultstring", data.get("result").getAsString());
+	}	
 
 }

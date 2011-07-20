@@ -11,6 +11,7 @@ GET     /demo																		Application.demo
 *		     /signout																Users.signout
 *        /requestrandomroom 										Users.requestRandomRoom
 *        /leaveroom															Users.leaveRoom
+*				 /usepower															Users.usePower
 
 # Chat actions
 GET   /listen																  Notify.listen

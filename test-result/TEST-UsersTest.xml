@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="2.377" errors="0" skipped="0" tests="7" name="UsersTest">
-  <testcase classname="UsersTest" name="testSigninResponse" time="1.567">
+<testsuite failures="0" time="1.895" errors="0" skipped="0" tests="7" name="UsersTest">
+  <testcase classname="UsersTest" name="testSigninResponse" time="1.176">
       </testcase>
-  <testcase classname="UsersTest" name="testBadTokenResponse" time="0.18">
+  <testcase classname="UsersTest" name="testBadTokenResponse" time="0.206">
       </testcase>
-  <testcase classname="UsersTest" name="testBadLogout" time="0.079">
+  <testcase classname="UsersTest" name="testBadLogout" time="0.068">
       </testcase>
-  <testcase classname="UsersTest" name="testGoodLogout" time="0.107">
+  <testcase classname="UsersTest" name="testGoodLogout" time="0.08">
       </testcase>
-  <testcase classname="UsersTest" name="testMeetUpFunction" time="0.126">
+  <testcase classname="UsersTest" name="testMeetUpFunction" time="0.119">
       </testcase>
-  <testcase classname="UsersTest" name="testMeetUpFunctionRespectsRemeetEligible" time="0.246">
+  <testcase classname="UsersTest" name="testMeetUpFunctionRespectsRemeetEligible" time="0.184">
       </testcase>
-  <testcase classname="UsersTest" name="stub" time="0.072">
+  <testcase classname="UsersTest" name="stub" time="0.062">
       </testcase>
 </testsuite>

@@ -74,7 +74,7 @@ public class User extends Model {
      * Collection of the superpowers this user has, including
      * ones that have already been used */ 
     @OneToMany(cascade=CascadeType.REMOVE)
-    public List<StoredPower> superpowers;
+    public List<StoredPower> superPowers;
 	
 	/**
 	 * True if this user is currently online
@@ -113,13 +113,14 @@ public class User extends Model {
         // this.facebook_token = "";
 		this.online = false;
 		this.session_id = "";
-		this.friends = new HashSet<User>();
 		this.chatTime = 0L;
 		this.messageCount = 0;
 		this.joinCount = 0;
 		this.offersMadeCount = 0;
 		this.offersReceivedCount = 0;
 		this.revealCount = 0;
+		this.friends = new HashSet<User>();
+	    this.superPowers = new LinkedList<StoredPower>();		
 	}
 	
 	/**
@@ -141,14 +142,11 @@ public class User extends Model {
 		this.online = false;
 		this.removeMeFromRooms();
 		if (this.friends == null) {
-			System.out.println(this.user_id + "is logging out but has no friends");
 			return;
 		}
 		for (User friend : this.friends) {
-			System.out.println("tell " + friend.user_id + " I'm logging out");
 			friend.notifyMeLogout(this.id);
 		}
-		System.out.println("done logging " + this.user_id + " out");
 		User.removeFromWaitingRoom(this.user_id);
 	}	
 	
@@ -232,18 +230,24 @@ public class User extends Model {
 	}
 
 	/**
-	* Count how many {@link StoredPower} instances of <code>type</code>
-	* this user has
-	* @param type the type of {@link SuperPower} to count
-	* @param countUsed if <code>true</code>, then powers that have already been
-	*				   consumed will also be included in the count
-	* @return number of powers matching <code>type</code>
+	* Count how many {@link StoredPower} instances 
+	* @param p the {@link Power} to count
+	* @param countUsed flag to indicate whether to include used powers;
+	*                  0 => include used and unused
+	*                  1 => unused only
+	*                  2 => used only
+	* @return number of powers matching <code>p</code>
 	*/
-	public Long countPowers (Power p, boolean countUsed) {
-		if (countUsed) {
-			return StoredPower.count("byOwnerAndPower", this, p);
+	public int countPowers (Power p, int countUsed) {
+	    StoredPower sp = StoredPower.find("byOwnerAndPower", this, p).first();
+	    if (sp == null) {
+	        return 0;
+	    } else if (countUsed == 0) {
+			return sp.used + sp.available;
+		} else if (countUsed == 1) {
+			return sp.available;
 		} else {
-			return StoredPower.count("byOwnerAndPowerAndUsed", this, p, false);
+		    return sp.used;
 		}
 	}
 
@@ -260,16 +264,28 @@ public class User extends Model {
 		}
     }
 
+    /**
+     * Send this user a notification that a super power was used */
+    public void notifyUsedPower (Long used_by, Long room_id, SuperPower power, String result) {
+		if (!this.imOnMaster()) {
+		    HashMap<String, String> params 
+		        = Notify.getNotifyUsedPowerParams(this.id, used_by, room_id, power, result, this.session_id);
+    		notifyMe("usedpower", params);            
+        } else {
+			new UserEvent.UsedPower(this.id, used_by, room_id, power, result, this.session_id);
+		}        
+    } 
+    
 	/**
 	 * Send this user a notification that they have recieved a new power
 	 * @param power the new power they have received */
-	public void notifyNewPower (StoredPower storedPower) {
+	public void notifyNewPower (StoredPower power) {
 		if (!this.imOnMaster()) {
 		    HashMap<String, String> params 
-		        = Notify.getNotifyNewPowerParams(this.id, storedPower, this.session_id);
+		        = Notify.getNotifyNewPowerParams(this.id, power.getSuperPower(), power.id, this.session_id);
     		notifyMe("newpower", params);            
         } else {
-			new UserEvent.NewPower(this.id, storedPower.power.getSuperPower(), storedPower.id, this.session_id);
+			new UserEvent.NewPower(this.id, power.getSuperPower(), power.id, this.session_id);
 		}
 	}
 

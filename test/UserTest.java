@@ -3,6 +3,8 @@ import java.util.*;
 import play.test.*;
 import models.*;
 import java.util.concurrent.ConcurrentHashMap;
+import enums.*;
+import models.powers.*;
 
 public class UserTest extends UnitTest {
 	protected static Long pmo_id = 24403414L;
@@ -35,7 +37,7 @@ public class UserTest extends UnitTest {
 		User u3 = User.getOrCreate(100L);		
 		assertEquals(7, User.count());
 	}
-
+    
 	@Test
 	public void testRoomMeetupFunctions () {
 	    // reset meetings first
@@ -51,7 +53,6 @@ public class UserTest extends UnitTest {
 		assertEquals(0, Room.lastMeetingBetween(k_db_id, pmo_db_id));
 		
 		// should never have met
-        System.out.println(Room.recentMeetings);
         assertEquals(-1, Room.lastMeetingBetween(k_db_id, rando_1_db));
         
         // start another room
@@ -87,6 +88,35 @@ public class UserTest extends UnitTest {
 		r = new Room(8L);
 		r.addUsers(pmo_db_id, rando_2_db);	
 		assertFalse(Room.hasMetRecently(k_db_id, pmo_db_id, 1));				
+	}
+	
+	@Test
+	public void testAssigningAndUsingPowers () {
+	    User u = User.getOrCreate(645L);
+	    
+	    assertEquals(0, u.superPowers.size());
+	    StoredPower.incrementPowerForUser(Power.ICE_BREAKER, u);
+	    
+	    assertEquals(1, u.superPowers.size());
+	    assertEquals(1, u.countPowers(Power.ICE_BREAKER, 0));
+	    assertEquals(0, u.countPowers(Power.ICE_BREAKER, 2));
+	    
+	    StoredPower.incrementPowerForUser(Power.ICE_BREAKER, u);
+	    assertEquals(1, u.superPowers.size());
+	    assertEquals(2, u.countPowers(Power.ICE_BREAKER, 0));
+	    assertEquals(2, u.countPowers(Power.ICE_BREAKER, 1));
+	    assertEquals(0, u.countPowers(Power.ICE_BREAKER, 2));
+	    
+	    StoredPower.usePowerForUser(Power.ICE_BREAKER, u);
+	    assertEquals(1, u.superPowers.size());
+	    assertEquals(2, u.countPowers(Power.ICE_BREAKER, 0));
+	    assertEquals(1, u.countPowers(Power.ICE_BREAKER, 1));
+	    assertEquals(1, u.countPowers(Power.ICE_BREAKER, 2));
+	    
+	    // test is qualified
+	    assertFalse(new IceBreaker().isQualified(u));
+	    assertFalse(new XRayLevelOne().isQualified(u));
+	    assertFalse(new MindReader().isQualified(u));
 	}
 
 }

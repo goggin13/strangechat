@@ -23,7 +23,7 @@ public class CheckPulses extends Job {
 		
 		// this seems to be necessary to keep events popping off the queue in 
 		// a timely manner, though I hate it
-        UserEvent.userEvents.publish(new UserEvent.KeepItMoving());
+        // UserEvent.userEvents.publish(new UserEvent.KeepItMoving());
 		
 		
 		// check user heartbeats
@@ -35,8 +35,6 @@ public class CheckPulses extends Job {
 				broadcastLogout(user_id);
 			}
 		}
-		
-        // System.out.println(User.roombeats);
 		
 		// check heartbeats in rooms
 		for (String key : User.roombeats.keySet()) {

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.208" errors="0" skipped="0" tests="2" name="UserTest">
-  <testcase classname="UserTest" name="testBasicUserFunctions" time="0.099">
+<testsuite failures="0" time="0.236" errors="0" skipped="0" tests="3" name="UserTest">
+  <testcase classname="UserTest" name="testBasicUserFunctions" time="0.067">
       </testcase>
-  <testcase classname="UserTest" name="testRoomMeetupFunctions" time="0.109">
+  <testcase classname="UserTest" name="testRoomMeetupFunctions" time="0.086">
+      </testcase>
+  <testcase classname="UserTest" name="testAssigningAndUsingPowers" time="0.083">
       </testcase>
 </testsuite>

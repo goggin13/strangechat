@@ -42,7 +42,7 @@ public class UsersTest extends MyFunctionalTest {
 		JsonObject caller = jsonObj.get(fb_2_db_id.toString()).getAsJsonObject();
 		assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
 		String session_id = caller.get("session_id").getAsString();
-		
+				
 		// and now id 1 logs in
         params = new HashMap<String, String>();
 	    params.put("facebook_id", fb_id_1.toString());
@@ -58,9 +58,16 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("Matthew Goggin", goggin.get("name").getAsString());
 		assertEquals(chatURI, goggin.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
 
-		caller = jsonObj.get(fb_2_db_id.toString()).getAsJsonObject();
+		caller = jsonObj.get(fb_1_db_id.toString()).getAsJsonObject();
 		assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
-		
+
+		// I have an ice breaker, so that should show up
+		// TO DO
+        // JsonArray powers = caller.get("superpowers").getAsJsonArray();
+        // JsonObject power = powers.get(0).getAsJsonObject();
+        // assertEquals("Ice Breaker", power.get("name"));
+        // Long power_id = power.get("power_id");
+				
 		// there should be an event waiting for user 2 telling them that user 1
 		// logged in
 		JsonObject data = getListenResponse(fb_2_db_id, 0);

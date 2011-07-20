@@ -27,13 +27,18 @@ User(kristen):
   online: true
   friends: pmo
   heartbeatServer: chat1
-     
+
+StoredPower(gstoredpower):
+  power: "ICE_BREAKER"
+  used: false
+           
 User(goggin):
   user_id: 100002292928724
   name: "Matthew Goggin"
   online: true
   friends: kristen
   heartbeatServer: chat1
+  superpowers: gstoredpower
   
 User(rando1):
   user_id: 11
@@ -56,6 +61,6 @@ StoredPower(sp2):
   owner: rando2
   
 StoredPower(sp3):
-  power: "X_RAY_LEVEL_1"
+  power: "MIND_READER"
   owner: rando2
  

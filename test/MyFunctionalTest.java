@@ -49,7 +49,7 @@ public class MyFunctionalTest extends FunctionalTest {
 	protected JsonObject getListenResponse (Long id, int lastReceived) {
 		String url = "/listen?user_id=" + id + "&lastReceived=" + lastReceived;
 	    JsonArray jsonArr = getAndValidateAsArray(url);
-	    System.out.println("listening response = " + jsonArr.toString());
+        // System.out.println("listening response = " + jsonArr.toString());
 		JsonObject jsonObj = jsonArr.get(jsonArr.size() - 1).getAsJsonObject();
 		JsonObject data = jsonObj.get("data").getAsJsonObject();
 		return data;
@@ -97,8 +97,6 @@ public class MyFunctionalTest extends FunctionalTest {
 	    assertIsOk(response);
 	    assertContentType("application/json", response);
 	    assertCharset("utf-8", response);
-	    System.out.println("RESP : ");
-	    System.out.println(response.out.toString());	
 		return response.out.toString();
 	}
 
@@ -167,9 +165,14 @@ public class MyFunctionalTest extends FunctionalTest {
 		postAndAssertOkay("/notify/left", params);
     }
 
-    protected void notifyNewPower(Long for_user, StoredPower storedPower, String session_id) {
-        HashMap<String, String> params = Notify.getNotifyNewPowerParams(for_user, storedPower, session_id);
+    protected void notifyNewPower(Long for_user, StoredPower sp, String session_id) {
+        HashMap<String, String> params = Notify.getNotifyNewPowerParams(for_user, sp.getSuperPower(), sp.id, session_id);
         postAndAssertOkay("/notify/newpower", params);
+    }
+
+    protected void notifyUsedPower (Long for_user, Long by_user, Long room_id, SuperPower power, String result, String session_id) {
+        HashMap<String, String> params = Notify.getNotifyUsedPowerParams(for_user, by_user, room_id, power, result, session_id);
+        postAndAssertOkay("/notify/usedpower", params);
     }
 
     protected void notifyTyping (Long for_user, Long user_id, Long room_id, String txt) {
