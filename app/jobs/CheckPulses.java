@@ -27,6 +27,8 @@ public class CheckPulses extends Job {
 		
 		
 		// check user heartbeats
+        // System.out.println(User.heartbeats);
+        
 		for (Long user_id : User.heartbeats.keySet()) {
 			Date lastBeat = User.heartbeats.get(user_id);
 			Long diff = Utility.diffInSecs(new Date(), lastBeat);

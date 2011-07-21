@@ -94,29 +94,29 @@ public class UserTest extends UnitTest {
 	public void testAssigningAndUsingPowers () {
 	    User u = User.getOrCreate(645L);
 	    
-	    assertEquals(0, u.superPowers.size());
-	    StoredPower.incrementPowerForUser(Power.ICE_BREAKER, u);
-	    
 	    assertEquals(1, u.superPowers.size());
-	    assertEquals(1, u.countPowers(Power.ICE_BREAKER, 0));
-	    assertEquals(0, u.countPowers(Power.ICE_BREAKER, 2));
+	    StoredPower.incrementPowerForUser(Power.ICE_BREAKER, u, 1);
 	    
-	    StoredPower.incrementPowerForUser(Power.ICE_BREAKER, u);
 	    assertEquals(1, u.superPowers.size());
 	    assertEquals(2, u.countPowers(Power.ICE_BREAKER, 0));
-	    assertEquals(2, u.countPowers(Power.ICE_BREAKER, 1));
+	    assertEquals(0, u.countPowers(Power.ICE_BREAKER, 2));
+	    
+	    StoredPower.incrementPowerForUser(Power.ICE_BREAKER, u, 1);
+	    assertEquals(1, u.superPowers.size());
+	    assertEquals(3, u.countPowers(Power.ICE_BREAKER, 0));
+	    assertEquals(3, u.countPowers(Power.ICE_BREAKER, 1));
 	    assertEquals(0, u.countPowers(Power.ICE_BREAKER, 2));
 	    
 	    StoredPower.usePowerForUser(Power.ICE_BREAKER, u);
 	    assertEquals(1, u.superPowers.size());
-	    assertEquals(2, u.countPowers(Power.ICE_BREAKER, 0));
-	    assertEquals(1, u.countPowers(Power.ICE_BREAKER, 1));
+	    assertEquals(3, u.countPowers(Power.ICE_BREAKER, 0));
+	    assertEquals(2, u.countPowers(Power.ICE_BREAKER, 1));
 	    assertEquals(1, u.countPowers(Power.ICE_BREAKER, 2));
 	    
 	    // test is qualified
-	    assertFalse(new IceBreaker().isQualified(u));
-	    assertFalse(new XRayLevelOne().isQualified(u));
-	    assertFalse(new MindReader().isQualified(u));
+	    assertFalse(new IceBreaker().isQualified(u) > 0);
+	    assertFalse(new XRayLevelOne().isQualified(u) > 0);
+	    assertFalse(new MindReader().isQualified(u) > 0);
 	}
 
 }

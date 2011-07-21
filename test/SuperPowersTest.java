@@ -87,15 +87,6 @@ public class SuperPowersTest extends MyFunctionalTest {
         JsonObject newPower = data.get("superPower").getAsJsonObject();
         assertEquals("X Ray Level 1", newPower.get("name").getAsString());        
 	}    
-
-	protected JsonObject usePower (Long power_id, Long user_id, Long other_id, Long room_id) {
-	    HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("power_id", power_id.toString());
-	    params.put("user_id", user_id.toString());
-	    params.put("other_id", other_id.toString());
-	    params.put("room_id", room_id.toString());
-	    return postAndValidateResponse("/usepower", params);
-	}
 	
 	@Test
 	public void testUsePowers () {
@@ -134,5 +125,34 @@ public class SuperPowersTest extends MyFunctionalTest {
         data = getListenResponse(rando_1_db, 0);
         assertEquals("usedpower", data.get("type").getAsString());               
 	}
+	 
+    // @Test
+    // public void testUseIceBreakerTwiceInARow () {
+    //         // first lets earn some x-ray-vision
+    //         for (int i = 0; i <= (XRayLevelOne.CHAT_MESSAGES_REQUIRED * 3); i++) {
+    //             notifyChatMessage(rando_1_db, rando_2_db, "hello world", 15L);
+    //         }
+    //         Promise<String> p = new CheckPowers().now();
+    //         goToSleep(2);
+    //         p = new CheckPowers().now();
+    //         goToSleep(2);        
+    // 
+    //         // and now after we wait, should have a superpower notifications
+    //         JsonObject data = getListenResponse(rando_1_db, 0);
+    //         assertEquals("newpower", data.get("type").getAsString());
+    //         JsonObject newPower = data.get("superPower").getAsJsonObject();
+    //         assertEquals("X Ray Level 1", newPower.get("name").getAsString());
+    //         Long power_id = data.get("power_id").getAsLong();
+    //              
+    //         JsonObject json = usePower(power_id, pmo_db_id, k_db_id, 15L);
+    //         assertEquals("okay", json.get("message").getAsString());    
+    // 
+    //         json = usePower(power_id, pmo_db_id, k_db_id, 15L);
+    //         assertEquals("okay", json.get("message").getAsString());       
+    // 
+    //         json = usePower (power_id, rando_1_db, rando_2_db, 15L);
+    //         assertEquals("You don't have any of that power remaining!", json.get("message").getAsString());
+    //         assertEquals("error", json.get("status").getAsString());             
+    // }
 		
 }

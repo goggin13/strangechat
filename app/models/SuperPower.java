@@ -29,9 +29,9 @@ public abstract class SuperPower {
 	* Test whether <code>userStat</code> is qualified to receive 
 	* another {@link SuperPower} instance of this type
 	* @param user 
-	* @return <code>true</code> if userStat has earned another
+	* @return the level of the power they are qualified for, or 0 if unqualified
 	*/
-	public abstract boolean isQualified (User user);
+	public abstract int isQualified (User user);
 	
 	/**
 	* Return the enumerated Power associated with this
@@ -50,21 +50,23 @@ public abstract class SuperPower {
     *		  another instance of this power
     */
     public boolean awardIfQualified (User user) {
-    	boolean qualified = isQualified(user);
-    	if (qualified) {
-    		grantTo(user);
+    	int level = isQualified(user);
+    	if (level > 0) {
+    		grantTo(user, level);
     	}
-    	return qualified;
+    	return level > 0;
     }
 
     /**
     * Create a {@link SuperPower} instance of this type, and grant it
-    * to <code>userStat</code>
-    * @param userStat
+    * to <code>user</code>
+    * @param user the user to grant to 
+    * @param level the level of the power to award    
     */
-    public void grantTo (User user) {
+    public void grantTo (User user, int level) {
         Power p = this.getPower();
-        StoredPower sp = StoredPower.incrementPowerForUser(p, user);
+        StoredPower sp = StoredPower.incrementPowerForUser(p, user, level);
+        sp.level = level;
     	user.notifyNewPower(sp);
     } 
     
@@ -74,8 +76,10 @@ public abstract class SuperPower {
      * be anything, so long as it coordinates with what clients expect.
      * E.G. "used", "fail", etc.  Subclasses superpowers may return any
      * string they wish 
+     * @param caller the {@link User} using the power
+     * @param subject the {@link User} the power is being used on
      * @return */
-    public String use () {
+    public String use (User caller, User subject) {
         return "used";
     }
     

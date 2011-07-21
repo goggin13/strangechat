@@ -43,7 +43,9 @@ public class UserEvent {
 	    }
 	
 	    public void publishMe () {
-	        System.out.println(this);
+	        if (this.user_id != -1) {
+	            System.out.println(this);
+            }
 	        userEvents.publish(this);
 	    }
 	    
@@ -252,16 +254,19 @@ public class UserEvent {
 	    final public Long power_id;
 	    /** details about the super power */
 	    final public SuperPower superPower;
+	    /** The level of the new super power */
+	    final public int level;
 	    
-	    public NewPower (Long for_user, SuperPower sp, Long power_id, String session_id) {
+	    public NewPower (Long for_user, SuperPower sp, Long power_id, int level, String session_id) {
 	        super("newpower", for_user, session_id);
 	        this.superPower = sp;
 	        this.power_id = power_id;
+	        this.level = level;
 	        publishMe();
 	    }
 	    
 		public String toString () {
-			return super.toString() + " : " + this.superPower.name + " awarded";
+			return super.toString() + " : " + this.superPower.name + " awarded (L " + this.level +")";
 		}	    
 	}
 
@@ -276,13 +281,16 @@ public class UserEvent {
 	    final public Long room_id;
 	    /** the result of using the power */
 	    final public String result;
+	    /** The level of the new super power */
+	    final public int level;	    
 	    
-	    public UsedPower (Long for_user, Long by_user, Long room_id, SuperPower sp, String result, String session_id) {
+	    public UsedPower (Long for_user, Long by_user, Long room_id, SuperPower sp, int level, String result, String session_id) {
 	        super("usedpower", for_user, session_id);
 	        this.superPower = sp;
 	        this.by_user = by_user;
 	        this.room_id = room_id;
 	        this.result = result;
+	        this.level = level;
 	        publishMe();
 	    }
 	    

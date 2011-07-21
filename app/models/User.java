@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import controllers.*;
 import enums.Power;
+import models.powers.*;
 
 /**
  * A chat user in the system, who can be online or off, and the maintained meta
@@ -77,6 +78,10 @@ public class User extends Model {
     public List<StoredPower> superPowers;
 	
 	/**
+	 * comma delimted list of icebreaker indices seen */
+	public String icebreakers_seen;
+	
+	/**
 	 * True if this user is currently online
 	 */	
 	public boolean online;
@@ -120,7 +125,22 @@ public class User extends Model {
 		this.offersReceivedCount = 0;
 		this.revealCount = 0;
 		this.friends = new HashSet<User>();
-	    this.superPowers = new LinkedList<StoredPower>();		
+	    this.superPowers = new LinkedList<StoredPower>();	
+	    this.icebreakers_seen = "";
+	    this.save();
+	    StoredPower sp = new StoredPower(Power.ICE_BREAKER, this);
+        // sp.available = 10;
+	    sp.save();
+	    this.superPowers.add(sp);
+	    
+        // sp = new StoredPower(Power.X_RAY_LEVEL_1, this);
+        // sp.save();       
+        // this.superPowers.add(sp);
+        // sp = new StoredPower(Power.MIND_READER, this);
+        // sp.save();    
+        // this.superPowers.add(sp);
+	    
+	    this.save();
 	}
 	
 	/**
@@ -229,6 +249,39 @@ public class User extends Model {
 		}
 	}
 
+    /**
+     * Return a list of all the ice breakers this user has seen 
+     * @return list of indices of icebreakers */
+    public Set<Integer> getSeenIceBreakers () {
+        String[] seen = this.icebreakers_seen.split(",");
+        Set<Integer> seenInts = new TreeSet<Integer>();
+        for (String s : seen) {
+            if (!s.equals("")) {
+                seenInts.add(Integer.parseInt(s.trim()));
+            }
+        }
+        return seenInts;
+    }
+    
+    /**
+     * Mark the given index as seen by this user 
+     * @param i the index of the icebreaker to mark as seen */
+    public void addSeenIceBreaker (int i) {
+        if (!this.seenIceBreaker(i)) {
+            String toAdd = " " + i + ",";            
+            this.icebreakers_seen += toAdd;
+            this.save();
+        }
+    }
+
+    /**
+     * @param i
+     * @return <code>true</code> if this user has seen the icebreaker at index i */
+    public boolean seenIceBreaker (int i) {
+        String indexStr = " " + i + ",";  
+        return this.icebreakers_seen.indexOf(indexStr) > -1;
+    }
+
 	/**
 	* Count how many {@link StoredPower} instances 
 	* @param p the {@link Power} to count
@@ -251,6 +304,17 @@ public class User extends Model {
 		}
 	}
 
+    /**
+     * This users current level for <code>p</code>
+     * @param p the power to check for
+     * @return the level of that power for this user, or 0 if they don't have it */
+    public int currentLevel (Power p) {
+        StoredPower sp = StoredPower.find("byOwnerAndPower", this, p).first();
+	    if (sp == null) {
+	        return 0;
+	    } 
+	    return sp.level;
+    }
 
     /**
      * Check all of the super powers and see if I am eligible for any
@@ -266,13 +330,13 @@ public class User extends Model {
 
     /**
      * Send this user a notification that a super power was used */
-    public void notifyUsedPower (Long used_by, Long room_id, SuperPower power, String result) {
+    public void notifyUsedPower (Long used_by, Long room_id, SuperPower power, int level, String result) {
 		if (!this.imOnMaster()) {
 		    HashMap<String, String> params 
-		        = Notify.getNotifyUsedPowerParams(this.id, used_by, room_id, power, result, this.session_id);
+		        = Notify.getNotifyUsedPowerParams(this.id, used_by, room_id, power, level, result, this.session_id);
     		notifyMe("usedpower", params);            
         } else {
-			new UserEvent.UsedPower(this.id, used_by, room_id, power, result, this.session_id);
+			new UserEvent.UsedPower(this.id, used_by, room_id, power, level, result, this.session_id);
 		}        
     } 
     
@@ -282,10 +346,10 @@ public class User extends Model {
 	public void notifyNewPower (StoredPower power) {
 		if (!this.imOnMaster()) {
 		    HashMap<String, String> params 
-		        = Notify.getNotifyNewPowerParams(this.id, power.getSuperPower(), power.id, this.session_id);
+		        = Notify.getNotifyNewPowerParams(this.id, power.getSuperPower(), power.id, power.level, this.session_id);
     		notifyMe("newpower", params);            
         } else {
-			new UserEvent.NewPower(this.id, power.getSuperPower(), power.id, this.session_id);
+			new UserEvent.NewPower(this.id, power.getSuperPower(), power.id, power.level, this.session_id);
 		}
 	}
 
@@ -399,7 +463,6 @@ public class User extends Model {
 		User user = User.find("byUser_id", user_id).first();
 		if (user == null) {
 			user = new User(user_id);
-			user.save();
 		}
 		return user;
 	}

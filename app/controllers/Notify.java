@@ -180,10 +180,12 @@ public class Notify extends Index {
 	 * Create an event telling a user they have a new superpower 
 	 * @param for_user the user who should read this event 	 
  	 * @param superPowerJSON serialized power  	 
+ 	 * @param power_id the id of the stored power record
+ 	 * @param level the level of the new power
 	 * @param session_id current session id this event is pertinent	to */		 
-	 public static void newPower (Long for_user, String superPowerJSON, Long power_id, String session_id) {
+	 public static void newPower (Long for_user, String superPowerJSON, Long power_id, int level, String session_id) {
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);
-         new UserEvent.NewPower(for_user, superPower, power_id, session_id);
+         new UserEvent.NewPower(for_user, superPower, power_id, level, session_id);
          returnOkay(null);
 	 }
 	 
@@ -193,11 +195,12 @@ public class Notify extends Index {
  	 * @param by_user the user who used the power
  	 * @param room_id optional, the room_id that it was used in
  	 * @param superPowerJSON serialized power  
+ 	 * @param level the level of the used power 	 
  	 * @param result the result of superpower.use()
  	 * @param session_id current session id this event is pertinent	to */		 
- 	 public static void usedPower (Long for_user, Long by_user, Long room_id, String superPowerJSON, String result, String session_id) {
+ 	 public static void usedPower (Long for_user, Long by_user, Long room_id, String superPowerJSON, int level, String result, String session_id) {
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);	     
-         new UserEvent.UsedPower(for_user, by_user, room_id, superPower, result, session_id);
+         new UserEvent.UsedPower(for_user, by_user, room_id, superPower, level, result, session_id);
          returnOkay(null);
  	 }
 	
@@ -213,8 +216,8 @@ public class Notify extends Index {
 	 * @param callback optional JSONP callback */
 	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
 		User.heartbeats.put(for_user, new Date());
-		new UserEvent.HeartBeat(for_user);
 		if (room_ids != null && room_ids.size() > 0 && room_ids.get(0) != null) {
+		    new UserEvent.HeartBeat(for_user);
 			for (Long rid : room_ids) {
 				User.beatInRoom(rid, for_user);
 			}
@@ -230,21 +233,31 @@ public class Notify extends Index {
         return params;
     }
 
-    public static HashMap<String, String> getNotifyUsedPowerParams (Long for_user, Long by_user, Long room_id, SuperPower power, String result, String session_id) {
+    public static HashMap<String, String> getNotifyUsedPowerParams (
+                    Long for_user, 
+                    Long by_user, 
+                    Long room_id, 
+                    SuperPower power, 
+                    int level, 
+                    String result, 
+                    String session_id) 
+    {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("superPowerJSON", power.toJSON());
         params.put("by_user", by_user.toString());
-        params.put("result", result);        
+        params.put("result", result); 
+        params.put("level", level + "");       
         params.put("room_id", room_id.toString());
         params.put("for_user", for_user.toString());
         params.put("session_id", session_id);
         return params;        
     }
 
-    public static HashMap<String, String> getNotifyNewPowerParams (Long for_user, SuperPower p, Long power_id, String session_id) {
+    public static HashMap<String, String> getNotifyNewPowerParams (Long for_user, SuperPower p, Long power_id, int level, String session_id) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("superPowerJSON", p.toJSON());
         params.put("power_id", power_id.toString());
+        params.put("level", level + "");
         params.put("for_user", for_user.toString());
         params.put("session_id", session_id);
         return params;

@@ -202,9 +202,9 @@ public class Users extends Index {
             returnFailed("You don't have any of that power remaining!", callback);
         } else {
             SuperPower sp = storedPower.getSuperPower();
-            String result = storedPower.use();
-            user.notifyUsedPower(user_id, room_id, sp, result);
-            other.notifyUsedPower(user_id, room_id, sp, result);            
+            String result = storedPower.use(user, other);
+            user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
+            other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
             returnOkay(callback);
         }
         

@@ -145,7 +145,7 @@ public class NotificationTests extends MyFunctionalTest {
 	@Test
 	public void testNotifyUsedPower () {
 	    SuperPower sp = new IceBreaker();
-        notifyUsedPower(pmo_db_id, k_db_id, 15L, sp, "resultstring", "sessionid");
+        notifyUsedPower(pmo_db_id, k_db_id, 15L, sp, 2, "resultstring", "sessionid");
         
 		JsonObject data = getListenResponse(pmo_db_id, 0);
 		assertEquals("usedpower", data.get("type").getAsString());
@@ -153,6 +153,7 @@ public class NotificationTests extends MyFunctionalTest {
 		assertEquals("15", data.get("room_id").getAsString());	
 		assertEquals("sessionid", data.get("session_id").getAsString());			
 		assertEquals("resultstring", data.get("result").getAsString());
+		assertEquals("2", data.get("level").getAsString());
 	}	
 
 }

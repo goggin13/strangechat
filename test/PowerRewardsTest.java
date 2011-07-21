@@ -89,7 +89,8 @@ public class PowerRewardsTest extends MyFunctionalTest {
 		data = getListenResponse(pmo_db_id, 0);
 		assertEquals("newpower", data.get("type").getAsString());
         JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("Ice Breaker", newPower.get("name").getAsString());		
+        assertEquals("Ice Breaker", newPower.get("name").getAsString());
+        assertEquals("1", data.get("level").getAsString());		
 	} 
 
  	@Test

@@ -85,7 +85,7 @@ public class CheckPowers extends Job {
     
     private static User getUser (Long id) {
         if (myUsers.containsKey(id)) {
-            return myUsers.get(id);
+            // return myUsers.get(id);
         }
         User u = User.findById(id);
         if (u == null) {

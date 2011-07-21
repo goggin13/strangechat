@@ -166,12 +166,12 @@ public class MyFunctionalTest extends FunctionalTest {
     }
 
     protected void notifyNewPower(Long for_user, StoredPower sp, String session_id) {
-        HashMap<String, String> params = Notify.getNotifyNewPowerParams(for_user, sp.getSuperPower(), sp.id, session_id);
+        HashMap<String, String> params = Notify.getNotifyNewPowerParams(for_user, sp.getSuperPower(), sp.id, sp.level, session_id);
         postAndAssertOkay("/notify/newpower", params);
     }
 
-    protected void notifyUsedPower (Long for_user, Long by_user, Long room_id, SuperPower power, String result, String session_id) {
-        HashMap<String, String> params = Notify.getNotifyUsedPowerParams(for_user, by_user, room_id, power, result, session_id);
+    protected void notifyUsedPower (Long for_user, Long by_user, Long room_id, SuperPower power, int level, String result, String session_id) {
+        HashMap<String, String> params = Notify.getNotifyUsedPowerParams(for_user, by_user, room_id, power, level, result, session_id);
         postAndAssertOkay("/notify/usedpower", params);
     }
 
@@ -179,6 +179,15 @@ public class MyFunctionalTest extends FunctionalTest {
 		HashMap<String, String> params = Notify.getNotifyTypingParams(for_user, user_id, room_id, txt);
 		postAndAssertOkay("/notify/useristyping", params);        
     }
+
+	protected JsonObject usePower (Long power_id, Long user_id, Long other_id, Long room_id) {
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("power_id", power_id.toString());
+	    params.put("user_id", user_id.toString());
+	    params.put("other_id", other_id.toString());
+	    params.put("room_id", room_id.toString());
+	    return postAndValidateResponse("/usepower", params);
+	}
 	
 	protected void goToSleep (int seconds) {
 	    try {

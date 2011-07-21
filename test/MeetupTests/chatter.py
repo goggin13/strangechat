@@ -35,8 +35,13 @@ class ChatAPI():
             'alias': self.name,
             'updatefriends': False
         }, self.CHAT_ROOT)
-        self.myData = data[str(self.user_id)]
-        self.heartbeatServer = data[str(self.user_id)]["heartbeatServer"]["uri"] 
+        # print data
+        # print str(self.user_id)
+        for k, v in data.iteritems():
+            if v['name'] == self.name:
+                self.speak("set my data")
+                self.myData = v
+                self.heartbeatServer = v["heartbeatServer"]["uri"] 
 
     def requestAndListen(self):
         """

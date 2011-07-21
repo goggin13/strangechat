@@ -5,6 +5,7 @@ import models.*;
 
 public class MindReader extends SuperPower {
 	private static int ICE_BREAKERS_REQUIRED = 3;
+	private static int ICE_BREAKERS_LEVEL_2 = 6;
 	
 	public MindReader () {
 		super(
@@ -15,15 +16,21 @@ public class MindReader extends SuperPower {
 		);
 	}
 		
-	public boolean isQualified (User user) {
+	public int isQualified (User user) {
 	    Power p = this.getPower();
-	    int mindReaderCount = user.countPowers(p, 0);
-        if (mindReaderCount > 0) {
-            return false; // can only have one
+	    int currentLevel = user.currentLevel(p);
+	    int usedIceBreakers = user.countPowers(new IceBreaker().getPower(), 2);
+	    
+	    if (currentLevel >= 2) {
+	        return 0;
+	    }
+	    if (usedIceBreakers >= ICE_BREAKERS_LEVEL_2  && currentLevel < 2) {
+	        return 2;
+	    } else if (usedIceBreakers >= ICE_BREAKERS_REQUIRED && currentLevel < 1) {
+            return 1;
+        } else {
+            return 0;
         }
-        int iceCount = user.countPowers(new IceBreaker().getPower(), 2);
-        System.out.println(iceCount >= ICE_BREAKERS_REQUIRED);
-		return iceCount >= ICE_BREAKERS_REQUIRED;
 	}
 	
 }

@@ -4,7 +4,7 @@ import enums.Power;
 import models.*;
 
 public class XRayLevelOne extends SuperPower {
-	private static final int CHAT_MESSAGES_REQUIRED = 40;
+	public static final int CHAT_MESSAGES_REQUIRED = 10;
 	
 	public XRayLevelOne() {
 		super(
@@ -15,13 +15,15 @@ public class XRayLevelOne extends SuperPower {
 		);
 	}
 		
-	public boolean isQualified (User user) {
+	public int isQualified (User user) {
 	    Power p = this.getPower();
 		long msgsUsed = CHAT_MESSAGES_REQUIRED * user.countPowers(p, 0);
-		return user.messageCount - msgsUsed > CHAT_MESSAGES_REQUIRED;
+        // System.out.println(msgsUsed);
+        // System.out.println(" / " + user.messageCount);
+		return user.messageCount - msgsUsed > CHAT_MESSAGES_REQUIRED ? 1 : 0;
 	}
 	
-	public String use () {
+	public String use (User caller, User subject) {
 	    return "X-Ray";
 	}
 }
