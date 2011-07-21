@@ -73,7 +73,7 @@ public class CheckPulses extends Job {
 		} else {	
 			String url = Server.getMasterServer().uri + "signout";
 			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("facebook_id", user_id.toString());
+			params.put("user_id", user_id.toString());
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			JsonObject json = resp.getJson().getAsJsonObject();
 		}

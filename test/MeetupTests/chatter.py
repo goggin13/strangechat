@@ -214,9 +214,9 @@ class ChatTester(Thread):
     def speak(self, txt):
         print self.name, txt
     
-ROOT_ID = 1
-NUM_USERS = 8
-NUM_ITERS = 3
+ROOT_ID = 11
+NUM_USERS = 7
+NUM_ITERS = 2
 
 thread_queue = Queue.Queue()
 for i in range(ROOT_ID, ROOT_ID + NUM_USERS):
