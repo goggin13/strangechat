@@ -10,6 +10,7 @@ import play.libs.F.*;
 import play.cache.Cache;
 import play.*;
 import models.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.google.gson.*;
 import com.google.gson.reflect.*;
@@ -28,7 +29,7 @@ public class Users extends Index {
 	
 	/**
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
-	public static int spotsPerUser = 100;
+	public static int spotsPerUser = 1;
 	
 	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom", "usePower"})
 	public static void checkAuth () {
@@ -119,18 +120,22 @@ public class Users extends Index {
 	 * @param user_id your user_id, so the random returned user isn't you 
 	 * @param callback optional JSONP callback*/
 	public static synchronized void requestRandomRoom (Long user_id, String callback) {
-		
+        // User.waitingRoom = new CopyOnWriteArrayList<Long>();
+        System.out.println("request from " + user_id);
+        System.out.println("currently " + User.waitingRoom);
 		if (User.waitingRoom.size() > 0) {
 		    Long otherUserID = null;
 			for (Long id : User.waitingRoom) {
 				if (canBePaired(id, user_id)) {
 					otherUserID = id;
-					User.removeFromWaitingRoom(id);
+					User.removeFromWaitingRoom(id, false);
 					break;
 				}
 			}
 			
 			if (otherUserID != null) {
+			    System.out.println("pairing " + otherUserID + " , " + user_id);
+			    System.out.println(User.waitingRoom);
 			    Room.createRoomFor(otherUserID, user_id);	
 				returnOkay(callback);
 			}
@@ -140,6 +145,8 @@ public class Users extends Index {
 		if (Collections.frequency(User.waitingRoom, user_id) < spotsPerUser) {
 		    User.waitingRoom.add(user_id);
 		}
+		System.out.println("adding " + user_id);
+		System.out.println(User.waitingRoom);
 		returnOkay(callback);
 	}
 
@@ -191,7 +198,7 @@ public class Users extends Index {
 	    }
 	    User user = User.findById(user_id);
 	    User other = User.findById(other_id);
-	    if (user == null || other == null) {
+	    if (user == null || (other_id != -1 && other == null)) {
 	        returnFailed("both user_id and other_id must map to existing users", callback);
 	    }
 	    

@@ -22,13 +22,15 @@ public class PowerRewardsTest extends MyFunctionalTest {
 	    GET("/mock/init");
 	    Users.remeetEligible = -1;
 	    
-		// pmo and kk register to for rooms
-	    requestRoomFor(pmo_db_id);
-	    requestRoomFor(k_db_id);	    
+        // pmo and kk register to for rooms
+        requestRoomFor(pmo_db_id);
+        requestRoomFor(k_db_id); 
+        heartbeatFor(pmo_db_id);
+        heartbeatFor(k_db_id); 
 	}
 	       
 	@Test
-	public void testXRayVision () {
+	public void testCloning () {
 	    
 		// PMO should have an event waiting notifying him kk joined
 		JsonObject data = getListenResponse(pmo_db_id, 0);
@@ -37,7 +39,7 @@ public class PowerRewardsTest extends MyFunctionalTest {
 		String with_user = data.get("new_user").getAsString();
 		
 		// chat 20 messages so we can get a new power (woo hoo!)
-		int msgCount = 55;
+		int msgCount = Cloning.CHAT_MSGS_REQUIRED + 2;
 		for (int i = 0; i < msgCount; i++) {
      		HashMap<String, String> params = new HashMap<String, String>();
      	    params.put("for_user", with_user.toString());
@@ -57,11 +59,13 @@ public class PowerRewardsTest extends MyFunctionalTest {
 		heartbeatForRoom(k_db_id, room_id);
 		Promise<String> p = new CheckPowers().now();
         goToSleep(2);
+        
 		// and now after we wait, PMO should have a superpower notifications
 		data = getListenResponse(pmo_db_id, 0);
 		assertEquals("newpower", data.get("type").getAsString());
         JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("X Ray Level 1", newPower.get("name").getAsString());		
+        assertEquals("Cloning", newPower.get("name").getAsString());
+        assertEquals("1", data.get("level").getAsString());		
 	} 
 
  	@Test
@@ -72,14 +76,11 @@ public class PowerRewardsTest extends MyFunctionalTest {
 		assertEquals("join", data.get("type").getAsString());
 		Long room_id = data.get("room_id").getAsLong();
 		String with_user = data.get("new_user").getAsString();
-		
-		IceBreaker.CHAT_SECONDS_REQUIRED = 1;
-		
+	
         // keep them alive and wait for checkpowers to run
-		for (int i = 0; i < 1; i++) {
+        double time = Math.ceil(IceBreaker.CHAT_SECONDS_REQUIRED / 5) + 1;
+		for (int i = 0; i < time; i++) {
 		    heartbeatForRoom(pmo_db_id, room_id);
-		    heartbeatForRoom(k_db_id, room_id);
-		    goToSleep(2);
 		}
 		
 		Promise<String> p = new CheckPowers().now();
@@ -106,7 +107,61 @@ public class PowerRewardsTest extends MyFunctionalTest {
 		JsonObject data = getListenResponse(pmo_db_id, 0);
 		assertEquals("newpower", data.get("type").getAsString());
         JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("Mind Reader", newPower.get("name").getAsString());		
+        assertEquals("Mind Reader", newPower.get("name").getAsString());
+        assertEquals("1", data.get("level").getAsString());		
 	}
 	
+	@Test
+	public void testMindReaderL2 () {
+	    // give PMO 3 used ice breakers
+        GET("/mock/loaddummyicebreakers2");
+
+		Promise<String> p = new CheckPowers().now();
+        goToSleep(2);
+        
+		// and now after we wait, PMO should have a superpower notifications
+		JsonObject data = getListenResponse(pmo_db_id, 0);
+		assertEquals("newpower", data.get("type").getAsString());
+        JsonObject newPower = data.get("superPower").getAsJsonObject();
+        assertEquals("Mind Reader", newPower.get("name").getAsString());
+        assertEquals("2", data.get("level").getAsString());
+	}
+	
+	
+	@Test
+	public void testOmniscience () {
+        
+        double time = Math.ceil(Omniscience.CHAT_TIME_REQUIRED) + 1;
+        // keep them alive and wait for checkpowers to run
+		for (int i = 0; i < time; i++) {
+		    heartbeatForRoom(pmo_db_id, 15L);
+		}
+		Promise<String> p = new CheckPowers().now();
+        goToSleep(2);
+        
+		// and now after we wait, PMO should have a superpower notifications
+		JsonObject data = getListenResponse(pmo_db_id, 0);
+		assertEquals("newpower", data.get("type").getAsString());
+        JsonObject newPower = data.get("superPower").getAsJsonObject();
+        assertEquals("Omniscience", newPower.get("name").getAsString());		
+	}
+	
+    @Test
+	public void testXRayLevel1 () {
+
+        double reveals = XRayVision.REVEALS_REQUIRED + 1;
+		for (int i = 0; i < reveals; i++) {
+            notifyChatMessage(pmo_db_id, k_db_id, CheckPowers.REVEAL_CODE, 15L);
+		}
+		Promise<String> p = new CheckPowers().now();
+        goToSleep(2);
+
+		// and now after we wait, PMO should have a superpower notifications
+		JsonObject data = getListenResponse(pmo_db_id, 0);
+		assertEquals("newpower", data.get("type").getAsString());
+        JsonObject newPower = data.get("superPower").getAsJsonObject();
+        assertEquals("X Ray Vision", newPower.get("name").getAsString());
+        assertEquals("1", data.get("level").getAsString());		
+	}
+ 		
 }

@@ -12,7 +12,9 @@ import models.powers.*;
 public enum Power {
 	ICE_BREAKER(new IceBreaker()), 
 	MIND_READER(new MindReader()),
-	X_RAY_LEVEL_1(new XRayLevelOne());
+	OMNISCIENCE(new Omniscience()),
+	CLONING(new Cloning()),
+	X_RAY_VISION(new XRayVision());
     
 	private String str; 
 	private SuperPower sp;

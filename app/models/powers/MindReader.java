@@ -4,8 +4,8 @@ import enums.Power;
 import models.*;
 
 public class MindReader extends SuperPower {
-	private static int ICE_BREAKERS_REQUIRED = 3;
-	private static int ICE_BREAKERS_LEVEL_2 = 6;
+	public static final int ICE_BREAKERS_REQUIRED = 3;
+	public static final int ICE_BREAKERS_LEVEL_2 = 6;
 	
 	public MindReader () {
 		super(

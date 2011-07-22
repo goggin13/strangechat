@@ -76,6 +76,11 @@ public class User extends Model {
      * ones that have already been used */ 
     @OneToMany(cascade=CascadeType.REMOVE)
     public List<StoredPower> superPowers;
+
+    /** list of the SuperPower objects owned by this user
+     * Just for login to tell them what they have */
+    @Transient
+    public HashMap<Power, SuperPower> superPowerDetails;
 	
 	/**
 	 * comma delimted list of icebreaker indices seen */
@@ -153,6 +158,17 @@ public class User extends Model {
 				friend.notifyMeLogin(this);
 			}
 		}
+		this.populateSuperPowerDetails();
+	}
+	
+	/**
+	 * Iterate stored powers and save all the superpower objects for
+	 * sending back to the user on login */
+	private void populateSuperPowerDetails () {
+	    this.superPowerDetails = new HashMap<Power, SuperPower>();
+	    for (StoredPower sp : this.superPowers) {
+	        this.superPowerDetails.put(sp.power, sp.getSuperPower());
+	    }
 	}
 	
 	/**
@@ -167,7 +183,7 @@ public class User extends Model {
 		for (User friend : this.friends) {
 			friend.notifyMeLogout(this.id);
 		}
-		User.removeFromWaitingRoom(this.user_id);
+		User.removeFromWaitingRoom(this.user_id, true);
 	}	
 	
 	/**
@@ -253,8 +269,12 @@ public class User extends Model {
      * Return a list of all the ice breakers this user has seen 
      * @return list of indices of icebreakers */
     public Set<Integer> getSeenIceBreakers () {
-        String[] seen = this.icebreakers_seen.split(",");
         Set<Integer> seenInts = new TreeSet<Integer>();
+        if (this.seenIceBreakersIsNull()) {
+            return seenInts;
+        }
+        String[] seen = this.icebreakers_seen.split(",");
+        
         for (String s : seen) {
             if (!s.equals("")) {
                 seenInts.add(Integer.parseInt(s.trim()));
@@ -268,8 +288,13 @@ public class User extends Model {
      * @param i the index of the icebreaker to mark as seen */
     public void addSeenIceBreaker (int i) {
         if (!this.seenIceBreaker(i)) {
-            String toAdd = " " + i + ",";            
-            this.icebreakers_seen += toAdd;
+            String toAdd = " " + i + ","; 
+            if (this.seenIceBreakersIsNull()) {
+                this.icebreakers_seen = toAdd;
+            } else {
+                this.icebreakers_seen += toAdd;
+            }       
+            
             this.save();
         }
     }
@@ -278,8 +303,15 @@ public class User extends Model {
      * @param i
      * @return <code>true</code> if this user has seen the icebreaker at index i */
     public boolean seenIceBreaker (int i) {
+        if (this.seenIceBreakersIsNull()) {
+            return false;
+        }
         String indexStr = " " + i + ",";  
         return this.icebreakers_seen.indexOf(indexStr) > -1;
+    }
+
+    private boolean seenIceBreakersIsNull () {
+        return this.icebreakers_seen == null || this.icebreakers_seen.equals("");
     }
 
 	/**
@@ -303,7 +335,28 @@ public class User extends Model {
 		    return sp.used;
 		}
 	}
+	
+	/**
+	 * count how many powers of type p this user has available 
+	 * @return */
+    public int countAvailablePowers (Power p) {
+        return countPowers(p, 1);
+    }
+    
+	/**
+	 * count how many powers of type p this user has used 
+	 * @return */
+    public int countUsedPowers (Power p) {
+        return countPowers(p, 0);
+    }    
 
+	/**
+	 * count how many powers of type p this user has
+	 * @return */
+    public int countPowers (Power p) {
+        return countPowers(p, 0);
+    }
+    
     /**
      * This users current level for <code>p</code>
      * @param p the power to check for
@@ -478,10 +531,16 @@ public class User extends Model {
 	
     /**
      * Removes all occurences of the given user from the waiting room
-     * @param user_id the id to remove from the room */
-    public static void removeFromWaitingRoom (Long user_id) {
+     * @param user_id the id to remove from the room 
+     * @param removeAll if true, remove all of the occurences of this user,
+     *                  else just one */
+    public static void removeFromWaitingRoom (Long user_id, boolean removeAll) {
+        System.out.println("remove " + (removeAll ? " all of " : " just one ") + user_id);
         while (waitingRoom.contains(user_id)) {
             waitingRoom.remove(user_id);
+            if (!removeAll) {
+                return;
+            }
         }
     }
 

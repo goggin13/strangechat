@@ -191,9 +191,7 @@ public class MyFunctionalTest extends FunctionalTest {
 	
 	protected void goToSleep (int seconds) {
 	    try {
-			System.out.println("sleeping");
 			Thread.sleep(seconds * 1000);
-			System.out.println("waking up");			
 		} catch (InterruptedException e){
 			System.out.println(e.getMessage());
 		}

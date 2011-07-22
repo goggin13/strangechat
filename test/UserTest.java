@@ -115,7 +115,7 @@ public class UserTest extends UnitTest {
 	    
 	    // test is qualified
 	    assertFalse(new IceBreaker().isQualified(u) > 0);
-	    assertFalse(new XRayLevelOne().isQualified(u) > 0);
+	    assertFalse(new XRayVision().isQualified(u) > 0);
 	    assertFalse(new MindReader().isQualified(u) > 0);
 	}
 

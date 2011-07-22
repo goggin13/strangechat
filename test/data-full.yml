@@ -57,7 +57,7 @@ StoredPower(sp):
   owner: rando2
   
 StoredPower(sp2):
-  power: "X_RAY_LEVEL_1"
+  power: "X_RAY_VISION"
   owner: rando2
   
 StoredPower(sp3):

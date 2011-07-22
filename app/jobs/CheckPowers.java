@@ -18,9 +18,9 @@ import java.lang.reflect .*;
 public class CheckPowers extends Job {
 	private static HashMap<String, Long> lastReceived = new HashMap<String, Long>();
 	private static HashMap<Long, User> myUsers = new HashMap<Long, User>();
-	private static final String REVEAL_CODE = "!@#$%^&$#@";
-	private static final String DATA_CODE = "*&^%$!";
-	private static final int HEARTBEAT_INTERVAL = 5;	
+	public static final String REVEAL_CODE = "!@#$%^&$#@";
+	public static final String DATA_CODE = "*&^%$!";
+	public static final int HEARTBEAT_INTERVAL = 5;	
 	
 	public void doJob () {
 		

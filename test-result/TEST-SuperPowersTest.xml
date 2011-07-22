@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="2.662" errors="0" skipped="0" tests="4" name="SuperPowersTest">
-  <testcase classname="SuperPowersTest" name="testEnumsMatchPowers" time="0.056">
+<testsuite failures="0" time="2.332" errors="0" skipped="0" tests="4" name="SuperPowersTest">
+  <testcase classname="SuperPowersTest" name="testEnumsMatchPowers" time="0.052">
       </testcase>
-  <testcase classname="SuperPowersTest" name="testGetAdminEvents" time="0.14">
+  <testcase classname="SuperPowersTest" name="testGetAdminEvents" time="0.131">
       </testcase>
-  <testcase classname="SuperPowersTest" name="testUsePowers" time="2.412">
+  <testcase classname="SuperPowersTest" name="testUsePowers" time="2.099">
       </testcase>
-  <testcase classname="SuperPowersTest" name="stub" time="0.054">
+  <testcase classname="SuperPowersTest" name="stub" time="0.05">
       </testcase>
 </testsuite>

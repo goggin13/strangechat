@@ -28,13 +28,18 @@ public class SuperPowersTest extends MyFunctionalTest {
     public void testEnumsMatchPowers () {
         assertEquals(Power.ICE_BREAKER, new IceBreaker().getPower());
         assertEquals(Power.MIND_READER, new MindReader().getPower());                
-        assertEquals(Power.X_RAY_LEVEL_1, new XRayLevelOne().getPower());        
+        assertEquals(Power.X_RAY_VISION, new XRayVision().getPower());        
+        assertEquals(Power.CLONING, new Cloning().getPower());        
+        assertEquals(Power.OMNISCIENCE, new Omniscience().getPower());                        
     }
     
 	@Test
 	public void testGetAdminEvents () {
 	    // put some events in there
         heartbeatFor(pmo_db_id);
+        heartbeatForRoom(pmo_db_id, 15L);
+        heartbeatFor(pmo_db_id);  // these heartbeats without rooms shouldn't show up
+        heartbeatFor(pmo_db_id);        
     	notifyLogin(pmo_db_id, k_db_id); 
     	notifyLogout(pmo_db_id, k_db_id);
     	notifyMessage(pmo_db_id, k_db_id, "helloworld");
@@ -53,6 +58,8 @@ public class SuperPowersTest extends MyFunctionalTest {
         String jsonStr = getAndValidateInner(url);
         List<UserEvent.Event> events = UserEvent.deserializeEvents(jsonStr);
 
+
+        // last one should be last received, for admin listeners
         UserEvent.DirectMessage lastMsg = (UserEvent.DirectMessage)events.get(events.size() - 1);
         Long last = Long.parseLong(lastMsg.text);
 
@@ -77,7 +84,7 @@ public class SuperPowersTest extends MyFunctionalTest {
 
         np = (UserEvent.NewPower)events.get(i++); 
         assertEquals("newpower", np.type);
-        assertEquals("X Ray Level 1", np.superPower.name);        
+        assertEquals("X Ray Vision", np.superPower.name);        
       
         // last message will always be a direct message indicating what the last recieved was
         assertEquals("directmessage", events.get(i++).type);
@@ -85,15 +92,16 @@ public class SuperPowersTest extends MyFunctionalTest {
         JsonObject data = getListenResponse(rando_1_db, 0);
         assertEquals("newpower", data.get("type").getAsString());
         JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("X Ray Level 1", newPower.get("name").getAsString());        
+        assertEquals("X Ray Vision", newPower.get("name").getAsString());        
 	}    
 	
 	@Test
 	public void testUsePowers () {
-        // first lets earn some x-ray-vision
-        for (int i = 0; i < 55; i++) {
-            notifyChatMessage(rando_1_db, rando_2_db, "hello world", 15L);
-        }
+        // first lets earn some Ice Breakers
+        double time = Math.ceil(IceBreaker.CHAT_SECONDS_REQUIRED / 5) + 1;
+		for (int i = 0; i < time; i++) {
+		    heartbeatForRoom(rando_1_db, 15L);
+		}
         Promise<String> p = new CheckPowers().now();
         goToSleep(2);
 
@@ -101,7 +109,7 @@ public class SuperPowersTest extends MyFunctionalTest {
         JsonObject data = getListenResponse(rando_1_db, 0);
         assertEquals("newpower", data.get("type").getAsString());
         JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("X Ray Level 1", newPower.get("name").getAsString());
+        assertEquals("Ice Breaker", newPower.get("name").getAsString());
         Long power_id = data.get("power_id").getAsLong();
 
         // now use it!
@@ -118,9 +126,11 @@ public class SuperPowersTest extends MyFunctionalTest {
         data = getListenResponse(rando_2_db, 0);
         assertEquals("usedpower", data.get("type").getAsString());
         assertEquals("15", data.get("room_id").getAsString());
-        assertEquals("X-Ray", data.get("result").getAsString());
+        
+        // just make sure result is there, its a random msg so we wont test for it
+        String result = data.get("result").getAsString();
         JsonObject power = data.get("superPower").getAsJsonObject();
-        assertEquals("X Ray Level 1", power.get("name").getAsString());
+        assertEquals("Ice Breaker", power.get("name").getAsString());
         
         data = getListenResponse(rando_1_db, 0);
         assertEquals("usedpower", data.get("type").getAsString());               
