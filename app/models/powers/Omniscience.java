@@ -11,7 +11,8 @@ public class Omniscience extends SuperPower {
 		    "Omniscience",
 			"http://lh6.ggpht.com/yj-E7lODrXPhoguX0ojc91zR90_BE7Bcv2slyH-df57i2VIcSkzuAsNzNTPWdC2yz6J-SzTLM8heA7c",
 			"Receive notifications whenever the other user uses super powers",
-			false
+			false,
+			true
 		);
 	}
 	

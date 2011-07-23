@@ -11,7 +11,8 @@ public class XRayVision extends SuperPower {
 		    "X Ray Vision",
 			"http://lh6.ggpht.com/yj-E7lODrXPhoguX0ojc91zR90_BE7Bcv2slyH-df57i2VIcSkzuAsNzNTPWdC2yz6J-SzTLM8heA7c",
 			"See if the other user has revealed themselves",
-			false
+			false,
+			true
 		);
 	}
 		

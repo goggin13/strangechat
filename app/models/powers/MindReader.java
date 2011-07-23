@@ -12,6 +12,7 @@ public class MindReader extends SuperPower {
 		    "Mind Reader",
 			"http://lh5.ggpht.com/-9NUoHdm3HKbEaU4zmOwJe4xD26Jf4YJFzsKAxnS72kQ30-sOiRYMG9hAIMats73tx64m4B27ibHR_w",
 			"See when the other user is typing",
+			true,
 			true
 		);
 	}

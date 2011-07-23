@@ -13,6 +13,7 @@ public class IceBreaker extends SuperPower {
 		    "Ice Breaker",
 			"http://lh3.ggpht.com/HygyyzxG6-EgjNjQvlfszfqXOEx4144eSqUCEKAEay7Fp_vYIIsAk0N1lp18Hdbh-aopXHo84oBPxiqK",
 			"Display an ice breaker message",
+			false,
 			false
 		);
 	}

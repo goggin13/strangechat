@@ -17,12 +17,15 @@ public abstract class SuperPower {
 	public final boolean infinite;
 	/** Name of this superpower */
 	public final String name;	
+	/** true if this power can only be used once per chat */
+	public final boolean oncePerChat;
 	
-	public SuperPower (String n, String im, String d, boolean i) {
+	public SuperPower (String n, String im, String d, boolean i, boolean o) {
         this.name = n;
 		this.image = im;
 		this.description = d;
 		this.infinite = i;
+		this.oncePerChat = o;
 	}
 	
 	/**

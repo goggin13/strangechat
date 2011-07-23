@@ -163,5 +163,5 @@ public class PowerRewardsTest extends MyFunctionalTest {
         assertEquals("X Ray Vision", newPower.get("name").getAsString());
         assertEquals("1", data.get("level").getAsString());		
 	}
- 		
+	
 }
