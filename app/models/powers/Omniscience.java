@@ -4,7 +4,7 @@ import enums.Power;
 import models.*;
 
 public class Omniscience extends SuperPower {
-	public static final int CHAT_TIME_REQUIRED = 30;
+	public static final int CHAT_TIME_REQUIRED = 300;
 	
 	public Omniscience () {
 		super(

@@ -98,7 +98,7 @@ public class SuperPowersTest extends MyFunctionalTest {
 	@Test
 	public void testUsePowers () {
         // first lets earn some Ice Breakers
-        double time = Math.ceil(IceBreaker.CHAT_SECONDS_REQUIRED / 5) + 1;
+        double time = Math.ceil(IceBreaker.levels.get(1) / 5) + 1;
 		for (int i = 0; i < time; i++) {
 		    heartbeatForRoom(rando_1_db, 15L);
 		}

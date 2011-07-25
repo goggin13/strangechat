@@ -134,17 +134,9 @@ public class User extends Model {
 	    this.icebreakers_seen = "";
 	    this.save();
 	    StoredPower sp = new StoredPower(Power.ICE_BREAKER, this);
-        // sp.available = 10;
+        sp.level = 0;
 	    sp.save();
 	    this.superPowers.add(sp);
-	    
-        // sp = new StoredPower(Power.X_RAY_LEVEL_1, this);
-        // sp.save();       
-        // this.superPowers.add(sp);
-        // sp = new StoredPower(Power.MIND_READER, this);
-        // sp.save();    
-        // this.superPowers.add(sp);
-	    
 	    this.save();
 	}
 	

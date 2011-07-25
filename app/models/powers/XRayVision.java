@@ -19,7 +19,7 @@ public class XRayVision extends SuperPower {
 	public int isQualified (User user) {
 	    Power p = this.getPower();
 		long revealsUsed = REVEALS_REQUIRED * user.countPowers(p, 0);
-		return user.offersMadeCount - revealsUsed > REVEALS_REQUIRED ? 1 : 0;
+		return user.offersMadeCount - revealsUsed >= REVEALS_REQUIRED ? 1 : 0;
 	}
 	
 	public String use (User caller, User subject) {

@@ -66,7 +66,9 @@ public class StoredPower extends Model {
     	  if (storedPower.getSuperPower().infinite) {
     	      storedPower.available = 1;
     	  } else {
-    	      storedPower.available++; 
+    	      if (storedPower.available < Integer.MAX_VALUE) {
+    	          storedPower.available++;
+    	      } 
     	  }    	    
     	  storedPower.save();  
     	}

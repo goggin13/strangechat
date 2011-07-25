@@ -67,33 +67,7 @@ public class PowerRewardsTest extends MyFunctionalTest {
         assertEquals("Cloning", newPower.get("name").getAsString());
         assertEquals("1", data.get("level").getAsString());		
 	} 
-
- 	@Test
-	public void testIceBreaker () {
-	    
-		// PMO should have an event waiting notifying him kk joined
-		JsonObject data = getListenResponse(pmo_db_id, 0);
-		assertEquals("join", data.get("type").getAsString());
-		Long room_id = data.get("room_id").getAsLong();
-		String with_user = data.get("new_user").getAsString();
 	
-        // keep them alive and wait for checkpowers to run
-        double time = Math.ceil(IceBreaker.CHAT_SECONDS_REQUIRED / 5) + 1;
-		for (int i = 0; i < time; i++) {
-		    heartbeatForRoom(pmo_db_id, room_id);
-		}
-		
-		Promise<String> p = new CheckPowers().now();
-        goToSleep(2);
-        
-		// and now after we wait, PMO should have a superpower notifications
-		data = getListenResponse(pmo_db_id, 0);
-		assertEquals("newpower", data.get("type").getAsString());
-        JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("Ice Breaker", newPower.get("name").getAsString());
-        assertEquals("1", data.get("level").getAsString());		
-	} 
-
  	@Test
 	public void testMindReader () {
         

@@ -29,7 +29,7 @@ public class Users extends Index {
 	
 	/**
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
-	public static int spotsPerUser = 1;
+	public static int spotsPerUser = 2;
 	
 	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom", "usePower"})
 	public static void checkAuth () {
@@ -83,8 +83,13 @@ public class Users extends Index {
 		user.save();		
 		broadcastHeartbeat(user);
 		
+		// since this user is just logging in, if they have previous requests for the waiting room, we should
+		// null them out
+		User.removeFromWaitingRoom(user.id, true);
+		
 		// add heartbeat server into list
 		friendData.put(user.id.toString(), user);
+		
 		Users.renderJSONP(
 			friendData, 
 			new TypeToken<HashMap<String, User>>() {}.getType(),

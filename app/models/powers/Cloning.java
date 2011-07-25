@@ -4,7 +4,7 @@ import enums.Power;
 import models.*;
 
 public class Cloning extends SuperPower {
-	public static final int CHAT_MSGS_REQUIRED = 20;
+	public static final int CHAT_MSGS_REQUIRED = 50;
 	
 	public Cloning () {
 		super(
@@ -12,7 +12,7 @@ public class Cloning extends SuperPower {
 			"http://lh6.ggpht.com/yj-E7lODrXPhoguX0ojc91zR90_BE7Bcv2slyH-df57i2VIcSkzuAsNzNTPWdC2yz6J-SzTLM8heA7c",
 			"Hold multiple chats",
 			true,
-			false
+			true
 		);
 	}
 	

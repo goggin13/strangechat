@@ -12,7 +12,7 @@ import com.google.gson.reflect.*;
  * A wrapper for the UserEvent classes.  See comment on {@link AnEvent} for 
  * more detail */
 public class UserEvent {
-    private static final int streamSize = 1000;
+    private static final int streamSize = 2000;
 	public static ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
 	public static ArchivedEventStream<UserEvent.Event> adminEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);	
 	

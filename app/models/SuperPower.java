@@ -66,11 +66,12 @@ public abstract class SuperPower {
     * @param user the user to grant to 
     * @param level the level of the power to award    
     */
-    public void grantTo (User user, int level) {
+    public StoredPower grantTo (User user, int level) {
         Power p = this.getPower();
         StoredPower sp = StoredPower.incrementPowerForUser(p, user, level);
         sp.level = level;
     	user.notifyNewPower(sp);
+    	return sp;
     } 
     
     /**

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="26.808" errors="0" skipped="0" tests="11" name="NotificationTests">
-  <testcase classname="NotificationTests" name="testHeartbeatFadeout" time="11.148">
+<testsuite failures="0" time="25.852" errors="0" skipped="0" tests="11" name="NotificationTests">
+  <testcase classname="NotificationTests" name="testHeartbeatFadeout" time="11.071">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.116">
+  <testcase classname="NotificationTests" name="testNotifyLogout" time="0.071">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.099">
+  <testcase classname="NotificationTests" name="testNotifyLogin" time="0.08">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.14">
+  <testcase classname="NotificationTests" name="testNotifyMessage" time="0.08">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyChatMessage" time="0.169">
+  <testcase classname="NotificationTests" name="testNotifyChatMessage" time="0.082">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyJoined" time="0.169">
+  <testcase classname="NotificationTests" name="testNotifyJoined" time="0.08">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyLeft" time="0.163">
+  <testcase classname="NotificationTests" name="testNotifyLeft" time="0.075">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyTyping" time="0.202">
+  <testcase classname="NotificationTests" name="testNotifyTyping" time="0.069">
       </testcase>
-  <testcase classname="NotificationTests" name="testLoginAndDontHeartbeat" time="14.232">
+  <testcase classname="NotificationTests" name="testLoginAndDontHeartbeat" time="14.119">
       </testcase>
-  <testcase classname="NotificationTests" name="testNotifyUsedPower" time="0.197">
+  <testcase classname="NotificationTests" name="testNotifyUsedPower" time="0.067">
       </testcase>
-  <testcase classname="NotificationTests" name="stub" time="0.173">
+  <testcase classname="NotificationTests" name="stub" time="0.058">
       </testcase>
 </testsuite>

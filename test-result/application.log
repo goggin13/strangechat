@@ -1,228 +1,46 @@
-23 Jul 2011 19:04:43,257 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
-23 Jul 2011 19:04:43,260 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
-23 Jul 2011 19:04:43,260 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
-23 Jul 2011 19:04:43,260 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-23 Jul 2011 19:04:43,260 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
-23 Jul 2011 19:04:43,261 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
-23 Jul 2011 19:04:43,261 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
-23 Jul 2011 19:04:43,888 WARN  ~ You're running Play! in DEV mode
-23 Jul 2011 19:04:43,958 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-23 Jul 2011 19:05:02,590 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-23 Jul 2011 19:05:05,631 INFO  ~ Application 'strangechat' is now started !
-23 Jul 2011 19:05:05,952 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-23 Jul 2011 19:05:13,805 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-23 Jul 2011 19:05:21,050 INFO  ~ broadcast leave room, 2 from 1
-23 Jul 2011 19:05:21,052 INFO  ~ broadcast leave room, 1 from 1
-23 Jul 2011 19:05:21,053 INFO  ~ broadcast leave room, 4 from 7
-23 Jul 2011 19:05:21,054 INFO  ~ broadcast leave room, 4 from 2
-23 Jul 2011 19:05:21,055 INFO  ~ broadcast leave room, 5 from 6
-23 Jul 2011 19:05:21,056 INFO  ~ broadcast leave room, 5 from 8
-23 Jul 2011 19:05:26,073 INFO  ~ broadcast leave room, 1 from 8
-23 Jul 2011 19:05:26,075 INFO  ~ broadcast leave room, 1 from 6
-23 Jul 2011 19:05:26,076 INFO  ~ broadcast leave room, 1 from 3
-23 Jul 2011 19:05:26,076 INFO  ~ broadcast leave room, 4 from 4
-23 Jul 2011 19:05:26,077 INFO  ~ broadcast leave room, 2 from 8
-23 Jul 2011 19:05:26,079 INFO  ~ broadcast leave room, 2 from 6
-23 Jul 2011 19:05:26,079 INFO  ~ broadcast leave room, 2 from 3
-23 Jul 2011 19:05:26,080 INFO  ~ broadcast leave room, 2 from 2
-23 Jul 2011 19:05:26,080 INFO  ~ broadcast leave room, 1 from 4
-23 Jul 2011 19:05:26,081 INFO  ~ broadcast leave room, 1 from 7
-23 Jul 2011 19:05:26,081 INFO  ~ broadcast leave room, 1 from 2
-23 Jul 2011 19:05:26,082 INFO  ~ broadcast leave room, 5 from 5
-23 Jul 2011 19:05:26,083 INFO  ~ broadcast leave room, 2 from 7
-23 Jul 2011 19:05:26,083 INFO  ~ broadcast leave room, 2 from 5
-23 Jul 2011 19:05:31,088 INFO  ~ broadcast leave room, 1 from 10
-23 Jul 2011 19:05:31,090 INFO  ~ broadcast leave room, 2 from 9
-23 Jul 2011 19:05:31,091 INFO  ~ broadcast leave room, 1 from 9
-23 Jul 2011 19:05:31,092 INFO  ~ broadcast leave room, 2 from 10
-23 Jul 2011 19:05:36,096 INFO  ~ broadcast leave room, 1 from 11
-23 Jul 2011 19:05:36,098 INFO  ~ broadcast leave room, 2 from 12
-23 Jul 2011 19:05:36,099 INFO  ~ broadcast leave room, 1 from 12
-23 Jul 2011 19:05:36,100 INFO  ~ broadcast leave room, 2 from 11
-23 Jul 2011 19:05:36,100 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:05:41,105 INFO  ~ broadcast leave room, 1 from 13
-23 Jul 2011 19:05:41,106 INFO  ~ broadcast leave room, 2 from 13
-23 Jul 2011 19:05:51,117 INFO  ~ broadcast leave room, 2 from 15
-23 Jul 2011 19:05:51,118 INFO  ~ broadcast leave room, 2 from 14
-23 Jul 2011 19:05:51,119 INFO  ~ broadcast leave room, 1 from 14
-23 Jul 2011 19:05:56,125 INFO  ~ broadcast leave room, 1 from 17
-23 Jul 2011 19:05:56,127 INFO  ~ broadcast leave room, 2 from 17
-23 Jul 2011 19:05:56,128 INFO  ~ broadcast leave room, 1 from 16
-23 Jul 2011 19:05:56,128 INFO  ~ broadcast leave room, 2 from 18
-23 Jul 2011 19:05:56,129 INFO  ~ broadcast leave room, 2 from 16
-23 Jul 2011 19:05:56,129 INFO  ~ broadcast leave room, 1 from 18
-23 Jul 2011 19:05:56,130 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:06:01,154 INFO  ~ broadcast leave room, 2 from 20
-23 Jul 2011 19:06:01,154 INFO  ~ broadcast leave room, 1 from 19
-23 Jul 2011 19:06:01,155 INFO  ~ broadcast leave room, 2 from 19
-23 Jul 2011 19:06:01,155 INFO  ~ broadcast leave room, 1 from 20
-23 Jul 2011 19:08:43,544 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-23 Jul 2011 19:08:53,555 ERROR ~ attempted to process event for non-existant user (6)
-23 Jul 2011 19:08:53,557 ERROR ~ 
-
-@6779hf2b9
-Error during job execution (jobs.CheckPowers)
-
-Execution exception (In /app/jobs/CheckPowers.java around line 76)
-NullPointerException occured : Try to read chatTime on null object models.User (jobs.CheckPowers.processUpdates, line 76)
-
-play.exceptions.JavaExecutionException: Try to read chatTime on null object models.User (jobs.CheckPowers.processUpdates, line 76)
-	at play.jobs.Job.call(Job.java:166)
-	at Invocation.Job(Play!)
-Caused by: java.lang.NullPointerException: Try to read chatTime on null object models.User (jobs.CheckPowers.processUpdates, line 76)
-	at play.classloading.enhancers.PropertiesEnhancer$FieldAccessor.invokeReadProperty(PropertiesEnhancer.java:201)
-	at jobs.CheckPowers.processUpdates(CheckPowers.java:76)
-	at jobs.CheckPowers.doJob(CheckPowers.java:33)
-	at play.jobs.Job.doJobWithResult(Job.java:55)
-	at play.jobs.Job.call(Job.java:157)
-	... 1 more
-23 Jul 2011 19:08:53,570 INFO  ~ broadcast leave room, 1 from 3
-23 Jul 2011 19:08:53,573 INFO  ~ broadcast leave room, 2 from 3
-23 Jul 2011 19:08:53,573 INFO  ~ broadcast leave room, 2 from 2
-23 Jul 2011 19:08:53,574 INFO  ~ broadcast leave room, 1 from 2
-23 Jul 2011 19:09:00,484 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-23 Jul 2011 19:09:10,515 INFO  ~ broadcast leave room, 1 from 3
-23 Jul 2011 19:09:10,518 INFO  ~ broadcast leave room, 6 from 21
-23 Jul 2011 19:09:10,519 INFO  ~ broadcast leave room, 3 from 21
-23 Jul 2011 19:09:10,519 INFO  ~ broadcast leave room, 2 from 3
-23 Jul 2011 19:09:10,520 INFO  ~ broadcast leave room, 2 from 2
-23 Jul 2011 19:09:10,520 INFO  ~ broadcast leave room, 1 from 2
-23 Jul 2011 19:09:15,525 INFO  ~ broadcast leave room, 1 from 5
-23 Jul 2011 19:09:15,527 INFO  ~ broadcast leave room, 1 from 4
-23 Jul 2011 19:09:15,528 INFO  ~ broadcast leave room, 2 from 4
-23 Jul 2011 19:09:15,529 INFO  ~ broadcast leave room, 2 from 5
-23 Jul 2011 19:09:20,534 INFO  ~ broadcast leave room, 1 from 6
-23 Jul 2011 19:09:20,535 INFO  ~ broadcast leave room, 2 from 6
-23 Jul 2011 19:09:20,536 INFO  ~ broadcast leave room, 1 from 7
-23 Jul 2011 19:09:20,537 INFO  ~ broadcast leave room, 2 from 7
-23 Jul 2011 19:09:20,537 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:09:25,561 INFO  ~ broadcast leave room, 1 from 8
-23 Jul 2011 19:09:25,562 INFO  ~ broadcast leave room, 2 from 8
-23 Jul 2011 19:09:28,823 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-23 Jul 2011 19:09:35,583 INFO  ~ broadcast leave room, 1 from 8
-23 Jul 2011 19:09:35,584 INFO  ~ broadcast leave room, 2 from 1
-23 Jul 2011 19:09:35,584 INFO  ~ broadcast leave room, 1 from 1
-23 Jul 2011 19:09:35,585 INFO  ~ broadcast leave room, 4 from 7
-23 Jul 2011 19:09:35,586 INFO  ~ broadcast leave room, 4 from 2
-23 Jul 2011 19:09:35,586 INFO  ~ broadcast leave room, 5 from 6
-23 Jul 2011 19:09:35,587 INFO  ~ broadcast leave room, 2 from 6
-23 Jul 2011 19:09:35,588 INFO  ~ broadcast leave room, 2 from 2
-23 Jul 2011 19:09:35,588 INFO  ~ broadcast leave room, 5 from 8
-23 Jul 2011 19:09:35,589 INFO  ~ broadcast leave room, 1 from 7
-23 Jul 2011 19:09:40,602 INFO  ~ broadcast leave room, 5 from 12
-23 Jul 2011 19:09:40,603 INFO  ~ broadcast leave room, 1 from 10
-23 Jul 2011 19:09:40,604 INFO  ~ broadcast leave room, 2 from 15
-23 Jul 2011 19:09:40,605 INFO  ~ broadcast leave room, 1 from 11
-23 Jul 2011 19:09:40,606 INFO  ~ broadcast leave room, 4 from 11
-23 Jul 2011 19:09:40,607 INFO  ~ broadcast leave room, 2 from 12
-23 Jul 2011 19:09:40,607 INFO  ~ broadcast leave room, 1 from 13
-23 Jul 2011 19:09:40,608 INFO  ~ broadcast leave room, 2 from 9
-23 Jul 2011 19:09:40,608 INFO  ~ broadcast leave room, 2 from 14
-23 Jul 2011 19:09:40,609 INFO  ~ broadcast leave room, 2 from 13
-23 Jul 2011 19:09:40,609 INFO  ~ broadcast leave room, 1 from 9
-23 Jul 2011 19:09:40,610 INFO  ~ broadcast leave room, 2 from 10
-23 Jul 2011 19:09:40,610 INFO  ~ broadcast leave room, 1 from 14
-23 Jul 2011 19:09:45,615 INFO  ~ broadcast leave room, 1 from 17
-23 Jul 2011 19:09:45,616 INFO  ~ broadcast leave room, 2 from 17
-23 Jul 2011 19:09:45,618 INFO  ~ broadcast leave room, 1 from 16
-23 Jul 2011 19:09:45,618 INFO  ~ broadcast leave room, 2 from 16
-23 Jul 2011 19:09:50,623 INFO  ~ broadcast leave room, 1 from 19
-23 Jul 2011 19:09:50,624 INFO  ~ broadcast leave room, 2 from 18
-23 Jul 2011 19:09:50,626 INFO  ~ broadcast leave room, 2 from 19
-23 Jul 2011 19:09:50,626 INFO  ~ broadcast leave room, 1 from 18
-23 Jul 2011 19:09:55,635 INFO  ~ broadcast leave room, 2 from 20
-23 Jul 2011 19:09:55,635 INFO  ~ broadcast leave room, 1 from 20
-23 Jul 2011 19:10:05,650 INFO  ~ broadcast leave room, 4 from 15
-23 Jul 2011 19:10:05,651 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:10:33,316 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-23 Jul 2011 19:10:33,329 ERROR ~ 
-
-@6779hf2bc
-Error during job execution (jobs.CheckPowers)
-
-Execution exception (In /app/jobs/CheckPowers.java around line 32)
-ClassCastException occured : models.Server cannot be cast to models.Server
-
-play.exceptions.JavaExecutionException: models.Server cannot be cast to models.Server
-	at play.jobs.Job.call(Job.java:166)
-	at Invocation.Job(Play!)
-Caused by: java.lang.ClassCastException: models.Server cannot be cast to models.Server
-	at jobs.CheckPowers.doJob(CheckPowers.java:32)
-	at play.jobs.Job.doJobWithResult(Job.java:55)
-	at play.jobs.Job.call(Job.java:157)
-	... 1 more
-23 Jul 2011 19:10:43,339 INFO  ~ broadcast leave room, 4 from 15
-23 Jul 2011 19:10:49,357 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-23 Jul 2011 19:10:59,381 INFO  ~ broadcast leave room, 4 from 15
-23 Jul 2011 19:10:59,383 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:11:00,604 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-23 Jul 2011 19:11:09,397 INFO  ~ broadcast leave room, 2 from 1
-23 Jul 2011 19:11:09,398 INFO  ~ broadcast leave room, 1 from 6
-23 Jul 2011 19:11:09,399 INFO  ~ broadcast leave room, 1 from 1
-23 Jul 2011 19:11:09,399 INFO  ~ broadcast leave room, 1 from 3
-23 Jul 2011 19:11:09,400 INFO  ~ broadcast leave room, 4 from 4
-23 Jul 2011 19:11:09,401 INFO  ~ broadcast leave room, 4 from 7
-23 Jul 2011 19:11:09,401 INFO  ~ broadcast leave room, 4 from 2
-23 Jul 2011 19:11:09,402 INFO  ~ broadcast leave room, 5 from 6
-23 Jul 2011 19:11:09,403 INFO  ~ broadcast leave room, 2 from 6
-23 Jul 2011 19:11:09,404 INFO  ~ broadcast leave room, 2 from 3
-23 Jul 2011 19:11:09,404 INFO  ~ broadcast leave room, 2 from 2
-23 Jul 2011 19:11:09,404 INFO  ~ broadcast leave room, 5 from 8
-23 Jul 2011 19:11:09,405 INFO  ~ broadcast leave room, 1 from 4
-23 Jul 2011 19:11:09,405 INFO  ~ broadcast leave room, 1 from 2
-23 Jul 2011 19:11:09,406 INFO  ~ broadcast leave room, 5 from 5
-23 Jul 2011 19:11:09,406 INFO  ~ broadcast leave room, 2 from 5
-23 Jul 2011 19:11:14,411 INFO  ~ broadcast leave room, 1 from 8
-23 Jul 2011 19:11:14,413 INFO  ~ broadcast leave room, 2 from 8
-23 Jul 2011 19:11:14,414 INFO  ~ broadcast leave room, 1 from 7
-23 Jul 2011 19:11:14,414 INFO  ~ broadcast leave room, 2 from 7
-23 Jul 2011 19:11:19,419 INFO  ~ broadcast leave room, 1 from 10
-23 Jul 2011 19:11:19,420 INFO  ~ broadcast leave room, 1 from 11
-23 Jul 2011 19:11:19,420 INFO  ~ broadcast leave room, 2 from 9
-23 Jul 2011 19:11:19,421 INFO  ~ broadcast leave room, 2 from 11
-23 Jul 2011 19:11:19,422 INFO  ~ broadcast leave room, 1 from 9
-23 Jul 2011 19:11:19,422 INFO  ~ broadcast leave room, 2 from 10
-23 Jul 2011 19:11:24,433 INFO  ~ broadcast leave room, 2 from 12
-23 Jul 2011 19:11:24,434 INFO  ~ broadcast leave room, 1 from 13
-23 Jul 2011 19:11:24,435 INFO  ~ broadcast leave room, 1 from 12
-23 Jul 2011 19:11:24,435 INFO  ~ broadcast leave room, 2 from 13
-23 Jul 2011 19:11:24,436 INFO  ~ broadcast leave room, 4 from 15
-23 Jul 2011 19:11:24,436 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:11:39,454 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:12:12,725 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-23 Jul 2011 19:12:19,501 INFO  ~ broadcast leave room, 1 from 8
-23 Jul 2011 19:12:19,502 INFO  ~ broadcast leave room, 2 from 1
-23 Jul 2011 19:12:19,502 INFO  ~ broadcast leave room, 1 from 1
-23 Jul 2011 19:12:19,503 INFO  ~ broadcast leave room, 4 from 7
-23 Jul 2011 19:12:19,504 INFO  ~ broadcast leave room, 4 from 2
-23 Jul 2011 19:12:19,504 INFO  ~ broadcast leave room, 5 from 6
-23 Jul 2011 19:12:19,505 INFO  ~ broadcast leave room, 2 from 6
-23 Jul 2011 19:12:19,506 INFO  ~ broadcast leave room, 2 from 2
-23 Jul 2011 19:12:19,506 INFO  ~ broadcast leave room, 5 from 8
-23 Jul 2011 19:12:19,507 INFO  ~ broadcast leave room, 1 from 7
-23 Jul 2011 19:12:24,512 INFO  ~ broadcast leave room, 2 from 20
-23 Jul 2011 19:12:24,514 INFO  ~ broadcast leave room, 2 from 15
-23 Jul 2011 19:12:24,514 INFO  ~ broadcast leave room, 2 from 14
-23 Jul 2011 19:12:24,515 INFO  ~ broadcast leave room, 2 from 17
-23 Jul 2011 19:12:24,515 INFO  ~ broadcast leave room, 1 from 16
-23 Jul 2011 19:12:24,516 INFO  ~ broadcast leave room, 1 from 19
-23 Jul 2011 19:12:24,517 INFO  ~ broadcast leave room, 2 from 18
-23 Jul 2011 19:12:24,517 INFO  ~ broadcast leave room, 2 from 19
-23 Jul 2011 19:12:24,518 INFO  ~ broadcast leave room, 1 from 20
-23 Jul 2011 19:12:24,518 INFO  ~ broadcast leave room, 1 from 18
-23 Jul 2011 19:12:24,518 INFO  ~ broadcast leave room, 4 from 16
-23 Jul 2011 19:12:24,519 INFO  ~ broadcast leave room, 5 from 17
-23 Jul 2011 19:12:24,520 INFO  ~ broadcast leave room, 1 from 14
-23 Jul 2011 19:12:29,526 INFO  ~ broadcast leave room, 1 from 22
-23 Jul 2011 19:12:29,527 INFO  ~ broadcast leave room, 2 from 21
-23 Jul 2011 19:12:29,528 INFO  ~ broadcast leave room, 2 from 22
-23 Jul 2011 19:12:29,529 INFO  ~ broadcast leave room, 1 from 21
-23 Jul 2011 19:12:34,534 INFO  ~ broadcast leave room, 1 from 23
-23 Jul 2011 19:12:34,535 INFO  ~ broadcast leave room, 2 from 24
-23 Jul 2011 19:12:34,536 INFO  ~ broadcast leave room, 1 from 24
-23 Jul 2011 19:12:34,537 INFO  ~ broadcast leave room, 2 from 23
-23 Jul 2011 19:12:39,550 INFO  ~ broadcast leave room, 1 from 25
-23 Jul 2011 19:12:39,551 INFO  ~ broadcast leave room, 2 from 25
-23 Jul 2011 19:12:39,551 INFO  ~ broadcast leave room, 4 from 15
-23 Jul 2011 19:12:39,552 INFO  ~ broadcast leave room, 1 from 15
-23 Jul 2011 19:12:54,569 INFO  ~ broadcast leave room, 1 from 15
+25 Jul 2011 16:36:16,461 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+25 Jul 2011 16:36:16,464 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+25 Jul 2011 16:36:16,464 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
+25 Jul 2011 16:36:16,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+25 Jul 2011 16:36:16,465 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+25 Jul 2011 16:36:16,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
+25 Jul 2011 16:36:16,465 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
+25 Jul 2011 16:36:17,030 WARN  ~ You're running Play! in DEV mode
+25 Jul 2011 16:36:17,100 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+25 Jul 2011 16:36:28,223 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+25 Jul 2011 16:36:30,693 INFO  ~ Application 'strangechat' is now started !
+25 Jul 2011 16:36:30,898 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+25 Jul 2011 16:36:39,643 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+25 Jul 2011 16:36:40,968 INFO  ~ broadcast leave room, 1 from 8
+25 Jul 2011 16:36:40,973 INFO  ~ broadcast leave room, 2 from 1
+25 Jul 2011 16:36:40,976 INFO  ~ broadcast leave room, 1 from 1
+25 Jul 2011 16:36:40,977 INFO  ~ broadcast leave room, 4 from 7
+25 Jul 2011 16:36:40,980 INFO  ~ broadcast leave room, 4 from 2
+25 Jul 2011 16:36:40,981 INFO  ~ broadcast leave room, 5 from 6
+25 Jul 2011 16:36:40,982 INFO  ~ broadcast leave room, 5 from 8
+25 Jul 2011 16:36:51,000 INFO  ~ broadcast leave room, 1 from 8
+25 Jul 2011 16:36:51,001 INFO  ~ broadcast leave room, 1 from 6
+25 Jul 2011 16:36:51,002 INFO  ~ broadcast leave room, 1 from 3
+25 Jul 2011 16:36:51,002 INFO  ~ broadcast leave room, 4 from 4
+25 Jul 2011 16:36:51,003 INFO  ~ broadcast leave room, 2 from 8
+25 Jul 2011 16:36:51,004 INFO  ~ broadcast leave room, 2 from 6
+25 Jul 2011 16:36:51,004 INFO  ~ broadcast leave room, 2 from 3
+25 Jul 2011 16:36:51,005 INFO  ~ broadcast leave room, 2 from 2
+25 Jul 2011 16:36:51,005 INFO  ~ broadcast leave room, 1 from 4
+25 Jul 2011 16:36:51,006 INFO  ~ broadcast leave room, 1 from 7
+25 Jul 2011 16:36:51,006 INFO  ~ broadcast leave room, 1 from 2
+25 Jul 2011 16:36:51,007 INFO  ~ broadcast leave room, 5 from 5
+25 Jul 2011 16:36:51,008 INFO  ~ broadcast leave room, 2 from 7
+25 Jul 2011 16:36:51,008 INFO  ~ broadcast leave room, 2 from 5
+25 Jul 2011 16:36:56,014 INFO  ~ broadcast leave room, 1 from 10
+25 Jul 2011 16:36:56,016 INFO  ~ broadcast leave room, 2 from 9
+25 Jul 2011 16:36:56,017 INFO  ~ broadcast leave room, 1 from 9
+25 Jul 2011 16:36:56,018 INFO  ~ broadcast leave room, 2 from 10
+25 Jul 2011 16:37:01,022 INFO  ~ broadcast leave room, 1 from 11
+25 Jul 2011 16:37:01,024 INFO  ~ broadcast leave room, 2 from 12
+25 Jul 2011 16:37:01,025 INFO  ~ broadcast leave room, 1 from 12
+25 Jul 2011 16:37:01,026 INFO  ~ broadcast leave room, 2 from 11
+25 Jul 2011 16:37:05,985 INFO  ~ broadcast leave room, 4 from 15
+25 Jul 2011 16:37:05,986 INFO  ~ broadcast leave room, 1 from 15
+25 Jul 2011 16:37:16,044 INFO  ~ broadcast leave room, 1 from 15
+25 Jul 2011 16:37:56,085 INFO  ~ broadcast leave room, 1 from 15
