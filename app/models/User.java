@@ -182,9 +182,16 @@ public class User extends Model {
 	 * @return string representation of this user
 	 */	
 	public String toString () {
-		return this.user_id.toString() + " "
-			   + (this.heartbeatServer == null ? "no hb server" : this.heartbeatServer.uri) + " "
-			   + (this.online ? " - online" : "");
+	    String str;
+	    if (!this.name.equals("")) {
+	        str = this.name 
+	              + " (" + this.user_id.toString() + ")";
+	    } else {
+	        str = this.user_id.toString();
+	    }
+		return str;
+               // + (this.heartbeatServer == null ? "no hb server" : this.heartbeatServer.uri) + " "
+               // + (this.online ? " - online" : "");
 	}
 	
 	/**

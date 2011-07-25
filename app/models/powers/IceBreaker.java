@@ -10,20 +10,21 @@ public class IceBreaker extends SuperPower {
     public static final int bonusLevel;
     public static final int bonus = 3;
     public static final int penultimateLevelInterval = 300; // every 5 minutes
+    private static final Long min = 60L;
     
 	static {
 	    levels.put(0, 0L);         // one for free when u start
-        levels.put(levelCount++, 2L * 60L);
-        levels.put(levelCount++, 5L * 60L);
-        levels.put(levelCount++, 10L * 60L);
-        levels.put(levelCount++, 20L * 60L);
-        levels.put(levelCount++, 25L * 60L);    // 25 minutes
-        levels.put(levelCount++, 35L * 60L);
-        levels.put(levelCount++, 50L * 60L);
+        levels.put(levelCount++, 2L * min);
+        levels.put(levelCount++, 5L * min);
+        levels.put(levelCount++, 10L * min);
+        levels.put(levelCount++, 20L * min);
+        levels.put(levelCount++, 25L * min);    // 25 minutes
+        levels.put(levelCount++, 35L * min);
+        levels.put(levelCount++, 50L * min);
         bonusLevel = levelCount;
-        levels.put(levelCount++, 60L * 60L);    // 1 hour
-        levels.put(levelCount++, 65L * 60L);    // start receiving one every 5 minutes
-        levels.put(levelCount, 60L * 60L * 3L); // 3 hours
+        levels.put(levelCount++, 60L * min);    // 1 hour
+        levels.put(levelCount++, 65L * min);    // start receiving one every 5 minutes
+        levels.put(levelCount, min * 60L * 3L); // 3 hours
 	}
 	
 	public IceBreaker() {
@@ -36,7 +37,7 @@ public class IceBreaker extends SuperPower {
 		);
 	}
     
-	public int isQualified (User user) {
+	public int isQualified (User user) {	    
 	    Power p = this.getPower();
 	    int targetLevel = user.currentLevel(p) + 1;
 	    Long targetTime = levels.get(targetLevel);
@@ -56,14 +57,6 @@ public class IceBreaker extends SuperPower {
 	        // get one every 5 minutes until they get to final level
             int secsUsed = penultimateLevelInterval * (user.countPowers(p) - levelCount - 2);
 	        Long secsAvailable = user.chatTime - secsUsed - levels.get(levelCount - 1);
-
-	        System.out.println("PENULTIMATE LEVEL");
-	        System.out.println(secsAvailable);
-	        System.out.println("\t : " + user.chatTime);
-	        System.out.println("\t : " + secsUsed);
-	        System.out.println("\t : " + levels.get(levelCount - 1));
-            System.out.println(secsAvailable >= penultimateLevelInterval);
-            
 	        return (secsAvailable >= penultimateLevelInterval) ? levelCount - 1 : 0;
 	        
 	    } else {       

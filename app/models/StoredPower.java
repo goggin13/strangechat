@@ -25,6 +25,9 @@ public class StoredPower extends Model {
 	
 	/** the level of the current power */
 	public int level;
+
+	/* true if this power has been used at this level before */
+	public boolean newToLevel;
 	
 	/** User who has accrued this power */
 	@Required
@@ -37,10 +40,14 @@ public class StoredPower extends Model {
 		this.available = 1;
 		this.level = 1;
 		this.used = 0;
+		this.newToLevel = true;		
 	}
 	
 	public String toString () {
-		return power.toString();
+		return power.toString() 
+		       + "(" + this.level + ")"
+               + " " + this.available + " / " + (this.used + this.available) 
+               + " --> " + owner.toString();
 	}
 	
 	public SuperPower getSuperPower () {
@@ -75,6 +82,15 @@ public class StoredPower extends Model {
     	return storedPower;
     }
     
+    public void setLevel (int l) {
+        if (l != this.level) {
+            this.level = l;
+            if (!this.power.equals(Power.ICE_BREAKER)) {
+                this.newToLevel = true;
+            }
+        } 
+    }
+    
     /**
      * Return true if the Owner of this stored power has some available
      * @return */
@@ -93,6 +109,7 @@ public class StoredPower extends Model {
             this.available--;
         }
         this.used++;
+        this.newToLevel = false;
         this.save();
         return superPower.use(caller, subject);
     }

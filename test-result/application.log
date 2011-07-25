@@ -1,46 +1,79 @@
-25 Jul 2011 16:36:16,461 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
-25 Jul 2011 16:36:16,464 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
-25 Jul 2011 16:36:16,464 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
-25 Jul 2011 16:36:16,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
-25 Jul 2011 16:36:16,465 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
-25 Jul 2011 16:36:16,465 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
-25 Jul 2011 16:36:16,465 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
-25 Jul 2011 16:36:17,030 WARN  ~ You're running Play! in DEV mode
-25 Jul 2011 16:36:17,100 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
-25 Jul 2011 16:36:28,223 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
-25 Jul 2011 16:36:30,693 INFO  ~ Application 'strangechat' is now started !
-25 Jul 2011 16:36:30,898 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
-25 Jul 2011 16:36:39,643 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
-25 Jul 2011 16:36:40,968 INFO  ~ broadcast leave room, 1 from 8
-25 Jul 2011 16:36:40,973 INFO  ~ broadcast leave room, 2 from 1
-25 Jul 2011 16:36:40,976 INFO  ~ broadcast leave room, 1 from 1
-25 Jul 2011 16:36:40,977 INFO  ~ broadcast leave room, 4 from 7
-25 Jul 2011 16:36:40,980 INFO  ~ broadcast leave room, 4 from 2
-25 Jul 2011 16:36:40,981 INFO  ~ broadcast leave room, 5 from 6
-25 Jul 2011 16:36:40,982 INFO  ~ broadcast leave room, 5 from 8
-25 Jul 2011 16:36:51,000 INFO  ~ broadcast leave room, 1 from 8
-25 Jul 2011 16:36:51,001 INFO  ~ broadcast leave room, 1 from 6
-25 Jul 2011 16:36:51,002 INFO  ~ broadcast leave room, 1 from 3
-25 Jul 2011 16:36:51,002 INFO  ~ broadcast leave room, 4 from 4
-25 Jul 2011 16:36:51,003 INFO  ~ broadcast leave room, 2 from 8
-25 Jul 2011 16:36:51,004 INFO  ~ broadcast leave room, 2 from 6
-25 Jul 2011 16:36:51,004 INFO  ~ broadcast leave room, 2 from 3
-25 Jul 2011 16:36:51,005 INFO  ~ broadcast leave room, 2 from 2
-25 Jul 2011 16:36:51,005 INFO  ~ broadcast leave room, 1 from 4
-25 Jul 2011 16:36:51,006 INFO  ~ broadcast leave room, 1 from 7
-25 Jul 2011 16:36:51,006 INFO  ~ broadcast leave room, 1 from 2
-25 Jul 2011 16:36:51,007 INFO  ~ broadcast leave room, 5 from 5
-25 Jul 2011 16:36:51,008 INFO  ~ broadcast leave room, 2 from 7
-25 Jul 2011 16:36:51,008 INFO  ~ broadcast leave room, 2 from 5
-25 Jul 2011 16:36:56,014 INFO  ~ broadcast leave room, 1 from 10
-25 Jul 2011 16:36:56,016 INFO  ~ broadcast leave room, 2 from 9
-25 Jul 2011 16:36:56,017 INFO  ~ broadcast leave room, 1 from 9
-25 Jul 2011 16:36:56,018 INFO  ~ broadcast leave room, 2 from 10
-25 Jul 2011 16:37:01,022 INFO  ~ broadcast leave room, 1 from 11
-25 Jul 2011 16:37:01,024 INFO  ~ broadcast leave room, 2 from 12
-25 Jul 2011 16:37:01,025 INFO  ~ broadcast leave room, 1 from 12
-25 Jul 2011 16:37:01,026 INFO  ~ broadcast leave room, 2 from 11
-25 Jul 2011 16:37:05,985 INFO  ~ broadcast leave room, 4 from 15
-25 Jul 2011 16:37:05,986 INFO  ~ broadcast leave room, 1 from 15
-25 Jul 2011 16:37:16,044 INFO  ~ broadcast leave room, 1 from 15
-25 Jul 2011 16:37:56,085 INFO  ~ broadcast leave room, 1 from 15
+25 Jul 2011 18:52:34,826 INFO  ~ Starting /Users/goggin/Documents/CS/chatmaster
+25 Jul 2011 18:52:34,828 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+25 Jul 2011 18:52:34,829 INFO  ~ Module secure is available (/Users/goggin/Library/play-1.2.1/modules/secure)
+25 Jul 2011 18:52:34,829 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.crud)
+25 Jul 2011 18:52:34,829 INFO  ~ Module crud is available (/Users/goggin/Library/play-1.2.1/modules/crud)
+25 Jul 2011 18:52:34,829 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.playapps)
+25 Jul 2011 18:52:34,830 INFO  ~ Module playapps is available (/Users/goggin/Library/play-1.2.1/modules/playapps-1.4)
+25 Jul 2011 18:52:35,403 WARN  ~ You're running Play! in DEV mode
+25 Jul 2011 18:52:35,474 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+25 Jul 2011 18:52:44,856 INFO  ~ Connected to jdbc:mysql://localhost/chat_master?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+25 Jul 2011 18:52:47,386 INFO  ~ Application 'strangechat' is now started !
+25 Jul 2011 18:52:47,589 INFO  ~ finished bootstrapping development server; ischat = true, ismaster = true
+25 Jul 2011 18:52:58,480 ERROR ~ Failed to log in 100002292928724 ( {"error":{"type":"OAuthException","message":"Invalid OAuth access token."}} )
+25 Jul 2011 18:53:02,665 INFO  ~ broadcast leave room, 2 from 1
+25 Jul 2011 18:53:02,669 INFO  ~ broadcast leave room, 1 from 1
+25 Jul 2011 18:53:02,670 INFO  ~ broadcast leave room, 4 from 7
+25 Jul 2011 18:53:02,671 INFO  ~ broadcast leave room, 4 from 2
+25 Jul 2011 18:53:02,672 INFO  ~ broadcast leave room, 5 from 6
+25 Jul 2011 18:53:02,673 INFO  ~ broadcast leave room, 5 from 8
+25 Jul 2011 18:53:07,687 INFO  ~ broadcast leave room, 1 from 6
+25 Jul 2011 18:53:07,689 INFO  ~ broadcast leave room, 1 from 3
+25 Jul 2011 18:53:07,690 INFO  ~ broadcast leave room, 4 from 4
+25 Jul 2011 18:53:07,691 INFO  ~ broadcast leave room, 2 from 6
+25 Jul 2011 18:53:07,691 INFO  ~ broadcast leave room, 2 from 3
+25 Jul 2011 18:53:07,692 INFO  ~ broadcast leave room, 2 from 2
+25 Jul 2011 18:53:07,692 INFO  ~ broadcast leave room, 1 from 4
+25 Jul 2011 18:53:07,693 INFO  ~ broadcast leave room, 1 from 7
+25 Jul 2011 18:53:07,693 INFO  ~ broadcast leave room, 1 from 2
+25 Jul 2011 18:53:07,694 INFO  ~ broadcast leave room, 5 from 5
+25 Jul 2011 18:53:07,697 INFO  ~ broadcast leave room, 2 from 7
+25 Jul 2011 18:53:07,698 INFO  ~ broadcast leave room, 2 from 5
+25 Jul 2011 18:53:12,707 INFO  ~ broadcast leave room, 1 from 8
+25 Jul 2011 18:53:12,709 INFO  ~ broadcast leave room, 2 from 9
+25 Jul 2011 18:53:12,710 INFO  ~ broadcast leave room, 2 from 8
+25 Jul 2011 18:53:12,711 INFO  ~ broadcast leave room, 1 from 9
+25 Jul 2011 18:53:17,716 INFO  ~ broadcast leave room, 1 from 10
+25 Jul 2011 18:53:17,718 INFO  ~ broadcast leave room, 1 from 11
+25 Jul 2011 18:53:17,718 INFO  ~ broadcast leave room, 2 from 11
+25 Jul 2011 18:53:17,719 INFO  ~ broadcast leave room, 2 from 10
+25 Jul 2011 18:53:22,736 INFO  ~ broadcast leave room, 2 from 12
+25 Jul 2011 18:53:22,737 INFO  ~ broadcast leave room, 1 from 12
+25 Jul 2011 18:53:22,738 INFO  ~ broadcast leave room, 4 from 15
+25 Jul 2011 18:53:22,738 INFO  ~ broadcast leave room, 1 from 15
+25 Jul 2011 18:53:37,796 INFO  ~ broadcast leave room, 1 from 15
+25 Jul 2011 18:54:12,833 INFO  ~ broadcast leave room, 1 from 15
+25 Jul 2011 18:58:08,033 INFO  ~ broadcast leave room, 3 from 13
+25 Jul 2011 18:58:13,038 INFO  ~ broadcast leave room, 6 from 13
+25 Jul 2011 18:58:20,109 ERROR ~ 
+
+@677o3ppd9
+Internal Server Error (500) for request GET /admin/storedpowers
+
+Execution exception (In /app/models/StoredPower.java around line 43)
+NullPointerException occured : null
+
+play.exceptions.JavaExecutionException
+	at play.templates.BaseTemplate.throwException(BaseTemplate.java:88)
+	at play.templates.GroovyTemplate.internalRender(GroovyTemplate.java:236)
+	at play.templates.GroovyTemplate$ExecutableTemplate.invokeTag(GroovyTemplate.java:347)
+	at {module:crud}/app/views/CRUD/list.html.(line:12)
+	at play.templates.GroovyTemplate.internalRender(GroovyTemplate.java:213)
+	at play.templates.Template.render(Template.java:26)
+	at play.mvc.results.RenderTemplate.<init>(RenderTemplate.java:24)
+	at play.mvc.Controller.renderTemplate(Controller.java:657)
+	at play.mvc.Controller.renderTemplate(Controller.java:637)
+	at play.mvc.Controller.render(Controller.java:692)
+	at controllers.CRUD.list(CRUD.java:43)
+	at play.mvc.ActionInvoker.invokeWithContinuation(ActionInvoker.java:540)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:498)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:474)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:469)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:157)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.NullPointerException
+	at models.StoredPower.toString(StoredPower.java:43)
+	at {module:crud}/app/views/tags/crud/table.html.(line:76)
+	at {module:crud}/app/views/tags/crud/table.html.(line:36)
+	at play.templates.GroovyTemplate.internalRender(GroovyTemplate.java:213)
+	... 15 more
