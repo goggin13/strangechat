@@ -3,8 +3,7 @@ import java.util.*;
 import enums.Power;
 import models.*;
 
-public class Omniscience extends SuperPower {
-	public static final int CHAT_TIME_REQUIRED = 300;
+public class Omniscience extends IntervalPower {
 	
 	public Omniscience () {
 		super(
@@ -14,15 +13,11 @@ public class Omniscience extends SuperPower {
 			false,
 			true
 		);
+		this.interval = 300;
 	}
-	
-	public int isQualified (User user) {
-	    Power p = this.getPower();
-		long secsUsed = CHAT_TIME_REQUIRED * user.countPowers(p);
-		if (user.chatTime == null) {
-		    return 0;
-		}
-		return user.chatTime - secsUsed > CHAT_TIME_REQUIRED ? 1 : 0;
+		
+	public Long getFieldValue (User user) {	    
+	    return user.chatTime;
 	}
 	
 	public String use (User caller, User subject) {

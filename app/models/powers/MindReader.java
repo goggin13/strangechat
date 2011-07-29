@@ -15,13 +15,17 @@ public class MindReader extends SuperPower {
 			true,
 			true
 		);
+	    this.autoOn = true;
+	    this.multiRoom = true;		
 	}
 		
 	public int isQualified (User user) {
 	    Power p = this.getPower();
 	    int currentLevel = user.currentLevel(p);
-	    int usedIceBreakers = user.countPowers(new IceBreaker().getPower(), 2);
+	    int usedIceBreakers = user.countUsedPowers(Power.ICE_BREAKER);
 	    
+	    System.out.println("current " + currentLevel);
+	    System.out.println("used " + usedIceBreakers);
 	    if (currentLevel >= 2) {
 	        return 0;
 	    }

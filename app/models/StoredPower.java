@@ -37,10 +37,13 @@ public class StoredPower extends Model {
 	public StoredPower (Power p, User u) {
 		this.power = p;
 		this.owner = u;
-		this.available = 1;
+		this.available = 0;
 		this.level = 1;
 		this.used = 0;
-		this.newToLevel = true;		
+		this.newToLevel = true;	
+		this.save();
+	    u.superPowers.add(this);	    
+	    u.save();	
 	}
 	
 	public String toString () {
@@ -55,39 +58,37 @@ public class StoredPower extends Model {
 	}
 	
 	/**
-	 * increment the available powers of type <code>power</code> for the given user 
-	 * @param power
-	 * @param user 
-	 * @param level the level of the power being awarded
-	 * @return the storedpower, after its been incremented */
-	public static StoredPower incrementPowerForUser (Power power, User user, int level) {
-    	StoredPower storedPower = StoredPower.find("byPowerAndOwner", power, user).first();
+	 * Return a new or existing row that matches 
+     * @param p the power to match against
+     * @param u the user to match against
+	 * @return a new record if none matches, or the existing row */
+	public static StoredPower getOrCreate (Power p, User u) {
+	    StoredPower storedPower = StoredPower.find("byPowerAndOwner", p, u).first();
     	if (storedPower == null) {
-    	  storedPower = new StoredPower(power, user);  
-    	  storedPower.level = level;
+    	  storedPower = new StoredPower(p, u);  
     	  storedPower.save(); 
-    	  user.superPowers.add(storedPower);
-    	  user.save();
-    	} else {
-    	  storedPower.level = level;
-    	  if (storedPower.getSuperPower().infinite) {
-    	      storedPower.available = 1;
-    	  } else {
-    	      if (storedPower.available < Integer.MAX_VALUE) {
-    	          storedPower.available++;
-    	      } 
-    	  }    	    
-    	  storedPower.save();  
     	}
     	return storedPower;
-    }
-    
+	}
+	
+	/**
+	 * Incrememnt the count available for this power, and set
+	 * the level
+	 * @param level */
+	public void increment (int level) {
+	    this.level = level;
+  	    if (this.getSuperPower().infinite) {
+  	        this.available = 1;
+  	    } else if (this.available < Integer.MAX_VALUE) {
+      	    this.available++;
+      	}
+      	this.save();
+	}
+	
     public void setLevel (int l) {
         if (l != this.level) {
             this.level = l;
-            if (!this.power.equals(Power.ICE_BREAKER)) {
-                this.newToLevel = true;
-            }
+            this.newToLevel = true;
         } 
     }
     
@@ -100,10 +101,9 @@ public class StoredPower extends Model {
     
     /**
      * Use this power, return the string from the super powers use() method
-     * @param caller the {@link User} using the power
      * @param subject the {@link User} the power is being used on     
      * @return the result of this.getSuperPower().use() */
-    public String use (User caller, User subject) {
+    public String use (User subject) {
         SuperPower superPower = this.getSuperPower();
         if (!superPower.infinite) {
             this.available--;
@@ -111,22 +111,9 @@ public class StoredPower extends Model {
         this.used++;
         this.newToLevel = false;
         this.save();
-        return superPower.use(caller, subject);
+        return superPower.use(this.owner, subject);
     }
-    
-	/**
-	 * decrement the available powers of type <code>power</code> for the given user 
-	 * @param power
-	 * @param user */
-	public static void usePowerForUser(Power power, User user) {
-    	StoredPower storedPower = StoredPower.find("byPowerAndOwner", power, user).first();
-    	if (storedPower != null) {
-    	  storedPower.available--;
-    	  storedPower.used++;
-    	  storedPower.save();            	  
-    	}
-    }    
-	
+ 	
 }
 
 

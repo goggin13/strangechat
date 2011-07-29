@@ -15,12 +15,14 @@ public class Bootstrap extends Job {
  	private final String pathToChatFileProd = "data/chat.txt";
 
     public void doJob() {
-        Fixtures.deleteAll();
 		UserEvent.resetEventQueue();
 		if (Play.mode == Play.Mode.DEV) {
+		    Fixtures.deleteAll();
         	Fixtures.loadModels("bootstrap-data-dev.yml");
 		} else {
-			Fixtures.loadModels("bootstrap-data-prod.yml");
+            // Fixtures.deleteAll();         
+            // Fixtures.loadModels("bootstrap-data-staging.yml");
+            // Fixtures.loadModels("bootstrap-data-prod.yml");
 		}
 		
 		if (Play.mode == Play.Mode.DEV) {

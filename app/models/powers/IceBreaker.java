@@ -4,28 +4,7 @@ import enums.Power;
 import play.Logger;
 import models.*;
 
-public class IceBreaker extends SuperPower {
-	public static final HashMap<Integer, Long> levels = new HashMap<Integer, Long>();
-	public static int levelCount = 1;
-    public static final int bonusLevel;
-    public static final int bonus = 3;
-    public static final int penultimateLevelInterval = 300; // every 5 minutes
-    private static final Long min = 60L;
-    
-	static {
-	    levels.put(0, 0L);         // one for free when u start
-        levels.put(levelCount++, 2L * min);
-        levels.put(levelCount++, 5L * min);
-        levels.put(levelCount++, 10L * min);
-        levels.put(levelCount++, 20L * min);
-        levels.put(levelCount++, 25L * min);    // 25 minutes
-        levels.put(levelCount++, 35L * min);
-        levels.put(levelCount++, 50L * min);
-        bonusLevel = levelCount;
-        levels.put(levelCount++, 60L * min);    // 1 hour
-        levels.put(levelCount++, 65L * min);    // start receiving one every 5 minutes
-        levels.put(levelCount, min * 60L * 3L); // 3 hours
-	}
+public class IceBreaker extends IntervalPower {
 	
 	public IceBreaker() {
 		super(
@@ -35,57 +14,13 @@ public class IceBreaker extends SuperPower {
 			false,
 			false
 		);
+		this.interval = 120;
 	}
-    
-	public int isQualified (User user) {	    
-	    Power p = this.getPower();
-	    int targetLevel = user.currentLevel(p) + 1;
-	    Long targetTime = levels.get(targetLevel);
-	    
-	    if (targetLevel > levelCount) {  // infinity, but never qualify for new ones
-	        return 0;
-	        
-	    } else if (targetLevel < levelCount) {
-	        boolean qualified = (user.chatTime == null ? 0 : user.chatTime) >= targetTime;
-    		return qualified ? targetLevel : 0;
-
-	    } else if (user.chatTime >= levels.get(levelCount)) { // they made it to the final level!
-	        return levelCount;
-
-	    } else if (targetLevel == levelCount) { 
-	        // penultimate level (any excuse to use that word)
-	        // get one every 5 minutes until they get to final level
-            int secsUsed = penultimateLevelInterval * (user.countPowers(p) - levelCount - 2);
-	        Long secsAvailable = user.chatTime - secsUsed - levels.get(levelCount - 1);
-	        return (secsAvailable >= penultimateLevelInterval) ? levelCount - 1 : 0;
-	        
-	    } else {       
-	        Logger.error("in fall through statement for IceBreaker.isQualified()"); 
-	        return 0;
-	    }
-
+		
+	public Long getFieldValue (User user) {	    
+	    return user.chatTime;
 	}
-	
-	// overridden from superpower
-    public boolean awardIfQualified (User user) {
-        int level = isQualified(user);
-        
-        if (level == bonusLevel) {
-            for (int b = 0; b < bonus + 1; b++) {
-                super.grantTo(user, level);
-            }
-        } else if (level > 0) {
-            StoredPower sp = super.grantTo(user, level);            
-    		if (level == levelCount) {
-    		    sp.available = Integer.MAX_VALUE;
-                sp.save();
-                System.out.println("set stored power to " + Integer.MAX_VALUE);
-    		}
-    	}
-    	 
-    	return level > 0;
-    }
-	
+		
 	public int chooseIndex (User caller, User subject) {
         Set<Integer> user1Seen = caller.getSeenIceBreakers();
         Set<Integer> user2Seen = subject.getSeenIceBreakers();     
@@ -160,7 +95,12 @@ public class IceBreaker extends SuperPower {
             messages.add("What super power do you wish you possessed?");
             messages.add("What’s your favorite board game?");
             messages.add("Do you play Angry Birds?");     
-            Collections.shuffle(messages);       
+            messages.add("Have you ever quit a job and why?");
+            messages.add("Were you a fan of the Backstreet Boys? Who was your favorite?");
+            messages.add("What’s your favorite word?");
+            messages.add("What’s your favorite number?");
+            messages.add("What would be the title of your memoir?");
+            messages.add("How would you describe yourself in two words?");            
 	    }
 	    
 	    // seen MUST BE SORTED

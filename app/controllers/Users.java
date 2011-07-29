@@ -21,6 +21,9 @@ import com.google.gson.reflect.*;
  */
 public class Users extends Index {
 	
+	/** list of ids of people waiting to be matched up with someone to chat */
+	public static List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
+		
 	/** How many meetings, 0 indexed, ago users must have interacted before they
 	 *  can be matched again.  0 means users can talk, then they have to talk to 
 	 *  at least one other perosn each.  -1 means they can be pairied in back
@@ -62,6 +65,9 @@ public class Users extends Index {
 			throw new Index.ArgumentException("are both required", "facebook_id and access_token", callback);
 		}	
 		User user = User.getOrCreate(facebook_id);
+		if (BlackList.isBlacklisted(user)) {
+		    returnFailed("You have been blacklisted", callback);
+		}
 		Server server = Server.getMyHeartbeatServer(user);
 		user.heartbeatServer = server;
 		
@@ -85,7 +91,7 @@ public class Users extends Index {
 		
 		// since this user is just logging in, if they have previous requests for the waiting room, we should
 		// null them out
-		User.removeFromWaitingRoom(user.id, true);
+        removeFromWaitingRoom(user.id, true);
 		
 		// add heartbeat server into list
 		friendData.put(user.id.toString(), user);
@@ -103,7 +109,10 @@ public class Users extends Index {
 	 * @param callback optional JSONP callback
 	 */
 	public static void signout (Long user_id, String callback) {
-		if (User.logOutUser(user_id)) {
+	    User u = User.findById(user_id);
+		if (u != null) {
+		    removeFromWaitingRoom(user_id, true);
+		    u.logout();
 			returnOkay(callback);
 		} else {
 			returnFailed("user " + user_id + " not found", callback);
@@ -114,9 +123,20 @@ public class Users extends Index {
 	 * Helper for <code>requestRandomRoom</code>
 	 * @return true if these users are eligible to be paired in a room right now */
 	private static boolean canBePaired (Long user_id1, Long user_id2) {
+	    System.out.println("pair " + user_id1 + ", " + user_id2);
+	    
+	    System.out.println(UserExclusion.canSpeak(user_id1, user_id2));
+	    
+	    System.out.println(remeetEligible == -1 
+            || !Room.hasMetRecently(user_id1, user_id2, remeetEligible));
+	    
+	    System.out.println(!Room.areSpeaking(user_id1, user_id2));
+	    
 	    return !user_id1.equals(user_id2) 
+		        && UserExclusion.canSpeak(user_id1, user_id2)
 		        && (remeetEligible == -1 
-		            || !Room.hasMetRecently(user_id1, user_id2, remeetEligible));
+		            || !Room.hasMetRecently(user_id1, user_id2, remeetEligible))
+                && !Room.areSpeaking(user_id1, user_id2);
 	}
 	
 	/**
@@ -125,35 +145,44 @@ public class Users extends Index {
 	 * @param user_id your user_id, so the random returned user isn't you 
 	 * @param callback optional JSONP callback*/
 	public static synchronized void requestRandomRoom (Long user_id, String callback) {
-        // User.waitingRoom = new CopyOnWriteArrayList<Long>();
-        System.out.println("request from " + user_id);
-        System.out.println("currently " + User.waitingRoom);
-		if (User.waitingRoom.size() > 0) {
+	    
+		if (waitingRoom.size() > 0) {
 		    Long otherUserID = null;
-			for (Long id : User.waitingRoom) {
+			for (Long id : waitingRoom) {
 				if (canBePaired(id, user_id)) {
 					otherUserID = id;
-					User.removeFromWaitingRoom(id, false);
+					removeFromWaitingRoom(id, false);
 					break;
 				}
 			}
 			
 			if (otherUserID != null) {
-			    System.out.println("pairing " + otherUserID + " , " + user_id);
-			    System.out.println(User.waitingRoom);
 			    Room.createRoomFor(otherUserID, user_id);	
 				returnOkay(callback);
 			}
 		}
 		
 		// no one there yet!
-		if (Collections.frequency(User.waitingRoom, user_id) < spotsPerUser) {
-		    User.waitingRoom.add(user_id);
+		if (Collections.frequency(waitingRoom, user_id) < spotsPerUser) {
+		    waitingRoom.add(user_id);
 		}
-		System.out.println("adding " + user_id);
-		System.out.println(User.waitingRoom);
+		System.out.println("adding " + user_id + " " + waitingRoom);
 		returnOkay(callback);
 	}
+	
+    /**
+     * Removes all occurences of the given user from the waiting room
+     * @param user_id the id to remove from the room 
+     * @param removeAll if true, remove all of the occurences of this user,
+     *                  else just one */
+    private static void removeFromWaitingRoom (Long user_id, boolean removeAll) {
+        while (waitingRoom.contains(user_id)) {
+            waitingRoom.remove(user_id);
+            if (!removeAll) {
+                return;
+            }
+        }
+    }
 
     /**
      * Broadcast a heartbeat for the given User, either to this server if we are
@@ -167,7 +196,7 @@ public class Users extends Index {
 	    String heartbeatURI = user.getHeartbeatURI();
 	    String masterURI = Server.getMasterServer().uri;
 		if (masterURI.equals(heartbeatURI)) {
-		    User.heartbeats.put(user.id, new Date());
+		    HeartBeat.beatFor(user.id);
 		    new UserEvent.HeartBeat(user.id);		    
 		    return true;
 		} else {	
@@ -212,16 +241,23 @@ public class Users extends Index {
             returnFailed("no power by that ID exists", callback);
         } else if (!storedPower.canUse()) {
             returnFailed("You don't have any of that power remaining!", callback);
-        } else {
-            SuperPower sp = storedPower.getSuperPower();
-            String result = storedPower.use(user, other);
-            user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
+        }
+
+        SuperPower sp = storedPower.getSuperPower();
+        String result = storedPower.use(other);
+        
+        user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
+        if (room_id != null && other != null) {
             other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
-            returnOkay(callback);
+        } else {
+            // HashMap<User, Long> conversants = user.getConversants();
+            // for (User u : conversants.keySet()) {
+                // u.notifyUsedPower(user_id, conversants.get(u), sp, storedPower.level, result);
+            // }
         }
         
+        returnOkay(callback);
 
-        
 	}
 
 }

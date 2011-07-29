@@ -13,8 +13,11 @@ public enum Power {
 	ICE_BREAKER(new IceBreaker()), 
 	MIND_READER(new MindReader()),
 	OMNISCIENCE(new Omniscience()),
-	CLONING(new Cloning()),
+	CLONING(new Cloning()),	
+	EMOTION(new Emotion()),
 	X_RAY_VISION(new XRayVision());
+    // BRAIN_MASH(new BrainMash()),
+    // FREEZE(new Freeze()),    
     
 	private String str; 
 	private SuperPower sp;

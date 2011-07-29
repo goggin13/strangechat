@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="12.971" errors="0" skipped="0" tests="6" name="PowerRewardsTest">
-  <testcase classname="PowerRewardsTest" name="testCloning" time="2.484">
+<testsuite failures="0" time="4.462" errors="0" skipped="0" tests="4" name="PowerRewardsTest">
+  <testcase classname="PowerRewardsTest" name="testCloning" time="1.435">
       </testcase>
-  <testcase classname="PowerRewardsTest" name="testMindReader" time="2.15">
+  <testcase classname="PowerRewardsTest" name="testOmniscience" time="1.832">
       </testcase>
-  <testcase classname="PowerRewardsTest" name="testMindReaderL2" time="2.181">
+  <testcase classname="PowerRewardsTest" name="testXRayLevel1" time="1.105">
       </testcase>
-  <testcase classname="PowerRewardsTest" name="testOmniscience" time="3.911">
-      </testcase>
-  <testcase classname="PowerRewardsTest" name="testXRayLevel1" time="2.138">
-      </testcase>
-  <testcase classname="PowerRewardsTest" name="stub" time="0.107">
+  <testcase classname="PowerRewardsTest" name="stub" time="0.09">
       </testcase>
 </testsuite>

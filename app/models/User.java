@@ -13,8 +13,6 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect .*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import controllers.*;
 import enums.Power;
 import models.powers.*;
@@ -26,18 +24,7 @@ import models.powers.*;
 
 @Entity
 public class User extends Model {
-	/** Amount of time a user can go without heartbeating before they are removed */
-	public static final int HEALTHY_HEARTBEAT = 6;
-	
-	/** A map of all the latest user_ids to heartbeats on this server */
-	public static final AbstractMap<Long, Date> heartbeats = new ConcurrentHashMap<Long, Date>();
-	
-	/** A map of all the latest user_id_room_id to last heartbeat in that room on this server */
-	public static final AbstractMap<String, Date> roombeats = new ConcurrentHashMap<String, Date>();
-	
-	/** list of ids of people waiting to be matched up with someone to chat */
-	public static List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
-    
+	    
 	/**
 	 * The user_id, in this case will be the facebook_id
 	 */
@@ -70,6 +57,12 @@ public class User extends Model {
 	 */
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	public Set<User> friends;
+	
+    /**
+     * List of other users this user has met with recently */
+    @ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+    @JoinTable(name = "UserToMetWith")
+    public List<User> recentMeetings;	
 
     /** 
      * Collection of the superpowers this user has, including
@@ -120,7 +113,6 @@ public class User extends Model {
 	
 	public User (Long u) {
 		this.user_id = u;
-        // this.facebook_token = "";
 		this.online = false;
 		this.session_id = "";
 		this.chatTime = 0L;
@@ -130,14 +122,39 @@ public class User extends Model {
 		this.offersReceivedCount = 0;
 		this.revealCount = 0;
 		this.friends = new HashSet<User>();
-	    this.superPowers = new LinkedList<StoredPower>();	
+	    this.superPowers = new LinkedList<StoredPower>();
+	    this.recentMeetings = new LinkedList<User>();
 	    this.icebreakers_seen = "";
 	    this.save();
-	    StoredPower sp = new StoredPower(Power.ICE_BREAKER, this);
-        sp.level = 0;
-	    sp.save();
-	    this.superPowers.add(sp);
+	    addStartUpPowers();
+	}
+	
+	private void addStartUpPowers () {
+	    List<Power> powers = getStartUpPowers();
+	    for (Power p : Power.values()) {
+            addStoredPower(p);
+	    }
 	    this.save();
+	}
+	
+	public List<Power> getStartUpPowers () {
+        List<Power> powers = new LinkedList<Power>();
+	    boolean getAll = true;
+	    if (getAll) {
+    	    for (Power p : Power.values()) {
+	            powers.add(p);
+    	    }
+    	} else {
+    	    powers.add(Power.ICE_BREAKER);
+    	}
+    	return powers;
+	}
+	
+	private void addStoredPower (Power p) {
+	    StoredPower sp = new StoredPower(p, this);
+        sp.level = 1;
+        sp.available = 1;
+	    sp.save();
 	}
 	
 	/**
@@ -154,6 +171,12 @@ public class User extends Model {
 	}
 	
 	/**
+	 * total seconds this user has spent chatting */
+	public Long getChatTime () {
+	    return (this.chatTime == null ? 0L : this.chatTime);
+	}
+	
+	/**
 	 * Iterate stored powers and save all the superpower objects for
 	 * sending back to the user on login */
 	private void populateSuperPowerDetails () {
@@ -167,6 +190,7 @@ public class User extends Model {
 	 * log this user out, and notify any of their friends that
 	 * are online that they are no longer available */	
 	public void logout () {
+	    Logger.info(this.id + " logging out");
 		this.online = false;
 		this.removeMeFromRooms();
 		if (this.friends == null) {
@@ -175,7 +199,7 @@ public class User extends Model {
 		for (User friend : this.friends) {
 			friend.notifyMeLogout(this.id);
 		}
-		User.removeFromWaitingRoom(this.user_id, true);
+		this.save();
 	}	
 	
 	/**
@@ -190,8 +214,6 @@ public class User extends Model {
 	        str = this.user_id.toString();
 	    }
 		return str;
-               // + (this.heartbeatServer == null ? "no hb server" : this.heartbeatServer.uri) + " "
-               // + (this.online ? " - online" : "");
 	}
 	
 	/**
@@ -212,10 +234,27 @@ public class User extends Model {
 	/**
 	 * All the rooms this user is in
 	 * @return a list of all the rooms this user is participating in */
-	public List<Room> getRooms () {
-	    return Room.find(
+	public Set<Room> getRooms () {
+	    List<Room> roomList = Room.find(
 	        "select distinct r from Room r join r.participants as p where p = ?", this
 	    ).fetch();
+	    Set<Room> roomSet = new HashSet<Room>(roomList);
+	    return roomSet;
+	}
+	
+	/**
+	 * A List of users this user is talking to right now */
+	public HashMap<User, Long> getConversants () {
+	    Set<Room> roomSet = getRooms();
+	    HashMap<User, Long> users = new HashMap<User, Long>();
+	    for (Room r : roomSet) {
+            for (User u : r.participants) {
+                if (u.id != this.id) {
+                    users.put(u, r.id);
+                }
+            }
+	    }
+	    return users;
 	}
 	
 	public HashMap<String, User> updateMyFacebookFriends (String access_token) {
@@ -251,7 +290,7 @@ public class User extends Model {
 	 * @return <code>true</code> if this user's heartbeat server
 	 * 		   matches the master servers uri */
 	public boolean imOnMaster () {
-		return this.heartbeatServer.uri.equals(Server.getMasterServer().uri);
+        return this.heartbeatServer.uri.equals(Server.getMasterServer().uri);
 	}
 	
 	/**
@@ -346,7 +385,7 @@ public class User extends Model {
 	 * count how many powers of type p this user has used 
 	 * @return */
     public int countUsedPowers (Power p) {
-        return countPowers(p, 0);
+        return countPowers(p, 2);
     }    
 
 	/**
@@ -488,23 +527,7 @@ public class User extends Model {
 		    Logger.error("bad response from notification (%s)", url);
 		}	
 	}
-		
-	/**
-	 * retrieve and log out the given user
-	 * @param user_id the user_id of the user to log out
-	 * @return true on success, false if the user is not found */
-	public static boolean logOutUser (Long user_id) {
-		User user = User.findById(user_id);
-		if (user != null) {
-			user.removeMeFromRooms();
-			user.logout();
-			user.save();
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
+			
 	/**
 	 * Return a user with id <code>user_id</code>, either an 
 	 * existing one, or a newly created user with this id
@@ -519,30 +542,6 @@ public class User extends Model {
 		return user;
 	}
 		
-	/**
-	 * Update the heartbeat for the given user in the given room
-	 * @param room_id the id of the room to beat in
-	 * @param user_id the id of the user to beat for */
-	public static void beatInRoom (Long room_id, Long user_id) {
-		String key = room_id.toString() + "_" + user_id.toString();
-		User.roombeats.put(key, new Date());	
-	}
-	
-    /**
-     * Removes all occurences of the given user from the waiting room
-     * @param user_id the id to remove from the room 
-     * @param removeAll if true, remove all of the occurences of this user,
-     *                  else just one */
-    public static void removeFromWaitingRoom (Long user_id, boolean removeAll) {
-        System.out.println("remove " + (removeAll ? " all of " : " just one ") + user_id);
-        while (waitingRoom.contains(user_id)) {
-            waitingRoom.remove(user_id);
-            if (!removeAll) {
-                return;
-            }
-        }
-    }
-
 	/** 
 	 * This class is used when serializing and deserializing JSON.  Its only 
 	 * purpose is to inform the GsonBuilder objects that they should exclude 
@@ -561,7 +560,8 @@ public class User extends Model {
 		public boolean shouldSkipField(FieldAttributes f) {
 		  return f.getName().equals("friends")
                  || f.getName().equals("user_id")
-                 || f.getName().equals("owner");
+                 || f.getName().equals("owner")
+                 || f.getName().equals("recentMeetings");
 		}
  	}
 		

@@ -168,7 +168,8 @@ public class UserEvent {
 
 			// as soon as this event is created, we heartbeat for the given user; if they never received this event,
 			// we see their heartbeat fail and notify the other user
-            User.beatInRoom(room_id, this.user_id);		
+            // HeartBeat.beatInRoom(room_id, this.user_id);    
+            	
 			publishMe();
         }
 

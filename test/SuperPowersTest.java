@@ -23,14 +23,15 @@ public class SuperPowersTest extends MyFunctionalTest {
 	    GET("/mock/init");
 	    Users.remeetEligible = -1;
 	}
-	       
-    @Test
+	
+   @Test
     public void testEnumsMatchPowers () {
         assertEquals(Power.ICE_BREAKER, new IceBreaker().getPower());
         assertEquals(Power.MIND_READER, new MindReader().getPower());                
         assertEquals(Power.X_RAY_VISION, new XRayVision().getPower());        
         assertEquals(Power.CLONING, new Cloning().getPower());        
         assertEquals(Power.OMNISCIENCE, new Omniscience().getPower());                        
+        assertEquals(Power.EMOTION, new Emotion().getPower());                        
     }
     
 	@Test
@@ -97,33 +98,11 @@ public class SuperPowersTest extends MyFunctionalTest {
 	
 	@Test
 	public void testUsePowers () {
-        // first lets earn some Ice Breakers
-        double time = Math.ceil(IceBreaker.levels.get(1) / 5) + 1;
-		for (int i = 0; i < time; i++) {
-		    heartbeatForRoom(rando_1_db, 15L);
-		}
-        Promise<String> p = new CheckPowers().now();
-        goToSleep(2);
 
-        // and now after we wait, should have a superpower notifications
-        JsonObject data = getListenResponse(rando_1_db, 0);
-        assertEquals("newpower", data.get("type").getAsString());
-        JsonObject newPower = data.get("superPower").getAsJsonObject();
-        assertEquals("Ice Breaker", newPower.get("name").getAsString());
-        Long power_id = data.get("power_id").getAsLong();
-
-        // now use it!
-        JsonObject json = usePower (power_id, rando_1_db, rando_2_db, 15L);
-        assertEquals("okay", json.get("message").getAsString());
-        assertEquals("okay", json.get("status").getAsString());
-    
-        // twice wont work though
-        json = usePower (power_id, rando_1_db, rando_2_db, 15L);
-        assertEquals("You don't have any of that power remaining!", json.get("message").getAsString());
-        assertEquals("error", json.get("status").getAsString());
+        earnAndUseIceBreakers(rando_1_db, rando_2_db, 5);
         
         // both users should have events waiting for them about the use of it
-        data = getListenResponse(rando_2_db, 0);
+        JsonObject data = getListenResponse(rando_2_db, 0);
         assertEquals("usedpower", data.get("type").getAsString());
         assertEquals("15", data.get("room_id").getAsString());
         
@@ -135,34 +114,5 @@ public class SuperPowersTest extends MyFunctionalTest {
         data = getListenResponse(rando_1_db, 0);
         assertEquals("usedpower", data.get("type").getAsString());               
 	}
-	 
-    // @Test
-    // public void testUseIceBreakerTwiceInARow () {
-    //         // first lets earn some x-ray-vision
-    //         for (int i = 0; i <= (XRayLevelOne.CHAT_MESSAGES_REQUIRED * 3); i++) {
-    //             notifyChatMessage(rando_1_db, rando_2_db, "hello world", 15L);
-    //         }
-    //         Promise<String> p = new CheckPowers().now();
-    //         goToSleep(2);
-    //         p = new CheckPowers().now();
-    //         goToSleep(2);        
-    // 
-    //         // and now after we wait, should have a superpower notifications
-    //         JsonObject data = getListenResponse(rando_1_db, 0);
-    //         assertEquals("newpower", data.get("type").getAsString());
-    //         JsonObject newPower = data.get("superPower").getAsJsonObject();
-    //         assertEquals("X Ray Level 1", newPower.get("name").getAsString());
-    //         Long power_id = data.get("power_id").getAsLong();
-    //              
-    //         JsonObject json = usePower(power_id, pmo_db_id, k_db_id, 15L);
-    //         assertEquals("okay", json.get("message").getAsString());    
-    // 
-    //         json = usePower(power_id, pmo_db_id, k_db_id, 15L);
-    //         assertEquals("okay", json.get("message").getAsString());       
-    // 
-    //         json = usePower (power_id, rando_1_db, rando_2_db, 15L);
-    //         assertEquals("You don't have any of that power remaining!", json.get("message").getAsString());
-    //         assertEquals("error", json.get("status").getAsString());             
-    // }
-		
+	 		
 }

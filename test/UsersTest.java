@@ -8,7 +8,7 @@ import controllers.*;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ConcurrentHashMap;
-
+import jobs.*;
 
 public class UsersTest extends MyFunctionalTest {
 		
@@ -39,6 +39,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("Kristen Diver", kk.get("name").getAsString());
 		assertEquals(chatURI, kk.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
 
+        System.out.println(jsonObj);
 		JsonObject caller = jsonObj.get(fb_2_db_id.toString()).getAsJsonObject();
 		assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
 		String session_id = caller.get("session_id").getAsString();
@@ -152,8 +153,7 @@ public class UsersTest extends MyFunctionalTest {
 	public void testMeetUpFunctionRespectsRemeetEligible () {	
 	    // reset meetings and waiting room, and turn eligible to require 1 meeting apart
 	    Users.remeetEligible = 0;	
-	    User.waitingRoom = new CopyOnWriteArrayList<Long>(); 
-	    Room.recentMeetings = new ConcurrentHashMap<Long, List<Long>>();	    
+	    Users.waitingRoom = new CopyOnWriteArrayList<Long>(); 
 	    
 	    // pmo requests a room
 		requestRoomFor(pmo_db_id);
@@ -168,9 +168,8 @@ public class UsersTest extends MyFunctionalTest {
 
 		data = getListenResponse(k_db_id, 0);
 		assertEquals("join", data.get("type").getAsString());
+	    Long room_id = data.get("room_id").getAsLong();
 		assertEquals(pmo_db_id.toString(), data.get("new_user").getAsString());
-		
-		GET("/mock/reseteventqueue");
 		
 		// but if they go again, shouldn't get eachother
 	    requestRoomFor(pmo_db_id);
@@ -190,7 +189,8 @@ public class UsersTest extends MyFunctionalTest {
 		assertTrue(newUser2.equals(k_db_id) || newUser2.equals(pmo_db_id));
 		assertFalse(newUser1.equals(newUser2));		
 		
-        GET("/mock/reseteventqueue");
+		GET("/leaveroom?user_id=" + pmo_db_id + "&room_id=" + room_id);
+		GET("/leaveroom?user_id=" + k_db_id + "&room_id=" + room_id);		
         
         // But now they should be eligible again
 	    requestRoomFor(pmo_db_id);

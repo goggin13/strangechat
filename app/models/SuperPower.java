@@ -19,6 +19,10 @@ public abstract class SuperPower {
 	public final String name;	
 	/** true if this power can only be used once per chat */
 	public final boolean oncePerChat;
+	/** true if this power should be automatically turned on whenever its received */
+	public boolean autoOn;
+	/** true if this power is applied to multiple rooms at once*/
+	public boolean multiRoom;	
 	
 	public SuperPower (String n, String im, String d, boolean i, boolean o) {
         this.name = n;
@@ -26,6 +30,8 @@ public abstract class SuperPower {
 		this.description = d;
 		this.infinite = i;
 		this.oncePerChat = o;
+		this.autoOn = false;
+		this.multiRoom = false;
 	}
 	
 	/**
@@ -68,8 +74,8 @@ public abstract class SuperPower {
     */
     public StoredPower grantTo (User user, int level) {
         Power p = this.getPower();
-        StoredPower sp = StoredPower.incrementPowerForUser(p, user, level);
-        sp.level = level;
+        StoredPower sp = StoredPower.getOrCreate(p, user);
+        sp.increment(level);
     	user.notifyNewPower(sp);
     	return sp;
     } 

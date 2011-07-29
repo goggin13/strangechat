@@ -25,7 +25,7 @@ public class Application extends Index {
 
 	private static HashMap<String, String> getChatStats () {
 		HashMap<String, String> stats = new HashMap<String, String>();
-		stats.put("heartbeats", User.heartbeats.size() + "");
+		stats.put("heartbeats", HeartBeat.heartbeats.size() + "");
 		return stats;
 	}
 	

@@ -14,6 +14,7 @@ public class Cloning extends SuperPower {
 			true,
 			true
 		);
+		this.multiRoom = true;
 	}
 	
 	public int isQualified (User user) {

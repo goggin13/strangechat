@@ -8,12 +8,16 @@ import com.google.gson.reflect.*;
 import models.*;
 import java.lang.reflect .*;
 import controllers.Notify;
+import play.libs.*;
+import play.libs.F.*;
+import jobs.*;
+import models.powers.*;
 
 public class MyFunctionalTest extends FunctionalTest {
 	
 	// These tokens were obtained using offline_access permissions from the facebook API, which are NOT like
 	// the tokens this app will usually be receiving.  But they will hopefully last for testing.  
-	protected static Long next_id = 6L;
+	protected static Long next_id = 7L;
 	
 	protected static Long fb_id_1 = 100002292928724L;
 	protected static Long fb_1_db_id = 3L;
@@ -35,7 +39,9 @@ public class MyFunctionalTest extends FunctionalTest {
 	protected static Long rando_1_db = 4L;	
 	protected static Long rando_2 = 12L;
 	protected static Long rando_2_db = 5L;
-		
+
+	protected static Long power_id = 0L;		
+	
 	@Test
 	public void stub () {
 		// do nothing
@@ -196,5 +202,70 @@ public class MyFunctionalTest extends FunctionalTest {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	protected int assertResponseContains(Long user_id, String power_name, int level, int lastReceived) {
+	    Promise<String> p = new CheckPowers().now();
+        goToSleep(1);
+        
+        JsonArray arr = getWholeListenResponse(user_id, lastReceived);
+		int received = 0;
+		int lastLevel = 0;
+		
+		for (JsonElement event : arr) {
+		    JsonObject data = event.getAsJsonObject().get("data").getAsJsonObject();
+
+		    if (data.get("type").getAsString().equals("newpower")) {
+                JsonObject newPower = data.get("superPower").getAsJsonObject();
+    		    System.out.println(newPower);
+		        if (newPower.get("name").getAsString().equals(power_name)) {
+		            received++;
+		            lastLevel = Math.max(lastLevel, data.get("level").getAsInt());
+		            power_id = data.get("power_id").getAsLong();
+		        }
+		    }
+		    lastReceived = event.getAsJsonObject().get("id").getAsInt();
+		}
+		
+		System.out.println("testing level " + level + " - " + power_name + ", received = " + received);
+    	assertTrue(1 <= received);
+    	assertEquals(level, lastLevel);
+        
+		return lastReceived;
+	}	
+	
+    protected int assertResponseHasIceBreaker (Long user_id, int level, int lastReceived) {
+        return assertResponseContains(user_id, "Ice Breaker", level, lastReceived);
+    }
+    
+    protected int earnIceBreakers (Long user1, Long user2, int count, int lastReceived) {
+	    for (int i = 0; i < count; i++) {
+	        double time = IceBreaker.interval;
+	        double iters = Math.ceil(time / 5);
+	        for (int j = 0; j < iters; j++) {
+    		    heartbeatForRoom(user1, 15L);
+    		    heartbeatForRoom(user1, 15L);    		    
+    		}
+    		// and now after we wait, PMO should have a superpower notifications
+    		lastReceived = assertResponseHasIceBreaker(user1, 1, lastReceived);
+	    }
+	    return lastReceived;
+    }
+    
+    protected void earnAndUseIceBreakers (Long user1, Long user2, int count) {
+        // first lets earn some Ice Breakers
+        earnIceBreakers(user1, user2, count, 0);
+
+        // now use them!
+        for (int i = 0; i < count; i++) {
+            JsonObject json = usePower (power_id, user1, user2, 15L);
+            assertEquals("okay", json.get("message").getAsString());
+            assertEquals("okay", json.get("status").getAsString());
+        }
+        
+        // again wont work though
+        // JsonObject json = usePower (power_id, user1, user2, 15L);
+        // assertEquals("You don't have any of that power remaining!", json.get("message").getAsString());
+        // assertEquals("error", json.get("status").getAsString());        
+	}	
 	
 }

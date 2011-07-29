@@ -21,35 +21,29 @@ public class CheckPulses extends Job {
 			return;
 		}
 		
-		// this seems to be necessary to keep events popping off the queue in 
-		// a timely manner, though I hate it
-        // UserEvent.userEvents.publish(new UserEvent.KeepItMoving());
-		
-		
 		// check user heartbeats
         // System.out.println(User.heartbeats);
         
-		for (Long user_id : User.heartbeats.keySet()) {
-			Date lastBeat = User.heartbeats.get(user_id);
+		for (Long user_id : HeartBeat.heartbeats.keySet()) {
+			Date lastBeat = HeartBeat.heartbeats.get(user_id);
 			Long diff = Utility.diffInSecs(new Date(), lastBeat);
-			if (diff > User.HEALTHY_HEARTBEAT) {
-				User.heartbeats.remove(user_id);
+			if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
+				HeartBeat.heartbeats.remove(user_id);
 				broadcastLogout(user_id);
 			}
 		}
 		
 		// check heartbeats in rooms
-		for (String key : User.roombeats.keySet()) {
-			Date lastBeat = User.roombeats.get(key);
+		for (String key : HeartBeat.roombeats.keySet()) {
+			Date lastBeat = HeartBeat.roombeats.get(key);
 			Long diff = Utility.diffInSecs(new Date(), lastBeat);
-			if (diff > User.HEALTHY_HEARTBEAT) {
+			if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
 				String parts[] = key.split("_");
-				User.roombeats.remove(key);
+				HeartBeat.roombeats.remove(key);
 				Long room_id = Long.parseLong(parts[0]);
 				Long user_id = Long.parseLong(parts[1]);
 				Logger.info("broadcast leave room, " + user_id + " from " + room_id);
 				broadcastLeaveRoom(room_id, user_id);
-				
 			}
 		}
     }
@@ -69,7 +63,8 @@ public class CheckPulses extends Job {
 	
 	private static void broadcastLogout (Long user_id) {
 		if (Server.onMaster()) {
-			User.logOutUser(user_id);
+		    User u = User.findById(user_id);
+		    u.logout();
 		} else {	
 			String url = Server.getMasterServer().uri + "signout";
 			HashMap<String, String> params = new HashMap<String, String>();

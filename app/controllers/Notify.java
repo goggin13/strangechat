@@ -64,9 +64,6 @@ public class Notify extends Index {
 			for (IndexedEvent<UserEvent.Event> e : events) {
 				if (e.data.user_id.equals(user_id)) {
 					returnData.add(e);
-					// if (e.data.type.equals("join")) {
-						// Logger.info("its a join for " + user_id);
-					// }
 				}
 				lastReceived = e.id;
 				
@@ -215,16 +212,17 @@ public class Notify extends Index {
 	 * @param room_ids optional, list of rooms this user is currently in
 	 * @param callback optional JSONP callback */
 	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
-		User.heartbeats.put(for_user, new Date());
+		HeartBeat.beatFor(for_user);
 		if (room_ids != null && room_ids.size() > 0 && room_ids.get(0) != null) {
 		    new UserEvent.HeartBeat(for_user);
 			for (Long rid : room_ids) {
-				User.beatInRoom(rid, for_user);
+				HeartBeat.beatInRoom(rid, for_user);
 			}
 		}
 		returnOkay(callback);
 	}
 	
+		
     public static HashMap<String, String> getNotifyLeftParams (Long for_user, Long left_user, Long room_id) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("for_user", for_user.toString());
@@ -247,7 +245,7 @@ public class Notify extends Index {
         params.put("by_user", by_user.toString());
         params.put("result", result); 
         params.put("level", level + "");       
-        params.put("room_id", room_id.toString());
+        params.put("room_id", (room_id != null ? room_id.toString() : ""));
         params.put("for_user", for_user.toString());
         params.put("session_id", session_id);
         return params;        

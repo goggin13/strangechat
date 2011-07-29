@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="27.63" errors="0" skipped="0" tests="2" name="IceBreakerRewardsTest">
-  <testcase classname="IceBreakerRewardsTest" name="testIceBreaker" time="27.569">
+<testsuite failures="0" time="11.782" errors="0" skipped="0" tests="2" name="IceBreakerRewardsTest">
+  <testcase classname="IceBreakerRewardsTest" name="testIceBreaker" time="11.664">
       </testcase>
-  <testcase classname="IceBreakerRewardsTest" name="stub" time="0.061">
+  <testcase classname="IceBreakerRewardsTest" name="stub" time="0.118">
       </testcase>
 </testsuite>

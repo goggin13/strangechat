@@ -51,11 +51,12 @@ User(rando2):
   name: "Jane Doe"
   online: true
   heartbeatServer: chat1
-  
+
 StoredPower(sp):
   power: "ICE_BREAKER"
+  used: 12
   owner: rando2
-  
+    
 StoredPower(sp2):
   power: "X_RAY_VISION"
   owner: rando2
@@ -63,4 +64,12 @@ StoredPower(sp2):
 StoredPower(sp3):
   power: "MIND_READER"
   owner: rando2
+
+User(blacklisted):
+  user_id: 15
+  name: "John Smith II"
+  online: false
+  heartbeatServer: chat1 
  
+BlackList(bl):
+  user: blacklisted

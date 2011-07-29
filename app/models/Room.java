@@ -18,9 +18,6 @@ public class Room extends Model {
     /** Unique id for rooms */
 	public static AtomicLong nextRoomID = new AtomicLong(1);	
 
-	/** Map of user ids to the last 10 people they talked to */
-	public static AbstractMap<Long, List<Long>> recentMeetings = new ConcurrentHashMap<Long, List<Long>>();
-		
 	/** set of users in this chatroom */
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	public Set<User> participants;
@@ -40,15 +37,15 @@ public class Room extends Model {
      * @param user_id1
      * @param user_id2 */
 	public void addUsers (Long user_id1, Long user_id2) {
-    	User user1 = User.findById(user_id1);
-    	User user2 = User.findById(user_id2);
+        User user1 = User.findById(user_id1);
+        User user2 = User.findById(user_id2);
         this.participants.add(user1);
-        this.participants.add(user2);
+        this.participants.add(user2);     
         this.save();
-    	user1.notifyJoined(user2, room_id);
-    	user2.notifyJoined(user1, room_id);
-	    Room.updateRecentMeetingsFor(user1.id, user2.id);
-	    Room.updateRecentMeetingsFor(user2.id, user1.id);	    
+        user1.notifyJoined(user2, room_id);
+        user2.notifyJoined(user1, room_id);
+        Room.updateRecentMeetingsFor(user1.id, user2.id);
+        Room.updateRecentMeetingsFor(user2.id, user1.id);        
 	}
 			
 	/**
@@ -63,6 +60,7 @@ public class Room extends Model {
 			this.save();
 			for (User u : this.participants) {
 				u.notifyLeftRoom(user, room_id);
+                user.notifyLeftRoom(u, room_id);
 			}			
 		} else {
 			this.delete();
@@ -74,7 +72,7 @@ public class Room extends Model {
      * <code>n</code> attempts
      * @param user1
      * @param user2
-     * @param n the number of meetings ago to consider, 0 indexed. */
+     * @param n the number of meetings ago to consider as "recently", 0 indexed. */
     public static boolean hasMetRecently (Long user_id1, Long user_id2, int n) {
         int meeting1 = Room.lastMeetingBetween(user_id1, user_id2);
         int meeting2 = Room.lastMeetingBetween(user_id2, user_id1);        
@@ -89,12 +87,11 @@ public class Room extends Model {
      * @return if user_id spoke with met_with_id, then 3 other users, returns 3, e.g.;
      *         = -1 if user_id never spoke with them */
     public static int lastMeetingBetween (Long user_id, Long met_with_id) {
-        if (!Room.recentMeetings.containsKey(user_id)) {
-            return -1;
-        }
-        List<Long> meetings = Room.recentMeetings.get(user_id);
-        int index = meetings.indexOf(met_with_id);
-        return index == -1 ? -1 : meetings.size() - 1 - index;
+        User user = User.findById(user_id);
+        User met_with = User.findById(met_with_id);
+        List<User> recentMeetings = user.recentMeetings;
+        int index = recentMeetings.indexOf(met_with);
+        return index == -1 ? -1 : recentMeetings.size() - 1 - index;
     }
 
 	/**
@@ -102,16 +99,25 @@ public class Room extends Model {
 	 * @param user_id the user to update the meetings for
 	 * @param met_with_id the user id of the user they met with */
 	public static void updateRecentMeetingsFor (Long user_id, Long met_with_id) {
-        List<Long> meetings;
-
-        if (Room.recentMeetings.containsKey(user_id)) {
-            meetings = Room.recentMeetings.get(user_id);
-        } else {
-            meetings = new LinkedList<Long>();
+        User user = User.findById(user_id);
+        User met_with = User.findById(met_with_id);
+        
+        user.recentMeetings.add(met_with);
+        if (user.recentMeetings.size() > 10) {
+            user.recentMeetings.remove(0);
         }
-        meetings.add(met_with_id);
-        Room.recentMeetings.put(user_id, meetings);
+        user.save();
 	}
+
+    /**
+     * Check if the 2 given users are currently speaking together in a room */
+    public static boolean areSpeaking (Long u1, Long u2) {
+        User user1 = User.findById(u1);
+        User user2 = User.findById(u2);
+        Set<Room> rooms_1 = user1.getRooms();
+        rooms_1.retainAll(user2.getRooms());
+        return rooms_1.size() > 0;
+    }
 
 	/**
 	 * Create a new room for the two given users.  Notify both of the users
