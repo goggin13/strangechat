@@ -3,7 +3,7 @@ package jobs;
 import play.*;
 import play.jobs.*;
 import play.test.*;
- 
+import java.util.*;
 import java.io.File;
 import models.*;
  
@@ -20,9 +20,9 @@ public class Bootstrap extends Job {
 		    Fixtures.deleteAll();
         	Fixtures.loadModels("bootstrap-data-dev.yml");
 		} else {
-            // Fixtures.deleteAll();         
+            Fixtures.deleteAll();         
             // Fixtures.loadModels("bootstrap-data-staging.yml");
-            // Fixtures.loadModels("bootstrap-data-prod.yml");
+            Fixtures.loadModels("bootstrap-data-prod.yml");
 		}
 		
 		if (Play.mode == Play.Mode.DEV) {
@@ -36,6 +36,15 @@ public class Bootstrap extends Job {
 					 + (Play.mode == Play.Mode.DEV ? "development" : "production") 
 					 + " server; ischat = " + Server.imAChatServer()  
 					 + ", ismaster = " + Server.onMaster());
+					 
+		List<Server> servers = Server.all().fetch(100);
+		double totalVolume = 0;
+		for(Server s : servers) {
+		    totalVolume += s.volume;
+		}
+		if (totalVolume != 1) {
+		    Logger.error("Invalid server volume assignments; expected 1.0, found " + totalVolume);
+		}
     }
  
 }

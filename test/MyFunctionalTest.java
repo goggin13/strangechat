@@ -239,7 +239,7 @@ public class MyFunctionalTest extends FunctionalTest {
     
     protected int earnIceBreakers (Long user1, Long user2, int count, int lastReceived) {
 	    for (int i = 0; i < count; i++) {
-	        double time = IceBreaker.interval;
+	        double time = new IceBreaker().award_interval;
 	        double iters = Math.ceil(time / 5);
 	        for (int j = 0; j < iters; j++) {
     		    heartbeatForRoom(user1, 15L);

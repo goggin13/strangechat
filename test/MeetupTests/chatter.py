@@ -10,14 +10,14 @@ import math
 
 class ChatAPI():
     """Manages all interactions with the chat apis"""
-    # CHAT_ROOT = 'http://localhost:9000/'
-    # CHAT_ROOT = 'http://173.246.102.246/'
-    CHAT_ROOT = 'http://173.246.101.45/'
+    # CHAT_ROOT = 'http://localhost:9000/'   # Dev
+    CHAT_ROOT = 'http://173.246.100.79/' # live
+    # CHAT_ROOT = 'http://173.246.101.45/' # staging
     
     
-    def __init__ (self, user_id, name):
+    def __init__ (self, user_id):
         self.user_id = user_id
-        self.name = name
+        self.name = "N/A"
         self.room_to_user = {}
         self.other_user_id = -1
         self.lastReceived = 0
@@ -43,7 +43,8 @@ class ChatAPI():
         for k, v in data.iteritems():
             if v['name'] == self.name:
                 self.myData = v
-                self.user_id = v["id"]                
+                self.user_id = v["id"]    
+                self.name = "user-%d" % self.user_id        
                 self.heartbeatServer = v["heartbeatServer"]["uri"] 
                 self.speak("set my data, id = %s, server = %s " % (self.user_id, self.heartbeatServer))                
                 
@@ -140,8 +141,9 @@ class ChatAPI():
     def heartbeat (self):
         self.request("heartbeat", {
             'for_user': self.user_id,
-            'room_ids': self.room_ids
+            'room_ids': ",".join(map(str, self.room_ids))
         }, self.heartbeatServer)
+        self.speak("heartbeat in %s - %s" % (self.room_ids, self.heartbeatServer))
 
     def use_power (self, power_id):
         self.request("usepower", {
@@ -185,8 +187,7 @@ class ChatTester(Thread):
     def __init__ (self, id, thread_queue, num_iters, num_users):
         Thread.__init__(self)
         self.user_id = id
-        self.name = "user-%d" % self.user_id
-        self.API = ChatAPI(self.user_id, self.name)
+        self.API = ChatAPI(self.user_id)
         self.num_iters = num_iters
         self.num_users = num_users
         self.thread_queue = thread_queue

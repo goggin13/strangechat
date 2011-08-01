@@ -13,7 +13,7 @@ public class Freeze extends IntervalPower {
 			false,
 			false
 		);
-		this.interval = 120;
+		this.award_interval = 120;
 	}
 
 	public Long getFieldValue (User user) {	    

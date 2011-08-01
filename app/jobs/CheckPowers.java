@@ -31,6 +31,7 @@ public class CheckPowers extends Job {
         
         List<Server> chatServers = Server.getChatServers();
         for (Server s : chatServers) {
+            System.out.println("checking powers from " + s.name);
             processUpdates(getEvents(s));
         }
         

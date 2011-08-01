@@ -209,13 +209,13 @@ public class UserEvent {
         final public Long for_user_id;
 		
         public HeartBeat (Long for_user) {
-            super("heartbeat", -1L, "");
+            super("heartbeat", -1L, "");  // -1 so we don't bother sending this back to anyone
             this.for_user_id = for_user;
 			publishMe();
         }
 
 		public String toString () {
-			return super.toString() + " : " + "heartbeat";
+			return super.toString() + " : " + "heartbeat - " + for_user_id.toString();
 		}		
 	}
 

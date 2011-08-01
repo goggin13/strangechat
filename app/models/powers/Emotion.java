@@ -7,7 +7,7 @@ import play.*;
 public class Emotion extends SuperPower {
     public static final HashMap<Integer, Long> levels = new HashMap<Integer, Long>();
 	public static int levelCount = 1;
-	private static Long min = 60L;
+	private static Long min = 5L;
 
 	static {
         levels.put(levelCount++, 2L * min);

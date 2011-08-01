@@ -5,7 +5,7 @@ import play.Logger;
 import models.*;
 
 public abstract class IntervalPower extends SuperPower {
-    public static int interval = 120;
+    public int award_interval = 120;
 	    
 	public IntervalPower (String n, String im, String d, boolean i, boolean o) {
 	    super(n, im, d, i, o);
@@ -14,15 +14,20 @@ public abstract class IntervalPower extends SuperPower {
 	public abstract Long getFieldValue (User user);
 	    
 	public int isQualified (User user) {	    
+	    
 	    Power p = this.getPower();
         int count = user.countPowers(p);
-        long available = getFieldValue(user) - (count * interval);
+        long current = getFieldValue(user);
+        long used = count * this.award_interval;
+        long available = current - used;
         // System.out.println("--------------");
         // System.out.println(this.name);
-        // System.out.println("val : " + getFieldValue(user));
+        // System.out.println("current : " + current);
         // System.out.println("count : " + count);
+        // System.out.println("interval : " + this.award_interval);        
+        // System.out.println("used :" + used);
         // System.out.println("available : " + available);
-        return count < 100 && available >= interval ? 1 : 0;
+        return (count < 100 && available >= this.award_interval) ? 1 : 0;
 	}
 	
 }

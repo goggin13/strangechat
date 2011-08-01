@@ -8,7 +8,7 @@ import play.db.jpa.*;
 import com.google.gson.*;
 import models.*;
 import play.libs.WS;
-
+import java.util.Collections.*;
 import controllers.*;
 import java.lang.reflect .*;
 import com.google.gson.reflect.*;
@@ -34,6 +34,15 @@ public class Server extends Model {
 	/**
 	 * true if this server is the master server */
 	public boolean isMaster;
+	
+    /** true if this server is a chat server */
+    public boolean isChat;	
+    
+    /** if this is a chat server, represents the overall volume that
+     * should be directed to this server; the sum of all the volumes for
+     * servers should = 1.0.  Bootstrap.java will log a warning if a .yml 
+     * file loads in data which does not adhere to this.   */
+    public double volume;
 	
 	/** Number of active rooms on this server */
 	public int roomCount;
@@ -101,13 +110,24 @@ public class Server extends Model {
 	 * @return a Server instance that this user should use to
 	 * to heartbeat against */
 	public static Server getMyHeartbeatServer (User user) {
-		Server heartbeat = Server.find("byIsMaster", false).first();
-		return heartbeat;
+        Random generator = new Random();
+        double r = generator.nextDouble();
+	    List<Server> heartbeat_servers = Server.find("ischat = ? order by volume asc", true).fetch(100);
+	    int len = heartbeat_servers.size();
+	    double total = 0;
+	    for (int i = 0; i < len; i++) {
+	        Server server = heartbeat_servers.get(i);
+	        if (r <= (total + server.volume)) {
+	            return server;
+	        }
+	    }
+	    Server server = heartbeat_servers.get(len - 1);
+	    return server;
 	}
 
 	/**
 	 * @return a List of chat servers */
 	public static List<Server> getChatServers () {
-	    return Server.find("byIsMaster", false).fetch(100);
+	    return Server.find("byIsChat", true).fetch(100);
 	}
 }

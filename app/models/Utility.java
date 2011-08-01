@@ -111,4 +111,11 @@ public class Utility {
 	    return DigestUtils.md5Hex(str);
 	}
 	
+	/**
+	 * Current system time in milliseconds */
+    public static long time () {
+        long unixTime = System.currentTimeMillis() / 1000L;
+        return unixTime;
+    }
+	
 }

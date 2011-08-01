@@ -78,10 +78,11 @@ public class User extends Model {
 	/**
 	 * comma delimted list of icebreaker indices seen */
 	public String icebreakers_seen;
+
+    /** True if this user is currently online */	
+    public long lastLogin;
 	
-	/**
-	 * True if this user is currently online
-	 */	
+	/** True if this user is currently online */	
 	public boolean online;
 
     /** total seconds chatting */
@@ -131,7 +132,7 @@ public class User extends Model {
 	
 	private void addStartUpPowers () {
 	    List<Power> powers = getStartUpPowers();
-	    for (Power p : Power.values()) {
+	    for (Power p : powers) {
             addStoredPower(p);
 	    }
 	    this.save();
@@ -139,7 +140,7 @@ public class User extends Model {
 	
 	public List<Power> getStartUpPowers () {
         List<Power> powers = new LinkedList<Power>();
-	    boolean getAll = true;
+	    boolean getAll = false;
 	    if (getAll) {
     	    for (Power p : Power.values()) {
 	            powers.add(p);
@@ -162,6 +163,7 @@ public class User extends Model {
 	 * are online that they are available */	
 	public void login () {
 		this.online = true;
+		this.lastLogin = Utility.time();
 		for (User friend : this.friends) {
 			if (friend.online) {
 				friend.notifyMeLogin(this);
@@ -538,6 +540,8 @@ public class User extends Model {
 		User user = User.find("byUser_id", user_id).first();
 		if (user == null) {
 			user = new User(user_id);
+			Server server = Server.getMyHeartbeatServer(user);
+            user.heartbeatServer = server;
 		}
 		return user;
 	}

@@ -26,7 +26,7 @@ public class IntervalRewardsTest extends MyFunctionalTest {
     public void testIceBreaker () {
         int lastReceived = 0;
         for (int i = 0; i < 4; i++) {
-            double time = IceBreaker.interval;
+            double time = new IceBreaker().award_interval;
             double iters = Math.ceil(time / 5);
             
             for (int j = 0; j < iters; j++) {
@@ -57,7 +57,7 @@ public class IntervalRewardsTest extends MyFunctionalTest {
 	@Test
 	public void testOmniscience () {
         
-        double time = Math.ceil(Omniscience.interval) + 1;
+        double time = Math.ceil(new Omniscience().award_interval) + 1;
         // keep them alive and wait for checkpowers to run
 		for (int i = 0; i < time; i++) {
 		    heartbeatForRoom(pmo_db_id, 15L);
@@ -69,7 +69,7 @@ public class IntervalRewardsTest extends MyFunctionalTest {
 	
     @Test
 	public void testXRayLevel1 () {
-        double reveals = XRayVision.interval + 1;
+        double reveals = new XRayVision().award_interval + 1;
 		for (int i = 0; i < reveals; i++) {
             notifyChatMessage(pmo_db_id, k_db_id, CheckPowers.REVEAL_CODE, 15L);
 		}

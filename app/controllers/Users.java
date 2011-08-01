@@ -68,9 +68,7 @@ public class Users extends Index {
 		if (BlackList.isBlacklisted(user)) {
 		    returnFailed("You have been blacklisted", callback);
 		}
-		Server server = Server.getMyHeartbeatServer(user);
-		user.heartbeatServer = server;
-		
+    	
 		HashMap<String, User> friendData = new HashMap<String, User>();
 		if (updatefriends) {
 			friendData = user.updateMyFacebookFriends(access_token);	

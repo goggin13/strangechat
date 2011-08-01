@@ -13,7 +13,7 @@ public class Omniscience extends IntervalPower {
 			false,
 			true
 		);
-		this.interval = 300;
+		this.award_interval = 300;
 	}
 		
 	public Long getFieldValue (User user) {	    

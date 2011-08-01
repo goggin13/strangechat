@@ -7,11 +7,15 @@ Server(master):
   roomCount: 4
   nextID: 1
   isMaster: true
-
+  isChat: true
+  volume: .3
+    
 Server(chat1):
   name: chatslave1
   uri: http://173.246.101.127/
   roomCount: 4
   nextID: 1
   isMaster: false
+  isChat: true  
+  volume: .7  
 

@@ -7,14 +7,18 @@ Server(master):
   roomCount: 4
   nextID: 1
   isMaster: true
-
+  isChat: true
+  volume: .5
+  
 Server(chat1):
   name: chat1.com
   uri: http://localhost:9000/
   roomCount: 4
   nextID: 1
   isMaster: false
-
+  isChat: true
+  volume: .5
+  
 User(pmo):
   user_id: 24403414
   name: "Patrick Moberg"

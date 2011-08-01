@@ -13,7 +13,7 @@ public class XRayVision extends IntervalPower {
 			false,
 			true
 		);
-		this.interval = 3;
+		this.award_interval = 3;
 	}
 		
 	public Long getFieldValue (User user) {	
