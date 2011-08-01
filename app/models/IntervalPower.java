@@ -22,7 +22,7 @@ public abstract class IntervalPower extends SuperPower {
         // System.out.println("val : " + getFieldValue(user));
         // System.out.println("count : " + count);
         // System.out.println("available : " + available);
-        return available >= interval ? 1 : 0;
+        return count < 100 && available >= interval ? 1 : 0;
 	}
 	
 }

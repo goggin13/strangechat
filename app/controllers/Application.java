@@ -20,6 +20,7 @@ public class Application extends Index {
 		stats.put("users", User.count() + "");
 		stats.put("online", User.count("online", true) + "");
 		stats.put("rooms", Room.count() + "");
+		stats.put("waiting room", Users.waitingRoom.toString());
 		return stats;
 	}
 

@@ -11,12 +11,15 @@ import math
 class ChatAPI():
     """Manages all interactions with the chat apis"""
     # CHAT_ROOT = 'http://localhost:9000/'
-    CHAT_ROOT = 'http://173.246.102.246/'
+    # CHAT_ROOT = 'http://173.246.102.246/'
+    CHAT_ROOT = 'http://173.246.101.45/'
+    
     
     def __init__ (self, user_id, name):
         self.user_id = user_id
         self.name = name
         self.room_to_user = {}
+        self.other_user_id = -1
         self.lastReceived = 0
         self.room_ids = []
         self.contacts = {}
@@ -31,7 +34,7 @@ class ChatAPI():
             'facebook_id': self.user_id,
             'name': self.name,
             'access_token': "",
-            'avatar': "",
+            'avatar': "http://www.everafterstore.com/media/belt-buckle-robot-red-BR11845ZNKRD.jpg",
             'alias': self.name,
             'updatefriends': False
         }, self.CHAT_ROOT)
@@ -39,10 +42,16 @@ class ChatAPI():
         # print str(self.user_id)
         for k, v in data.iteritems():
             if v['name'] == self.name:
-                self.speak("set my data")
                 self.myData = v
+                self.user_id = v["id"]                
                 self.heartbeatServer = v["heartbeatServer"]["uri"] 
-
+                self.speak("set my data, id = %s, server = %s " % (self.user_id, self.heartbeatServer))                
+                
+    def signout(self):
+       data = self.request("signout", {
+             'user_id': self.user_id,
+         }, self.CHAT_ROOT)
+         
     def requestAndListen(self):
         """
         Request a random room, and check for the listen response to get 
@@ -73,6 +82,7 @@ class ChatAPI():
                 self.contacts[d["data"]["new_user"]] = {
                     "server": d["data"]["server"]
                 }
+                self.other_user_id = d["data"]["new_user"]
                 self.room_to_user[room_id] = d["data"]["new_user"]
                 
 
@@ -81,6 +91,13 @@ class ChatAPI():
                 # print d["room_id"], d["user_id"], d["from"]
                 self.speak("chat from %s : %s" % (d["from"], d["text"]))
                 self.msg_received_count += 1
+                
+            elif d["data"]["type"] == "newpower" and ts >= startTime:
+                d = d["data"]
+                power_id = d["power_id"]
+                power_name = d["superPower"]["name"]
+                self.speak("sweet, new power %s - %s" % (power_name, power_id))
+                self.use_power(power_id)
 
         return room_id
             
@@ -126,12 +143,20 @@ class ChatAPI():
             'room_ids': self.room_ids
         }, self.heartbeatServer)
 
+    def use_power (self, power_id):
+        self.request("usepower", {
+            'user_id': self.user_id,
+            'power_id': power_id,
+            'other_id': self.other_user_id,
+            'room_id': self.room_ids[0] if len(self.room_ids) > 0 else -1
+        }, self.heartbeatServer)        
+
     def requestRoom (self):
         self.speak("request room")
         self.request("requestrandomroom", {'user_id': self.user_id}, self.CHAT_ROOT)
 
     def request (self, path, data, server):
-        h = httplib2.Http(timeout=4)  
+        h = httplib2.Http(timeout=2)  
         h.force_exception_to_status_code = True         
         url = server + path + "?" + urlencode(data)
         start = datetime.now()
@@ -172,16 +197,15 @@ class ChatTester(Thread):
         """Main method, log in and perform requests"""
 
         print self.name, " LIVES!"
+        self.API.requestAndListen()
         for i in range(0, self.num_iters):
-
-            self.API.requestAndListen()
             self.API.heartbeat()
-            for r in range(0, 20):
+            for r in range(0, 2):
                 room_id = self.randomRoom()
                 if room_id:
                     self.unique += 1
                     self.API.messageRoom("hello - %d" % self.unique, room_id)
-                    time.sleep(.2)
+                    time.sleep(1)
             
             self.API.heartbeat()
             self.API.getListenResponse()
@@ -190,11 +214,8 @@ class ChatTester(Thread):
         time.sleep(1)
         self.API.heartbeat()
         self.API.getListenResponse()        
-        self.API.heartbeat()
-        time.sleep(1)
-        self.API.heartbeat()
-        self.API.getListenResponse()                
-        self.API.heartbeat()
+        
+        self.API.signout()
         
         self.msg_count = self.API.msg_count
         self.msg_received_count = self.API.msg_received_count
@@ -214,24 +235,17 @@ class ChatTester(Thread):
     def speak(self, txt):
         print self.name, txt
     
-ROOT_ID = 11
-NUM_USERS = 7
-NUM_ITERS = 2
+ROOT_ID = 99
+NUM_USERS = 16
+NUM_ITERS = 2000
 
 thread_queue = Queue.Queue()
 for i in range(ROOT_ID, ROOT_ID + NUM_USERS):
     thread_queue.put(i)
-
-h = httplib2.Http()
-HEARTBEAT_ROOT = 'http://173.246.100.128/'
-# HEARTBEAT_ROOT = 'http://localhost:9000/'
-resp, content = h.request(HEARTBEAT_ROOT + "mock/resetEventQueue", "GET")
-if (resp['status'] != "200"):
-    print "failed to reset event queue"
-
+    
 testers = []
-start = datetime.now()
 for i in range(ROOT_ID, ROOT_ID + NUM_USERS):
+    time.sleep(.2)
     tester = ChatTester(i, thread_queue, NUM_ITERS, NUM_USERS)
     tester.daemon = True
     testers.append(tester)

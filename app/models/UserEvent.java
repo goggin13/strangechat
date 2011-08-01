@@ -220,15 +220,6 @@ public class UserEvent {
 	}
 
 	/**
-	 * Dummy event, seems to help keep things popping off stack */
-    public static class KeepItMoving extends Event {		
-        public KeepItMoving () {
-            super("nothing", -1L, "");
-			publishMe();
-        }
-    }
-    
-	/**
 	 * Represents a user leaving the chat room */
     public static class Leave extends Event {
         /** user id of the user leaving */

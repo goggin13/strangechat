@@ -66,26 +66,6 @@ public class PowerRewardsTest extends MyFunctionalTest {
     // }
     //  
 		
-	@Test
-	public void testOmniscience () {
-        
-        double time = Math.ceil(Omniscience.interval) + 1;
-        // keep them alive and wait for checkpowers to run
-		for (int i = 0; i < time; i++) {
-		    heartbeatForRoom(pmo_db_id, 15L);
-		}
-        
-		// and now after we wait, PMO should have a superpower notifications
-        assertResponseContains(pmo_db_id, "Omniscience", 1, 0);  		
-	}
-	
-    @Test
-	public void testXRayLevel1 () {
-        double reveals = XRayVision.REVEALS_REQUIRED + 1;
-		for (int i = 0; i < reveals; i++) {
-            notifyChatMessage(pmo_db_id, k_db_id, CheckPowers.REVEAL_CODE, 15L);
-		}
-		assertResponseContains(pmo_db_id, "X Ray Vision", 1, 0);  	
-	}
+
 	
 }
