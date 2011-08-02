@@ -30,9 +30,12 @@ public class CheckPowers extends Job {
         }
         
         List<Server> chatServers = Server.getChatServers();
+        List<String> processedURIs = new LinkedList<String>();
         for (Server s : chatServers) {
-            System.out.println("checking powers from " + s.name);
-            processUpdates(getEvents(s));
+            if (!processedURIs.contains(s.uri)) {
+                processUpdates(getEvents(s));
+                processedURIs.add(s.uri);
+            }
         }
         
         for (Long id : myUsers) {
@@ -80,8 +83,10 @@ public class CheckPowers extends Job {
                 if (user.chatTime == null) {
                     user.chatTime = 0L;
                 }
+                // System.out.println(user.id + " cur time - " + user.chatTime);
                 user.chatTime += HEARTBEAT_INTERVAL;    
                 user.save();                
+                // System.out.println(user.id + " new time - " + user.chatTime);
             } else if (!(event instanceof UserEvent.Event)) {
                 Logger.error("Processing super power check and encountered a bad event");
             } 
@@ -99,11 +104,12 @@ public class CheckPowers extends Job {
     }
     
     private static List<UserEvent.Event> getEvents (Server s) {
-        Long last = getLastReceived(s.uri);
+        Long last = getLastReceived(s.name);
         List<UserEvent.Event> events;
         
         if (s.iAmMaster()) {
             
+            System.out.println("requesting events from " + last);
             List<IndexedEvent> indexedEvents = UserEvent.userEvents.availableEvents(last);    
             last = indexedEvents.size() > 0 
                    ? indexedEvents.get(indexedEvents.size() - 1).id
@@ -124,7 +130,7 @@ public class CheckPowers extends Job {
             last = Long.parseLong(lastMsg.text);
             
         }
-        lastReceived.put(s.uri, last);
+        lastReceived.put(s.name, last);
         return events;
     }
     

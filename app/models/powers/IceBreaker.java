@@ -20,7 +20,12 @@ public class IceBreaker extends IntervalPower {
 	public Long getFieldValue (User user) {	    
 	    return user.chatTime;
 	}
-		
+	
+	// since u get a freebie ice breaker we decrement the count by 1
+	public int countPowers (User user) {
+	    return super.countPowers(user) - 1;
+	}
+	
 	public int chooseIndex (User caller, User subject) {
         Set<Integer> user1Seen = caller.getSeenIceBreakers();
         Set<Integer> user2Seen = subject.getSeenIceBreakers();     
@@ -100,19 +105,61 @@ public class IceBreaker extends IntervalPower {
             messages.add("What’s your favorite word?");
             messages.add("What’s your favorite number?");
             messages.add("What would be the title of your memoir?");
-            messages.add("How would you describe yourself in two words?");            
+            messages.add("How would you describe yourself in two words?");                   
+            messages.add("How do you make a relationship work?");
+            messages.add("What's something romantic to do on a first date?");
+            messages.add("What's it like to be in loveeee?");
+            messages.add("What's your fondest memory from being small?");
+            messages.add("Do you have any tattoos?");
+            messages.add("What's the best meal you've ever had?");
+            messages.add("What is your favorite food to eat in a bed?");
+            messages.add("What's a secret you have?");
+            messages.add("What’s your favorite smell?");
+            messages.add("What did you dress up as for Halloween last year?");
+            messages.add("What movie makes you cry?");
+            messages.add("What's your stance on the afterlife?");
+            messages.add("What's your take on soul mates?");
+            messages.add("What is your greatest regret?");
+            messages.add("Do you like spicy food and why?");
+            messages.add("Who was your first crush?");
+            messages.add("Do you own any pets?");
+            messages.add("Which is a stronger emotion: anger or love? How do you know?");
+            messages.add("What are the 3 most important things in your life?");
+            messages.add("What time period would you time travel to?");
+            messages.add("What's the best chain restaurant to make out in?");
+            messages.add("What instruments do you play?");
+            messages.add("Where is a gross place you've made out at?");
+            messages.add("Is love real? How can you be so sure?");
+            messages.add("What is your favorite band?");
+            messages.add("Where did humans come from?");
+            messages.add("Do you think there are aliens? What're they like?");
+            messages.add("If God had a face what would it look like?");
+            messages.add("What's a funny joke?");
+            messages.add("What do women want?");
+            messages.add("Why is glitter so popular?");
+            messages.add("What do boys smell like? What about girls?");
+            messages.add("How do you know if it's love?");
+            messages.add("How do you know if someone likes you?");
+            messages.add("What makes you laugh?");
+            messages.add("What makes people successful?");
+            messages.add("What is a soul?");
+            messages.add("What do farts feel like?");
+            messages.add("Why do people do drugs?");
+            messages.add("Why do people drink?");
+            messages.add("How do you fall asleep?");
+            messages.add("What is social media?");            
 	    }
 	    
 	    // seen MUST BE SORTED
 	    public static int getRandomIndex (Set<Integer> seen) {
-	        int k = 0;
-	        for (int i : seen) {
-	            if (k < i) {
-	                return k;
+	        List<Integer> unseen = new LinkedList<Integer>();
+	        for (int k = 0; k < size(); k++) {
+	            if (!seen.contains(k)) {
+	                unseen.add(k);
 	            }
-	            k++;
 	        }
-	        return k;
+	        Collections.shuffle(unseen);
+	        return unseen.get(0);
 	    }
 	    
 	    public static int getRandomIndex () {

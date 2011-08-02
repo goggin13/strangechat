@@ -29,21 +29,21 @@ public class IceBreakersTest extends UnitTest {
 	public void testIceBreakerHasSeenAssignment () {
 	    // set up the users we need
 	    int total = IceBreaker.iceBreakersCount();
-	    String all = "";
-	    String some1 = "";
-	    String some2 = "";
-	    String allbut1 = "";
+	    Set<Integer> all = new TreeSet<Integer>();
+	    Set<Integer> some1 = new TreeSet<Integer>();
+	    Set<Integer> some2 = new TreeSet<Integer>();
+	    Set<Integer> allbut1 = new TreeSet<Integer>();
 	    Random r = new Random();
 	    for (int i = 0; i < total; i++) {
-	        all += " " + i + ",";
+	        all.add(i);
 	        if (r.nextInt(100) % 2 == 0) {
-	            some1 += " " +  i + ",";
+	            some1.add(i);
 	        }
 	        if (r.nextInt(100) % 2 == 0) {
-	            some2 += " " + i + ",";
+	            some2.add(i);
 	        }	        
 	        if (i != total - 1) {
-	            allbut1 += " " + i + ",";
+	            allbut1.add(i);
 	        }
 	    }
         User seenAll1 = User.findById(pmo_db_id);
@@ -100,6 +100,25 @@ public class IceBreakersTest extends UnitTest {
         index = sp.chooseIndex(seenSome1, seenSome2);     
         assertTrue(seenSome1.seenIceBreaker(index));
         assertTrue(seenSome2.seenIceBreaker(index));        
+    }
+
+    @Test
+    public void testRandomIceBreakers () {
+        int total = IceBreaker.iceBreakersCount();
+        IceBreaker ice = new IceBreaker();
+        
+        User u1 = User.getOrCreate(1L);
+        User u2 = User.getOrCreate(1L);        
+        List<String> seen = new LinkedList<String>();
+        
+        for (int i = 0; i < total; i++) {
+            String msg = ice.use(u1, u2);
+            assertFalse(seen.contains(msg));
+            seen.add(msg);
+        }
+        
+        String msg = ice.use(u1, u2);
+        assertTrue(seen.contains(msg));
     }
 
 }

@@ -93,6 +93,13 @@ public abstract class SuperPower {
         return "used";
     }
     
+    /** count how many powers the given user has of this type */
+    public int countPowers (User u) {
+        Power p = this.getPower();
+        int count = u.countPowers(p);
+        return count;
+    }
+    
     /** @return JSON representing this object */
     public String toJSON () {
         Gson gson = new GsonBuilder()

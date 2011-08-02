@@ -11,6 +11,7 @@ import math
 class ChatAPI():
     """Manages all interactions with the chat apis"""
     # CHAT_ROOT = 'http://localhost:9000/'   # Dev
+    # CHAT_ROOT = 'http://localhost:8080/'   # Dev    
     CHAT_ROOT = 'http://173.246.100.79/' # live
     # CHAT_ROOT = 'http://173.246.101.45/' # staging
     
@@ -143,7 +144,6 @@ class ChatAPI():
             'for_user': self.user_id,
             'room_ids': ",".join(map(str, self.room_ids))
         }, self.heartbeatServer)
-        self.speak("heartbeat in %s - %s" % (self.room_ids, self.heartbeatServer))
 
     def use_power (self, power_id):
         self.request("usepower", {

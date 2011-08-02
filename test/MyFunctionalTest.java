@@ -65,6 +65,18 @@ public class MyFunctionalTest extends FunctionalTest {
 		String url = "/listen?user_id=" + id + "&lastReceived=" + lastReceived;
 	    return getAndValidateAsArray(url);
 	}
+
+    protected JsonObject getListenItem(String type, Long user_id, int lastReceived) {
+        JsonArray arr =  getWholeListenResponse(user_id, lastReceived);
+        for (JsonElement e : arr) {
+            JsonObject data = e.getAsJsonObject().get("data").getAsJsonObject();
+            if (data.get("type").getAsString().equals(type)) {
+                return data;
+            }
+        }
+        assertTrue(false);
+        return null;
+    }	
 	
 	protected void heartbeatFor (Long user_id) {
 	    HashMap<String, String> params = new HashMap<String, String>();
@@ -203,13 +215,14 @@ public class MyFunctionalTest extends FunctionalTest {
 		}
 	}
 	
-	protected int assertResponseContains(Long user_id, String power_name, int level, int lastReceived) {
+	protected int assertResponseContains (Long user_id, String power_name, int level, int lastReceived) {
 	    Promise<String> p = new CheckPowers().now();
         goToSleep(1);
         
         JsonArray arr = getWholeListenResponse(user_id, lastReceived);
 		int received = 0;
 		int lastLevel = 0;
+        // int power_id = -1;
 		
 		for (JsonElement event : arr) {
 		    JsonObject data = event.getAsJsonObject().get("data").getAsJsonObject();
@@ -229,8 +242,8 @@ public class MyFunctionalTest extends FunctionalTest {
 		System.out.println("testing level " + level + " - " + power_name + ", received = " + received);
     	assertTrue(1 <= received);
     	assertEquals(level, lastLevel);
-        
-		return lastReceived;
+		return lastReceived;            
+
 	}	
 	
     protected int assertResponseHasIceBreaker (Long user_id, int level, int lastReceived) {

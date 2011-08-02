@@ -44,6 +44,29 @@ public class PowerRewardsTest extends MyFunctionalTest {
         assertResponseContains(pmo_db_id, "Cloning", 1, 0);  	
 	} 
 
+    private int assertResponseHasEmotion (Long user_id, int level, int lastReceived) {
+        return assertResponseContains(user_id, "Emotion", level, lastReceived);     
+    }
+    
+ 	@Test
+	public void testEmotions () {
+        // Emotions dont currently level up, so only do for 1
+        int lastReceived = 0;
+        Long lastLevelTime = 0L;
+        for (int level = 1; level <= 1; level++) {
+            Long currentLevelTime = Emotion.levels.get(level);
+            Long timeRequired = currentLevelTime - lastLevelTime;
+            double iters = Math.ceil(timeRequired / 5.0);
+            
+            for (int i = 0; i < iters; i++) {
+                heartbeatForRoom(pmo_db_id, 15L);
+            }
+        
+            // and now after we wait, PMO should have a superpower notifications
+            lastReceived = assertResponseHasEmotion(pmo_db_id, level, lastReceived);
+        }
+	}
+
     //      @Test
     // public void testMindReader () {
     //     

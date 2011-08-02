@@ -21,9 +21,6 @@ public class CheckPulses extends Job {
 			return;
 		}
 		
-		// check user heartbeats
-        // System.out.println(User.heartbeats);
-        
 		for (Long user_id : HeartBeat.heartbeats.keySet()) {
 			Date lastBeat = HeartBeat.heartbeats.get(user_id);
 			Long diff = Utility.diffInSecs(new Date(), lastBeat);
@@ -46,6 +43,11 @@ public class CheckPulses extends Job {
 				broadcastLeaveRoom(room_id, user_id);
 			}
 		}
+
+        // this prevents memory from bloating up and bloating up, but I have no clue why
+        // it's necessary.  Sounds like its not usually necessary
+        // http://stackoverflow.com/questions/66540/system-gc-in-java
+        System.gc();
     }
 
 	private static void broadcastLeaveRoom (Long room_id, Long user_id) {

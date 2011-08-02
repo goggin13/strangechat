@@ -110,7 +110,7 @@ public class NotificationTests extends MyFunctionalTest {
 		assertEquals("15", data.get("room_id").getAsString());	
 		assertEquals("helloworld", data.get("text").getAsString());			
 	}
-
+	
 	@Test
 	public void testLoginAndDontHeartbeat () {
     	// first id 2 logs in        
@@ -137,8 +137,8 @@ public class NotificationTests extends MyFunctionalTest {
         
     	// there should be an event waiting for user 2 telling them that user 1
     	// logged in
-    	JsonObject data = getListenResponse(pmo_db_id, 0);
-    	assertEquals("userlogout", data.get("type").getAsString());
+    	JsonObject data = getListenItem("userlogout", pmo_db_id, 0);
+        // assertEquals("userlogout", data.get("type").getAsString());
     	assertEquals(k_db_id.toString(), data.get("left_user").getAsString());
 	}
 

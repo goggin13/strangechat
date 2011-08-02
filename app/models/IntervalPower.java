@@ -14,9 +14,7 @@ public abstract class IntervalPower extends SuperPower {
 	public abstract Long getFieldValue (User user);
 	    
 	public int isQualified (User user) {	    
-	    
-	    Power p = this.getPower();
-        int count = user.countPowers(p);
+        int count = countPowers(user);
         long current = getFieldValue(user);
         long used = count * this.award_interval;
         long available = current - used;

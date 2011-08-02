@@ -77,7 +77,8 @@ public class User extends Model {
 	
 	/**
 	 * comma delimted list of icebreaker indices seen */
-	public String icebreakers_seen;
+	@ElementCollection  
+	public Set<Integer> icebreakers_seen;
 
     /** True if this user is currently online */	
     public long lastLogin;
@@ -125,7 +126,7 @@ public class User extends Model {
 		this.friends = new HashSet<User>();
 	    this.superPowers = new LinkedList<StoredPower>();
 	    this.recentMeetings = new LinkedList<User>();
-	    this.icebreakers_seen = "";
+	    this.icebreakers_seen = new TreeSet<Integer>();
 	    this.save();
 	    addStartUpPowers();
 	}
@@ -309,50 +310,27 @@ public class User extends Model {
      * Return a list of all the ice breakers this user has seen 
      * @return list of indices of icebreakers */
     public Set<Integer> getSeenIceBreakers () {
-        Set<Integer> seenInts = new TreeSet<Integer>();
-        if (this.seenIceBreakersIsNull()) {
-            return seenInts;
-        }
-        String[] seen = this.icebreakers_seen.split(",");
-        
-        for (String s : seen) {
-            if (!s.equals("")) {
-                seenInts.add(Integer.parseInt(s.trim()));
-            }
-        }
-        return seenInts;
+        return icebreakers_seen;
     }
     
     /**
      * Mark the given index as seen by this user 
      * @param i the index of the icebreaker to mark as seen */
     public void addSeenIceBreaker (int i) {
-        if (!this.seenIceBreaker(i)) {
-            String toAdd = " " + i + ","; 
-            if (this.seenIceBreakersIsNull()) {
-                this.icebreakers_seen = toAdd;
-            } else {
-                this.icebreakers_seen += toAdd;
-            }       
-            
-            this.save();
-        }
+        this.icebreakers_seen.add(i);
+        this.save();
     }
 
     /**
      * @param i
      * @return <code>true</code> if this user has seen the icebreaker at index i */
     public boolean seenIceBreaker (int i) {
-        if (this.seenIceBreakersIsNull()) {
-            return false;
-        }
-        String indexStr = " " + i + ",";  
-        return this.icebreakers_seen.indexOf(indexStr) > -1;
+        return this.icebreakers_seen.contains(i);
     }
 
-    private boolean seenIceBreakersIsNull () {
-        return this.icebreakers_seen == null || this.icebreakers_seen.equals("");
-    }
+    // private boolean seenIceBreakersIsNull () {
+        // return this.icebreakers_seen == null || this.icebreakers_seen.equals("");
+    // }
 
 	/**
 	* Count how many {@link StoredPower} instances 

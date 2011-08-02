@@ -3,6 +3,7 @@ package models;
 import java.util.*;
 import play.libs.F.*;
 import play.Logger;
+import java.text.SimpleDateFormat;
 import enums.Power;
 import com.google.gson.*;
 import java.lang.reflect .*;
@@ -14,7 +15,6 @@ import com.google.gson.reflect.*;
 public class UserEvent {
     private static final int streamSize = 2000;
 	public static ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
-	public static ArchivedEventStream<UserEvent.Event> adminEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);	
 	
 	/**
 	 * UserEvents are dropped into the userEvents queue, which 
@@ -168,7 +168,7 @@ public class UserEvent {
 
 			// as soon as this event is created, we heartbeat for the given user; if they never received this event,
 			// we see their heartbeat fail and notify the other user
-            // HeartBeat.beatInRoom(room_id, this.user_id);    
+            models.HeartBeat.beatInRoom(room_id, for_user);    
             	
 			publishMe();
         }
@@ -211,7 +211,9 @@ public class UserEvent {
         public HeartBeat (Long for_user) {
             super("heartbeat", -1L, "");  // -1 so we don't bother sending this back to anyone
             this.for_user_id = for_user;
-			publishMe();
+            publishMe();
+            SimpleDateFormat formatter = new SimpleDateFormat("ss");
+            System.out.println("heartbeat (" + for_user + " - " + formatter.format(new Date()) + ")");
         }
 
 		public String toString () {

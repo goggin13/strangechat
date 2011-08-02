@@ -36,9 +36,4 @@ public class UserListTests extends MyFunctionalTest {
 		assertEquals("You have been blacklisted", jsonObj.get("message").getAsString());
 	}  
 	
-	@Test
-	public void testUserExcludeGroups () {
-	    
-	}
-
 }

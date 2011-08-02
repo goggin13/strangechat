@@ -24,7 +24,7 @@ public class SuperPowersTest extends MyFunctionalTest {
 	    Users.remeetEligible = -1;
 	}
 	
-   @Test
+    @Test
     public void testEnumsMatchPowers () {
         assertEquals(Power.ICE_BREAKER, new IceBreaker().getPower());
         assertEquals(Power.MIND_READER, new MindReader().getPower());                
@@ -114,5 +114,46 @@ public class SuperPowersTest extends MyFunctionalTest {
         data = getListenResponse(rando_1_db, 0);
         assertEquals("usedpower", data.get("type").getAsString());               
 	}
-	 		
+	
+	protected void pairUsersInRoom (Long user1, Long user2) {
+	    // pmo and KK request rooms
+		requestRoomFor(user1);
+	    requestRoomFor(user2);
+		
+		// they should get matched up.
+		JsonObject data = getListenResponse(user1, 0);
+		assertEquals("join", data.get("type").getAsString());
+		assertEquals(user2.toString(), data.get("new_user").getAsString());
+
+		data = getListenResponse(user2, 0);
+		assertEquals("join", data.get("type").getAsString());
+		assertEquals(user1.toString(), data.get("new_user").getAsString());
+	}	
+	
+	@Test
+	public void testUsePowersInMultiRooms () {
+        pairUsersInRoom(pmo_db_id, k_db_id);
+        pairUsersInRoom(pmo_db_id, rando_1_db);
+		
+		// earn emotion power
+		Long firstLevelTime = Emotion.levels.get(1);
+        double iters = Math.ceil(firstLevelTime / 5.0);
+        for (int i = 0; i < iters; i++) {
+            heartbeatForRoom(pmo_db_id, 15L);
+        }
+    
+        // and now after we wait, PMO should have a superpower notifications
+        assertResponseContains(pmo_db_id, "Emotion", 1, 0);        
+        // now use it without specifying a room
+        usePower(power_id, pmo_db_id, -1L, -1L);
+        
+        // both kk and rando should get notifications
+        JsonObject data = getListenItem("usedpower", pmo_db_id, 0);
+		JsonObject sp = data.get("superPower").getAsJsonObject();
+        assertEquals("Emotion", sp.get("name").getAsString());
+        
+        data = getListenItem("usedpower", rando_1_db, 0);
+		sp = data.get("superPower").getAsJsonObject();
+        assertEquals("Emotion", sp.get("name").getAsString());
+	}
 }

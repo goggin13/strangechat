@@ -225,12 +225,15 @@ public class Users extends Index {
 	 * @param room_id optional, the room the event is in
 	 * @param callback optional jsonp callback */
 	public static void usePower (Long power_id, Long user_id, Long other_id, Long room_id, String callback) { 
-	    if (power_id == null || user_id == null || other_id == null) {
-	        returnFailed("power_id, user_id, other_id are all required", callback);
+	    if (power_id == null || user_id == null) {
+	        returnFailed("power_id, user_id, are both required", callback);
 	    }
 	    User user = User.findById(user_id);
-	    User other = User.findById(other_id);
-	    if (user == null || (other_id != -1 && other == null)) {
+	    User other = null;
+	    if (other_id != null) {
+	        other = User.findById(other_id);
+	    }
+	    if (user == null || (other_id != null && other_id != -1 && other == null)) {
 	        returnFailed("both user_id and other_id must map to existing users", callback);
 	    }
 	    
@@ -248,10 +251,10 @@ public class Users extends Index {
         if (room_id != null && other != null) {
             other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
         } else {
-            // HashMap<User, Long> conversants = user.getConversants();
-            // for (User u : conversants.keySet()) {
-                // u.notifyUsedPower(user_id, conversants.get(u), sp, storedPower.level, result);
-            // }
+            HashMap<User, Long> conversants = user.getConversants();
+            for (User u : conversants.keySet()) {
+                u.notifyUsedPower(user_id, conversants.get(u), sp, storedPower.level, result);
+            }
         }
         
         returnOkay(callback);

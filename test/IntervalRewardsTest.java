@@ -38,8 +38,8 @@ public class IntervalRewardsTest extends MyFunctionalTest {
         }
     }  
 
- 	@Test
-	public void testBrainMash () {
+    //      @Test
+    // public void testBrainMash () {
         // int lastReceived = 0;
         // for (int i = 0; i < 4; i++) {
         //     double time = BrainMash.interval;
@@ -52,7 +52,7 @@ public class IntervalRewardsTest extends MyFunctionalTest {
         //          // and now after we wait, PMO should have a superpower notifications
         //          lastReceived = assertResponseContains(pmo_db_id, "Brain Mash", 1, lastReceived);  
         // }
-	}
+    // }
 	
 	@Test
 	public void testOmniscience () {

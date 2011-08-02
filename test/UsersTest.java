@@ -18,7 +18,7 @@ public class UsersTest extends MyFunctionalTest {
 	    Users.remeetEligible = -1;
 	}
 	    
-/* 	@Test
+ 	@Test
 	public void testSigninResponse () {
 		
 		// first id 2 logs in
@@ -76,7 +76,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals(fb_1_db_id.toString(), data.get("new_user").getAsString());
 		assertEquals(session_id, data.get("session_id").getAsString());
 	} 
-*/
+	
 	@Test
 	public void testBadTokenResponse () {		
         HashMap<String, String> params = new HashMap<String, String>();
@@ -97,7 +97,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("user 23423424312 not found", jsonObj.get("message").getAsString());
 	} 
 	
-/*	@Test
+	@Test
 	public void testGoodLogout () {
 		HashMap<String, String> params = new HashMap<String, String>();
 	    params.put("user_id", k_db_id.toString());
@@ -204,5 +204,6 @@ public class UsersTest extends MyFunctionalTest {
         data = getListenResponse(k_db_id, 0);
         assertEquals("join", data.get("type").getAsString());
         assertEquals(pmo_db_id.toString(), data.get("new_user").getAsString());
-	}*/
+	}
+
 }
