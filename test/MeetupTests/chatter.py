@@ -158,7 +158,7 @@ class ChatAPI():
         self.request("requestrandomroom", {'user_id': self.user_id}, self.CHAT_ROOT)
 
     def request (self, path, data, server):
-        h = httplib2.Http(timeout=2)  
+        h = httplib2.Http(timeout=3)  
         h.force_exception_to_status_code = True         
         url = server + path + "?" + urlencode(data)
         start = datetime.now()
@@ -206,7 +206,7 @@ class ChatTester(Thread):
                 if room_id:
                     self.unique += 1
                     self.API.messageRoom("hello - %d" % self.unique, room_id)
-                    time.sleep(1)
+                    time.sleep(.2)
             
             self.API.heartbeat()
             self.API.getListenResponse()

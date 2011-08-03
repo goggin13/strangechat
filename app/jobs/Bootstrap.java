@@ -20,9 +20,9 @@ public class Bootstrap extends Job {
 		    Fixtures.deleteAll();
         	Fixtures.loadModels("bootstrap-data-dev.yml");
 		} else {
-            Fixtures.deleteAll();         
+            // Fixtures.deleteAll();         
             // Fixtures.loadModels("bootstrap-data-staging.yml");
-            Fixtures.loadModels("bootstrap-data-prod.yml");
+            // Fixtures.loadModels("bootstrap-data-prod.yml");
 		}
 		
 		if (Play.mode == Play.Mode.DEV) {

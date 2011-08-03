@@ -55,7 +55,10 @@ public class CheckPowers extends Job {
                     continue;
                 }
                 User to = getUser(rm.user_id);
-                User from = getUser(rm.from);  
+                User from = getUser(rm.from); 
+                if (to == null || from == null) {
+                    continue;
+                } 
                 String text = rm.text;
                 
                 if (text.equals(REVEAL_CODE)) {
@@ -74,19 +77,18 @@ public class CheckPowers extends Job {
                 from.save();
             } else if (event instanceof UserEvent.Join) {
                 UserEvent.Join j = (UserEvent.Join)event;
-                User user = getUser(j.user_id);                
-                user.joinCount += 1;
-                user.save();
+                User user = getUser(j.user_id);     
+                if (user != null) {
+                    user.joinCount += 1;
+                    user.save();                    
+                }           
             } else if (event instanceof UserEvent.HeartBeat) {
                 UserEvent.HeartBeat hb = (UserEvent.HeartBeat)event;
                 User user = getUser(hb.for_user_id);                
-                if (user.chatTime == null) {
-                    user.chatTime = 0L;
+                if (user != null) {
+                    user.chatTime += HEARTBEAT_INTERVAL;    
+                    user.save();                    
                 }
-                // System.out.println(user.id + " cur time - " + user.chatTime);
-                user.chatTime += HEARTBEAT_INTERVAL;    
-                user.save();                
-                // System.out.println(user.id + " new time - " + user.chatTime);
             } else if (!(event instanceof UserEvent.Event)) {
                 Logger.error("Processing super power check and encountered a bad event");
             } 
@@ -96,7 +98,7 @@ public class CheckPowers extends Job {
     private static User getUser (Long id) {
         User u = User.findById(id);
         if (u == null) {
-            Logger.error("attempted to process event for non-existant user (%s)", id);
+            Logger.warn("attempted to process event for non-existant user (%s)", id);
             return null;
         }
         myUsers.add(id);

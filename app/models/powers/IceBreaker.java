@@ -21,9 +21,9 @@ public class IceBreaker extends IntervalPower {
 	    return user.chatTime;
 	}
 	
-	// since u get a freebie ice breaker we decrement the count by 1
+	// since u get two freebie ice breaker we decrement the count by 2
 	public int countPowers (User user) {
-	    return super.countPowers(user) - 1;
+	    return super.countPowers(user) - 2;
 	}
 	
 	public int chooseIndex (User caller, User subject) {
@@ -52,7 +52,7 @@ public class IceBreaker extends IntervalPower {
         return index;
 	}
 	
-	public String use (User caller, User subject) {
+	public synchronized String use (User caller, User subject) {
         int index = chooseIndex(caller, subject);
         caller.addSeenIceBreaker(index);
         subject.addSeenIceBreaker(index);

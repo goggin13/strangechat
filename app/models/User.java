@@ -148,6 +148,7 @@ public class User extends Model {
     	    }
     	} else {
     	    powers.add(Power.ICE_BREAKER);
+    	    powers.add(Power.ICE_BREAKER);
     	}
     	return powers;
 	}
@@ -183,6 +184,9 @@ public class User extends Model {
 	 * Iterate stored powers and save all the superpower objects for
 	 * sending back to the user on login */
 	private void populateSuperPowerDetails () {
+	    if (this.superPowerDetails != null) {
+	        this.superPowerDetails.clear();
+        }
 	    this.superPowerDetails = new HashMap<Power, SuperPower>();
 	    for (StoredPower sp : this.superPowers) {
 	        this.superPowerDetails.put(sp.power, sp.getSuperPower());

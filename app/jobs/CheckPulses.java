@@ -17,37 +17,39 @@ public class CheckPulses extends Job {
 	private static Long lastReceived = 0L;
 	
 	public void doJob() {
-		if (!Server.imAChatServer()) {
-			return;
-		}
-		
-		for (Long user_id : HeartBeat.heartbeats.keySet()) {
-			Date lastBeat = HeartBeat.heartbeats.get(user_id);
-			Long diff = Utility.diffInSecs(new Date(), lastBeat);
-			if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
-				HeartBeat.heartbeats.remove(user_id);
-				broadcastLogout(user_id);
-			}
-		}
-		
+        if (!Server.imAChatServer()) {
+         return;
+        }
+
+        for (Long user_id : HeartBeat.heartbeats.keySet()) {
+         Date lastBeat = HeartBeat.heartbeats.get(user_id);
+         Long diff = Utility.diffInSecs(new Date(), lastBeat);
+         if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
+             HeartBeat.heartbeats.remove(user_id);
+             broadcastLogout(user_id);
+         }
+        }
+        
 		// check heartbeats in rooms
-		for (String key : HeartBeat.roombeats.keySet()) {
-			Date lastBeat = HeartBeat.roombeats.get(key);
-			Long diff = Utility.diffInSecs(new Date(), lastBeat);
-			if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
-				String parts[] = key.split("_");
-				HeartBeat.roombeats.remove(key);
-				Long room_id = Long.parseLong(parts[0]);
-				Long user_id = Long.parseLong(parts[1]);
-				Logger.info("broadcast leave room, " + user_id + " from " + room_id);
-				broadcastLeaveRoom(room_id, user_id);
-			}
-		}
+        for (String key : HeartBeat.roombeats.keySet()) {
+         Date lastBeat = HeartBeat.roombeats.get(key);
+         Long diff = Utility.diffInSecs(new Date(), lastBeat);
+         if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
+             String parts[] = key.split("_");
+             HeartBeat.roombeats.remove(key);
+             Long room_id = Long.parseLong(parts[0]);
+             Long user_id = Long.parseLong(parts[1]);
+             Logger.info("broadcast leave room, " + user_id + " from " + room_id);
+             broadcastLeaveRoom(room_id, user_id);
+         }
+        }
 
         // this prevents memory from bloating up and bloating up, but I have no clue why
         // it's necessary.  Sounds like its not usually necessary
         // http://stackoverflow.com/questions/66540/system-gc-in-java
-        System.gc();
+        // http://stackoverflow.com/questions/2414105/why-is-it-a-bad-practice-to-call-system-gc
+        // http://stackoverflow.com/questions/4784987/calling-system-gc-explicitly
+        // System.gc();
     }
 
 	private static void broadcastLeaveRoom (Long room_id, Long user_id) {
