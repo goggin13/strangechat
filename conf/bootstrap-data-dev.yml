@@ -7,8 +7,8 @@ Server(master):
   roomCount: 4
   nextID: 1
   isMaster: true
-  isChat: false
-  volume: 0
+  isChat: true
+  volume: .3
 
 Server(chat1):
   name: chat1.com
@@ -17,4 +17,4 @@ Server(chat1):
   nextID: 1
   isMaster: false
   isChat: true
-  volume: 1
+  volume: .7

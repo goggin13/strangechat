@@ -15,6 +15,7 @@ import controllers.Index;
 @Every("5s")
 public class CheckPulses extends Job {
 	private static Long lastReceived = 0L;
+	private static Long counter = 0L;
 	
 	public void doJob() {
         if (!Server.imAChatServer()) {
@@ -49,7 +50,9 @@ public class CheckPulses extends Job {
         // http://stackoverflow.com/questions/66540/system-gc-in-java
         // http://stackoverflow.com/questions/2414105/why-is-it-a-bad-practice-to-call-system-gc
         // http://stackoverflow.com/questions/4784987/calling-system-gc-explicitly
-        // System.gc();
+        if (counter++ % 1800 == 0) {  // every 30 minutes
+           System.gc(); 
+        }
     }
 
 	private static void broadcastLeaveRoom (Long room_id, Long user_id) {

@@ -34,7 +34,7 @@ public class Users extends Index {
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
 	public static int spotsPerUser = 2;
 	
-	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom", "usePower"})
+	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom", "usePower", "waiting_room_is_empty"})
 	public static void checkAuth () {
 		Index.checkAuthentication();
 	}
@@ -179,6 +179,18 @@ public class Users extends Index {
             if (!removeAll) {
                 return;
             }
+        }
+    }
+
+    /**
+     * This is only called from a unit test, and all it does it test if the waitingroom is
+     * empty.  Two test bots wish to talk to eachother but don't want to accidentally get a 
+     * real user */
+    public static void waiting_room_is_empty () {
+        if (waitingRoom.size() == 0) {
+            returnOkay(null);
+        } else {
+            returnFailed("The waiting room is not empty", null);
         }
     }
 

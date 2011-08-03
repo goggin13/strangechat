@@ -120,17 +120,14 @@ public class CheckPowers extends Job {
             for (IndexedEvent e : indexedEvents) {
                 events.add((UserEvent.Event)e.data);
             }
-            
         } else {
-            
             String url = s.uri + "notify/adminlisten";
             HashMap<String, String> params = new HashMap<String, String>();
             params.put("lastReceived", last.toString());
             WS.HttpResponse resp = Utility.fetchUrl(url, params);
             events = UserEvent.deserializeEvents(resp.getString());
             UserEvent.DirectMessage lastMsg = (UserEvent.DirectMessage)events.get(events.size() - 1);
-            last = Long.parseLong(lastMsg.text);
-            
+            last = Long.parseLong(lastMsg.text);                
         }
         lastReceived.put(s.name, last);
         return events;

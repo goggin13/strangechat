@@ -1,0 +1,38 @@
+# you describe your data using the YAML notation here
+# and then load them using Fixtures.load("data.yml")
+
+Server(master):
+  name: master.com
+  uri: http://10.0.1.50:9000/
+  roomCount: 4
+  nextID: 1
+  isMaster: true
+  isChat: false
+  volume: 0
+
+Server(chat1):
+  name: chat1.com
+  uri: http://10.0.1.50:8080/
+  roomCount: 4
+  nextID: 1
+  isMaster: false
+  isChat: true
+  volume: .3
+  
+Server(chat2):
+  name: chat2.com
+  uri: http://10.0.1.50:8070/
+  roomCount: 4
+  nextID: 1
+  isMaster: false
+  isChat: true
+  volume: .3
+  
+Server(chat3):
+  name: chat3.com
+  uri: http://10.0.1.50:8060/
+  roomCount: 4
+  nextID: 1
+  isMaster: false
+  isChat: true
+  volume: .4
