@@ -164,7 +164,7 @@ class ChatAPI():
             'power_id': power_id,
             'other_id': self.other_user_id,
             'room_id': self.room_ids[0] if len(self.room_ids) > 0 else -1
-        }, self.heartbeatServer)        
+        }, self.CHAT_ROOT)        
 
     def requestRoom (self):
         self.speak("request room")
@@ -175,11 +175,13 @@ class ChatAPI():
         h.force_exception_to_status_code = True         
         url = server + path + "?" + urlencode(data)
         start = datetime.now()
-        # self.speak("GET %s" % url)
         resp, content = h.request(url, "GET")
         if (resp['status'] != "200"):
-            print url
-            print resp
+            if (resp['status'] == "408"):
+                print "timeout"
+            else:    
+                print url
+                print resp
             return None
         end = datetime.now()
         diff = end - start

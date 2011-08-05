@@ -10,7 +10,7 @@ import java.lang.reflect .*;
 import com.google.gson.reflect.*;
 
 /* 
- * A wrapper for the UserEvent classes.  See comment on {@link AnEvent} for 
+ * A wrapper for the UserEvent classes.  See comment on {@link Event} for 
  * more detail */
 public class UserEvent {
     private static final int streamSize = 2000;
@@ -44,13 +44,17 @@ public class UserEvent {
 	
 	    public void publishMe () {
 	        if (this.user_id != -1) {
-	            System.out.println(this);
+            //    System.out.println(this);
             }
-	        userEvents.publish(this);
+            userEvents.publish(this);
 	    }
 	    
 		public String toString () {
 			return this.user_id + " ( " + this.type + " )";
+		}
+		
+		protected void finalize() {
+		    Logger.info("finalising event class");
 		}
 	}
 	
@@ -141,6 +145,10 @@ public class UserEvent {
 				   + " : message from " + this.from + ", " + this.text
 				   + ", in room " + this.room_id;
 		}
+		
+		protected void finalize() {
+		    Logger.info("finalising RoomMessage class");
+		}		
         
     }
 	

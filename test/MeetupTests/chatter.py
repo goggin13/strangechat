@@ -75,7 +75,7 @@ class ChatTester(Thread):
     
 ROOT_ID = 999
 NUM_USERS = 16
-NUM_ITERS = 100
+NUM_ITERS = 4000
 
 thread_queue = Queue.Queue()
 for i in range(ROOT_ID, ROOT_ID + NUM_USERS):

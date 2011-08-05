@@ -310,10 +310,6 @@ public class User extends Model {
         return this.icebreakers_seen.contains(i);
     }
 
-    // private boolean seenIceBreakersIsNull () {
-        // return this.icebreakers_seen == null || this.icebreakers_seen.equals("");
-    // }
-
 	/**
 	* Count how many {@link StoredPower} instances 
 	* @param p the {@link Power} to count

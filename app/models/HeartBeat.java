@@ -28,11 +28,23 @@ public class HeartBeat {
 	 * @param room_id the id of the room to beat in
 	 * @param user_id the id of the user to beat for */
 	public static void beatInRoom (Long room_id, Long user_id) {
-		String key = room_id.toString() + "_" + user_id.toString();
-		roombeats.put(key, new Date());	
+        String key = room_id.toString() + "_" + user_id.toString();
+        roombeats.put(key, new Date());  
 	}    
 	
 	public static void beatFor (Long for_user) {
-	    heartbeats.put(for_user, new Date());
+        heartbeats.put(for_user, new Date());
 	}
+	
+	public static AbstractMap<Long, Date> getHeartBeats () {
+	    return heartbeats;
+	}
+	
+	public static void removeBeatFor (Long user_id) {
+	    heartbeats.remove(user_id);
+	    if (heartbeats.size() == 0) {
+	        heartbeats.clear();
+	    }
+	}
+	
 }

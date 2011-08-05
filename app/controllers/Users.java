@@ -28,7 +28,7 @@ public class Users extends Index {
 	 *  can be matched again.  0 means users can talk, then they have to talk to 
 	 *  at least one other person each.  -1 means they can be paired in back
 	 *  to back rooms. */
-	public static int remeetEligible = -1;
+	public static int remeetEligible = 0;
 	
 	/**
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
@@ -164,7 +164,7 @@ public class Users extends Index {
 		if (Collections.frequency(waitingRoom, user_id) < spotsPerUser) {
 		    waitingRoom.add(user_id);
 		}
-		System.out.println("adding " + user_id + " " + waitingRoom);
+		
 		returnOkay(callback);
 	}
 	
@@ -238,7 +238,6 @@ public class Users extends Index {
 	 * @param callback optional jsonp callback */
 	public static void usePower (Long power_id, Long user_id, Long other_id, Long room_id, String callback) { 
 	    if (power_id == null || user_id == null) {
-	        Logger.error("Use Power : Use Power failed, no power_id or user_id sent");
 	        returnFailed("power_id, user_id, are both required", callback);
 	    }
 	    User user = User.findById(user_id);
@@ -247,24 +246,19 @@ public class Users extends Index {
 	        other = User.findById(other_id);
 	    }
 	    if (user == null || (other_id != null && other_id != -1 && other == null)) {
-	        Logger.error("Use Power : failed, not mapped to existing users");	        
 	        returnFailed("both user_id and other_id must map to existing users", callback);
 	    }
 	    
         StoredPower storedPower = StoredPower.findById(power_id);
         if (storedPower == null) {
-            Logger.error("Use Power : no power by that id exists");	  
             returnFailed("no power by that ID exists", callback);
         } else if (!storedPower.canUse()) {
-            Logger.error("Use Power : You don't have any of that power remaining!");
             returnFailed("Use Power : You don't have any of that power remaining!", callback);
         }
 
         SuperPower sp = storedPower.getSuperPower();
         String result = storedPower.use(other);
-        if (sp.name == "Ice Breaker") {
-            Logger.info("Use Power : Ice Breaker from " + user_id);
-        }
+        
         user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
         if (room_id != null && other != null) {
             other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            

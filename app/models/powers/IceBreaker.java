@@ -27,6 +27,10 @@ public class IceBreaker extends IntervalPower {
 	}
 	
 	public int chooseIndex (User caller, User subject) {
+	    if (caller == null || subject == null) {
+	        Logger.error("ice breaker called with a null user");
+	        return IceBreakers.getRandomIndex();
+	    }
         Set<Integer> user1Seen = caller.getSeenIceBreakers();
         Set<Integer> user2Seen = subject.getSeenIceBreakers();     
         Set<Integer> seenIndices = caller.getSeenIceBreakers();
@@ -152,7 +156,8 @@ public class IceBreaker extends IntervalPower {
             messages.add("What would you do to stop an astroid from hitting Earth?");
             messages.add("How would you save a baby from a burning building?");
             messages.add("How often do you help little old ladies cross the street?");
-                        
+            messages.add("How did you become a superhero?");
+            messages.add("Who is your nemesis?");
 	    }
 	    
 	    // seen MUST BE SORTED

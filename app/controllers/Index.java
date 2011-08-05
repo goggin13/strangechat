@@ -71,6 +71,7 @@ public class Index extends CRUD {
 	 * renders a JSON status error response
 	 * @param callback optional, used for cross domain requests */
 	protected static void returnFailed (String msg, String callback) {
+	    Logger.warn(msg);
 		Users.renderJSONP(
 			getErrorResponse(msg), 
 			new TypeToken<HashMap<String, String>>() {}.getType(),

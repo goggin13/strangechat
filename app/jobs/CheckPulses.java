@@ -21,14 +21,15 @@ public class CheckPulses extends Job {
         if (!Server.imAChatServer()) {
          return;
         }
-
-        for (Long user_id : HeartBeat.heartbeats.keySet()) {
-         Date lastBeat = HeartBeat.heartbeats.get(user_id);
-         Long diff = Utility.diffInSecs(new Date(), lastBeat);
-         if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
-             HeartBeat.heartbeats.remove(user_id);
-             broadcastLogout(user_id);
-         }
+        
+        AbstractMap<Long, Date> heartbeats = HeartBeat.getHeartBeats();
+        for (Long user_id : heartbeats.keySet()) {
+            Date lastBeat = heartbeats.get(user_id);
+            Long diff = Utility.diffInSecs(new Date(), lastBeat);
+            if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
+                HeartBeat.removeBeatFor(user_id);
+                broadcastLogout(user_id);
+            }
         }
         
 		// check heartbeats in rooms
@@ -40,7 +41,6 @@ public class CheckPulses extends Job {
              HeartBeat.roombeats.remove(key);
              Long room_id = Long.parseLong(parts[0]);
              Long user_id = Long.parseLong(parts[1]);
-             Logger.info("broadcast leave room, " + user_id + " from " + room_id);
              broadcastLeaveRoom(room_id, user_id);
          }
         }
