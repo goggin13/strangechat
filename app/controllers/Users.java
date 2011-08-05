@@ -26,7 +26,7 @@ public class Users extends Index {
 		
 	/** How many meetings, 0 indexed, ago users must have interacted before they
 	 *  can be matched again.  0 means users can talk, then they have to talk to 
-	 *  at least one other perosn each.  -1 means they can be pairied in back
+	 *  at least one other person each.  -1 means they can be paired in back
 	 *  to back rooms. */
 	public static int remeetEligible = -1;
 	
@@ -123,12 +123,12 @@ public class Users extends Index {
 	private static boolean canBePaired (Long user_id1, Long user_id2) {
 	    System.out.println("pair " + user_id1 + ", " + user_id2);
 	    
-	    System.out.println(UserExclusion.canSpeak(user_id1, user_id2));
+        // System.out.println(UserExclusion.canSpeak(user_id1, user_id2));
 	    
-	    System.out.println(remeetEligible == -1 
-            || !Room.hasMetRecently(user_id1, user_id2, remeetEligible));
+        // System.out.println(remeetEligible == -1 
+            // || !Room.hasMetRecently(user_id1, user_id2, remeetEligible));
 	    
-	    System.out.println(!Room.areSpeaking(user_id1, user_id2));
+        // System.out.println(!Room.areSpeaking(user_id1, user_id2));
 	    
 	    return !user_id1.equals(user_id2) 
 		        && UserExclusion.canSpeak(user_id1, user_id2)
@@ -238,6 +238,7 @@ public class Users extends Index {
 	 * @param callback optional jsonp callback */
 	public static void usePower (Long power_id, Long user_id, Long other_id, Long room_id, String callback) { 
 	    if (power_id == null || user_id == null) {
+	        Logger.error("Use Power : Use Power failed, no power_id or user_id sent");
 	        returnFailed("power_id, user_id, are both required", callback);
 	    }
 	    User user = User.findById(user_id);
@@ -246,29 +247,34 @@ public class Users extends Index {
 	        other = User.findById(other_id);
 	    }
 	    if (user == null || (other_id != null && other_id != -1 && other == null)) {
+	        Logger.error("Use Power : failed, not mapped to existing users");	        
 	        returnFailed("both user_id and other_id must map to existing users", callback);
 	    }
 	    
         StoredPower storedPower = StoredPower.findById(power_id);
         if (storedPower == null) {
+            Logger.error("Use Power : no power by that id exists");	  
             returnFailed("no power by that ID exists", callback);
         } else if (!storedPower.canUse()) {
-            returnFailed("You don't have any of that power remaining!", callback);
+            Logger.error("Use Power : You don't have any of that power remaining!");
+            returnFailed("Use Power : You don't have any of that power remaining!", callback);
         }
 
         SuperPower sp = storedPower.getSuperPower();
         String result = storedPower.use(other);
-        
+        if (sp.name == "Ice Breaker") {
+            Logger.info("Use Power : Ice Breaker from " + user_id);
+        }
         user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
         if (room_id != null && other != null) {
             other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
-        } else {
+        } else {            
             HashMap<User, Long> conversants = user.getConversants();
             for (User u : conversants.keySet()) {
                 u.notifyUsedPower(user_id, conversants.get(u), sp, storedPower.level, result);
             }
         }
-        
+
         returnOkay(callback);
 
 	}

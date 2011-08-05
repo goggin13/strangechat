@@ -50,9 +50,10 @@ public class CheckPulses extends Job {
         // http://stackoverflow.com/questions/66540/system-gc-in-java
         // http://stackoverflow.com/questions/2414105/why-is-it-a-bad-practice-to-call-system-gc
         // http://stackoverflow.com/questions/4784987/calling-system-gc-explicitly
-        if (counter++ % 1800 == 0) {  // every 30 minutes
+        // if (counter++ % 900 == 0) {  // every 15 minutes
+           // Logger.info("request Garbage Collection");
            System.gc(); 
-        }
+        // }
     }
 
 	private static void broadcastLeaveRoom (Long room_id, Long user_id) {

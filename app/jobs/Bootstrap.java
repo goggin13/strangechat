@@ -17,12 +17,39 @@ public class Bootstrap extends Job {
     public void doJob() {
 		UserEvent.resetEventQueue();
 		if (Play.mode == Play.Mode.DEV) {
-		    Fixtures.deleteAll();
-        	Fixtures.loadModels("bootstrap-data-dev.yml");
+            Fixtures.deleteAll();
+            Fixtures.loadModels("bootstrap-data-dev.yml");          
 		} else {
-            // Fixtures.deleteAll();         
-            // Fixtures.loadModels("bootstrap-data-staging.yml");
-            // Fixtures.loadModels("bootstrap-data-prod.yml");
+            // Server master = Server.getMasterServer();
+            // master.isChat = false;
+            // master.volume = 0;
+            // master.save();
+            // 
+            // Server chatter = Server.getChatServers().get(0); 
+            // chatter.volume = 1.0;
+            // chatter.save();
+            // 
+            List<User> users = User.all().fetch(400);
+              for (User u : users) {
+                  Logger.info("resetting user " + u.id);
+                  u.icebreakers_seen = new TreeSet<Integer>();
+                  u.save();
+              }
+            
+            // List<Room> rooms = Room.all().fetch(100);
+            // for (Room r : rooms) {
+            //     r.delete();
+            //     // if (r.isEmpty()) {
+            //         // r.delete();
+            //         // r.save();
+            //     // }
+            // }
+            
+            // List<StoredPower> allPowers = StoredPower.all.fetch(1500);
+            // for (StoredPower p : allPowers) {
+            //     
+            // }
+            
 		}
 		
 		if (Play.mode == Play.Mode.DEV) {

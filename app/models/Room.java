@@ -32,6 +32,22 @@ public class Room extends Model {
 	}
 
     /**
+     * Return <code>True</code> if this room has no participants in it */
+    public boolean isEmpty () {
+        if (this.participants.size() == 0) {
+            return true;
+        } else {
+            boolean active = false;
+            for (User p : this.participants) {
+                if (p.online) {
+                    active = true;
+                }
+            }
+            return active;
+        }
+    }
+
+    /**
      * Add the two given users to this room, and notify them that eachother
      * has joined 
      * @param user_id1
@@ -146,6 +162,10 @@ public class Room extends Model {
 		}
 		room.removeParticipant(user);
 		return true;
+	}
+	
+	public String toString () {
+	    return this.id + " => ("+ this.participants.toString() + ")";
 	}
 	
 }

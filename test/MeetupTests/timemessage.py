@@ -42,9 +42,12 @@ class MessageSender (Thread):
         room_id = self.getRoom()        
         if self.API.other_user_id != self.listener_id:
             self.speak("oops! Thats not who I want to talk to")
+            self.API.signout() 
             self.thread_queue.task_done()
             return        
             
+        time.sleep(2)
+        self.speak("START SENDING!")
         for i in range(0, NUM_MESSAGES):
             self.sent_messages[i] = datetime.now()
             self.speak("SENDING MESSAGE %d" % i)
@@ -90,9 +93,11 @@ class MessageListener (Thread):
         self.API.requestAndListen()
         if self.API.other_user_id != self.sender_id:
             self.speak("oops! Thats not who I want to talk to")
+            self.API.signout() 
             self.thread_queue.task_done()
             return     
-            
+        
+        self.speak("LISTENING....")
         while (len(self.got_messages)) < NUM_MESSAGES:
             messages = self.API.getMessageData()
             for m in messages:
@@ -119,7 +124,7 @@ class MessageListener (Thread):
             diffSecs = float(diff.microseconds) / 1000000
             total += diffSecs
             print i, diffSecs
-        print "%d messages, average = %f" % (NUM_MESSAGES, diffSecs)
+        print "%d messages, average = %f" % (NUM_MESSAGES, total/i)
         
 
 # check to make sure we dont pair with a real user
@@ -131,7 +136,7 @@ def waitingRoomIsEmpty ():
     return content["status"] == "okay"
 
 tries = 0
-max_tries = 3
+max_tries = 10
 empty = waitingRoomIsEmpty()    
 while not empty and tries < max_tries:
     print "waiting room is full, try again..."

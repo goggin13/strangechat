@@ -99,7 +99,15 @@ public class IceBreakersTest extends UnitTest {
         sp.use(seenSome1, seenSome2);
         index = sp.chooseIndex(seenSome1, seenSome2);     
         assertTrue(seenSome1.seenIceBreaker(index));
-        assertTrue(seenSome2.seenIceBreaker(index));        
+        assertTrue(seenSome2.seenIceBreaker(index));
+        
+        seenSome1.icebreakers_seen = new TreeSet<Integer>();
+        seenSome1.save();
+        seenSome2.icebreakers_seen = new TreeSet<Integer>();
+        seenSome2.save();
+        index = sp.chooseIndex(seenSome1, seenSome2);     
+        assertFalse(seenSome1.seenIceBreaker(index));
+        assertFalse(seenSome2.seenIceBreaker(index)); 
     }
 
     @Test

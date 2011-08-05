@@ -30,13 +30,19 @@ public class IceBreaker extends IntervalPower {
         Set<Integer> user1Seen = caller.getSeenIceBreakers();
         Set<Integer> user2Seen = subject.getSeenIceBreakers();     
         Set<Integer> seenIndices = caller.getSeenIceBreakers();
+        
         seenIndices.addAll(user2Seen);
         int user1SeenCount = user1Seen.size();
         int user2SeenCount = user2Seen.size();
-                int availableCount = IceBreakers.size();
+        int availableCount = IceBreakers.size();
         int index;
         
-        if (seenIndices.size() == availableCount) {  // one, both, or together has seen every one
+        Logger.info("IB: CHOOSE INDEX u1(" + caller.id + ")->" + user1Seen.size() + 
+                            ", u2(" + subject.id + ")->" + user2Seen.size() + 
+                            ", both->" + seenIndices.size() + 
+                            ", all->" + availableCount);
+        
+        if (seenIndices.size() >= availableCount) {  // one, both, or together has seen every one
         
             if (user1SeenCount < availableCount) {          // user1 hasn't seen them all
                 index = IceBreakers.getRandomIndex(user1Seen);                
@@ -47,6 +53,7 @@ public class IceBreaker extends IntervalPower {
             }
                     
         } else {  // we can choose one neither has seen
+            Logger.info("IB: return a random one neither has seen");
             index = IceBreakers.getRandomIndex(seenIndices);
         }
         return index;
@@ -66,7 +73,6 @@ public class IceBreaker extends IntervalPower {
 	
 	private static class IceBreakers {
 	    private static List<String> messages = new ArrayList<String>();
-	    private static Random r = new Random();
 	    
 	    static {
             messages.add("Did you like your high school experience?");
@@ -86,7 +92,6 @@ public class IceBreaker extends IntervalPower {
             messages.add("Where did you have your first kiss?");
             messages.add("What’s the worst thing you’ve ever done?");
             messages.add("If you had all the money you needed, would you still work?");
-            messages.add("How important is sex in an relationship?");
             messages.add("Is Bill Murray the best comedian of all time?");
             messages.add("What’s better: Italian or Chinese food?");
             messages.add("What’s the best pizza topping?");
@@ -95,7 +100,6 @@ public class IceBreaker extends IntervalPower {
             messages.add("Do you like to sit by the window or on the aisle on planes?");
             messages.add("Do you like Facebook or Twitter more?");
             messages.add("Who is your favorite author?");
-            messages.add("Have you ever had sex in public?");
             messages.add("What was the worst class in middle school?");
             messages.add("What super power do you wish you possessed?");
             messages.add("What’s your favorite board game?");
@@ -106,7 +110,6 @@ public class IceBreaker extends IntervalPower {
             messages.add("What’s your favorite number?");
             messages.add("What would be the title of your memoir?");
             messages.add("How would you describe yourself in two words?");                   
-            messages.add("How do you make a relationship work?");
             messages.add("What's something romantic to do on a first date?");
             messages.add("What's it like to be in loveeee?");
             messages.add("What's your fondest memory from being small?");
@@ -128,41 +131,64 @@ public class IceBreaker extends IntervalPower {
             messages.add("What time period would you time travel to?");
             messages.add("What's the best chain restaurant to make out in?");
             messages.add("What instruments do you play?");
-            messages.add("Where is a gross place you've made out at?");
-            messages.add("Is love real? How can you be so sure?");
             messages.add("What is your favorite band?");
             messages.add("Where did humans come from?");
             messages.add("Do you think there are aliens? What're they like?");
             messages.add("If God had a face what would it look like?");
             messages.add("What's a funny joke?");
             messages.add("What do women want?");
-            messages.add("Why is glitter so popular?");
             messages.add("What do boys smell like? What about girls?");
             messages.add("How do you know if it's love?");
             messages.add("How do you know if someone likes you?");
             messages.add("What makes you laugh?");
             messages.add("What makes people successful?");
-            messages.add("What is a soul?");
-            messages.add("What do farts feel like?");
             messages.add("Why do people do drugs?");
             messages.add("Why do people drink?");
             messages.add("How do you fall asleep?");
-            messages.add("What is social media?");            
+            messages.add("What's your secret lair like?");
+            messages.add("Do you have a sidekick?");
+            messages.add("Does your true identity wear glasses?");
+            messages.add("What would you do to stop a crashing airplane?");
+            messages.add("What would you do to stop an astroid from hitting Earth?");
+            messages.add("How would you save a baby from a burning building?");
+            messages.add("How often do you help little old ladies cross the street?");
+                        
 	    }
 	    
 	    // seen MUST BE SORTED
 	    public static int getRandomIndex (Set<Integer> seen) {
+	        
+	        Logger.info("IB: get rando index (seen size = " + seen.size() + ")");
+	        
+	        if (seen.size() == 0 || seen.size() == IceBreakers.size()) {
+	            Logger.debug("return rando");
+	            return getRandomIndex();
+	        }
 	        List<Integer> unseen = new LinkedList<Integer>();
 	        for (int k = 0; k < size(); k++) {
 	            if (!seen.contains(k)) {
 	                unseen.add(k);
 	            }
 	        }
-	        Collections.shuffle(unseen);
+	        if (unseen.size() == 0) {
+	            Logger.info("IB: This should never happen; fall through in get random ice breaker index");
+	            return getRandomIndex();
+	        }
+	        Logger.info("IB: return a rando from " + unseen.size() + " choices");
+	        Collections.shuffle(unseen);	        
 	        return unseen.get(0);
+	    }
+
+	    public static Set<Integer> getMessages () {
+	        Set<Integer> msgs = new TreeSet<Integer>();
+	        for (int i = 0; i < size(); i++) {
+	            msgs.add(i);
+	        }
+	        return msgs;
 	    }
 	    
 	    public static int getRandomIndex () {
+	        Random r = new Random();
 	        int size = messages.size();
 	        int rand = r.nextInt(size);
 	        return rand;

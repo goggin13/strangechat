@@ -110,8 +110,6 @@ public class CheckPowers extends Job {
         List<UserEvent.Event> events;
         
         if (s.iAmMaster()) {
-            
-            System.out.println("requesting events from " + last);
             List<IndexedEvent> indexedEvents = UserEvent.userEvents.availableEvents(last);    
             last = indexedEvents.size() > 0 
                    ? indexedEvents.get(indexedEvents.size() - 1).id

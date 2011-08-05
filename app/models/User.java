@@ -132,34 +132,12 @@ public class User extends Model {
 	}
 	
 	private void addStartUpPowers () {
-	    List<Power> powers = getStartUpPowers();
-	    for (Power p : powers) {
-            addStoredPower(p);
-	    }
-	    this.save();
-	}
-	
-	public List<Power> getStartUpPowers () {
-        List<Power> powers = new LinkedList<Power>();
-	    boolean getAll = false;
-	    if (getAll) {
-    	    for (Power p : Power.values()) {
-	            powers.add(p);
-    	    }
-    	} else {
-    	    powers.add(Power.ICE_BREAKER);
-    	    powers.add(Power.ICE_BREAKER);
-    	}
-    	return powers;
-	}
-	
-	private void addStoredPower (Power p) {
-	    StoredPower sp = new StoredPower(p, this);
+	    StoredPower sp = new StoredPower(Power.ICE_BREAKER, this);
         sp.level = 1;
-        sp.available = 1;
+        sp.available = 2;
 	    sp.save();
 	}
-	
+		
 	/**
 	 * log this user in, and notify any of their friends that
 	 * are online that they are available */	
@@ -411,6 +389,7 @@ public class User extends Model {
 		        = Notify.getNotifyUsedPowerParams(this.id, used_by, room_id, power, level, result, this.session_id);
     		notifyMe("usedpower", params);            
         } else {
+            logWrongServer();
 			new UserEvent.UsedPower(this.id, used_by, room_id, power, level, result, this.session_id);
 		}        
     } 
@@ -424,6 +403,7 @@ public class User extends Model {
 		        = Notify.getNotifyNewPowerParams(this.id, power.getSuperPower(), power.id, power.level, this.session_id);
     		notifyMe("newpower", params);            
         } else {
+            logWrongServer();            
 			new UserEvent.NewPower(this.id, power.getSuperPower(), power.id, power.level, this.session_id);
 		}
 	}
@@ -439,6 +419,7 @@ public class User extends Model {
           	    = Notify.getNotifyLeftParams(this.id, user.id, room_id);
 			notifyMe("left", params);   
         } else {
+            logWrongServer();              
 			new UserEvent.Leave(this.id, user.id, room_id, this.session_id);
 		}
 	}
@@ -459,6 +440,7 @@ public class User extends Model {
           	                                   this.session_id);
 			notifyMe("joined", params);   
         } else {
+            logWrongServer();              
 			new UserEvent.Join(this.id, 
 							   otherUser.id, 
 							   otherUser.avatar,
@@ -478,6 +460,7 @@ public class User extends Model {
           	    = Notify.getNotifyLogoutParams(this.id, left_user);
 			notifyMe("logout", params);   
         } else {
+            logWrongServer();              
 			new UserEvent.UserLogout(this.id, left_user, this.session_id);
 		}
 	}
@@ -493,8 +476,15 @@ public class User extends Model {
 			    = Notify.getNotifyLoginParams(this.id, newUser.id, name, server);
 			notifyMe("login", params);
 	    } else {
+                    
 			new UserEvent.UserLogon(this.id, newUser.id, name, server, this.session_id);
 		}		
+	}
+	
+	private void logWrongServer () {
+	    if (Play.mode != Play.Mode.DEV) {
+	        Logger.error("No users should be getting notifications on master");
+	    }
 	}
 	
 	/**

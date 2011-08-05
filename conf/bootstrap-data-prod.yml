@@ -4,19 +4,16 @@
 Server(master):
   name: master
   uri: http://173.246.100.79/
-  roomCount: 4
   nextID: 1
   isMaster: true
-  isChat: true
-  volume: .3
+  isChat: false
+  volume: 0
     
 Server(chat1):
   name: chatslave1
   uri: http://173.246.101.227/
-  roomCount: 4
   nextID: 1
   isMaster: false
   isChat: true 
-  volume: .7  
+  volume: 1
   
-

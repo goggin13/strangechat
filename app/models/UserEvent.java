@@ -212,8 +212,6 @@ public class UserEvent {
             super("heartbeat", -1L, "");  // -1 so we don't bother sending this back to anyone
             this.for_user_id = for_user;
             publishMe();
-            SimpleDateFormat formatter = new SimpleDateFormat("ss");
-            System.out.println("heartbeat (" + for_user + " - " + formatter.format(new Date()) + ")");
         }
 
 		public String toString () {
