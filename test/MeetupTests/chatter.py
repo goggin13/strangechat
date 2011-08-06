@@ -73,7 +73,7 @@ class ChatTester(Thread):
     def speak(self, txt):
         print self.name, txt
     
-ROOT_ID = 999
+ROOT_ID = 1020
 NUM_USERS = 16
 NUM_ITERS = 4000
 

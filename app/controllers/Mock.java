@@ -10,8 +10,8 @@ import enums.*;
 /**
  * Utilized by functional tests to perform data loading */
 public class Mock extends Index {
-	private static Long pmo_db_id = 1L;
-	private static Long k_db_id = 2L;
+	private static long pmo_db_id = 1L;
+	private static long k_db_id = 2L;
 	    
 	@Before
 	protected static void checkMode() {

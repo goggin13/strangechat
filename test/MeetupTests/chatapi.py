@@ -10,9 +10,9 @@ import math
 
 class ChatAPI():
     """Manages all interactions with the chat apis"""
-    # CHAT_ROOT = 'http://localhost:9000/'   # Dev
+    CHAT_ROOT = 'http://localhost:9000/'   # Dev
     # CHAT_ROOT = 'http://localhost:8080/'   # Dev    
-    CHAT_ROOT = 'http://173.246.100.79/' # live
+    # CHAT_ROOT = 'http://173.246.100.79/' # live
     # CHAT_ROOT = 'http://173.246.101.45/' # staging
     
     def __init__ (self, user_id, name=None, avatar=None):

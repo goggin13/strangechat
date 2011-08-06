@@ -12,7 +12,7 @@ Server(master):
 
 Server(chat1):
   name: chat1.com
-  uri: http://10.0.1.50:8080/
+  uri: http://10.0.1.50:9000/
   roomCount: 4
   nextID: 1
   isMaster: false

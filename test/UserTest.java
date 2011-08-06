@@ -87,33 +87,34 @@ public class UserTest extends UnitTest {
 		assertFalse(Room.hasMetRecently(k_db_id, pmo_db_id, 1));				
 	}
 	
-    // @Test
-    // public void testAssigningAndUsingPowers () {
-    //     User u = User.getOrCreate(645L);
-    //     User u2 = User.getOrCreate(646L);
-    //     int countPowers = u.getStartUpPowers().size();
-    //     
-    //     assertEquals(countPowers, u.superPowers.size());
-    //     StoredPower sp = StoredPower.getOrCreate(Power.ICE_BREAKER, u);
-    //     for (int i = 1; i <= MindReader.ICE_BREAKERS_LEVEL_2; i++) {
-    //         sp.increment(1);
-    //         assertEquals(countPowers, u.superPowers.size());
-    //         assertEquals(i + 1, u.countPowers(Power.ICE_BREAKER));
-    //         assertEquals(i + 1, u.countAvailablePowers(Power.ICE_BREAKER));
-    //         assertEquals(0, u.countUsedPowers(Power.ICE_BREAKER));
-    //     }
-    // 
-    //     for (int i = 1; i <= MindReader.ICE_BREAKERS_LEVEL_2; i++) {
-    //         sp.use(u2);
-    //         assertEquals(countPowers, u.superPowers.size());
-    //         assertEquals(MindReader.ICE_BREAKERS_LEVEL_2 + 1, u.countPowers(Power.ICE_BREAKER));
-    //         assertEquals(MindReader.ICE_BREAKERS_LEVEL_2 + 1 - i, u.countAvailablePowers(Power.ICE_BREAKER));           
-    //         assertEquals(i, u.countUsedPowers(Power.ICE_BREAKER));
-    //     }
-    // 
-    //     // test is qualified
-    //     assertTrue(new MindReader().isQualified(u) > 0);
-    // }
+    @Test
+    public void testAssigningAndUsingPowers () {
+        User u = User.getOrCreate(645L);
+        User u2 = User.getOrCreate(646L);
+        int countPowers = 1;
+        int startingIce = 2;
+        
+        assertEquals(countPowers, u.superPowers.size());
+        StoredPower sp = StoredPower.getOrCreate(Power.ICE_BREAKER, u);
+        for (int i = 1; i <= MindReader.ICE_BREAKERS_LEVEL_2; i++) {
+            sp.increment(1);
+            assertEquals(countPowers, u.superPowers.size());
+            assertEquals(i + startingIce, u.countPowers(Power.ICE_BREAKER));
+            assertEquals(i + startingIce, u.countAvailablePowers(Power.ICE_BREAKER));
+            assertEquals(0, u.countUsedPowers(Power.ICE_BREAKER));
+        }
+    
+        for (int i = 1; i <= MindReader.ICE_BREAKERS_LEVEL_2; i++) {
+            sp.use(u2);
+            assertEquals(countPowers, u.superPowers.size());
+            assertEquals(MindReader.ICE_BREAKERS_LEVEL_2 + startingIce, u.countPowers(Power.ICE_BREAKER));
+            assertEquals(MindReader.ICE_BREAKERS_LEVEL_2 + startingIce - i, u.countAvailablePowers(Power.ICE_BREAKER));           
+            assertEquals(i, u.countUsedPowers(Power.ICE_BREAKER));
+        }
+    
+        // test is qualified
+        assertTrue(new MindReader().isQualified(u) > 0);
+    }
     
     @Test
     public void testUsersCanSpeak () {

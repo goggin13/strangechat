@@ -17,30 +17,30 @@ public class MyFunctionalTest extends FunctionalTest {
 	
 	// These tokens were obtained using offline_access permissions from the facebook API, which are NOT like
 	// the tokens this app will usually be receiving.  But they will hopefully last for testing.  
-	protected static Long next_id = 7L;
+	protected static long next_id = 7L;
 	
-	protected static Long fb_id_1 = 100002292928724L;
-	protected static Long fb_1_db_id = 3L;
+	protected static long fb_id_1 = 100002292928724L;
+	protected static long fb_1_db_id = 3L;
 	protected static String facebook_token_1 = "126880997393817|1a234213f96da63a39f46e84.1-100002292928724|uhaRQIintrlca7mqrVmb6HAMxK0";
 	
-	protected static Long fb_id_2 = 32701378L;
-	protected static Long fb_2_db_id = next_id;
+	protected static long fb_id_2 = 32701378L;
+	protected static long fb_2_db_id = next_id;
 	protected static String facebook_token_2 = "126880997393817|a22af9b8426a1465b605d78f.1-32701378|LQO-IKrb-KEjBrlmcp-bscL2OMA";
 	
-	protected static Long pmo_id = 24403414L;
-	protected static Long pmo_db_id = 1L;
+	protected static long pmo_id = 24403414L;
+	protected static long pmo_db_id = 1L;
 	
-	protected static Long k_id = 411183L;
-	protected static Long k_db_id = 2L;
+	protected static long k_id = 411183L;
+	protected static long k_db_id = 2L;
 	
 	protected static String masterURI = "";
 	protected static String chatURI = "http://localhost:9000/";
-	protected static Long rando_1 = 11L;
-	protected static Long rando_1_db = 4L;	
-	protected static Long rando_2 = 12L;
-	protected static Long rando_2_db = 5L;
+	protected static long rando_1 = 11L;
+	protected static long rando_1_db = 4L;	
+	protected static long rando_2 = 12L;
+	protected static long rando_2_db = 5L;
 
-	protected static Long power_id = 0L;		
+	protected static long power_id = 0L;		
 	
 	@Test
 	public void stub () {
@@ -52,7 +52,7 @@ public class MyFunctionalTest extends FunctionalTest {
 	    return getAndValidateAsArray(url);
 	}
 	
-	protected JsonObject getListenResponse (Long id, int lastReceived) {
+	protected JsonObject getListenResponse (long id, int lastReceived) {
 		String url = "/listen?user_id=" + id + "&lastReceived=" + lastReceived;
 	    JsonArray jsonArr = getAndValidateAsArray(url);
         // System.out.println("listening response = " + jsonArr.toString());
@@ -61,12 +61,12 @@ public class MyFunctionalTest extends FunctionalTest {
 		return data;
 	}
 
-	protected JsonArray getWholeListenResponse (Long id, int lastReceived) {
+	protected JsonArray getWholeListenResponse (long id, int lastReceived) {
 		String url = "/listen?user_id=" + id + "&lastReceived=" + lastReceived;
 	    return getAndValidateAsArray(url);
 	}
 
-    protected JsonObject getListenItem(String type, Long user_id, int lastReceived) {
+    protected JsonObject getListenItem(String type, long user_id, int lastReceived) {
         JsonArray arr =  getWholeListenResponse(user_id, lastReceived);
         for (JsonElement e : arr) {
             JsonObject data = e.getAsJsonObject().get("data").getAsJsonObject();
@@ -78,17 +78,17 @@ public class MyFunctionalTest extends FunctionalTest {
         return null;
     }	
 	
-	protected void heartbeatFor (Long user_id) {
+	protected void heartbeatFor (long user_id) {
 	    HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("for_user", user_id.toString());
+	    params.put("for_user", user_id + "");
 	    JsonObject jsonObj = postAndValidateResponse("/heartbeat", params);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 	}
 	
-	protected void heartbeatForRoom (Long user_id, Long room_id) {
+	protected void heartbeatForRoom (long user_id, long room_id) {
 	    HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("for_user", user_id.toString());
-	    params.put("room_ids", room_id.toString());	    
+	    params.put("for_user", user_id + "");
+	    params.put("room_ids", room_id + "");	    
 	    JsonObject jsonObj = postAndValidateResponse("/heartbeat", params);
 		assertEquals("okay", jsonObj.get("status").getAsString());
 	}	
@@ -147,63 +147,63 @@ public class MyFunctionalTest extends FunctionalTest {
 		return jsonObj;
 	}
 	
-	protected void requestRoomFor (Long user_id) {
+	protected void requestRoomFor (long user_id) {
 	    HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("user_id", user_id.toString());
+	    params.put("user_id", user_id + "");
 		postAndAssertOkay("/requestrandomroom", params);
 	}
 	
-	protected void notifyLogout (Long for_user, Long left_user) {
+	protected void notifyLogout (long for_user, long left_user) {
 	    HashMap<String, String> params = Notify.getNotifyLogoutParams(for_user, left_user);
 		postAndAssertOkay("/notify/logout", params);
 	}
 	
-	protected void notifyLogin (Long for_user, Long new_user) {
+	protected void notifyLogin (long for_user, long new_user) {
 	    HashMap<String, String> params = Notify.getNotifyLoginParams(for_user, new_user, "name", "server");
 		postAndAssertOkay("/notify/login", params);
 	}	
 
-    protected void notifyMessage (Long for_user, Long from_user, String msg) {
+    protected void notifyMessage (long for_user, long from_user, String msg) {
         HashMap<String, String> params = Notify.getNotifyMessageParams(from_user, for_user, msg);
 		postAndAssertOkay("/notify/message", params);
     }
 
-    protected void notifyChatMessage (Long from_user, Long for_user, String msg, Long room_id) {
+    protected void notifyChatMessage (long from_user, long for_user, String msg, long room_id) {
 		HashMap<String, String> params = Notify.getNotifyChatMessageParams(from_user, for_user, msg, room_id);
 		postAndAssertOkay("/notify/roommessage", params);        
     }
 
-    protected void notifyJoined (Long for_user, Long new_user, String avatar, String name, String server, Long room_id, String session_id) {
+    protected void notifyJoined (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id) {
         HashMap<String, String> params = Notify.getNotifyJoinedParams(for_user, new_user, avatar, name, server, room_id, session_id);
     	postAndAssertOkay("/notify/joined", params);        
     }
      
-    protected void notifyLeft (Long for_user, Long left_user, Long room_id) {
+    protected void notifyLeft (long for_user, long left_user, long room_id) {
         HashMap<String, String> params = Notify.getNotifyLeftParams(for_user, left_user, room_id);
 		postAndAssertOkay("/notify/left", params);
     }
 
-    protected void notifyNewPower(Long for_user, StoredPower sp, String session_id) {
+    protected void notifyNewPower(long for_user, StoredPower sp, String session_id) {
         HashMap<String, String> params = Notify.getNotifyNewPowerParams(for_user, sp.getSuperPower(), sp.id, sp.level, session_id);
         postAndAssertOkay("/notify/newpower", params);
     }
 
-    protected void notifyUsedPower (Long for_user, Long by_user, Long room_id, SuperPower power, int level, String result, String session_id) {
+    protected void notifyUsedPower (long for_user, long by_user, long room_id, SuperPower power, int level, String result, String session_id) {
         HashMap<String, String> params = Notify.getNotifyUsedPowerParams(for_user, by_user, room_id, power, level, result, session_id);
         postAndAssertOkay("/notify/usedpower", params);
     }
 
-    protected void notifyTyping (Long for_user, Long user_id, Long room_id, String txt) {
+    protected void notifyTyping (long for_user, long user_id, long room_id, String txt) {
 		HashMap<String, String> params = Notify.getNotifyTypingParams(for_user, user_id, room_id, txt);
 		postAndAssertOkay("/notify/useristyping", params);        
     }
 
-	protected JsonObject usePower (Long power_id, Long user_id, Long other_id, Long room_id) {
+	protected JsonObject usePower (long power_id, long user_id, long other_id, long room_id) {
 	    HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("power_id", power_id.toString());
-	    params.put("user_id", user_id.toString());
-	    params.put("other_id", other_id.toString());
-	    params.put("room_id", room_id.toString());
+	    params.put("power_id", power_id + "");
+	    params.put("user_id", user_id + "");
+	    params.put("other_id", other_id + "");
+	    params.put("room_id", room_id + "");
 	    return postAndValidateResponse("/usepower", params);
 	}
 	
@@ -215,7 +215,7 @@ public class MyFunctionalTest extends FunctionalTest {
 		}
 	}
 	
-	protected int assertResponseContains (Long user_id, String power_name, int level, int lastReceived) {
+	protected int assertResponseContains (long user_id, String power_name, int level, int lastReceived) {
 	    Promise<String> p = new CheckPowers().now();
         goToSleep(1);
         
@@ -246,11 +246,11 @@ public class MyFunctionalTest extends FunctionalTest {
 
 	}	
 	
-    protected int assertResponseHasIceBreaker (Long user_id, int level, int lastReceived) {
+    protected int assertResponseHasIceBreaker (long user_id, int level, int lastReceived) {
         return assertResponseContains(user_id, "Ice Breaker", level, lastReceived);
     }
     
-    protected int earnIceBreakers (Long user1, Long user2, int count, int lastReceived) {
+    protected int earnIceBreakers (long user1, long user2, int count, int lastReceived) {
 	    for (int i = 0; i < count; i++) {
 	        double time = new IceBreaker().award_interval;
 	        double iters = Math.ceil(time / 5);
@@ -264,7 +264,7 @@ public class MyFunctionalTest extends FunctionalTest {
 	    return lastReceived;
     }
     
-    protected void earnAndUseIceBreakers (Long user1, Long user2, int count) {
+    protected void earnAndUseIceBreakers (long user1, long user2, int count) {
         // first lets earn some Ice Breakers
         earnIceBreakers(user1, user2, count, 0);
 

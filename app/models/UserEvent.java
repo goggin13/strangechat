@@ -27,15 +27,15 @@ public class UserEvent {
 		final public String type;
 	
 		/** the user_id this event is pertintent to */
-		final public Long user_id;
+		final public long user_id;
 
 		/** timestamp the event was created */
-		final public Long timestamp;
+		final public long timestamp;
 		
 		/** current session id, optional */
 		final public String session_id;		
 		
-		public Event (String type, Long user_id, String session_id) {
+		public Event (String type, long user_id, String session_id) {
 	        this.type = type;
 			this.user_id = user_id;
 			this.session_id = session_id;
@@ -44,7 +44,7 @@ public class UserEvent {
 	
 	    public void publishMe () {
 	        if (this.user_id != -1) {
-            //    System.out.println(this);
+               System.out.println(this);
             }
             userEvents.publish(this);
 	    }
@@ -54,7 +54,7 @@ public class UserEvent {
 		}
 		
 		protected void finalize() {
-		    Logger.info("finalising event class");
+            // Logger.info("finalising event class");
 		}
 	}
 	
@@ -63,13 +63,13 @@ public class UserEvent {
 	 * into the system and is ready to chat */
 	public static class UserLogon extends Event {
 		/** The user id of the user who just logged on */
-		public final Long new_user;
+		public final long new_user;
 		/** the name of the user logging on */
 		public final String name;
 		/** server this user is located on */
 		final public String server;
 		
-		public UserLogon (Long user_id, Long new_user, String name, String server, String session_id) {
+		public UserLogon (long user_id, long new_user, String name, String server, String session_id) {
 			super("userlogon", user_id, session_id);
 			this.new_user = new_user;
 			this.name = name;
@@ -87,9 +87,9 @@ public class UserEvent {
 	 * out of the system */
 	public static class UserLogout extends Event {
 		/** The user id of the user who just logged out */
-		public final Long left_user;
+		public final long left_user;
 		
-		public UserLogout (Long user_id, Long left_user, String session_id) {
+		public UserLogout (long user_id, long left_user, String session_id) {
 			super("userlogout", user_id, session_id);
 			this.left_user = left_user;
 			publishMe();
@@ -104,11 +104,11 @@ public class UserEvent {
 	 * Represents a direct message from one user to another (not in a chatroom) */
     public static class DirectMessage extends Event {
 		/** the user_id of the user who sent the message */
-        public final Long from;
+        public final long from;
 		/** the text of the message */
  		public final String text;
 		
-        public DirectMessage(Long to, Long from, String msg) {
+        public DirectMessage(long to, long from, String msg) {
             super("directmessage", to, "");
             this.from = from;
             this.text = msg;
@@ -126,13 +126,13 @@ public class UserEvent {
 	 * Represents a direct message from one user to another in a chatroom */
     public static class RoomMessage extends Event {
 		/** the user_id of the user who sent the message */
-        public final Long from;
+        public final long from;
 		/** the text of the message */
  		public final String text;
 		/** optional room id that this message is pertinent to */
-		public final Long room_id;
+		public final long room_id;
 		
-        public RoomMessage(Long to, Long from, Long room_id, String msg) {
+        public RoomMessage(long to, long from, long room_id, String msg) {
             super("roommessage", to, "");
             this.from = from;
             this.text = msg;
@@ -156,7 +156,7 @@ public class UserEvent {
 	 * represents a user joining the chat room */
     public static class Join extends Event {
         /** the user id of the joining user */
-        public final Long new_user;
+        public final long new_user;
         /** an optional url displaying this new users avatar */
 		public final String avatar;
 		/** the name of the user joining */
@@ -164,9 +164,9 @@ public class UserEvent {
 		/** the server the new user is on */
 		public final String server;
 		/** the room id that you are now chatting in */
-		public final Long room_id;
+		public final long room_id;
 		
-        public Join (Long for_user, Long new_user, String avatar, String name, String server, Long room_id, String session_id) {
+        public Join (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id) {
 			super("join", for_user, session_id);
             this.new_user = new_user;
 			this.avatar = avatar;
@@ -191,13 +191,13 @@ public class UserEvent {
 	 * Indicates that the user is typing */
 	public static class UserIsTyping extends Event {
         /** user id of the user leaving */
-        final public Long typing_user;
+        final public long typing_user;
         /** room id the event is for */
-		final public Long room_id;
+		final public long room_id;
 		/** the text they have typed so far */
 		final public String text;
 		
-        public UserIsTyping (Long for_user, Long typing_user, String text, Long room_id) {
+        public UserIsTyping (long for_user, long typing_user, String text, long room_id) {
             super("useristyping", for_user, "");
             this.typing_user = typing_user;
 			this.room_id = room_id;
@@ -214,16 +214,16 @@ public class UserEvent {
 	 * Indicates that the user is heartbeating; only used for admin tracking purposes */
 	public static class HeartBeat extends Event {
         /** user id of the user heart beating */
-        final public Long for_user_id;
+        final public long for_user_id;
 		
-        public HeartBeat (Long for_user) {
+        public HeartBeat (long for_user) {
             super("heartbeat", -1L, "");  // -1 so we don't bother sending this back to anyone
             this.for_user_id = for_user;
             publishMe();
         }
 
 		public String toString () {
-			return super.toString() + " : " + "heartbeat - " + for_user_id.toString();
+			return super.toString() + " : " + "heartbeat - " + for_user_id;
 		}		
 	}
 
@@ -231,11 +231,11 @@ public class UserEvent {
 	 * Represents a user leaving the chat room */
     public static class Leave extends Event {
         /** user id of the user leaving */
-        final public Long left_user;
+        final public long left_user;
         /** room id that was left */
-		final public Long room_id;
+		final public long room_id;
 		
-        public Leave(Long for_user, Long left_user, Long room_id, String session_id) {
+        public Leave(long for_user, long left_user, long room_id, String session_id) {
             super("leave", for_user, session_id);
             this.left_user = left_user;
 			this.room_id = room_id;
@@ -251,13 +251,13 @@ public class UserEvent {
 	 * Notifies a user that they have recieved a new super power */
 	public static class NewPower extends Event {
 	    /** the id of the stored power to hit when you use it */
-	    final public Long power_id;
+	    final public long power_id;
 	    /** details about the super power */
 	    final public SuperPower superPower;
 	    /** The level of the new super power */
 	    final public int level;
 	    
-	    public NewPower (Long for_user, SuperPower sp, Long power_id, int level, String session_id) {
+	    public NewPower (long for_user, SuperPower sp, long power_id, int level, String session_id) {
 	        super("newpower", for_user, session_id);
 	        this.superPower = sp;
 	        this.power_id = power_id;
@@ -274,17 +274,17 @@ public class UserEvent {
 	 * Notifies a user that a super power was used */
 	public static class UsedPower extends Event {
 	    /** the id of the user who used the power */
-	    final public Long by_user;
+	    final public long by_user;
 	    /** details about the super power */
 	    final public SuperPower superPower;
 	    /** optionally, the room_id this was used */
-	    final public Long room_id;
+	    final public long room_id;
 	    /** the result of using the power */
 	    final public String result;
 	    /** The level of the new super power */
 	    final public int level;	    
 	    
-	    public UsedPower (Long for_user, Long by_user, Long room_id, SuperPower sp, int level, String result, String session_id) {
+	    public UsedPower (long for_user, long by_user, long room_id, SuperPower sp, int level, String result, String session_id) {
 	        super("usedpower", for_user, session_id);
 	        this.superPower = sp;
 	        this.by_user = by_user;
@@ -387,7 +387,7 @@ public class UserEvent {
 	
 	/**
 	 * @return the id of the message at the top of the current event queue */
-	public static Long lastID () {
+	public static long lastID () {
 		List<IndexedEvent> events = userEvents.availableEvents(0L);
 		if (events.size() > 0) {
 			return events.get(events.size() - 1).id;			

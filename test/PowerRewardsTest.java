@@ -29,8 +29,8 @@ public class PowerRewardsTest extends MyFunctionalTest {
 		int msgCount = Cloning.CHAT_MSGS_REQUIRED + 2;
 		for (int i = 0; i < msgCount; i++) {
      		HashMap<String, String> params = new HashMap<String, String>();
-     	    params.put("for_user", k_db_id.toString());
-     	    params.put("from_user", pmo_db_id.toString());
+     	    params.put("for_user", k_db_id + "");
+     	    params.put("from_user", pmo_db_id + "");
      	    params.put("msg", "hello,world");
      	    params.put("room_id", "15");
      		postAndAssertOkay("/roommessage", params);		                                 

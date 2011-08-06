@@ -22,7 +22,7 @@ public class Notify extends Index {
 	 * All available events are returned immediately 
 	 * @param lastReceived optional; the id of the last event seen. If zero, all events returned
 	 */	
-	public static void adminListen (Long lastReceived) {
+	public static void adminListen (long lastReceived) {
         List<IndexedEvent> events = UserEvent.userEvents.availableEvents(lastReceived);
         List<UserEvent.Event> data = new LinkedList<UserEvent.Event>();
         
@@ -35,7 +35,7 @@ public class Notify extends Index {
         // still need to pass last recieved to admin listener, so do it here
         int count = events.size();
         lastReceived = count > 0 ? events.get(count - 1).id : 0L;
-        data.add(new UserEvent.DirectMessage(-1L, -1L, lastReceived.toString()));
+        data.add(new UserEvent.DirectMessage(-1L, -1L, lastReceived + ""));
         
         renderJSON(new Gson().toJson(data));
 	}
@@ -62,7 +62,7 @@ public class Notify extends Index {
 			// Logger.info(user_id + " is considering returned events : " + lastReceived);
 			
 			for (IndexedEvent<UserEvent.Event> e : events) {
-				if (e.data.user_id.equals(user_id)) {
+				if (e.data.user_id == user_id) {
 					returnData.add(e);
 				}
 				lastReceived = e.id;
@@ -87,7 +87,7 @@ public class Notify extends Index {
 	 * @param avatar url to display for the new user
 	 * @param room_id the id of the room to join 
 	 * @param session_id current session id this event is pertinent	 */
-	public static void joined (Long for_user, Long new_user, String name, String server, String avatar, Long room_id, String session_id) {
+	public static void joined (long for_user, long new_user, String name, String server, String avatar, long room_id, String session_id) {
 		new UserEvent.Join(for_user, 
 						   new_user, 
 						   avatar,
@@ -104,7 +104,7 @@ public class Notify extends Index {
 	 * @param left_user the user id of the user who has left
 	 * @param room_id the id of the room being left
 	 * @param session_id current session id this event is pertinent	  */	
-	public static void left (Long for_user, Long left_user, Long room_id, String session_id) {
+	public static void left (long for_user, long left_user, long room_id, String session_id) {
 		new UserEvent.Leave(for_user, left_user, room_id, session_id);
 		returnOkay(null);	
 	}
@@ -117,7 +117,7 @@ public class Notify extends Index {
 	 * @param name the name to be passed with the new user
 	 * @param server the uri the new user is located on 
 	 * @param session_id current session id this event is pertinent	 */
-	public static void login (Long for_user, Long new_user, String name, String server, String session_id) {
+	public static void login (long for_user, long new_user, String name, String server, String session_id) {
 		new UserEvent.UserLogon(for_user, new_user, name, server, session_id);
 		returnOkay(null);	
 	}
@@ -127,7 +127,7 @@ public class Notify extends Index {
 	 * @param for_user the user id who will recieve this notification
 	 * @param left_user the user id of the user who has left 
 	 * @param session_id current session id this event is pertinent	 */	
-	public static void logout (Long for_user, Long left_user, String session_id) {
+	public static void logout (long for_user, long left_user, String session_id) {
 		new UserEvent.UserLogout(for_user, left_user, session_id);
 		returnOkay(null);	
 	}
@@ -141,7 +141,7 @@ public class Notify extends Index {
 	 * @param from_user the user id of the user who sent the message
 	 * @param msg the text of the message being sent
 	 * @param callback optional JSONP callback */
-	public static void message (Long for_user, Long from_user, String msg, String callback) {
+	public static void message (long for_user, long from_user, String msg, String callback) {
 		new UserEvent.DirectMessage(for_user, from_user, msg);
 		returnOkay(callback);
 	}
@@ -156,7 +156,7 @@ public class Notify extends Index {
 	 * @param msg the text of the message being sent
 	 * @param room_id the pertinent room for this message
 	 * @param callback optional JSONP callback */
-	public static void roomMessage (Long for_user, Long from_user, String msg, Long room_id, String callback) {
+	public static void roomMessage (long for_user, long from_user, String msg, long room_id, String callback) {
 		new UserEvent.RoomMessage(for_user, from_user, room_id, msg);
 		returnOkay(callback);
 	}
@@ -168,7 +168,7 @@ public class Notify extends Index {
 	 * @param room_id optional, the room the typing is occuring in
 	 * @param text the text that the user has typed so far 
 	 * @param callback optional JSONP callback */
-	public static void userIsTyping (Long for_user, Long user_id, Long room_id, String text, String callback) {
+	public static void userIsTyping (long for_user, long user_id, long room_id, String text, String callback) {
 		new UserEvent.UserIsTyping(for_user, user_id, text, room_id);
 		returnOkay(callback);
 	}	
@@ -180,7 +180,7 @@ public class Notify extends Index {
  	 * @param power_id the id of the stored power record
  	 * @param level the level of the new power
 	 * @param session_id current session id this event is pertinent	to */		 
-	 public static void newPower (Long for_user, String superPowerJSON, Long power_id, int level, String session_id) {
+	 public static void newPower (long for_user, String superPowerJSON, long power_id, int level, String session_id) {
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);
          new UserEvent.NewPower(for_user, superPower, power_id, level, session_id);
          returnOkay(null);
@@ -195,7 +195,7 @@ public class Notify extends Index {
  	 * @param level the level of the used power 	 
  	 * @param result the result of superpower.use()
  	 * @param session_id current session id this event is pertinent	to */		 
- 	 public static void usedPower (Long for_user, Long by_user, Long room_id, String superPowerJSON, int level, String result, String session_id) {
+ 	 public static void usedPower (long for_user, long by_user, long room_id, String superPowerJSON, int level, String result, String session_id) {
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);	     
          new UserEvent.UsedPower(for_user, by_user, room_id, superPower, level, result, session_id);
          returnOkay(null);
@@ -211,11 +211,11 @@ public class Notify extends Index {
 	 * @param for_user the user_id of the user logging out 
 	 * @param room_ids optional, list of rooms this user is currently in
 	 * @param callback optional JSONP callback */
-	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
+	public static void heartbeat (long for_user, List<Long> room_ids, String callback) {
 		HeartBeat.beatFor(for_user);
 		if (room_ids != null && room_ids.size() > 0 && room_ids.get(0) != null) {
 		    new UserEvent.HeartBeat(for_user);
-			for (Long rid : room_ids) {
+			for (long rid : room_ids) {
 				HeartBeat.beatInRoom(rid, for_user);
 			}
 		}
@@ -223,17 +223,17 @@ public class Notify extends Index {
 	}
 	
 		
-    public static HashMap<String, String> getNotifyLeftParams (Long for_user, Long left_user, Long room_id) {
+    public static HashMap<String, String> getNotifyLeftParams (long for_user, long left_user, long room_id) {
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("left_user", left_user.toString());
-        params.put("room_id", room_id.toString());
+        params.put("for_user", for_user + "");
+        params.put("left_user", left_user + "");
+        params.put("room_id", room_id  + "");
         return params;
     }
 
     public static HashMap<String, String> getNotifyUsedPowerParams (
-                    Long for_user, 
-                    Long by_user, 
+                    long for_user, 
+                    long by_user, 
                     Long room_id, 
                     SuperPower power, 
                     int level, 
@@ -242,83 +242,83 @@ public class Notify extends Index {
     {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("superPowerJSON", power.toJSON());
-        params.put("by_user", by_user.toString());
+        params.put("by_user", by_user + "");
         params.put("result", result); 
         params.put("level", level + "");       
         params.put("room_id", (room_id != null ? room_id.toString() : ""));
-        params.put("for_user", for_user.toString());
+        params.put("for_user", for_user + "");
         params.put("session_id", session_id);
         return params;        
     }
 
-    public static HashMap<String, String> getNotifyNewPowerParams (Long for_user, SuperPower p, Long power_id, int level, String session_id) {
+    public static HashMap<String, String> getNotifyNewPowerParams (long for_user, SuperPower p, long power_id, int level, String session_id) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("superPowerJSON", p.toJSON());
-        params.put("power_id", power_id.toString());
+        params.put("power_id", power_id + "");
         params.put("level", level + "");
-        params.put("for_user", for_user.toString());
+        params.put("for_user", for_user + "");
         params.put("session_id", session_id);
         return params;
     }
 
-    public static HashMap<String, String> getNotifyTypingParams (Long for_user, Long user_id, Long room_id, String txt) {
+    public static HashMap<String, String> getNotifyTypingParams (long for_user, long user_id, long room_id, String txt) {
     	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("user_id", user_id.toString());
-        params.put("room_id", room_id.toString());
+        params.put("for_user", for_user + "");
+        params.put("user_id", user_id + "");
+        params.put("room_id", room_id + "");
         params.put("text", "helloworld");
         return params;
     }
 
-    public static HashMap<String, String> getNotifyLogoutParams (Long for_user, Long left_user) {
+    public static HashMap<String, String> getNotifyLogoutParams (long for_user, long left_user) {
     	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("left_user", left_user.toString());
+        params.put("for_user", for_user + "");
+        params.put("left_user", left_user + "");
         return params;
     }
 
-    public static HashMap<String, String> getNotifyLoginParams (Long for_user, Long new_user, String name, String server) {
+    public static HashMap<String, String> getNotifyLoginParams (long for_user, long new_user, String name, String server) {
     	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("new_user", new_user.toString());
+        params.put("for_user", for_user + "");
+        params.put("new_user", new_user + "");
         params.put("name", name);
         params.put("server", server);                
         return params;
     }
 
-    public static HashMap<String, String> getNotifyMessageParams (Long from_user, Long for_user, String msg) {
+    public static HashMap<String, String> getNotifyMessageParams (long from_user, long for_user, String msg) {
     	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("from_user", from_user.toString());
+        params.put("for_user", for_user + "");
+        params.put("from_user", from_user + "");
         params.put("msg", msg);
         return params;
     }
 
-    public static HashMap<String, String> getNotifyChatMessageParams (Long from_user, Long for_user, String msg, Long room_id) {
+    public static HashMap<String, String> getNotifyChatMessageParams (long from_user, long for_user, String msg, long room_id) {
     	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("from_user", from_user.toString());
+        params.put("for_user", for_user + "");
+        params.put("from_user", from_user + "");
         params.put("msg", msg);
-        params.put("room_id", room_id.toString());
+        params.put("room_id", room_id + "");
         return params;
     }
 
 
-    public static HashMap<String, String> getNotifyJoinedParams (Long for_user, 
-                                                                  Long new_user, 
+    public static HashMap<String, String> getNotifyJoinedParams (long for_user, 
+                                                                  long new_user, 
                                                                   String avatar, 
                                                                   String name, 
                                                                   String server, 
-                                                                  Long room_id, 
+                                                                  long room_id, 
                                                                   String session_id) 
     {
     	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("new_user", new_user.toString());
+        params.put("for_user", for_user + "");
+        params.put("new_user", new_user + "");
         params.put("avatar", avatar);
         params.put("name", name);
         params.put("server", server);
-        params.put("room_id", room_id.toString());	    
+        params.put("room_id", room_id + "");	    
         params.put("session_id", session_id);
         return params;
     }	
