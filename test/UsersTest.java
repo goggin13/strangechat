@@ -17,77 +17,37 @@ public class UsersTest extends MyFunctionalTest {
 	    GET("/mock/init");
 	    Users.remeetEligible = -1;
 	}
-	    
+	    	
  	@Test
 	public void testSigninResponse () {
 		
 		// first id 2 logs in
         HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("facebook_id", fb_id_2 + "");
-	    params.put("name", "Matthew Goggin");
-	    params.put("access_token", facebook_token_2);	    
-	    params.put("updatefriends", "true");
+	    params.put("user_id", fb_id_2 + "");
+	    params.put("alias", "Matthew Goggin");
 		JsonObject jsonObj = postAndValidateResponse("/signin", params);		
 	
-		assertEquals(4, jsonObj.entrySet().size());
+		assertEquals(1, jsonObj.entrySet().size());
 		
-		JsonObject pmo = jsonObj.get(pmo_db_id + "").getAsJsonObject();
-		assertEquals("Patrick Moberg", pmo.get("name").getAsString());
-		assertEquals(chatURI, pmo.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
-	
-		JsonObject kk = jsonObj.get(k_db_id + "").getAsJsonObject();
-		assertEquals("Kristen Diver", kk.get("name").getAsString());
-		assertEquals(chatURI, kk.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
-
-        System.out.println(jsonObj);
 		JsonObject caller = jsonObj.get(fb_2_db_id + "").getAsJsonObject();
-		assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
-		String session_id = caller.get("session_id").getAsString();
-				
-		// and now id 1 logs in
-        params = new HashMap<String, String>();
-	    params.put("facebook_id", fb_id_1 + "");
-	    params.put("name", "Matt Goggin");
-	    params.put("access_token", facebook_token_1);	    
-	    params.put("updatefriends", "true");
-		jsonObj = postAndValidateResponse("/signin", params);
+        assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
+        String session_id = caller.get("session_id").getAsString();
 		
-		// should include my fake account
-		assertEquals(2, jsonObj.entrySet().size());
-		JsonObject goggin = jsonObj.get(fb_2_db_id + "").getAsJsonObject();
+		System.out.println(caller);			
 		
-		assertEquals("Matthew Goggin", goggin.get("name").getAsString());
-		assertEquals(chatURI, goggin.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
-
-		caller = jsonObj.get(fb_1_db_id + "").getAsJsonObject();
-		assertEquals(chatURI, caller.get("heartbeatServer").getAsJsonObject().get("uri").getAsString());
-
 		// I have an ice breaker, so that should show up
-		// TO DO
-        // JsonArray powers = caller.get("superpowers").getAsJsonArray();
-        // JsonObject power = powers.get(0).getAsJsonObject();
-        // assertEquals("Ice Breaker", power.get("name"));
-        // Long power_id = power.get("power_id");
-				
-		// there should be an event waiting for user 2 telling them that user 1
-		// logged in
-		JsonObject data = getListenResponse(fb_2_db_id, 0);
-		assertEquals("userlogon", data.get("type").getAsString());
-		assertEquals(fb_1_db_id + "", data.get("new_user").getAsString());
-		assertEquals(session_id, data.get("session_id").getAsString());
+        JsonObject powers = caller.get("superPowerDetails").getAsJsonObject();
+        JsonObject power = powers.get("Ice Breaker").getAsJsonObject();
+        assertEquals("Ice Breaker", power.get("name").getAsString());
+		assertEquals("true", power.get("infinite").getAsString());	
+		
+		JsonArray myPowers = caller.get("superPowers").getAsJsonArray();
+        JsonObject myPower = myPowers.get(0).getAsJsonObject();
+        assertEquals("ICE_BREAKER", myPower.get("power").getAsString());
+        Long power_id = myPower.get("id").getAsLong();
+        
 	} 
 	
-	@Test
-	public void testBadTokenResponse () {		
-        HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("facebook_id", fb_id_1 + "");
-	    params.put("name", "Matt Goggin");
-	    params.put("access_token", "ANINVALIDTOKENASdfasdf");	    
-	    params.put("updatefriends", "true");
-		JsonObject jsonObj = postAndValidateResponse("/signin", params);		
-		
-		assertEquals("error", jsonObj.get("status").getAsString());
-	} 
 	
 	@Test
 	public void testBadLogout () {
@@ -102,13 +62,8 @@ public class UsersTest extends MyFunctionalTest {
 		HashMap<String, String> params = new HashMap<String, String>();
 	    params.put("user_id", k_db_id + "");
 		postAndAssertOkay("/signout", params);
-
-		// PMO should have an event waiting notifying him k logged out
-		JsonObject data = getListenResponse(pmo_db_id, 0);
-		assertEquals("userlogout", data.get("type").getAsString());
-		assertEquals(k_db_id + "", data.get("left_user").getAsString());
 	} 
-		
+	
 	@Test
 	public void testMeetUpFunction () {
 		// pmo registers to get paired
@@ -143,10 +98,6 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals("leave", data.get("type").getAsString());
 		assertEquals(k_db_id + "", data.get("left_user").getAsString());
 		
-		// and an additional one saying she logged out, since they are friends (awww)
-        data = events.get(1).getAsJsonObject().get("data").getAsJsonObject();
-		assertEquals("userlogout", data.get("type").getAsString());
-		assertEquals(k_db_id + "", data.get("left_user").getAsString());
 	} 
 	
 	@Test
@@ -205,5 +156,5 @@ public class UsersTest extends MyFunctionalTest {
         assertEquals("join", data.get("type").getAsString());
         assertEquals(pmo_db_id + "", data.get("new_user").getAsString());
 	}
-
+	
 }

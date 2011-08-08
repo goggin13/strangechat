@@ -217,7 +217,7 @@ public class MyFunctionalTest extends FunctionalTest {
 	
 	protected int assertResponseContains (long user_id, String power_name, int level, int lastReceived) {
 	    Promise<String> p = new CheckPowers().now();
-        goToSleep(1);
+        goToSleep(3);
         
         JsonArray arr = getWholeListenResponse(user_id, lastReceived);
 		int received = 0;
@@ -250,27 +250,30 @@ public class MyFunctionalTest extends FunctionalTest {
         return assertResponseContains(user_id, "Ice Breaker", level, lastReceived);
     }
     
-    protected int earnIceBreakers (long user1, long user2, int count, int lastReceived) {
-	    for (int i = 0; i < count; i++) {
-	        double time = new IceBreaker().award_interval;
-	        double iters = Math.ceil(time / 5);
-	        for (int j = 0; j < iters; j++) {
-    		    heartbeatForRoom(user1, 15L);
-    		    heartbeatForRoom(user1, 15L);    		    
-    		}
-    		// and now after we wait, PMO should have a superpower notifications
-    		lastReceived = assertResponseHasIceBreaker(user1, 1, lastReceived);
-	    }
-	    return lastReceived;
-    }
+    // protected int earnIceBreakers (long user1, long user2, int count, int lastReceived) {
+    //      for (int i = 0; i < count; i++) {
+    //          double time = new IceBreaker().award_interval;
+    //          double iters = Math.ceil(time / 5);
+    //          for (int j = 0; j < iters; j++) {
+    //          heartbeatForRoom(user1, 15L);
+    //          heartbeatForRoom(user1, 15L);               
+    //      }
+    //      // and now after we wait, PMO should have a superpower notifications
+    //      lastReceived = assertResponseHasIceBreaker(user1, 1, lastReceived);
+    //      }
+    //      return lastReceived;
+    // }
     
+    // CURRENTLY HARDCODED;; user1 needs to be PMO, to match power_id of 1
     protected void earnAndUseIceBreakers (long user1, long user2, int count) {
         // first lets earn some Ice Breakers
-        earnIceBreakers(user1, user2, count, 0);
-
+        // earnIceBreakers(user1, user2, count, 0);
+        
+        long power_id = 1;  // hardcoded for PMO
+        
         // now use them!
         for (int i = 0; i < count; i++) {
-            JsonObject json = usePower (power_id, user1, user2, 15L);
+            JsonObject json = usePower(power_id, user1, user2, 15L);
             assertEquals("okay", json.get("message").getAsString());
             assertEquals("okay", json.get("status").getAsString());
         }

@@ -22,21 +22,21 @@ public class IntervalRewardsTest extends MyFunctionalTest {
 	    GET("/mock/init");
 	}
 	 	        
-    @Test
-    public void testIceBreaker () {
-        int lastReceived = 0;
-        for (int i = 0; i < 4; i++) {
-            double time = new IceBreaker().award_interval;
-            double iters = Math.ceil(time / 5);
-            
-            for (int j = 0; j < iters; j++) {
-                 heartbeatForRoom(pmo_db_id, 15L);
-             }
-    
-             // and now after we wait, PMO should have a superpower notifications
-             lastReceived = assertResponseHasIceBreaker(pmo_db_id, 1, lastReceived);
-        }
-    }  
+    // @Test
+    // public void testIceBreaker () {
+    //     int lastReceived = 0;
+    //     for (int i = 0; i < 4; i++) {
+    //         double time = new IceBreaker().award_interval;
+    //         double iters = Math.ceil(time / 5);
+    //         
+    //         for (int j = 0; j < iters; j++) {
+    //              heartbeatForRoom(pmo_db_id, 15L);
+    //          }
+    // 
+    //          // and now after we wait, PMO should have a superpower notifications
+    //          lastReceived = assertResponseHasIceBreaker(pmo_db_id, 1, lastReceived);
+    //     }
+    // }  
 
     //      @Test
     // public void testBrainMash () {

@@ -25,7 +25,7 @@ public class CheckPulses extends Job {
         AbstractMap<Long, Date> heartbeats = HeartBeat.getHeartBeats();
         for (Long user_id : heartbeats.keySet()) {
             Date lastBeat = heartbeats.get(user_id);
-            Long diff = Utility.diffInSecs(new Date(), lastBeat);
+            long diff = Utility.diffInSecs(new Date(), lastBeat);
             if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
                 HeartBeat.removeBeatFor(user_id);
                 broadcastLogout(user_id);
@@ -35,12 +35,12 @@ public class CheckPulses extends Job {
 		// check heartbeats in rooms
         for (String key : HeartBeat.roombeats.keySet()) {
          Date lastBeat = HeartBeat.roombeats.get(key);
-         Long diff = Utility.diffInSecs(new Date(), lastBeat);
+         long diff = Utility.diffInSecs(new Date(), lastBeat);
          if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
              String parts[] = key.split("_");
              HeartBeat.roombeats.remove(key);
-             Long room_id = Long.parseLong(parts[0]);
-             Long user_id = Long.parseLong(parts[1]);
+             long room_id = Long.parseLong(parts[0]);
+             long user_id = Long.parseLong(parts[1]);
              broadcastLeaveRoom(room_id, user_id);
          }
         }

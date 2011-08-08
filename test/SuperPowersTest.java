@@ -99,7 +99,7 @@ public class SuperPowersTest extends MyFunctionalTest {
 	@Test
 	public void testUsePowers () {
 
-        earnAndUseIceBreakers(rando_1_db, rando_2_db, 5);
+        earnAndUseIceBreakers(pmo_db_id, rando_2_db, 5);
         
         // both users should have events waiting for them about the use of it
         JsonObject data = getListenResponse(rando_2_db, 0);
@@ -111,7 +111,7 @@ public class SuperPowersTest extends MyFunctionalTest {
         JsonObject power = data.get("superPower").getAsJsonObject();
         assertEquals("Ice Breaker", power.get("name").getAsString());
         
-        data = getListenResponse(rando_1_db, 0);
+        data = getListenResponse(pmo_db_id, 0);
         assertEquals("usedpower", data.get("type").getAsString());               
 	}
 	

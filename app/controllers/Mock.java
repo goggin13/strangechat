@@ -30,5 +30,10 @@ public class Mock extends Index {
 		Fixtures.deleteAll();
         Fixtures.load("data-full.yml");
     }
+
+    public static void initblacklist () {
+		Fixtures.deleteAll();
+        Fixtures.load("data-blacklisted.yml");
+    }
         
 }

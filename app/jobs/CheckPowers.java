@@ -37,7 +37,7 @@ public class CheckPowers extends Job {
                 processedURIs.add(s.uri);
             }
         }
-        
+
         for (Long id : myUsers) {
            User u = User.findById(id);
            if (u != null) {
@@ -95,7 +95,7 @@ public class CheckPowers extends Job {
         }
     }
     
-    private static User getUser (Long id) {
+    private static User getUser (long id) {
         User u = User.findById(id);
         if (u == null) {
             Logger.warn("attempted to process event for non-existant user (%s)", id);
@@ -106,7 +106,7 @@ public class CheckPowers extends Job {
     }
     
     private static List<UserEvent.Event> getEvents (Server s) {
-        Long last = getLastReceived(s.name);
+        long last = getLastReceived(s.name);
         List<UserEvent.Event> events;
         
         if (s.iAmMaster()) {
@@ -121,7 +121,7 @@ public class CheckPowers extends Job {
         } else {
             String url = s.uri + "notify/adminlisten";
             HashMap<String, String> params = new HashMap<String, String>();
-            params.put("lastReceived", last.toString());
+            params.put("lastReceived", last + "");
             WS.HttpResponse resp = Utility.fetchUrl(url, params);
             events = UserEvent.deserializeEvents(resp.getString());
             UserEvent.DirectMessage lastMsg = (UserEvent.DirectMessage)events.get(events.size() - 1);
@@ -131,11 +131,11 @@ public class CheckPowers extends Job {
         return events;
     }
     
-    private static Long getLastReceived (String url) {
+    private static long getLastReceived (String url) {
         if (lastReceived.containsKey(url)) {
             return lastReceived.get(url);
         } else {
-            return 0L;
+            return 0;
         }
     }
     

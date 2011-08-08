@@ -12,7 +12,7 @@ public class ServerTest extends UnitTest {
         Fixtures.deleteAll();
         Fixtures.load("data-dummy-servers.yml");
         
-        Long root_id = 500L;
+        long root_id = 500;
         for (int i = 0; i < 100; i++) {
             User user = User.getOrCreate(root_id++);
             Server server = Server.getMyHeartbeatServer(user);

@@ -67,28 +67,24 @@ public class PowerRewardsTest extends MyFunctionalTest {
         }
 	}
 
-    //      @Test
+    // @Test
     // public void testMindReader () {
     //     
-    //         earnIceBreakers(pmo_db_id, k_db_id, MindReader.ICE_BREAKERS_REQUIRED, 0);
-    //         for (int i = 0; i < MindReader.ICE_BREAKERS_REQUIRED; i++) {
-    //             JsonObject json = usePower (power_id, pmo_db_id, k_db_id, 15L);
-    //             assertEquals("okay", json.get("message").getAsString());
-    //             assertEquals("okay", json.get("status").getAsString());
-    //         }
-    //         assertResponseContains(pmo_db_id, "Mind Reader", 1, 0);         
-    //         
-    //         
-    //         earnIceBreakers(pmo_db_id, k_db_id, MindReader.ICE_BREAKERS_LEVEL_2, 0);
-    //         for (int i = 0; i < MindReader.ICE_BREAKERS_LEVEL_2; i++) {
-    //             JsonObject json = usePower (power_id, pmo_db_id, k_db_id, 15L);
-    //             assertEquals("okay", json.get("message").getAsString());
-    //             assertEquals("okay", json.get("status").getAsString());
-    //         }
-    //         assertResponseContains(pmo_db_id, "Mind Reader", 2, 0);     
+    //     for (int i = 0; i < MindReader.ICE_BREAKERS_REQUIRED; i++) {
+    //         JsonObject json = usePower(1, pmo_db_id, k_db_id, 15L);
+    //         assertEquals("okay", json.get("message").getAsString());
+    //         assertEquals("okay", json.get("status").getAsString());
+    //     }
+    //     assertResponseContains(pmo_db_id, "Mind Reader", 1, 0);         
+    //     
+    //     
+    //     for (int i = 0; i < MindReader.ICE_BREAKERS_LEVEL_2; i++) {
+    //         JsonObject json = usePower (power_id, pmo_db_id, k_db_id, 15L);
+    //         assertEquals("okay", json.get("message").getAsString());
+    //         assertEquals("okay", json.get("status").getAsString());
+    //     }
+    //     assertResponseContains(pmo_db_id, "Mind Reader", 2, 0);     
     // }
     //  
-		
-
 	
 }

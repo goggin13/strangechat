@@ -16,7 +16,7 @@ import models.*;
 /**
  * A convenience class to hold common methods used
  * by the our controllers */
-public class Index extends CRUD {
+public abstract class Index extends CRUD {
 	
 	/**
 	 * Catch any argument exceptions thrown by children methods, 
@@ -131,11 +131,11 @@ public class Index extends CRUD {
 	 * in this class */
 	protected static class ArgumentException extends Exception {
 		/** The parameter that is invalid */
-		private String field;
+		private final String field;
 		/** The error, e.g. "is null", "cant be negative" */		
-		private String mistake;
+		private final String mistake;
 		/** Optional JSONP callback to be used when this exception is caught */
-		private String callback;
+		private final String callback;
 		
 		public ArgumentException (String err, String field, String callback) {
 			super(err);   

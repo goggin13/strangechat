@@ -115,8 +115,8 @@ public class IceBreakersTest extends UnitTest {
         int total = IceBreaker.iceBreakersCount();
         IceBreaker ice = new IceBreaker();
         
-        User u1 = User.getOrCreate(1L);
-        User u2 = User.getOrCreate(1L);        
+        User u1 = User.getOrCreate(1);
+        User u2 = User.getOrCreate(1);        
         List<String> seen = new LinkedList<String>();
         
         for (int i = 0; i < total; i++) {

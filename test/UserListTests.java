@@ -16,22 +16,22 @@ import play.libs.*;
 import play.libs.F.*;
 
 public class UserListTests extends MyFunctionalTest {
-	private static Long blacklisted_id = 15L;
 	
 	@org.junit.Before
 	public void setUp() {
-	    GET("/mock/init");
+	    GET("/mock/initblacklist");
 	}
 	 	        
  	@Test
 	public void testBlackList () {
 		// first id 2 logs in
         HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("facebook_id", blacklisted_id.toString());
+	    params.put("user_id", fb_id_1 + "");
 	    params.put("name", "Matthew Goggin");
 	    params.put("access_token", facebook_token_2);	    
 	    params.put("updatefriends", "true");
 		JsonObject jsonObj = postAndValidateResponse("/signin", params);
+		System.out.println(jsonObj);
 		assertEquals("error", jsonObj.get("status").getAsString());
 		assertEquals("You have been blacklisted", jsonObj.get("message").getAsString());
 	}  

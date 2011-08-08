@@ -22,9 +22,7 @@ public class Bootstrap extends Job {
             Fixtures.loadModels("bootstrap-data-dev.yml");
             Users.remeetEligible = -1;
 		} else {
-		    Users.remeetEligible = 0;            
-            // Fixtures.deleteAll();
-            // Fixtures.loadModels("bootstrap-data-dev.yml");
+            Users.remeetEligible = 0;            
 		}
 		
 		if (Play.mode == Play.Mode.DEV) {

@@ -4,26 +4,20 @@ import enums.Power;
 import play.Logger;
 import models.*;
 
-public class IceBreaker extends IntervalPower {
+public class IceBreaker extends SuperPower {
 	
 	public IceBreaker() {
 		super(
 		    "Ice Breaker",
 			"http://lh3.ggpht.com/HygyyzxG6-EgjNjQvlfszfqXOEx4144eSqUCEKAEay7Fp_vYIIsAk0N1lp18Hdbh-aopXHo84oBPxiqK",
 			"Display an ice breaker message",
-			false,
+			true,
 			false
 		);
-		this.award_interval = 120;
 	}
 		
-	public Long getFieldValue (User user) {	    
-	    return user.chatTime;
-	}
-	
-	// since u get two freebie ice breaker we decrement the count by 2
-	public int countPowers (User user) {
-	    return super.countPowers(user) - 2;
+	public int isQualified (User user) {
+	    return 0;
 	}
 	
 	public int chooseIndex (User caller, User subject) {
@@ -76,7 +70,7 @@ public class IceBreaker extends IntervalPower {
 	}
 	
 	private static class IceBreakers {
-	    private static List<String> messages = new ArrayList<String>();
+	    private static List<String> messages = new LinkedList<String>();
 	    
 	    static {
             messages.add("Did you like your high school experience?");

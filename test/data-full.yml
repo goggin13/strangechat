@@ -21,38 +21,38 @@ Server(chat1):
   
 User(pmo):
   user_id: 24403414
-  name: "Patrick Moberg"
+  alias: "Patrick Moberg"
   online: true
   heartbeatServer: chat1
 
 User(kristen):
   user_id: 411183
-  name: "Kristen Diver"
+  alias: "Kristen Diver"
   online: true
-  friends: pmo
   heartbeatServer: chat1
 
 StoredPower(gstoredpower):
   power: "ICE_BREAKER"
+  owner: pmo
+  available: 1
   used: false
            
 User(goggin):
   user_id: 100002292928724
-  name: "Matthew Goggin"
+  alias: "Matthew Goggin"
   online: true
-  friends: kristen
   heartbeatServer: chat1
   superpowers: gstoredpower
   
 User(rando1):
   user_id: 11
-  name: "John Smith"
+  alias: "John Smith"
   online: true
   heartbeatServer: chat1
   
 User(rando2):
   user_id: 12
-  name: "Jane Doe"
+  alias: "Jane Doe"
   online: true
   heartbeatServer: chat1
 
@@ -71,7 +71,7 @@ StoredPower(sp3):
 
 User(blacklisted):
   user_id: 15
-  name: "John Smith II"
+  alias: "John Smith II"
   online: false
   heartbeatServer: chat1 
  

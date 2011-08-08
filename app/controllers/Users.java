@@ -11,6 +11,9 @@ import play.cache.Cache;
 import play.*;
 import models.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import play.db.jpa.GenericModel.JPAQuery;
+import play.db.jpa.JPA;
+import javax.persistence.Query;
 
 import com.google.gson.*;
 import com.google.gson.reflect.*;
@@ -34,54 +37,44 @@ public class Users extends Index {
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
 	public static int spotsPerUser = 2;
 	
-	@Before (unless={"signin", "signout", "random", "requestRandomRoom", "leaveRoom", "usePower", "waiting_room_is_empty"})
+	@Before (unless={"signin", 
+	                 "signout", 
+	                 "random", 
+	                 "requestRandomRoom", 
+	                 "leaveRoom", 
+	                 "usePower", 
+	                 "waiting_room_is_empty", 
+	                 "signinAnon"})
 	public static void checkAuth () {
 		Index.checkAuthentication();
 	}
-	
+
 	/**
-	 * Log user with <code>facebook_id</code> into the system.  Using <code>access_token</code>,
-	 * contact the Facebook API and download their latest set of friends.  Check current online
-	 * users for matches, and return the set of friends who are online.  In the list of friends is
-	 * included a mapping of -1 => chatroom server; this is the server the requesting client should 
-	 * login to
-	 * @param facebook_id the facebook id of the user logging in
-	 * @param name the name to assign to the user logging in
-	 * @param access_token an up to date access_token for logging into the facebook API
+	 * This function signs in a user who has not linked their facebook account.  
+	 * @param user_id the user_id field of the user signing in
 	 * @param avatar optional, url of an avatar to display for this user
-	 * @param alias optional, an alias for this user
-	 * @param callback optional, required for cross-doman requests
-	 */
-	public static void signin (
-								Long facebook_id, 
-								String name, 
-								String access_token, 
-								String avatar, 
-								String alias, 
-								boolean updatefriends, 
-								String callback) throws Index.ArgumentException
-	{
-		if (facebook_id == null || (updatefriends && access_token == null)) {
-			throw new Index.ArgumentException("are both required", "facebook_id and access_token", callback);
-		}	
-		User user = User.getOrCreate(facebook_id);
-		if (BlackList.isBlacklisted(user)) {
+	 * @param alias optional, an alias for this user 
+	 * @param callback optional, required for cross-doman requests */
+	public static void signin (long user_id, String avatar, String alias, String callback) {
+	    User user = User.getOrCreate(user_id);
+        if (BlackList.isBlacklisted(user)) {
 		    returnFailed("You have been blacklisted", callback);
 		}
     	
-		HashMap<String, User> friendData = new HashMap<String, User>();
-		if (updatefriends) {
-			friendData = user.updateMyFacebookFriends(access_token);	
-			if (friendData == null){
-				returnFailed("Failed to log into facebook; likely expired token", callback);
-			}
-		}
-		
-		user.name = name;
-		if (avatar != null) {
-			user.avatar = avatar;
-		}
-		user.session_id = Utility.md5(facebook_id.toString() + System.currentTimeMillis());
+        Users.renderJSONP(
+            getYourData(user, avatar, alias), 
+            new TypeToken<HashMap<String, User>>() {}.getType(),
+            callback
+        );   
+	}
+	
+	private static HashMap<String, User> getYourData (
+	            User user,
+	            String avatar,
+	            String alias) 
+	{	    
+	    
+		user.avatar = avatar == null ? "" : avatar;
 		user.alias = alias == null ? "" : alias;
 		user.login();
 		user.save();		
@@ -91,14 +84,10 @@ public class Users extends Index {
 		// null them out
         removeFromWaitingRoom(user.id, true);
 		
-		// add heartbeat server into list
-		friendData.put(user.id.toString(), user);
+		HashMap<String, User> data = new HashMap<String, User>();
+		data.put(user.id.toString(), user);
 		
-		Users.renderJSONP(
-			friendData, 
-			new TypeToken<HashMap<String, User>>() {}.getType(),
-			callback
-		);
+		return data;	    
 	}
 	
 	/**
@@ -106,7 +95,7 @@ public class Users extends Index {
 	 * @param user_id
 	 * @param callback optional JSONP callback
 	 */
-	public static void signout (Long user_id, String callback) {
+	public static void signout (long user_id, String callback) {
 	    User u = User.findById(user_id);
 		if (u != null) {
 		    removeFromWaitingRoom(user_id, true);
@@ -120,7 +109,7 @@ public class Users extends Index {
 	/**
 	 * Helper for <code>requestRandomRoom</code>
 	 * @return true if these users are eligible to be paired in a room right now */
-	private static boolean canBePaired (Long user_id1, Long user_id2) {
+	private static boolean canBePaired (long user_id1, long user_id2) {
 	    System.out.println("pair " + user_id1 + ", " + user_id2);
 	    
         // System.out.println(UserExclusion.canSpeak(user_id1, user_id2));
@@ -130,7 +119,7 @@ public class Users extends Index {
 	    
         // System.out.println(!Room.areSpeaking(user_id1, user_id2));
 	    
-	    return !user_id1.equals(user_id2) 
+	    return !(user_id1 == user_id2)
 		        && UserExclusion.canSpeak(user_id1, user_id2)
 		        && (remeetEligible == -1 
 		            || !Room.hasMetRecently(user_id1, user_id2, remeetEligible))
@@ -142,11 +131,11 @@ public class Users extends Index {
 	 * paired with you immediately if they are available, or whenever they do become available
 	 * @param user_id your user_id, so the random returned user isn't you 
 	 * @param callback optional JSONP callback*/
-	public static synchronized void requestRandomRoom (Long user_id, String callback) {
+	public static synchronized void requestRandomRoom (long user_id, String callback) {
 	    
 		if (waitingRoom.size() > 0) {
-		    Long otherUserID = null;
-			for (Long id : waitingRoom) {
+		    long otherUserID = 0;
+			for (long id : waitingRoom) {
 				if (canBePaired(id, user_id)) {
 					otherUserID = id;
 					removeFromWaitingRoom(id, false);
@@ -154,7 +143,7 @@ public class Users extends Index {
 				}
 			}
 			
-			if (otherUserID != null) {
+			if (otherUserID > 0) {
 			    Room.createRoomFor(otherUserID, user_id);	
 				returnOkay(callback);
 			}
@@ -173,7 +162,7 @@ public class Users extends Index {
      * @param user_id the id to remove from the room 
      * @param removeAll if true, remove all of the occurences of this user,
      *                  else just one */
-    private static void removeFromWaitingRoom (Long user_id, boolean removeAll) {
+    private static void removeFromWaitingRoom (long user_id, boolean removeAll) {
         while (waitingRoom.contains(user_id)) {
             waitingRoom.remove(user_id);
             if (!removeAll) {
@@ -212,7 +201,7 @@ public class Users extends Index {
 		} else {	
 			String url = heartbeatURI + "heartbeat";
 			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("for_user", user.id.toString());
+			params.put("for_user", user.id + "");
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			JsonObject json = resp.getJson().getAsJsonObject();
 			return json.get("status").getAsString().equals("okay");
@@ -224,7 +213,7 @@ public class Users extends Index {
 	 * @param user_id the user to remove from the room
 	 * @param room_id the room to remove them from
 	 * @param callback optional JSONP callback */
-	public static void leaveRoom (Long user_id, Long room_id, String callback) {
+	public static void leaveRoom (long user_id, long room_id, String callback) {
 		Room.removeUserFrom(room_id, user_id);
 		returnOkay(callback);
 	}
@@ -236,18 +225,18 @@ public class Users extends Index {
 	 * @param other_id the other user in the room
 	 * @param room_id optional, the room the event is in
 	 * @param callback optional jsonp callback */
-	public static void usePower (Long power_id, Long user_id, Long other_id, Long room_id, String callback) { 
-	    if (power_id == null || user_id == null) {
-	        returnFailed("power_id, user_id, are both required", callback);
-	    }
+	public static void usePower (long power_id, long user_id, long other_id, long room_id, String callback) { 
+        if (power_id <= 0 || user_id <= 0) {
+            returnFailed("power_id, user_id, are both required", callback);
+        }
 	    User user = User.findById(user_id);
 	    User other = null;
-	    if (other_id != null) {
+	    if (other_id > 0) {
 	        other = User.findById(other_id);
 	    }
-	    if (user == null || (other_id != null && other_id != -1 && other == null)) {
-	        returnFailed("both user_id and other_id must map to existing users", callback);
-	    }
+        if (user == null || (other_id == 0 && other_id != -1 && other == null)) {
+            returnFailed("both user_id and other_id must map to existing users", callback);
+        }
 	    
         StoredPower storedPower = StoredPower.findById(power_id);
         if (storedPower == null) {
@@ -260,7 +249,7 @@ public class Users extends Index {
         String result = storedPower.use(other);
         
         user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
-        if (room_id != null && other != null) {
+        if (room_id > 0 && other != null) {
             other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
         } else {            
             HashMap<User, Long> conversants = user.getConversants();

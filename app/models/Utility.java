@@ -87,8 +87,8 @@ public class Utility {
 	 * @param d2 the second date
 	 * @return number of seconds <code>d2</code> is greater than 
 	 * 		   <code>d1</code> */
-	public static Long diffInSecs (Date d1, Date d2) {
-		Long diff = d1.getTime() - d2.getTime();
+	public static long diffInSecs (Date d1, Date d2) {
+		long diff = d1.getTime() - d2.getTime();
 		diff = diff / 1000;
 		return diff; 
 	}

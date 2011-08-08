@@ -53,9 +53,9 @@ public class UserEvent {
 			return this.user_id + " ( " + this.type + " )";
 		}
 		
-		protected void finalize() {
+        // protected void finalize() {
             // Logger.info("finalising event class");
-		}
+        // }
 	}
 	
 	/**

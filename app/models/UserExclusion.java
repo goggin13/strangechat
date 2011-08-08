@@ -29,15 +29,15 @@ public class UserExclusion extends Model {
 	@OneToOne	 
     public User user;
     
-    public Long group_id;
+    public long group_id;
     
-    public UserExclusion (User u, Long group) {
+    public UserExclusion (User u, long group) {
         this.user = u;
         this.group_id = group;
         this.save();
     }
     
-    public static Set<Long> userGroups (Long user_id) {
+    public static Set<Long> userGroups (long user_id) {
         List<UserExclusion> userExclusions = UserExclusion.find("byUser_id", user_id).fetch(1000);
         Set<Long> groups = new HashSet<Long>();
         for (UserExclusion u : userExclusions) {
@@ -46,10 +46,14 @@ public class UserExclusion extends Model {
         return groups;
     }
     
-    public static boolean canSpeak (Long u1, Long u2) {
+    public static boolean canSpeak (long u1, long u2) {
         Set<Long> g1 = userGroups(u1);
         Set<Long> g2 = userGroups(u2);
         g1.retainAll(g2);
         return g1.size() == 0;
+    }
+    
+    public String toString () {
+        return this.user.toString();
     }
 }

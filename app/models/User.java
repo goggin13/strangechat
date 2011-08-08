@@ -25,58 +25,34 @@ import models.powers.*;
 @Entity
 public class User extends Model {
 	    
-	/**
-	 * The user_id, in this case will be the facebook_id
-	 */
-	@Required	 
-    public Long user_id;
-
-	/**
-	 * Name of this user */
-	@Required
-	public String name;
-	
-    // /**
-    //  * The most current faceook token we used for this user
-    //  */
-    // public String facebook_token;
-	
-	/**
-	 * the avatar to display for this user */
+	/** The user_id, in this case will be the facebook_id */
+    public long user_id;
+    
+	/** the avatar to display for this user */
 	public String avatar;
 
     /** String id of the most recent session we have for this user */ 
     public String session_id;
     
-	/**
-	 * this users alias */
+	/** this users alias */
 	public String alias;
 	
-	/**
-	 * Collection of other users this user is friends with
-	 */
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
-	public Set<User> friends;
-	
-    /**
-     * List of other users this user has met with recently */
+    /** List of other users this user has met with recently */
     @ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
     @JoinTable(name = "UserToMetWith")
     public List<User> recentMeetings;	
 
-    /** 
-     * Collection of the superpowers this user has, including
-     * ones that have already been used */ 
+    /** Collection of the superpowers this user has, including
+     *  ones that have already been used */ 
     @OneToMany(cascade=CascadeType.REMOVE)
     public List<StoredPower> superPowers;
 
     /** list of the SuperPower objects owned by this user
-     * Just for login to tell them what they have */
+     *  Just for login to tell them what they have */
     @Transient
     public HashMap<Power, SuperPower> superPowerDetails;
 	
-	/**
-	 * comma delimted list of icebreaker indices seen */
+	/** set of icebreaker indices seen */
 	@ElementCollection  
 	public Set<Integer> icebreakers_seen;
 
@@ -87,7 +63,7 @@ public class User extends Model {
 	public boolean online;
 
     /** total seconds chatting */
-    public Long chatTime;  		
+    public long chatTime;  		
 
     /** total messages sent */
     public int messageCount;  		
@@ -113,7 +89,7 @@ public class User extends Model {
 	@ManyToOne
 	public Server heartbeatServer;
 	
-	public User (Long u) {
+	public User (long u) {
 		this.user_id = u;
 		this.online = false;
 		this.session_id = "";
@@ -123,7 +99,6 @@ public class User extends Model {
 		this.offersMadeCount = 0;
 		this.offersReceivedCount = 0;
 		this.revealCount = 0;
-		this.friends = new HashSet<User>();
 	    this.superPowers = new LinkedList<StoredPower>();
 	    this.recentMeetings = new LinkedList<User>();
 	    this.icebreakers_seen = new TreeSet<Integer>();
@@ -144,18 +119,8 @@ public class User extends Model {
 	public void login () {
 		this.online = true;
 		this.lastLogin = Utility.time();
-		for (User friend : this.friends) {
-			if (friend.online) {
-				friend.notifyMeLogin(this);
-			}
-		}
+		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis());		
 		this.populateSuperPowerDetails();
-	}
-	
-	/**
-	 * total seconds this user has spent chatting */
-	public Long getChatTime () {
-	    return (this.chatTime == null ? 0L : this.chatTime);
 	}
 	
 	/**
@@ -178,12 +143,6 @@ public class User extends Model {
 	    Logger.info(this.id + " logging out");
 		this.online = false;
 		this.removeMeFromRooms();
-		if (this.friends == null) {
-			return;
-		}
-		for (User friend : this.friends) {
-			friend.notifyMeLogout(this.id);
-		}
 		this.save();
 	}	
 	
@@ -192,11 +151,11 @@ public class User extends Model {
 	 */	
 	public String toString () {
 	    String str;
-	    if (!this.name.equals("")) {
-	        str = this.name 
-	              + " (" + this.user_id.toString() + ")";
+	    if (!this.alias.equals("")) {
+	        str = this.alias 
+	              + " (" + this.user_id + ")";
 	    } else {
-	        str = this.user_id.toString();
+	        str = this.user_id + "";
 	    }
 		return str;
 	}
@@ -241,35 +200,7 @@ public class User extends Model {
 	    }
 	    return users;
 	}
-	
-	public HashMap<String, User> updateMyFacebookFriends (String access_token) {
-		JsonObject jsonObj = Utility.getMyFacebookFriends(this.user_id, access_token);
-
-		if (jsonObj.has("error")) {
-			Logger.error("Failed to log in " + this.user_id + " ( " + jsonObj.toString() + " )");
-			return null;
-		}
 		
-		HashMap<String, User> friendData = new HashMap<String, User>();
-		
-		for (JsonElement ele : jsonObj.get("data").getAsJsonArray()) {
-			JsonObject friendObj = ele.getAsJsonObject();
-			try {
-				Long friendID = friendObj.get("id").getAsLong();
-				String friendName = friendObj.get("name").getAsString();
-				User friend = User.find("byUser_id", friendID).first();
-				if (friend != null && friend.online) {
-					this.friends.add(friend);
-					friendData.put(friend.id.toString(), friend);
-				}
-			} catch (Exception e) {
-				System.out.println("EXCEPTION " + e);
-			}
-		}
-		
-		return friendData;
-	}
-	
 	/**
 	 * Check if this user is listening on the master server
 	 * @return <code>true</code> if this user's heartbeat server
@@ -282,9 +213,8 @@ public class User extends Model {
 	 * Remove this user from any chat rooms they are in */
 	public void removeMeFromRooms () {
 		for (Room r : this.getRooms()) {
-			if (r.participants.contains(this)) {
-				r.removeParticipant(this);
-			}
+		    System.out.println("REMOVE FROM ROOM");
+		    r.removeParticipant(this);
 		}
 	}
 
@@ -379,7 +309,7 @@ public class User extends Model {
 
     /**
      * Send this user a notification that a super power was used */
-    public void notifyUsedPower (Long used_by, Long room_id, SuperPower power, int level, String result) {
+    public void notifyUsedPower (long used_by, long room_id, SuperPower power, int level, String result) {
 		if (!this.imOnMaster()) {
 		    HashMap<String, String> params 
 		        = Notify.getNotifyUsedPowerParams(this.id, used_by, room_id, power, level, result, this.session_id);
@@ -409,7 +339,7 @@ public class User extends Model {
 	 * they were chatting in has left 
 	 * @param user the user who left the room
 	 * @param room_id the id of the room */
-	public void notifyLeftRoom (User user, Long room_id) {
+	public void notifyLeftRoom (User user, long room_id) {
 		if (!this.imOnMaster()) {
           	HashMap<String, String> params 
           	    = Notify.getNotifyLeftParams(this.id, user.id, room_id);
@@ -424,7 +354,7 @@ public class User extends Model {
 	 * Notify this user that someone has joined them in a room
 	 * @param otherUser the user joining the room
 	 * @param room_id the id of the room being joined */
-	public void notifyJoined (User otherUser, Long room_id) {
+	public void notifyJoined (User otherUser, long room_id) {
 		if (!this.imOnMaster()) {
           	HashMap<String, String> params 
           	    = Notify.getNotifyJoinedParams(this.id, 
@@ -450,7 +380,7 @@ public class User extends Model {
 	/**
 	 * Inform this user that one of their friends has logged out 
 	 * @param left_user the user_id of the user who has left */
-	public void notifyMeLogout (Long left_user) {
+	public void notifyMeLogout (long left_user) {
 		if (!this.imOnMaster()) {
           	HashMap<String, String> params 
           	    = Notify.getNotifyLogoutParams(this.id, left_user);
@@ -465,14 +395,13 @@ public class User extends Model {
 	 * Inform this user that one of their friends has logged on
 	 * @param newUser the user who has logged on */
 	public void notifyMeLogin (User newUser) {
-		String name = newUser.name;
+		String name = newUser.alias;
 		String server = newUser.heartbeatServer.uri;
 		if (!this.imOnMaster()) {
 			HashMap<String, String> params
 			    = Notify.getNotifyLoginParams(this.id, newUser.id, name, server);
 			notifyMe("login", params);
 	    } else {
-                    
 			new UserEvent.UserLogon(this.id, newUser.id, name, server, this.session_id);
 		}		
 	}
@@ -504,13 +433,14 @@ public class User extends Model {
 	 * @param user_id
 	 * @return user object of matched or created user
 	 */
-	public static User getOrCreate (Long user_id) {
+	public static User getOrCreate (long user_id) {
 		User user = User.find("byUser_id", user_id).first();
 		if (user == null) {
 			user = new User(user_id);
 			Server server = Server.getMyHeartbeatServer(user);
             user.heartbeatServer = server;
 		}
+		user.populateSuperPowerDetails();
 		return user;
 	}
 		

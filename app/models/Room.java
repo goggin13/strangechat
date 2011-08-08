@@ -24,9 +24,9 @@ public class Room extends Model {
 	
 	/** id of this room */
 	@Required
-	public Long room_id;
+	public long room_id;
 	
-	public Room (Long room_id) {
+	public Room (long room_id) {
 		this.room_id = room_id;
 		this.participants = new HashSet<User>();
 	}
@@ -52,7 +52,7 @@ public class Room extends Model {
      * has joined 
      * @param user_id1
      * @param user_id2 */
-	public void addUsers (Long user_id1, Long user_id2) {
+	public void addUsers (long user_id1, long user_id2) {
         User user1 = User.findById(user_id1);
         User user2 = User.findById(user_id2);
         this.participants.add(user1);
@@ -89,7 +89,7 @@ public class Room extends Model {
      * @param user1
      * @param user2
      * @param n the number of meetings ago to consider as "recently", 0 indexed. */
-    public static boolean hasMetRecently (Long user_id1, Long user_id2, int n) {
+    public static boolean hasMetRecently (long user_id1, long user_id2, int n) {
         int meeting1 = Room.lastMeetingBetween(user_id1, user_id2);
         int meeting2 = Room.lastMeetingBetween(user_id2, user_id1);        
         return (meeting1 > -1 && meeting1 <= n)
@@ -102,7 +102,7 @@ public class Room extends Model {
      * @param met_with_id
      * @return if user_id spoke with met_with_id, then 3 other users, returns 3, e.g.;
      *         = -1 if user_id never spoke with them */
-    public static int lastMeetingBetween (Long user_id, Long met_with_id) {
+    public static int lastMeetingBetween (long user_id, long met_with_id) {
         User user = User.findById(user_id);
         User met_with = User.findById(met_with_id);
         List<User> recentMeetings = user.recentMeetings;
@@ -114,7 +114,7 @@ public class Room extends Model {
 	 * Update this users list of recent meetings, adding the given user id
 	 * @param user_id the user to update the meetings for
 	 * @param met_with_id the user id of the user they met with */
-	public static void updateRecentMeetingsFor (Long user_id, Long met_with_id) {
+	public static void updateRecentMeetingsFor (long user_id, long met_with_id) {
         User user = User.findById(user_id);
         User met_with = User.findById(met_with_id);
         
@@ -127,7 +127,7 @@ public class Room extends Model {
 
     /**
      * Check if the 2 given users are currently speaking together in a room */
-    public static boolean areSpeaking (Long u1, Long u2) {
+    public static boolean areSpeaking (long u1, long u2) {
         User user1 = User.findById(u1);
         User user2 = User.findById(u2);
         Set<Room> rooms_1 = user1.getRooms();
@@ -140,8 +140,8 @@ public class Room extends Model {
 	 * after the room is created.
 	 * @param user_id1
 	 * @param user_id2 */
-	public static void createRoomFor (Long user_id1, Long user_id2) {
-    	Long room_id = nextRoomID.incrementAndGet();
+	public static void createRoomFor (long user_id1, long user_id2) {
+    	long room_id = nextRoomID.incrementAndGet();
     	Room r = new Room(room_id);
     	r.addUsers(user_id1, user_id2);	    
 	}
@@ -151,7 +151,7 @@ public class Room extends Model {
 	 * @param user_id the user_id of the User to remove from the room
 	 * @param room_id the id of the room to remove from
 	 * @return true on success, false if user_id or room_id does not exist */
-	public static boolean removeUserFrom (Long room_id, Long user_id) {
+	public static boolean removeUserFrom (long room_id, long user_id) {
 		Room room = Room.find("byRoom_id", room_id).first();
 		User user = User.findById(user_id);
 		if (user == null) {
