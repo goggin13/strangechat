@@ -215,6 +215,31 @@ public class MyFunctionalTest extends FunctionalTest {
 		}
 	}
 	
+	protected JsonObject assertResponseContainsInner (long user_id, String power_name, int level, int lastReceived) {
+	    Promise<String> p = new CheckPowers().now();
+        goToSleep(3);
+        
+        JsonArray arr = getWholeListenResponse(user_id, lastReceived);
+		int received = 0;
+		int lastLevel = 0;
+		JsonObject newPower = null;
+		
+		for (JsonElement event : arr) {
+		    JsonObject data = event.getAsJsonObject().get("data").getAsJsonObject();
+
+		    if (data.get("type").getAsString().equals("newpower")) {
+                newPower = data.get("superPower").getAsJsonObject();
+		        if (newPower.get("name").getAsString().equals(power_name)) {
+		            received++;
+		            lastLevel = Math.max(lastLevel, data.get("level").getAsInt());
+		            power_id = data.get("power_id").getAsLong();
+		            return data;
+		        }
+		    }
+		}
+		return null;
+	}
+	
 	protected int assertResponseContains (long user_id, String power_name, int level, int lastReceived) {
 	    Promise<String> p = new CheckPowers().now();
         goToSleep(3);
@@ -222,7 +247,6 @@ public class MyFunctionalTest extends FunctionalTest {
         JsonArray arr = getWholeListenResponse(user_id, lastReceived);
 		int received = 0;
 		int lastLevel = 0;
-        // int power_id = -1;
 		
 		for (JsonElement event : arr) {
 		    JsonObject data = event.getAsJsonObject().get("data").getAsJsonObject();
@@ -242,8 +266,7 @@ public class MyFunctionalTest extends FunctionalTest {
 		System.out.println("testing level " + level + " - " + power_name + ", received = " + received);
     	assertTrue(1 <= received);
     	assertEquals(level, lastLevel);
-		return lastReceived;            
-
+		return lastReceived;         
 	}	
 	
     protected int assertResponseHasIceBreaker (long user_id, int level, int lastReceived) {

@@ -27,7 +27,6 @@ public class ServerTest extends UnitTest {
         for (int i = 0; i < servers.size(); i++) {
             Server s = servers.get(i);
             Long count = User.count("byHeartbeatServer", s);
-            System.out.println(count + " for " + s.name);
             assertTrue(count >= last);
             last = count;
         }

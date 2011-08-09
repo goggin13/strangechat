@@ -41,15 +41,37 @@ public class PowerRewardsTest extends MyFunctionalTest {
 		JsonArray events = getAdminListenResponse(0);
 		assertEquals(msgCount + 1, events.size());
 
-        assertResponseContains(pmo_db_id, "Cloning", 1, 0);  	
+        JsonObject cloning = assertResponseContainsInner(pmo_db_id, "Cloning", 1, 0);  
+        System.out.println(cloning);
+        long power_id = cloning.get("power_id").getAsLong();
+        
+        // start two rooms
+		requestRoomFor(pmo_db_id);
+	    requestRoomFor(k_db_id);
+        requestRoomFor(pmo_db_id);
+        requestRoomFor(rando_1_db);
+        
+        usePower(power_id, pmo_db_id, -1, -1);
+        
+        JsonObject data = getListenItem("usedpower", pmo_db_id, 0);
+        assertEquals(pmo_db_id, data.get("by_user").getAsLong());
+        assertEquals("Cloning", data.get("superPower").getAsJsonObject().get("name").getAsString());
+        
+        data = getListenItem("usedpower", k_db_id, 0);
+        assertEquals(pmo_db_id, data.get("by_user").getAsLong());
+        assertEquals("Cloning", data.get("superPower").getAsJsonObject().get("name").getAsString());
+                
+        data = getListenItem("usedpower", rando_1_db, 0);
+        assertEquals(pmo_db_id, data.get("by_user").getAsLong());        
+        assertEquals("Cloning", data.get("superPower").getAsJsonObject().get("name").getAsString());        
 	} 
 
     private int assertResponseHasEmotion (Long user_id, int level, int lastReceived) {
         return assertResponseContains(user_id, "Emotion", level, lastReceived);     
     }
     
- 	@Test
-	public void testEmotions () {
+    @Test
+    public void testEmotions () {
         // Emotions dont currently level up, so only do for 1
         int lastReceived = 0;
         Long lastLevelTime = 0L;
@@ -65,7 +87,7 @@ public class PowerRewardsTest extends MyFunctionalTest {
             // and now after we wait, PMO should have a superpower notifications
             lastReceived = assertResponseHasEmotion(pmo_db_id, level, lastReceived);
         }
-	}
+    }
 
     // @Test
     // public void testMindReader () {

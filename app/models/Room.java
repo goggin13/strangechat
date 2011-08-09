@@ -145,6 +145,20 @@ public class Room extends Model {
     	Room r = new Room(room_id);
     	r.addUsers(user_id1, user_id2);	    
 	}
+
+	/**
+	 * Create a new room for the two given users.  Notify both of the users
+	 * after the room is created.
+	 * @param user_id
+	 * @param bot */
+	public static void createBotRoomFor (long user_id, User bot) {
+    	long room_id = nextRoomID.incrementAndGet();
+    	Room r = new Room(room_id);
+        User user = User.findById(user_id);
+        r.participants.add(user);
+        r.save();
+        user.notifyJoined(bot, room_id);    	
+	}
 	
 	/**
 	 * Remove the given user from the given room

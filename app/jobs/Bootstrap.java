@@ -6,6 +6,7 @@ import play.test.*;
 import java.util.*;
 import java.io.File;
 import models.*;
+import models.eliza.*;
 import controllers.*;
 
 @OnApplicationStart
@@ -40,6 +41,11 @@ public class Bootstrap extends Job {
 		}
 		if (totalVolume != 1) {
 		    Logger.error("Invalid server volume assignments; expected 1.0, found " + totalVolume);
+		}
+		
+		if (Server.onMaster()) {
+		    Eliza.init();
+		    Logger.info("Initialized Eliza");
 		}
 		
 		Logger.info("finished bootstrapping " 

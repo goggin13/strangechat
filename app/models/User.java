@@ -37,6 +37,9 @@ public class User extends Model {
 	/** this users alias */
 	public String alias;
 	
+	/** true if this user is an automated bot */
+	public boolean isBot = false;
+	
     /** List of other users this user has met with recently */
     @ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
     @JoinTable(name = "UserToMetWith")
@@ -213,7 +216,6 @@ public class User extends Model {
 	 * Remove this user from any chat rooms they are in */
 	public void removeMeFromRooms () {
 		for (Room r : this.getRooms()) {
-		    System.out.println("REMOVE FROM ROOM");
 		    r.removeParticipant(this);
 		}
 	}
@@ -305,6 +307,19 @@ public class User extends Model {
 		    SuperPower superPower = power.getSuperPower();
 		    superPower.awardIfQualified(this);
 		}
+    }
+
+    /**
+     * Send this user a notification that a super power was used */
+    public void sendMessage (long from, long room_id, String text) {
+		if (!this.imOnMaster()) {
+		    HashMap<String, String> params 
+		        = Notify.getNotifyChatMessageParams(from, this.id, text, room_id);
+    		notifyMe("roommessage", params);            
+        } else {
+            logWrongServer();
+			new UserEvent.RoomMessage(this.id, from, room_id, text);
+		}        
     }
 
     /**

@@ -10,10 +10,10 @@ import math
 
 class ChatAPI():
     """Manages all interactions with the chat apis"""
-    # CHAT_ROOT = 'http://localhost:9000/'   # Dev
+    CHAT_ROOT = 'http://localhost:9000/'   # Dev
     # CHAT_ROOT = 'http://localhost:8080/'   # Dev    
     # CHAT_ROOT = 'http://173.246.100.79/' # live
-    CHAT_ROOT = 'http://173.246.101.45/' # staging
+    # CHAT_ROOT = 'http://173.246.101.45/' # staging
     
     def __init__ (self, user_id, name=None, avatar=None):
         self.user_id = user_id
@@ -29,21 +29,19 @@ class ChatAPI():
         self.msg_count = 0
         self.logged_in_at = round(time.time())
         self.msg_received_count = 0
+        self.timeout = 3
         
     def login(self):
         """Login into the chat master server"""
         data = self.request("signin", {
-            'facebook_id': self.user_id,
-            'name': self.name,
-            'access_token': "",
+            'user_id': self.user_id,
             'avatar': self.avatar,
-            'alias': self.name,
-            'updatefriends': False
+            'alias': self.name
         }, self.CHAT_ROOT)
         # print data
         # print str(self.user_id)
         for k, v in data.iteritems():
-            if v['name'] == self.name:
+            if v['alias'] == self.name:
                 self.myData = v
                 self.user_id = v["id"]    
                 self.name = "user-%d" % self.user_id        
@@ -171,7 +169,7 @@ class ChatAPI():
         self.request("requestrandomroom", {'user_id': self.user_id}, self.CHAT_ROOT)
         
     def request (self, path, data, server):
-        h = httplib2.Http(timeout=3)  
+        h = httplib2.Http(timeout=self.timeout)  
         h.force_exception_to_status_code = True         
         url = server + path + "?" + urlencode(data)
         start = datetime.now()

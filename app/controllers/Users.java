@@ -14,6 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import play.db.jpa.GenericModel.JPAQuery;
 import play.db.jpa.JPA;
 import javax.persistence.Query;
+import models.eliza.*;
 
 import com.google.gson.*;
 import com.google.gson.reflect.*;
@@ -44,7 +45,8 @@ public class Users extends Index {
 	                 "leaveRoom", 
 	                 "usePower", 
 	                 "waiting_room_is_empty", 
-	                 "signinAnon"})
+	                 "signinAnon",
+	                 "reply"})
 	public static void checkAuth () {
 		Index.checkAuthentication();
 	}
@@ -110,15 +112,6 @@ public class Users extends Index {
 	 * Helper for <code>requestRandomRoom</code>
 	 * @return true if these users are eligible to be paired in a room right now */
 	private static boolean canBePaired (long user_id1, long user_id2) {
-	    System.out.println("pair " + user_id1 + ", " + user_id2);
-	    
-        // System.out.println(UserExclusion.canSpeak(user_id1, user_id2));
-	    
-        // System.out.println(remeetEligible == -1 
-            // || !Room.hasMetRecently(user_id1, user_id2, remeetEligible));
-	    
-        // System.out.println(!Room.areSpeaking(user_id1, user_id2));
-	    
 	    return !(user_id1 == user_id2)
 		        && UserExclusion.canSpeak(user_id1, user_id2)
 		        && (remeetEligible == -1 
@@ -234,8 +227,8 @@ public class Users extends Index {
 	    if (other_id > 0) {
 	        other = User.findById(other_id);
 	    }
-        if (user == null || (other_id == 0 && other_id != -1 && other == null)) {
-            returnFailed("both user_id and other_id must map to existing users", callback);
+        if (user == null) {
+            returnFailed("user_id must map to existing user", callback);
         }
 	    
         StoredPower storedPower = StoredPower.findById(power_id);
@@ -261,4 +254,5 @@ public class Users extends Index {
         returnOkay(callback);
 
 	}
+	
 }
