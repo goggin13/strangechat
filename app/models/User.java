@@ -199,7 +199,7 @@ public class User extends Model {
 	    for (Room r : roomSet) {
             for (User u : r.participants) {
                 if (u.id != this.id) {
-                    users.put(u, r.id);
+                    users.put(u, r.room_id);
                 }
             }
 	    }

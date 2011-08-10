@@ -15,7 +15,7 @@ import play.db.jpa.GenericModel.JPAQuery;
 import play.db.jpa.JPA;
 import javax.persistence.Query;
 import models.eliza.*;
-
+import play.data.validation.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 
@@ -38,19 +38,6 @@ public class Users extends Index {
 	 * Maximum number of pending spots in the waiting room a single user can occupy */
 	public static int spotsPerUser = 2;
 	
-	@Before (unless={"signin", 
-	                 "signout", 
-	                 "random", 
-	                 "requestRandomRoom", 
-	                 "leaveRoom", 
-	                 "usePower", 
-	                 "waiting_room_is_empty", 
-	                 "signinAnon",
-	                 "reply"})
-	public static void checkAuth () {
-		Index.checkAuthentication();
-	}
-
 	/**
 	 * This function signs in a user who has not linked their facebook account.  
 	 * @param user_id the user_id field of the user signing in
@@ -150,6 +137,27 @@ public class Users extends Index {
 		returnOkay(callback);
 	}
 	
+	/**
+	 * Join or create a group room with the given key
+	 * @param user_id the id of the user joining
+	 * @param key the key to link to the room
+     * @param callback optional JSONP callback */
+    public static void joinGroupChat (
+                    @Required long user_id, 
+                    @Required String key, 
+                    String callback) 
+    {
+        if (validation.hasErrors()) {
+            returnFailed(validation.errors(), callback);
+        }
+        User user = User.findById(user_id);
+        if (user == null) {
+            returnFailed("user_id must map to an existing user (" + user_id + ")", callback);
+        }
+        Room r = Room.joinGroupChat(user, key);
+        returnOkay(r.room_id + "", callback);
+    }
+	
     /**
      * Removes all occurences of the given user from the waiting room
      * @param user_id the id to remove from the room 
@@ -242,17 +250,16 @@ public class Users extends Index {
         String result = storedPower.use(other);
         
         user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
-        if (room_id > 0 && other != null) {
-            other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
-        } else {            
+        if (room_id <= 0 || other == null) {
             HashMap<User, Long> conversants = user.getConversants();
             for (User u : conversants.keySet()) {
+                System.out.println("notify users");
                 u.notifyUsedPower(user_id, conversants.get(u), sp, storedPower.level, result);
             }
+        } else {            
+            System.out.println("NOTIFY ONE USER");
+            other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
         }
-
         returnOkay(callback);
-
 	}
-	
 }

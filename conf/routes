@@ -14,6 +14,7 @@ GET     /demo																		Application.demo
 *        /leaveroom															Users.leaveRoom
 *				 /usepower															Users.usePower
 * 			 /eliza																	Elizas.reply
+* 		   /group											            Users.joinGroupChat
 
 # Chat actions
 GET   /listen																  Notify.listen

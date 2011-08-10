@@ -11,6 +11,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.*;
 import models.*;
 import controllers.Index;
+import controllers.Users;
 
 @Every("5s")
 public class CheckPulses extends Job {
@@ -73,6 +74,7 @@ public class CheckPulses extends Job {
 		if (Server.onMaster()) {
 		    User u = User.findById(user_id);
 		    u.logout();
+		    removeFromWaitingRoom(user_id, true);
 		} else {	
 			String url = Server.getMasterServer().uri + "signout";
 			HashMap<String, String> params = new HashMap<String, String>();
@@ -81,5 +83,19 @@ public class CheckPulses extends Job {
 			JsonObject json = resp.getJson().getAsJsonObject();
 		}
 	}
+	
+	/**
+     * Removes all occurences of the given user from the waiting room
+     * @param user_id the id to remove from the room 
+     * @param removeAll if true, remove all of the occurences of this user,
+     *                  else just one */
+    private static void removeFromWaitingRoom (long user_id, boolean removeAll) {
+        while (Users.waitingRoom.contains(user_id)) {
+            Users.waitingRoom.remove(user_id);
+            if (!removeAll) {
+                return;
+            }
+        }
+    }
 
 }

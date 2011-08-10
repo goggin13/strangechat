@@ -5,6 +5,7 @@ import java.util.*;
 import java.lang.reflect .*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
+import play.data.validation.*;
 
 import play.*;
 import play.mvc.*;
@@ -66,6 +67,21 @@ public abstract class Index extends CRUD {
 		return resp;
 	}
 
+ 	/**
+ 	 * renders a JSON status error response from a list of errors
+ 	 * @param callback optional, used for cross domain requests */
+ 	protected static void returnFailed (List<play.data.validation.Error> errors, String callback) {
+ 	    String msg = "";
+        for (play.data.validation.Error err : errors) {
+            msg += err.message();
+        }
+ 	    Logger.warn(msg);
+ 		Users.renderJSONP(
+ 			getErrorResponse(msg), 
+ 			new TypeToken<HashMap<String, String>>() {}.getType(),
+ 			callback
+ 		);
+ 	}
 
 	/**
 	 * renders a JSON status error response

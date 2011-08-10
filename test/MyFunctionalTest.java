@@ -118,9 +118,14 @@ public class MyFunctionalTest extends FunctionalTest {
 		return response.out.toString();
 	}
 
-    protected void postAndAssertOkay (String url, HashMap<String, String> params) {
+    protected JsonObject getJsonObj (String url, HashMap<String, String> params) {
         String jsonStr = postAndValidateInner(url, params);
 		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
+		return jsonObj;
+    }
+
+    protected void postAndAssertOkay (String url, HashMap<String, String> params) {
+        JsonObject jsonObj = getJsonObj(url, params);
 		assertEquals("okay", jsonObj.get("status").getAsString());
     }
 
@@ -166,6 +171,11 @@ public class MyFunctionalTest extends FunctionalTest {
     protected void notifyMessage (long for_user, long from_user, String msg) {
         HashMap<String, String> params = Notify.getNotifyMessageParams(from_user, for_user, msg);
 		postAndAssertOkay("/notify/message", params);
+    }
+    
+    protected void notifyChatMessage (long from_user, List<Long> for_user, String msg, long room_id) {
+		HashMap<String, String> params = Notify.getNotifyChatMessageParams(from_user, for_user, msg, room_id);
+		postAndAssertOkay("/notify/roommessage", params);        
     }
 
     protected void notifyChatMessage (long from_user, long for_user, String msg, long room_id) {

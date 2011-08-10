@@ -18,6 +18,9 @@ public class Room extends Model {
     /** Unique id for rooms */
 	public static AtomicLong nextRoomID = new AtomicLong(1);	
 
+    /** key to link to a group chat room */
+    public String groupKey;
+
 	/** set of users in this chatroom */
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	public Set<User> participants;
@@ -55,11 +58,8 @@ public class Room extends Model {
 	public void addUsers (long user_id1, long user_id2) {
         User user1 = User.findById(user_id1);
         User user2 = User.findById(user_id2);
-        this.participants.add(user1);
-        this.participants.add(user2);     
-        this.save();
-        user1.notifyJoined(user2, room_id);
-        user2.notifyJoined(user1, room_id);
+        this.addUser(user1);
+        this.addUser(user2);
         Room.updateRecentMeetingsFor(user1.id, user2.id);
         Room.updateRecentMeetingsFor(user2.id, user1.id);        
 	}
@@ -81,6 +81,19 @@ public class Room extends Model {
 		} else {
 			this.delete();
 		}		
+	}
+
+	/**
+	 * Add the given user to this room, notifying the other 
+	 * participants 
+	 * @param u */
+	public void addUser (User u) {
+	    for (User p : this.participants) {
+	        p.notifyJoined(u, this.room_id);
+	        u.notifyJoined(p, this.room_id);
+	    }
+	    this.participants.add(u);
+	    this.save();
 	}
 
     /**
@@ -154,10 +167,7 @@ public class Room extends Model {
 	public static void createBotRoomFor (long user_id, User bot) {
     	long room_id = nextRoomID.incrementAndGet();
     	Room r = new Room(room_id);
-        User user = User.findById(user_id);
-        r.participants.add(user);
-        r.save();
-        user.notifyJoined(bot, room_id);    	
+        r.addUsers(user_id, bot.id);
 	}
 	
 	/**
@@ -176,6 +186,29 @@ public class Room extends Model {
 		}
 		room.removeParticipant(user);
 		return true;
+	}
+	
+	/**
+	 * return a new, empty room */
+    public static Room getEmptyRoom () {
+        return new Room(Room.nextRoomID.incrementAndGet());
+    }
+	
+	/**
+	 * Add this user to an existing group chat, or start a new group chat
+	 * with the given key if none exists 
+	 * @param user the user to add
+	 * @param key the group key of the room to join 
+	 * @return the room object for the group chat room */
+	public static Room joinGroupChat (User user, String key) {
+	    Room myRoom = Room.find("byGroupKey", key).first();
+        if (myRoom == null) {
+            myRoom = Room.getEmptyRoom();
+            myRoom.groupKey = key;
+            myRoom.save();
+        }
+        myRoom.addUser(user);
+        return myRoom;
 	}
 	
 	public String toString () {

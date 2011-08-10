@@ -156,8 +156,10 @@ public class Notify extends Index {
 	 * @param msg the text of the message being sent
 	 * @param room_id the pertinent room for this message
 	 * @param callback optional JSONP callback */
-	public static void roomMessage (Long for_user, Long from_user, String msg, Long room_id, String callback) {
-		new UserEvent.RoomMessage(for_user, from_user, room_id, msg);
+	public static void roomMessage (List<Long> for_user, long from_user, String msg, Long room_id, String callback) {
+	    for (Long for_u : for_user) {
+	        new UserEvent.RoomMessage(for_u, from_user, room_id, msg);
+	    }
 		returnOkay(callback);
 	}
 	
@@ -222,6 +224,10 @@ public class Notify extends Index {
 		returnOkay(callback);
 	}
 	
+	/* 
+	 * All of the following are helpers used by clients wishing to make requests to this
+	 * controller.  They are used mostly by the Users controller and USers object, and 
+	 * also by the unit tests */
 		
     public static HashMap<String, String> getNotifyLeftParams (Long for_user, Long left_user, Long room_id) {
         HashMap<String, String> params = new HashMap<String, String>();
@@ -293,16 +299,27 @@ public class Notify extends Index {
         params.put("msg", msg);
         return params;
     }
-
+    
     public static HashMap<String, String> getNotifyChatMessageParams (Long from_user, Long for_user, String msg, Long room_id) {
     	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
+        params.put("for_user", for_user.toString());        
         params.put("from_user", from_user.toString());
         params.put("msg", msg);
         params.put("room_id", room_id.toString());
         return params;
     }
 
+    public static HashMap<String, String> getNotifyChatMessageParams (Long from_user, List<Long> for_users, String msg, Long room_id) {
+    	HashMap<String, String> params = new HashMap<String, String>();
+    	int i = 0;
+        for (long for_user : for_users) {
+            params.put("for_user[" + i++ + "]", for_user + "");
+        }
+        params.put("from_user", from_user.toString());
+        params.put("msg", msg);
+        params.put("room_id", room_id.toString());
+        return params;
+    }
 
     public static HashMap<String, String> getNotifyJoinedParams (Long for_user, 
                                                                   Long new_user, 

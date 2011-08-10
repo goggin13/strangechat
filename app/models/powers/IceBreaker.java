@@ -22,7 +22,9 @@ public class IceBreaker extends SuperPower {
 	
 	public int chooseIndex (User caller, User subject) {
 	    if (caller == null || subject == null) {
-	        Logger.error("ice breaker called with a null user");
+	        if (caller == null) {
+	            Logger.error("ice breaker called with a null user");
+	        }
 	        return IceBreakers.getRandomIndex();
 	    }
         Set<Integer> user1Seen = caller.getSeenIceBreakers();
@@ -60,7 +62,9 @@ public class IceBreaker extends SuperPower {
 	public synchronized String use (User caller, User subject) {
         int index = chooseIndex(caller, subject);
         caller.addSeenIceBreaker(index);
-        subject.addSeenIceBreaker(index);
+        if (subject != null) {
+            subject.addSeenIceBreaker(index);
+        }
         String txt = IceBreakers.get(index);
         return txt;
 	}
