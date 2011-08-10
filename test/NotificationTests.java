@@ -158,5 +158,39 @@ public class NotificationTests extends MyFunctionalTest {
      assertEquals("resultstring", data.get("result").getAsString());
      assertEquals("2", data.get("level").getAsString());
     }    
+    
+    @Test
+    public void testNotifyBroadcast () {
+        // first id 2 logs in
+        HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("user_id", fb_id_2 + "");
+	    params.put("alias", "Matthew Goggin");
+		JsonObject jsonObj = postAndValidateResponse("/signin", params);
+		
+		params = new HashMap<String, String>();
+	    params.put("user_id", fb_id_1 + "");
+	    params.put("alias", "Matthew Goggin");
+		jsonObj = postAndValidateResponse("/signin", params);
+		
+		params = new HashMap<String, String>();
+	    params.put("user_id", rando_1 + "");
+	    params.put("alias", "Matthew Goggin");
+		jsonObj = postAndValidateResponse("/signin", params);
+		
+        GET("/mock/testbroadcast");
+        
+        JsonObject data = getListenItem("roommessage", fb_1_db_id, 0);
+        assertEquals(User.admin_id, data.get("from").getAsLong());
+        assertEquals("test broadcast", data.get("text").getAsString());
+        
+        data = getListenItem("roommessage", fb_2_db_id, 0);
+        assertEquals(User.admin_id, data.get("from").getAsLong());
+        assertEquals("test broadcast", data.get("text").getAsString());
+        
+        data = getListenItem("roommessage", rando_1_db, 0);
+        assertEquals(User.admin_id, data.get("from").getAsLong());
+        assertEquals("test broadcast", data.get("text").getAsString());
+		
+    }
 
 }

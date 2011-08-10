@@ -30,12 +30,18 @@ public class Application extends Index {
 		return stats;
 	}
 	
-	public static void broadcast (String broadcast) {
+	public static void broadcast (String broadcast, boolean json) {
+	    System.out.println("IN BROADCAST");
 	    if (broadcast != null) {
+	        System.out.println("SEND BROADCAST");
 	        User.broadcast(broadcast);
 	    }
         boolean amMaster = Server.onMaster();
-	    render(amMaster, broadcast);
+        if (!json) {
+            render(amMaster, broadcast);
+        } else {
+            returnOkay(null);
+        }
 	}
 	
     public static void index() {

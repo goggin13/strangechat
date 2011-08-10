@@ -35,7 +35,7 @@ public class ElizasTest extends MyFunctionalTest {
 		
 		JsonObject rm1 = data.get(0).getAsJsonObject().get("data").getAsJsonObject();
         String msg = rm1.get("text").getAsString();
-        assertEquals("@Eliza whats up eliza", msg);
+        assertEquals("@Azile whats up eliza", msg);
 		
 		JsonObject rm2 = data.get(1).getAsJsonObject().get("data").getAsJsonObject();
 		String r = rm2.get("text").getAsString();
@@ -46,7 +46,6 @@ public class ElizasTest extends MyFunctionalTest {
 		assertTrue(r2.length() > 0);
 		assertEquals(r, r2);
 	} 
-	
 	
 	@Test
 	public void testGetBotRoom () {

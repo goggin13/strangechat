@@ -20,6 +20,10 @@ public class Mock extends Index {
         }
     }
 
+    public static void testbroadcast () {
+        User.broadcast("test broadcast");
+    }
+
 	public static void resetEventQueue () {
 		UserEvent.resetEventQueue();
 		returnOkay(null);
