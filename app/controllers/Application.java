@@ -30,6 +30,14 @@ public class Application extends Index {
 		return stats;
 	}
 	
+	public static void broadcast (String broadcast) {
+	    if (broadcast != null) {
+	        User.broadcast(broadcast);
+	    }
+        boolean amMaster = Server.onMaster();
+	    render(amMaster, broadcast);
+	}
+	
     public static void index() {
 		boolean amMaster = Server.onMaster();
 		boolean amChat = Server.imAChatServer();

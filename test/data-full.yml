@@ -57,7 +57,7 @@ User(rando2):
   heartbeatServer: chat1
 
 User(testBot):
-  user_id: -3
+  botid: 843ad5ae9e34019a
   alias: "Test"
   online: true
   avatar: "http://www.celebrific.com/wp-content/uploads/2010/11/425.the_.incredible.hulk_.033108.jpg"

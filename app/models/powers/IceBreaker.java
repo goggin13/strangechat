@@ -152,6 +152,27 @@ public class IceBreaker extends SuperPower {
             messages.add("How often do you help little old ladies cross the street?");
             messages.add("How did you become a superhero?");
             messages.add("Who is your nemesis?");
+            messages.add("When was the last time you cried?");
+            messages.add("How many times have you saved a life?");
+            messages.add("What's the best thing you've ever done?");
+            messages.add("What was your first love like?");
+            messages.add("Are your parents superheroes?");
+            messages.add("Who is your favorite X-Men?");
+            messages.add("Who is your greatest nemesis?");
+            messages.add("What are your weaknesses?");
+            messages.add("Blondes, redheads or brunettes?");
+            messages.add("The Simpsons, South Park, Futurama or Family Guy?");
+            messages.add("What's your superhero slogan?");
+            messages.add("What's your theme song?");
+            messages.add("What song do you sing in the shower?");
+            messages.add("Where do you come from?");
+            messages.add("What fabric makes the best costume?");
+            messages.add("Do you peep out people's underwear with your x-ray vision?");
+            messages.add("Do you have special superhero transportation?");
+            messages.add("Where do you change into your superhero costume?");
+            messages.add("Have you ever had any wardrobe malfunctions?");
+            messages.add("Does your mask get itchy?");
+            messages.add("Have you ever smelled what The Rock is cooking?");            
 	    }
 	    
 	    // seen MUST BE SORTED

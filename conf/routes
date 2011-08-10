@@ -5,6 +5,7 @@
 # Home page
 GET     /                                       Application.index
 GET     /demo																		Application.demo
+*       /broadcast															Application.broadcast
 
 # User actions
 *		     /signin																Users.signin

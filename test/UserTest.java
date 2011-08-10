@@ -28,14 +28,14 @@ public class UserTest extends UnitTest {
     @Test
     public void testBasicUserFunctions () {
         // first no users
-        assertEquals(6, User.count());
+        assertEquals(7, User.count());
         
         User u1 = User.getOrCreate(100);
         User u2 = User.getOrCreate(101);       
-        assertEquals(8, User.count());
+        assertEquals(9, User.count());
         
         User u3 = User.getOrCreate(100);       
-        assertEquals(8, User.count());
+        assertEquals(9, User.count());
     }
     
 	@Test

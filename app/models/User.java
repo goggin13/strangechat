@@ -24,7 +24,8 @@ import models.powers.*;
 
 @Entity
 public class User extends Model {
-	    
+	public static long admin_id = -3L;    
+	
 	/** The user_id, in this case will be the facebook_id */
     public long user_id;
     
@@ -37,8 +38,8 @@ public class User extends Model {
 	/** this users alias */
 	public String alias;
 	
-	/** true if this user is an automated bot */
-	public boolean isBot = false;
+	/** maps to a Pandora bot */
+	public String botid;
 	
     /** List of other users this user has met with recently */
     @ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
@@ -90,6 +91,7 @@ public class User extends Model {
 	 * The server this user was assigned to heartbeat on
 	 */	
 	@ManyToOne
+	@Required
 	public Server heartbeatServer;
 	
 	public User (long u) {
@@ -459,6 +461,15 @@ public class User extends Model {
 		return user;
 	}
 		
+    /**
+     * Broadcast a message to all online users */
+    public static void broadcast (String msg) {
+        List<User> users = User.find("byOnline", true).fetch(1000);
+        for (User u : users) {
+            u.sendMessage(User.admin_id, -1, msg);
+        }
+    }
+    
 	/** 
 	 * This class is used when serializing and deserializing JSON.  Its only 
 	 * purpose is to inform the GsonBuilder objects that they should exclude 

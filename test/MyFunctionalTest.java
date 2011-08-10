@@ -17,7 +17,7 @@ public class MyFunctionalTest extends FunctionalTest {
 	
 	// These tokens were obtained using offline_access permissions from the facebook API, which are NOT like
 	// the tokens this app will usually be receiving.  But they will hopefully last for testing.  
-	protected static long next_id = 7L;
+	protected static long next_id = 8L;
 	
 	protected static long fb_id_1 = 100002292928724L;
 	protected static long fb_1_db_id = 3L;
