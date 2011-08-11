@@ -54,7 +54,6 @@ public class Bootstrap extends Job {
             //     
             // }
             
->>>>>>> Stashed changes
 		}
 		
 		if (Play.mode == Play.Mode.DEV) {
