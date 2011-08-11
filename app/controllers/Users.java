@@ -31,7 +31,9 @@ public class Users extends Index {
 	/** How many meetings, 0 indexed, ago users must have interacted before they
 	 *  can be matched again.  0 means users can talk, then they have to talk to 
 	 *  at least one other person each.  -1 means they can be paired in back
-	 *  to back rooms. */
+	 * 
+	 *  THIS IS SET IN BOOTSTRAP.JAVA.  YOU MUST MAKE CHANGES THERE OR THEY
+	 *  WILL BE OVERRIDDEN */
 	public static int remeetEligible = 0;
 	
 	/**

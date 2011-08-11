@@ -52,7 +52,7 @@ class MessageSender (Thread):
             self.sent_messages[i] = datetime.now()
             self.speak("SENDING MESSAGE %d" % i)
             self.API.messageRoom(i, room_id)
-            time.sleep(.1)
+            time.sleep(.5)
 
         self.API.signout()            
         self.thread_queue.task_done()
@@ -103,7 +103,7 @@ class MessageListener (Thread):
             for m in messages:
                 self.speak("GOT MESSAGE %d" % int(m["text"]))
                 self.got_messages[int(m["text"])] = datetime.now() 
-            time.sleep(.1)
+            time.sleep(.5)
         
         self.API.signout()          
         self.thread_queue.task_done()

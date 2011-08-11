@@ -32,6 +32,7 @@ User(kristen):
   heartbeatServer: chat1
 
 StoredPower(gstoredpower):
+  owner: pmo
   power: "ICE_BREAKER"
   owner: pmo
   available: 1
