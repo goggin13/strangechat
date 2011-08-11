@@ -282,25 +282,9 @@ public class MyFunctionalTest extends FunctionalTest {
     protected int assertResponseHasIceBreaker (long user_id, int level, int lastReceived) {
         return assertResponseContains(user_id, "Ice Breaker", level, lastReceived);
     }
-    
-    // protected int earnIceBreakers (long user1, long user2, int count, int lastReceived) {
-    //      for (int i = 0; i < count; i++) {
-    //          double time = new IceBreaker().award_interval;
-    //          double iters = Math.ceil(time / 5);
-    //          for (int j = 0; j < iters; j++) {
-    //          heartbeatForRoom(user1, 15L);
-    //          heartbeatForRoom(user1, 15L);               
-    //      }
-    //      // and now after we wait, PMO should have a superpower notifications
-    //      lastReceived = assertResponseHasIceBreaker(user1, 1, lastReceived);
-    //      }
-    //      return lastReceived;
-    // }
-    
+
     // CURRENTLY HARDCODED;; user1 needs to be PMO, to match power_id of 1
     protected void earnAndUseIceBreakers (long user1, long user2, int count) {
-        // first lets earn some Ice Breakers
-        // earnIceBreakers(user1, user2, count, 0);
         
         long power_id = 1;  // hardcoded for PMO
         
@@ -311,10 +295,6 @@ public class MyFunctionalTest extends FunctionalTest {
             assertEquals("okay", json.get("status").getAsString());
         }
         
-        // again wont work though
-        // JsonObject json = usePower (power_id, user1, user2, 15L);
-        // assertEquals("You don't have any of that power remaining!", json.get("message").getAsString());
-        // assertEquals("error", json.get("status").getAsString());        
 	}	
 	
 }

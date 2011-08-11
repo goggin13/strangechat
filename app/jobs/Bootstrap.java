@@ -21,7 +21,7 @@ public class Bootstrap extends Job {
 		if (Play.mode == Play.Mode.DEV) {
             Fixtures.deleteAll();
             Fixtures.loadModels("bootstrap-data-dev.yml");
-            Users.remeetEligible = -1;
+            Users.remeetEligible = 0;
 		} else {
 			Users.remeetEligible = 0;
             // Server master = Server.getMasterServer();

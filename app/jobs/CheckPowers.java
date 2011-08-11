@@ -65,7 +65,8 @@ public class CheckPowers extends Job {
                     to.offersReceivedCount += 1;
                     from.offersMadeCount += 1;
                 } else if (text.length() >= DATA_CODE.length()
-                           && text.substring(0, DATA_CODE.length()).equals(DATA_CODE)) {   
+                           && text.substring(0, DATA_CODE.length()).equals(DATA_CODE)
+                           && text.indexOf("facebook_id") > -1) {   
                     // only count this for one user; there will be a corresponding event
                     // for the other one
                     to.revealCount += 1;                       

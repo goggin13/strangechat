@@ -32,7 +32,7 @@ public class Users extends Index {
 	 *  can be matched again.  0 means users can talk, then they have to talk to 
 	 *  at least one other person each.  -1 means they can be paired in back
 	 * 
-	 *  THIS IS SET IN BOOTSTRAP.JAVA.  YOU MUST MAKE CHANGES THERE OR THEY
+	 *  THIS IS SET IN BOOTSTRAP.JAVA;  YOU MUST MAKE CHANGES THERE OR THEY
 	 *  WILL BE OVERRIDDEN */
 	public static int remeetEligible = 0;
 	
@@ -101,6 +101,7 @@ public class Users extends Index {
 	 * Helper for <code>requestRandomRoom</code>
 	 * @return true if these users are eligible to be paired in a room right now */
 	private static boolean canBePaired (long user_id1, long user_id2) {
+	    
 	    return !(user_id1 == user_id2)
 		        && UserExclusion.canSpeak(user_id1, user_id2)
 		        && (remeetEligible == -1 
@@ -255,11 +256,9 @@ public class Users extends Index {
         if (room_id <= 0 || other == null) {
             HashMap<User, Long> conversants = user.getConversants();
             for (User u : conversants.keySet()) {
-                System.out.println("notify users");
                 u.notifyUsedPower(user_id, conversants.get(u), sp, storedPower.level, result);
             }
         } else {            
-            System.out.println("NOTIFY ONE USER");
             other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
         }
         returnOkay(callback);

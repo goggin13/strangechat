@@ -18,6 +18,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  * A collection of random, static utility functions */
 public class Utility {
 	
+	
 	/**
 	 * Get the response from <code>url</code> as a JSON string
 	 * @param url the url to hit

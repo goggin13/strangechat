@@ -85,9 +85,12 @@ public class Room extends Model {
 
 	/**
 	 * Add the given user to this room, notifying the other 
-	 * participants 
+	 * participants.  If they are already in the room, does nothing
 	 * @param u */
 	public void addUser (User u) {
+        if (this.participants.contains(u)) {
+            return;
+        }
 	    for (User p : this.participants) {
 	        p.notifyJoined(u, this.room_id);
 	        u.notifyJoined(p, this.room_id);
@@ -130,7 +133,7 @@ public class Room extends Model {
 	public static void updateRecentMeetingsFor (long user_id, long met_with_id) {
         User user = User.findById(user_id);
         User met_with = User.findById(met_with_id);
-        
+        user.recentMeetings.remove(met_with);
         user.recentMeetings.add(met_with);
         if (user.recentMeetings.size() > 10) {
             user.recentMeetings.remove(0);

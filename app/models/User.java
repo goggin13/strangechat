@@ -24,6 +24,7 @@ import models.powers.*;
 
 @Entity
 public class User extends Model {
+    @Transient
 	public static long admin_id = -3L;    
 	
 	/** The user_id, in this case will be the facebook_id */

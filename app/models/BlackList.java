@@ -30,6 +30,8 @@ public class BlackList extends Model {
     
     public BlackList (User u) {
         this.user = u;
+        u.logout();
+        u.save();
     }
     
     public static List<BlackList> getBlackList () {

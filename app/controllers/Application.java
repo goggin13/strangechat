@@ -31,9 +31,7 @@ public class Application extends Index {
 	}
 	
 	public static void broadcast (String broadcast, boolean json) {
-	    System.out.println("IN BROADCAST");
 	    if (broadcast != null) {
-	        System.out.println("SEND BROADCAST");
 	        User.broadcast(broadcast);
 	    }
         boolean amMaster = Server.onMaster();
