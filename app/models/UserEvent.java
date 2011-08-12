@@ -1,21 +1,71 @@
 package models;
  
-import java.util.*;
-import play.libs.F.*;
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import play.Logger;
-import java.text.SimpleDateFormat;
+import play.libs.F.ArchivedEventStream;
+import play.libs.F.IndexedEvent;
+import play.libs.F.Promise;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+
 import enums.Power;
-import com.google.gson.*;
-import java.lang.reflect .*;
-import com.google.gson.reflect.*;
 
 /* 
  * A wrapper for the UserEvent classes.  See comment on {@link Event} for 
  * more detail */
 public class UserEvent {
     private static final int streamSize = 2000;
-	public static ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
+	final private ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
 	
+	/**
+     * For long polling, as we are sometimes disconnected, we need to pass 
+     * the last event seen id, to be sure to not miss any message.  Gets the
+	 * messages that have been published to the event stream for the chat room
+	 * @param lastReceived	the id of the last message the caller has seen.  Messages
+	 * 						with ids greater than lastReceived are returned
+	 * @return list of messages with ids > lastReceived
+     */
+    public Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents (long lastReceived) {
+        return userEvents.nextEvents(lastReceived);
+    }
+
+	/**
+     * Just used for admin purposes, return entire event stream
+	 * @return list of all messages in the queue
+     */
+    public List<UserEvent.Event> currentMessages () {
+		List<UserEvent.Event> events = userEvents.archive();
+		Collections.reverse(events);
+        return events;
+    }
+    
+    public List<IndexedEvent> availableEvents (long lastReceived) {
+        return userEvents.availableEvents(lastReceived);
+    }
+
+    public void publish (Event e) {
+        userEvents.publish(e); 
+    }
+
+	/**
+	 * Reset the user event queue, flushing out existing events */
+    public void resetEventQueue () {
+        for (int i = 0; i < streamSize; i++) {
+            publish(new DummyEvent());
+        }
+    }
+
 	/**
 	 * UserEvents are dropped into the userEvents queue, which 
 	 * is listened to by chat clients for notifications, including friends signing on
@@ -46,7 +96,7 @@ public class UserEvent {
 	        if (this.user_id != -1) {
                System.out.println(this);
             }
-            userEvents.publish(this);
+            UserEvent.get().publish(this);
 	    }
 	    
 		public String toString () {
@@ -82,6 +132,10 @@ public class UserEvent {
 		}		
 	}	
 	
+	public void addUserLogon (long user_id, long new_user, String name, String server, String session_id) {
+        new UserLogon(user_id, new_user, name, server, session_id);
+	}
+	
 	/**
 	 * This event indicates to clients that this user has just logged
 	 * out of the system */
@@ -99,6 +153,10 @@ public class UserEvent {
 			return super.toString() + " : " + this.left_user + " has logged out ";
 		}		
 	}	
+	
+	public void addUserLogout (long user_id, long left_user, String session_id) {
+        new UserLogout(user_id, left_user, session_id);
+	}
 	
 	/**
 	 * Represents a direct message from one user to another (not in a chatroom) */
@@ -121,6 +179,10 @@ public class UserEvent {
 		}
         
     }
+	    
+	public void addDirectMessage (long to, long from, String msg) {
+        new DirectMessage(to, from, msg);
+	}    
 	    
 	/**
 	 * Represents a direct message from one user to another in a chatroom */
@@ -146,11 +208,15 @@ public class UserEvent {
 				   + ", in room " + this.room_id;
 		}
 		
-		protected void finalize() {
-		    Logger.info("finalising RoomMessage class");
-		}		
+        // protected void finalize() {
+            // Logger.info("finalising RoomMessage class");
+        // }        
         
     }
+	
+	public void addRoomMessage (long to, long from, long room_id, String msg) {
+        new RoomMessage(to, from, room_id, msg);
+	}	
 	
 	/** 
 	 * represents a user joining the chat room */
@@ -187,6 +253,10 @@ public class UserEvent {
         
     }
 
+	public void addJoin (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id) {
+        new Join(for_user, new_user, avatar, name, server, room_id, session_id);
+	}
+
 	/**
 	 * Indicates that the user is typing */
 	public static class UserIsTyping extends Event {
@@ -210,6 +280,10 @@ public class UserEvent {
 		}		
 	}
 
+	public void addUserIsTyping (long for_user, long typing_user, String text, long room_id) {
+        new UserIsTyping(for_user, typing_user, text, room_id);
+	}
+
 	/**
 	 * Indicates that the user is heartbeating; only used for admin tracking purposes */
 	public static class HeartBeat extends Event {
@@ -225,6 +299,10 @@ public class UserEvent {
 		public String toString () {
 			return super.toString() + " : " + "heartbeat - " + for_user_id;
 		}		
+	}
+
+	public void addHeartBeat (long for_user) {
+        new HeartBeat(for_user);
 	}
 
 	/**
@@ -247,6 +325,10 @@ public class UserEvent {
 		}
     }
 	
+	public void addLeave (long for_user, long left_user, long room_id, String session_id) {
+        new Leave(for_user, left_user, room_id, session_id);
+	}	
+	
 	/** 
 	 * Notifies a user that they have recieved a new super power */
 	public static class NewPower extends Event {
@@ -267,6 +349,24 @@ public class UserEvent {
 	    
 		public String toString () {
 			return super.toString() + " : " + this.superPower.name + " awarded (L " + this.level +")";
+		}	    
+	}
+
+	public void addNewPower (long for_user, SuperPower sp, long power_id, int level, String session_id) {
+        new NewPower(for_user, sp, power_id, level, session_id);
+	}
+
+	/** 
+	 * Notifies a user that they have recieved a new super power */
+	private static class DummyEvent extends Event {
+	    
+	    public DummyEvent () {
+	        super("dummy", -1, null);
+	        publishMe();
+	    }
+	    
+		public String toString () {
+			return "dummy event";
 		}	    
 	}
 
@@ -297,6 +397,10 @@ public class UserEvent {
 		public String toString () {
 			return super.toString() + " : " + this.superPower.name + " was used by " + this.by_user + " => " + this.result;
 		}	    
+	}
+
+	public void addUsedPower (long for_user, long by_user, long room_id, SuperPower sp, int level, String result, String session_id) {
+        new UsedPower(for_user, by_user, room_id, sp, level, result, session_id);
 	}
 
     /**
@@ -363,43 +467,23 @@ public class UserEvent {
 	    }
 	}
 	
-	/**
-     * For long polling, as we are sometimes disconnected, we need to pass 
-     * the last event seen id, to be sure to not miss any message.  Gets the
-	 * messages that have been published to the event stream for the chat room
-	 * @param lastReceived	the id of the last message the caller has seen.  Messages
-	 * 						with ids greater than lastReceived are returned
-	 * @return list of messages with ids > lastReceived
-     */
-    public static Promise<List<IndexedEvent<UserEvent.Event>>> nextMessages (long lastReceived) {
-        return userEvents.nextEvents(lastReceived);
-    }
-	
-	/**
-     * Just used for admin purposes, return entire event stream
-	 * @return list of all messages in the queue
-     */
-    public static List<UserEvent.Event> currentMessages () {
-		List<UserEvent.Event> events = userEvents.archive();
-		Collections.reverse(events);
-        return events;
-    }
-	
-	/**
-	 * @return the id of the message at the top of the current event queue */
-	public static long lastID () {
-		List<IndexedEvent> events = userEvents.availableEvents(0L);
-		if (events.size() > 0) {
-			return events.get(events.size() - 1).id;			
-		} else {
-			return 0L;
-		}
 
-	}
-	
-	/**
-	 * Reset the user event queue, flushing out existing events */
-	public static void resetEventQueue () {
-		UserEvent.userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
-	}
+    // /**
+    //  * @return the id of the message at the top of the current event queue */
+    // public static long lastID () {
+    //  List<IndexedEvent> events = userEvents.availableEvents(0L);
+    //  if (events.size() > 0) {
+    //      return events.get(events.size() - 1).id;            
+    //  } else {
+    //      return 0L;
+    //  }
+    // }
+		
+	static UserEvent instance = null;
+    public static UserEvent get() {
+        if(instance == null) {
+            instance = new UserEvent();
+        }
+        return instance;
+    }
 }

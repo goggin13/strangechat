@@ -1,17 +1,16 @@
 package models;
  
-import play.libs.WS;
-import java.net.*;
-import java.io.*;
-import java.util.Collection;
-import java.util.*;
 import java.text.Format;
-import com.google.gson.*;
-import play.cache.Cache;
 import java.text.SimpleDateFormat;
-import java.security.*;
-import play.Logger;
+import java.util.Date;
+import java.util.HashMap;
+
 import org.apache.commons.codec.digest.DigestUtils;
+
+import play.cache.Cache;
+import play.libs.WS;
+
+import com.google.gson.JsonObject;
 
 
 /**
@@ -113,7 +112,7 @@ public class Utility {
 	}
 	
 	/**
-	 * Current system time in milliseconds */
+	 * UnixTime */
     public static long time () {
         long unixTime = System.currentTimeMillis() / 1000L;
         return unixTime;

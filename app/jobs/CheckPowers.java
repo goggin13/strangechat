@@ -25,7 +25,8 @@ public class CheckPowers extends Job {
     
     public void doJob () {
             
-        if (!Server.onMaster()) {
+        // MPG
+        if (true || !Server.onMaster()) {
             return;
         }
         
@@ -44,7 +45,7 @@ public class CheckPowers extends Job {
               u.checkForNewPowers();
            }
         }
-        myUsers.clear();
+        myUsers.clear();        
     }
     
     private static void processUpdates (List<UserEvent.Event> events) {
@@ -111,7 +112,7 @@ public class CheckPowers extends Job {
         List<UserEvent.Event> events;
         
         if (s.iAmMaster()) {
-            List<IndexedEvent> indexedEvents = UserEvent.userEvents.availableEvents(last);    
+            List<IndexedEvent> indexedEvents = UserEvent.get().availableEvents(last);    
             last = indexedEvents.size() > 0 
                    ? indexedEvents.get(indexedEvents.size() - 1).id
                    : 0L;

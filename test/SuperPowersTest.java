@@ -43,6 +43,8 @@ public class SuperPowersTest extends MyFunctionalTest {
         heartbeatFor(pmo_db_id);        
     	notifyLogin(pmo_db_id, k_db_id); 
     	notifyLogout(pmo_db_id, k_db_id);
+    	heartbeatFor(pmo_db_id);
+    	heartbeatFor(k_db_id);
     	notifyMessage(pmo_db_id, k_db_id, "helloworld");
     	notifyChatMessage(k_db_id, pmo_db_id, "helloworld", 45L);
         notifyTyping(pmo_db_id, k_db_id, 15L, "helloworld");
@@ -65,7 +67,8 @@ public class SuperPowersTest extends MyFunctionalTest {
         Long last = Long.parseLong(lastMsg.text);
 
         int i = 0;
-        assertEquals("heartbeat", events.get(i++).type);
+        System.out.println(events);
+        assertEquals("heartbeat", events.get(i++).type);        
         assertEquals("userlogon", events.get(i++).type);
         assertEquals("userlogout", events.get(i++).type);
         

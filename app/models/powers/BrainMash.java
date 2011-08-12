@@ -1,7 +1,6 @@
 package models.powers;
-import java.util.*;
-import enums.Power;
-import models.*;
+import models.IntervalPower;
+import models.User;
 
 public class BrainMash extends IntervalPower {
 	

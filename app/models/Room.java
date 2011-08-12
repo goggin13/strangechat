@@ -1,14 +1,17 @@
 package models;
  
-import java.util.*;
-import javax.persistence.*;
-import play.data.validation.*;
-import play.libs.F.*;
-import play.Logger;
-import play.db.jpa.*;
-import com.google.gson.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.ConcurrentHashMap;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+
+import play.data.validation.Required;
+import play.db.jpa.Model;
 
 /**
  * A chat room, and the participants contained 
@@ -74,9 +77,11 @@ public class Room extends Model {
 		this.participants.remove(user);
 		if (this.participants.size() > 0) {
 			this.save();
-			for (User u : this.participants) {
-				u.notifyLeftRoom(user, room_id);
-                user.notifyLeftRoom(u, room_id);
+			if (this.groupKey == null || this.groupKey.equals("")) {
+    			for (User u : this.participants) {
+    				u.notifyLeftRoom(user, room_id);
+                    user.notifyLeftRoom(u, room_id);
+    			}			    
 			}			
 		} else {
 			this.delete();
@@ -146,8 +151,8 @@ public class Room extends Model {
     public static boolean areSpeaking (long u1, long u2) {
         User user1 = User.findById(u1);
         User user2 = User.findById(u2);
-        Set<Room> rooms_1 = user1.getRooms();
-        rooms_1.retainAll(user2.getRooms());
+        Set<Room> rooms_1 = user1.getNonGroupRooms();
+        rooms_1.retainAll(user2.getNonGroupRooms());
         return rooms_1.size() > 0;
     }
 

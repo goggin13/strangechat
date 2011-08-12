@@ -1,25 +1,12 @@
 package controllers;
 
-import java.util.*;
-import java.lang.reflect.*;
+import java.util.HashMap;
 
-import play.*;
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
-import play.cache.Cache;
-import play.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import models.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import play.db.jpa.GenericModel.JPAQuery;
-import play.db.jpa.JPA;
-import javax.persistence.Query;
-import models.eliza.*;
-
-import com.google.gson.*;
-import com.google.gson.reflect.*;
+import models.Room;
+import models.User;
+import models.UserEvent;
+import models.Utility;
+import models.eliza.Eliza;
 
 /**
  * This controller is responsible for keeping track of users, updating their

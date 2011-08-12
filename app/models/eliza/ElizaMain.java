@@ -1,12 +1,15 @@
 package models.eliza;
 
-import java.util.Vector;
-import java.lang.*;
-import java.io.*;
-import java.io.File;
-import java.awt.*;
-import java.net.*;
-import play.*;
+import java.awt.Event;
+import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import play.Play;
 import play.vfs.VirtualFile;
 
 /**
@@ -285,8 +288,8 @@ import play.vfs.VirtualFile;
     TextField textfield;
 
     public void response(String str) {
-        textarea.appendText(str);
-        textarea.appendText("\n");
+       // textarea.appendText(str);
+       // textarea.appendText("\n");
     }
 
 

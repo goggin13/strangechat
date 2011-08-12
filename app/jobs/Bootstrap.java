@@ -17,11 +17,10 @@ public class Bootstrap extends Job {
  	private final String pathToChatFileProd = "data/chat.txt";
 
     public void doJob() {
-		UserEvent.resetEventQueue();
 		if (Play.mode == Play.Mode.DEV) {
-            Fixtures.deleteAll();
+            Fixtures.deleteDatabase();
             Fixtures.loadModels("bootstrap-data-dev.yml");
-            Users.remeetEligible = 0;
+            Users.remeetEligible = -1;
 		} else {
 			Users.remeetEligible = 0;
             // Server master = Server.getMasterServer();

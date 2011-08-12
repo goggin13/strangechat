@@ -1,15 +1,17 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
-import java.util.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import java.lang.reflect.*;
-import models.*;
-import enums.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import models.HeartBeat;
+import models.SuperPower;
+import models.UserEvent;
+import play.libs.F.IndexedEvent;
+import models.eliza.Eliza;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * This controller is in charge of pushing events into the event streams
@@ -23,7 +25,7 @@ public class Notify extends Index {
 	 * @param lastReceived optional; the id of the last event seen. If zero, all events returned
 	 */	
 	public static void adminListen (Long lastReceived) {
-        List<IndexedEvent> events = UserEvent.userEvents.availableEvents(lastReceived);
+        List<IndexedEvent> events = UserEvent.get().availableEvents(lastReceived);
         List<UserEvent.Event> data = new LinkedList<UserEvent.Event>();
         
         for (IndexedEvent e : events) {
@@ -51,26 +53,18 @@ public class Notify extends Index {
 		if (user_id == null) {
 			returnFailed("no user_id provided", callback);
 		}
-		if (lastReceived == null || lastReceived.equals(-1L)) {
-			lastReceived = UserEvent.lastID();
-		}
 		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
 		
 		do {
-            // Logger.info(user_id + " is waiting for events : " + lastReceived);
-			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.userEvents.nextEvents(lastReceived));
-			// Logger.info(user_id + " is considering returned events : " + lastReceived);
-			
+			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.get().nextEvents(lastReceived));
 			for (IndexedEvent<UserEvent.Event> e : events) {
 				if (e.data.user_id == user_id) {
 					returnData.add(e);
 				}
-				lastReceived = e.id;
-				
+				lastReceived = e.id; 
 			}			
 		} while (returnData.size() == 0);
 		
-        // Logger.info("user " + user_id + " gets " + returnData.size() + " events back (" + callback + ")");
 		renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
@@ -88,7 +82,7 @@ public class Notify extends Index {
 	 * @param room_id the id of the room to join 
 	 * @param session_id current session id this event is pertinent	 */
 	public static void joined (Long for_user, Long new_user, String name, String server, String avatar, Long room_id, String session_id) {
-		new UserEvent.Join(for_user, 
+		UserEvent.get().addJoin(for_user, 
 						   new_user, 
 						   avatar,
 						   name,
@@ -105,7 +99,7 @@ public class Notify extends Index {
 	 * @param room_id the id of the room being left
 	 * @param session_id current session id this event is pertinent	  */	
 	public static void left (Long for_user, Long left_user, Long room_id, String session_id) {
-		new UserEvent.Leave(for_user, left_user, room_id, session_id);
+		UserEvent.get().addLeave(for_user, left_user, room_id, session_id);
 		returnOkay(null);	
 	}
 
@@ -118,7 +112,7 @@ public class Notify extends Index {
 	 * @param server the uri the new user is located on 
 	 * @param session_id current session id this event is pertinent	 */
 	public static void login (Long for_user, Long new_user, String name, String server, String session_id) {
-		new UserEvent.UserLogon(for_user, new_user, name, server, session_id);
+		UserEvent.get().addUserLogon(for_user, new_user, name, server, session_id);
 		returnOkay(null);	
 	}
 
@@ -128,7 +122,7 @@ public class Notify extends Index {
 	 * @param left_user the user id of the user who has left 
 	 * @param session_id current session id this event is pertinent	 */	
 	public static void logout (Long for_user, Long left_user, String session_id) {
-		new UserEvent.UserLogout(for_user, left_user, session_id);
+		UserEvent.get().addUserLogout(for_user, left_user, session_id);
 		returnOkay(null);	
 	}
 
@@ -142,7 +136,11 @@ public class Notify extends Index {
 	 * @param msg the text of the message being sent
 	 * @param callback optional JSONP callback */
 	public static void message (Long for_user, Long from_user, String msg, String callback) {
-		new UserEvent.DirectMessage(for_user, from_user, msg);
+	    // MPG MUST CHANGE; ASSUMES SENDER SENDEE ON SAME SERVER
+	    if (!HeartBeat.isAlive(from_user) && from_user != Eliza.user_id) {
+	        returnFailed("You are dead", callback);
+	    }
+		UserEvent.get().addDirectMessage(for_user, from_user, msg);
 		returnOkay(callback);
 	}
 
@@ -157,8 +155,12 @@ public class Notify extends Index {
 	 * @param room_id the pertinent room for this message
 	 * @param callback optional JSONP callback */
 	public static void roomMessage (List<Long> for_user, long from_user, String msg, Long room_id, String callback) {
+	    // MPG MUST CHANGE; ASSUMES SENDER SENDEE ON SAME SERVER	    
+	    if (!HeartBeat.isAlive(from_user) && from_user != Eliza.user_id) {
+	        returnFailed("You are dead", callback);
+	    }
 	    for (Long for_u : for_user) {
-	        new UserEvent.RoomMessage(for_u, from_user, room_id, msg);
+	        UserEvent.get().addRoomMessage(for_u, from_user, room_id, msg);
 	    }
 		returnOkay(callback);
 	}
@@ -171,7 +173,7 @@ public class Notify extends Index {
 	 * @param text the text that the user has typed so far 
 	 * @param callback optional JSONP callback */
 	public static void userIsTyping (Long for_user, Long user_id, Long room_id, String text, String callback) {
-		new UserEvent.UserIsTyping(for_user, user_id, text, room_id);
+		UserEvent.get().addUserIsTyping(for_user, user_id, text, room_id);
 		returnOkay(callback);
 	}	
 	
@@ -184,7 +186,7 @@ public class Notify extends Index {
 	 * @param session_id current session id this event is pertinent	to */		 
 	 public static void newPower (Long for_user, String superPowerJSON, Long power_id, int level, String session_id) {
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);
-         new UserEvent.NewPower(for_user, superPower, power_id, level, session_id);
+         UserEvent.get().addNewPower(for_user, superPower, power_id, level, session_id);
          returnOkay(null);
 	 }
 	 
@@ -199,7 +201,7 @@ public class Notify extends Index {
  	 * @param session_id current session id this event is pertinent	to */		 
  	 public static void usedPower (Long for_user, Long by_user, Long room_id, String superPowerJSON, int level, String result, String session_id) {
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);	     
-         new UserEvent.UsedPower(for_user, by_user, room_id, superPower, level, result, session_id);
+         UserEvent.get().addUsedPower(for_user, by_user, room_id, superPower, level, result, session_id);
          returnOkay(null);
  	 }
 	
@@ -216,7 +218,7 @@ public class Notify extends Index {
 	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
 		HeartBeat.beatFor(for_user);
 		if (room_ids != null && room_ids.size() > 0 && room_ids.get(0) != null) {
-		    new UserEvent.HeartBeat(for_user);
+		    UserEvent.get().addHeartBeat(for_user);
 			for (long rid : room_ids) {
 				HeartBeat.beatInRoom(rid, for_user);
 			}

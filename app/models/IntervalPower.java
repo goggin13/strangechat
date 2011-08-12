@@ -1,8 +1,4 @@
 package models;
-import java.util.*;
-import enums.Power;
-import play.Logger;
-import models.*;
 
 public abstract class IntervalPower extends SuperPower {
     public int award_interval = 120;

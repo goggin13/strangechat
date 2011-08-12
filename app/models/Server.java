@@ -1,17 +1,12 @@
 package models;
  
-import java.util.*;
-import javax.persistence.*;
-import play.data.validation.*;
-import play.libs.F.*;
-import play.db.jpa.*;
-import com.google.gson.*;
-import models.*;
-import play.libs.WS;
-import java.util.Collections.*;
-import controllers.*;
-import java.lang.reflect .*;
-import com.google.gson.reflect.*;
+import java.util.List;
+import java.util.Random;
+
+import javax.persistence.Entity;
+
+import play.data.validation.Required;
+import play.db.jpa.Model;
  
 /**
  * An instance of a server represents one of the chat servers that

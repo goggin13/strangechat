@@ -1,17 +1,14 @@
 package controllers;
-import play.*;
-import play.mvc.*;
-import java.util.*;
-import play.test.*;
-import models.*;
-import models.powers.*;
-import enums.*;
+
+import models.User;
+import models.UserEvent;
+import play.Play;
+import play.mvc.Before;
+import play.test.Fixtures;
 
 /**
  * Utilized by functional tests to perform data loading */
 public class Mock extends Index {
-	private static long pmo_db_id = 1L;
-	private static long k_db_id = 2L;
 	    
 	@Before
 	protected static void checkMode() {
@@ -25,19 +22,19 @@ public class Mock extends Index {
     }
 
 	public static void resetEventQueue () {
-		UserEvent.resetEventQueue();
+        UserEvent.get().resetEventQueue();
 		returnOkay(null);
 	}
 
     public static void init () {
-		UserEvent.resetEventQueue();
-		Fixtures.deleteAll();
-        Fixtures.load("data-full.yml");
+        UserEvent.get().resetEventQueue();
+		Fixtures.deleteDatabase();
+        Fixtures.loadModels("data-full.yml");
     }
 
     public static void initblacklist () {
-		Fixtures.deleteAll();
-        Fixtures.load("data-blacklisted.yml");
+		Fixtures.deleteDatabase();
+        Fixtures.loadModels("data-blacklisted.yml");
     }
         
 }

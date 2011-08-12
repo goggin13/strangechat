@@ -1,7 +1,7 @@
 package models.powers;
-import java.util.*;
+import models.SuperPower;
+import models.User;
 import enums.Power;
-import models.*;
 
 public class MindReader extends SuperPower {
 	public static final int ICE_BREAKERS_REQUIRED = 3;

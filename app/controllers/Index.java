@@ -1,18 +1,16 @@
 package controllers;
 
-import java.util.*;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
 
-import java.lang.reflect.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import play.data.validation.*;
+import models.User;
+import play.Logger;
+import play.mvc.Catch;
 
-import play.*;
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
-
-import models.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * A convenience class to hold common methods used

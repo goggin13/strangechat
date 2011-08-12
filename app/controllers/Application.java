@@ -1,10 +1,14 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.libs.WS;
-import models.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+
+import models.HeartBeat;
+import models.Room;
+import models.Server;
+import models.User;
+import models.UserEvent;
+import play.mvc.Before;
 
 /**
  * Demo page and home page, which is blank for now */
@@ -47,7 +51,7 @@ public class Application extends Index {
 		boolean amChat = Server.imAChatServer();
 		HashMap<String, String> masterStats = getMasterStats();
 		HashMap<String, String> chatStats = getChatStats();
-		List<UserEvent.Event> events = UserEvent.currentMessages();
+		List<UserEvent.Event> events = UserEvent.get().currentMessages();
         render(amMaster, masterStats, amChat, chatStats, events);
     }
 

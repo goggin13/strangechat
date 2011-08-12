@@ -15,8 +15,6 @@ import controllers.Users;
 
 @Every("5s")
 public class CheckPulses extends Job {
-	private static Long lastReceived = 0L;
-	private static Long counter = 0L;
 	
 	public void doJob() {
         if (!Server.imAChatServer()) {
@@ -65,8 +63,7 @@ public class CheckPulses extends Job {
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("user_id", user_id.toString());
 			params.put("room_id", room_id.toString());
-			WS.HttpResponse resp = Utility.fetchUrl(url, params);
-			JsonObject json = resp.getJson().getAsJsonObject();
+			Utility.fetchUrl(url, params);
 		}
 	}
 	
@@ -79,8 +76,7 @@ public class CheckPulses extends Job {
 			String url = Server.getMasterServer().uri + "signout";
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("user_id", user_id.toString());
-			WS.HttpResponse resp = Utility.fetchUrl(url, params);
-			JsonObject json = resp.getJson().getAsJsonObject();
+			Utility.fetchUrl(url, params);
 		}
 	}
 	

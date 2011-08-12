@@ -1,23 +1,25 @@
 package controllers;
 
-import java.util.*;
-import java.lang.reflect.*;
-
-import play.*;
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
-import play.cache.Cache;
-import play.*;
-import models.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import play.db.jpa.GenericModel.JPAQuery;
-import play.db.jpa.JPA;
-import javax.persistence.Query;
-import models.eliza.*;
-import play.data.validation.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
+
+import models.BlackList;
+import models.HeartBeat;
+import models.Room;
+import models.Server;
+import models.StoredPower;
+import models.SuperPower;
+import models.User;
+import models.UserEvent;
+import models.UserExclusion;
+import models.Utility;
+import play.data.validation.Required;
+import play.libs.WS;
+
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * This controller is responsible for keeping track of users, updating their
@@ -137,6 +139,7 @@ public class Users extends Index {
 		    waitingRoom.add(user_id);
 		}
 		
+		System.out.println("waiting room = " + waitingRoom);
 		returnOkay(callback);
 	}
 	

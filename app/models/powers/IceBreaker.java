@@ -1,8 +1,14 @@
 package models.powers;
-import java.util.*;
-import enums.Power;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
+
+import models.SuperPower;
+import models.User;
 import play.Logger;
-import models.*;
 
 public class IceBreaker extends SuperPower {
 	
@@ -37,11 +43,6 @@ public class IceBreaker extends SuperPower {
         int availableCount = IceBreakers.size();
         int index;
         
-        Logger.info("IB: CHOOSE INDEX u1(" + caller.id + ")->" + user1Seen.size() + 
-                            ", u2(" + subject.id + ")->" + user2Seen.size() + 
-                            ", both->" + seenIndices.size() + 
-                            ", all->" + availableCount);
-        
         if (seenIndices.size() >= availableCount) {  // one, both, or together has seen every one
         
             if (user1SeenCount < availableCount) {          // user1 hasn't seen them all
@@ -53,7 +54,6 @@ public class IceBreaker extends SuperPower {
             }
                     
         } else {  // we can choose one neither has seen
-            Logger.info("IB: return a random one neither has seen");
             index = IceBreakers.getRandomIndex(seenIndices);
         }
         return index;
@@ -176,16 +176,33 @@ public class IceBreaker extends SuperPower {
             messages.add("Where do you change into your superhero costume?");
             messages.add("Have you ever had any wardrobe malfunctions?");
             messages.add("Does your mask get itchy?");
-            messages.add("Have you ever smelled what The Rock is cooking?");            
+            messages.add("Have you ever smelled what The Rock is cooking?");  
+            messages.add("Do you think Jean Grey should have been with Wolverine or Cyclops?");
+            messages.add("Was Godzilla just misunderstood?");
+            messages.add("What was your best age?");
+            messages.add("Nature or nurture?");
+            messages.add("Do politics matter?");
+            messages.add("What's your favorite inspirational quote?");
+            messages.add("In-n-Out or Shake Shack?");
+            messages.add("Favorite city?");
+            messages.add("Favorite text editor?");
+            messages.add("Who's sexier, you or your significant other?");
+            messages.add("What planet are you from?");
+            messages.add("Why did the chicken cross the road?");
+            messages.add("Where will you be when Ozzy comes for you?");
+            messages.add("When did you learn you were special?");
+            messages.add("How do you get to work?");
+            messages.add("Who you think you are, Mr. Big Stuff?");
+            messages.add("What did you do after your first kiss?");
+            messages.add("Why are you so odd?");
+            messages.add("Where were you when I needed you?");
+            messages.add("How've you been, guy?");            
+                      
 	    }
 	    
 	    // seen MUST BE SORTED
 	    public static int getRandomIndex (Set<Integer> seen) {
-	        
-	        Logger.info("IB: get rando index (seen size = " + seen.size() + ")");
-	        
 	        if (seen.size() == 0 || seen.size() == IceBreakers.size()) {
-	            Logger.debug("return rando");
 	            return getRandomIndex();
 	        }
 	        List<Integer> unseen = new LinkedList<Integer>();
@@ -195,22 +212,12 @@ public class IceBreaker extends SuperPower {
 	            }
 	        }
 	        if (unseen.size() == 0) {
-	            Logger.info("IB: This should never happen; fall through in get random ice breaker index");
 	            return getRandomIndex();
 	        }
-	        Logger.info("IB: return a rando from " + unseen.size() + " choices");
 	        Collections.shuffle(unseen);	        
 	        return unseen.get(0);
 	    }
 
-	    public static Set<Integer> getMessages () {
-	        Set<Integer> msgs = new TreeSet<Integer>();
-	        for (int i = 0; i < size(); i++) {
-	            msgs.add(i);
-	        }
-	        return msgs;
-	    }
-	    
 	    public static int getRandomIndex () {
 	        Random r = new Random();
 	        int size = messages.size();

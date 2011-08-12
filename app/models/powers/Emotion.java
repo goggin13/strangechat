@@ -1,8 +1,9 @@
 package models.powers;
-import java.util.*;
+import java.util.HashMap;
+
+import models.SuperPower;
+import models.User;
 import enums.Power;
-import models.*;
-import play.*;
 
 public class Emotion extends SuperPower {
     public static final HashMap<Integer, Long> levels = new HashMap<Integer, Long>();

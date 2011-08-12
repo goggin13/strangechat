@@ -1,12 +1,14 @@
 
 package models;
  
-import java.util.*;
-import javax.persistence.*;
-import play.data.validation.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+
+import play.data.validation.Required;
+import play.db.jpa.Model;
 import enums.Power;
-import play.db.jpa.*;
-import play.Logger;
 
 @Entity
 public class StoredPower extends Model {

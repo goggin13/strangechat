@@ -1,7 +1,7 @@
 package models.powers;
-import java.util.*;
+import models.SuperPower;
+import models.User;
 import enums.Power;
-import models.*;
 
 public class Cloning extends SuperPower {
 	public static final int CHAT_MSGS_REQUIRED = 50;

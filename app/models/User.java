@@ -1,21 +1,34 @@
 package models;
  
-import java.util.*;
-import javax.persistence.*;
-import play.data.validation.*;
-import play.libs.F.*;
-import play.db.jpa.*;
-import com.google.gson.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import play.Logger;
+import play.Play;
+import play.data.validation.Required;
+import play.db.jpa.Model;
 import play.libs.WS;
-import play.*;
-import play.mvc.*;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import controllers.*;
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.JsonObject;
+
+import controllers.Notify;
 import enums.Power;
-import models.powers.*;
 
 /**
  * A chat user in the system, who can be online or off, and the maintained meta
@@ -88,9 +101,7 @@ public class User extends Model {
     /** mutual offers to receive */
     public int revealCount; 			
 
-	/**
-	 * The server this user was assigned to heartbeat on
-	 */	
+	/** The server this user was assigned to heartbeat on */	
 	@ManyToOne
 	@Required
 	public Server heartbeatServer;
@@ -124,8 +135,8 @@ public class User extends Model {
 	 * are online that they are available */	
 	public void login () {
 		this.online = true;
+        this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis());
 		this.lastLogin = Utility.time();
-		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis());		
 		this.populateSuperPowerDetails();
 	}
 	
@@ -191,6 +202,17 @@ public class User extends Model {
 	    Set<Room> roomSet = new HashSet<Room>(roomList);
 	    return roomSet;
 	}
+	
+	/**
+	 * All the rooms this user is in
+	 * @return a list of all the rooms this user is participating in */
+	public Set<Room> getNonGroupRooms () {
+	    List<Room> roomList = Room.find(
+	        "select distinct r from Room r join r.participants as p where p = ? and r.groupKey = ?", this, ""
+	    ).fetch();
+	    Set<Room> roomSet = new HashSet<Room>(roomList);
+	    return roomSet;
+	}	
 	
 	/**
 	 * A List of users this user is talking to right now */
@@ -465,8 +487,9 @@ public class User extends Model {
     /**
      * Broadcast a message to all online users */
     public static void broadcast (String msg) {
-        List<User> users = User.find("byOnline", true).fetch(1000);
+        List<User> users = User.findAll();
         for (User u : users) {
+            System.out.println("broadcast to " + u.id);
             u.sendMessage(User.admin_id, -1, msg);
         }
     }

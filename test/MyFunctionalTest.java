@@ -216,6 +216,12 @@ public class MyFunctionalTest extends FunctionalTest {
 	    params.put("room_id", room_id + "");
 	    return postAndValidateResponse("/usepower", params);
 	}
+
+    protected void signoutUser (long user_id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("user_id", user_id + "");
+		postAndAssertOkay("/signout", params);
+    }
 	
 	protected void goToSleep (int seconds) {
 	    try {

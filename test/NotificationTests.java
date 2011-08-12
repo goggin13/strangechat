@@ -48,7 +48,7 @@ public class NotificationTests extends MyFunctionalTest {
         assertEquals("userlogout", data.get("type").getAsString());
         assertEquals(k_db_id + "", data.get("left_user").getAsString());
     }
-
+    
     @Test
     public void testNotifyLogin () {
         notifyLogin(pmo_db_id, k_db_id);
@@ -60,6 +60,8 @@ public class NotificationTests extends MyFunctionalTest {
 
     @Test
     public void testNotifyMessage () {
+        heartbeatFor(k_db_id);
+        heartbeatFor(pmo_db_id);        
         notifyMessage(pmo_db_id, k_db_id, "helloworld");
 
         JsonObject data = getListenResponse(pmo_db_id, 0);
@@ -70,6 +72,8 @@ public class NotificationTests extends MyFunctionalTest {
     
     @Test
     public void testNotifyChatMessage () {
+        heartbeatFor(k_db_id);
+        heartbeatFor(pmo_db_id);
         notifyChatMessage(k_db_id, pmo_db_id, "helloworld", 45L);
         
         JsonObject data = getListenResponse(pmo_db_id, 0);

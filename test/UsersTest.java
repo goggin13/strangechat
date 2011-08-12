@@ -18,7 +18,7 @@ public class UsersTest extends MyFunctionalTest {
 	    Users.remeetEligible = -1;
 	}
 	    	
-/* 	@Test
+ 	@Test
 	public void testSigninResponse () {
 		
 		// first id 2 logs in
@@ -99,7 +99,7 @@ public class UsersTest extends MyFunctionalTest {
 		assertEquals(k_db_id + "", data.get("left_user").getAsString());
 		
 	} 
-	*/
+	
 	@Test
 	public void testMeetUpFunctionRespectsRemeetEligible () {	
 	    // reset meetings and waiting room, and turn eligible to require 1 meeting apart

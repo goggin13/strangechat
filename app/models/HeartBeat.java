@@ -1,14 +1,8 @@
 package models;
  
-import java.util.*;
-import play.libs.F.*;
-import play.Logger;
-import enums.Power;
-import com.google.gson.*;
-import java.lang.reflect .*;
-import com.google.gson.reflect.*;
+import java.util.AbstractMap;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * This class maintains the collection of heartbeats and offers some
@@ -38,6 +32,10 @@ public class HeartBeat {
 	
 	public static AbstractMap<Long, Date> getHeartBeats () {
 	    return heartbeats;
+	}
+	
+	public static boolean isAlive (long user_id) {
+	    return heartbeats.containsKey(user_id);
 	}
 	
 	public static void removeBeatFor (Long user_id) {

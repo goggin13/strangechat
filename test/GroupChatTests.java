@@ -54,7 +54,7 @@ public class GroupChatTests extends MyFunctionalTest {
         assertEquals(room_id, msg.get("room_id").getAsLong());
     }
     
-	@Test
+/*	@Test
 	public void testJoining () {   
         long room_id1 = joinGroupChat(pmo_db_id, "hashedkey!@#$");
         long room_id2 = joinGroupChat(k_db_id, "hashedkey!@#$");
@@ -79,12 +79,53 @@ public class GroupChatTests extends MyFunctionalTest {
         users.add(k_db_id);
         users.add(rando_1_db);
         
+        heartbeatFor(pmo_db_id);
         // send a message to the group and check they all got it
         notifyChatMessage(pmo_db_id, users, "test message", room_id1);
         checkChatMessage(k_db_id, room_id1);
         checkChatMessage(rando_1_db, room_id1);
         checkChatMessage(rando_2_db, room_id1);                
         
+    } 
+*/    
+    @Test
+    public void testBroadcastToGroups () {
+		signoutUser(pmo_db_id);
+        signoutUser(k_db_id);
+		signoutUser(rando_1_db);
+        signoutUser(rando_2_db);
+        
+        long room_id1 = joinGroupChat(pmo_db_id, "hashedkey!@#$");
+        long room_id2 = joinGroupChat(k_db_id, "hashedkey!@#$");
+        long room_id3 = joinGroupChat(rando_1_db, "hashedkey!@#$");
+        long room_id4 = joinGroupChat(rando_2_db, "hashedkey!@#$");
+        assertEquals(room_id1, room_id2);
+        assertEquals(room_id2, room_id3);
+        assertEquals(room_id3, room_id4);
+        
+        // check everyone got the join notifications
+        checkForJoins(pmo_db_id, k_db_id, rando_1_db, rando_2_db, room_id1);
+        checkForJoins(k_db_id, pmo_db_id, rando_1_db, rando_2_db, room_id1);        
+        checkForJoins(rando_1_db, pmo_db_id, k_db_id, rando_2_db, room_id1);
+        checkForJoins(rando_2_db, pmo_db_id, k_db_id, rando_1_db, room_id1);
+                
+        GET("/mock/testbroadcast");
+        
+        JsonObject data = getListenItem("roommessage", pmo_db_id, 0);
+        assertEquals(User.admin_id, data.get("from").getAsLong());
+        assertEquals("test broadcast", data.get("text").getAsString());
+        
+        data = getListenItem("roommessage", k_db_id, 0);
+        assertEquals(User.admin_id, data.get("from").getAsLong());
+        assertEquals("test broadcast", data.get("text").getAsString());
+        
+        data = getListenItem("roommessage", rando_1_db, 0);
+        assertEquals(User.admin_id, data.get("from").getAsLong());
+        assertEquals("test broadcast", data.get("text").getAsString());
+        
+        data = getListenItem("roommessage", rando_2_db, 0);
+        assertEquals(User.admin_id, data.get("from").getAsLong());
+        assertEquals("test broadcast", data.get("text").getAsString());        
     }
 	
 }
