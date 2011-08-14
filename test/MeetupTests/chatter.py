@@ -35,9 +35,10 @@ class MessageTimer ():
             
     def gotMessage (self, message_id):
         with self.msgLock:
-            msgData = self.messages[message_id]
-            msgData["received"] = datetime.now()
-            self.messages[message_id] = msgData
+            if message_id in self.messages:
+                msgData = self.messages[message_id]
+                msgData["received"] = datetime.now()
+                self.messages[message_id] = msgData
             
     def report (self):
         with self.msgLock:
