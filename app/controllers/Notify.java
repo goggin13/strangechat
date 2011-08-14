@@ -54,7 +54,8 @@ public class Notify extends Index {
 			returnFailed("no user_id provided", callback);
 		}
 		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
-		
+		int tries = 0;
+		int maxTries = 100;
 		do {
 			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.get().nextEvents(lastReceived));
 			for (IndexedEvent<UserEvent.Event> e : events) {
@@ -63,7 +64,7 @@ public class Notify extends Index {
 				}
 				lastReceived = e.id; 
 			}			
-		} while (returnData.size() == 0);
+		} while (returnData.size() == 0 && tries++ < maxTries);
 		
 		renderJSONP(
 			returnData, 

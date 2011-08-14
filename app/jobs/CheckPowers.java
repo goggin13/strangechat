@@ -25,8 +25,7 @@ public class CheckPowers extends Job {
     
     public void doJob () {
             
-        // MPG
-        if (true || !Server.onMaster()) {
+        if (!Server.onMaster()) {
             return;
         }
         
@@ -50,6 +49,7 @@ public class CheckPowers extends Job {
     
     private static void processUpdates (List<UserEvent.Event> events) {
         for (UserEvent.Event event : events) {
+            System.out.println("admin process " + event.toString());
             if (event instanceof UserEvent.RoomMessage) {
                 UserEvent.RoomMessage rm = (UserEvent.RoomMessage)event;
                 if (rm.user_id == -1 || rm.from == -1) {
@@ -115,7 +115,7 @@ public class CheckPowers extends Job {
             List<IndexedEvent> indexedEvents = UserEvent.get().availableEvents(last);    
             last = indexedEvents.size() > 0 
                    ? indexedEvents.get(indexedEvents.size() - 1).id
-                   : 0L;
+                   : last;
             events = new LinkedList<UserEvent.Event>();
             for (IndexedEvent e : indexedEvents) {
                 events.add((UserEvent.Event)e.data);
