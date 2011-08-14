@@ -90,7 +90,7 @@ class ChatAPI():
             if d["data"]["type"] == "roommessage" and ts >= startTime:
                 d = d["data"]
                 # print d["room_id"], d["user_id"], d["from"]
-                self.speak("chat from %s : %s" % (d["from"], d["text"]))
+                # self.speak("chat from %s : %s" % (d["from"], d["text"]))
                 self.msg_received_count += 1
                 
             elif d["data"]["type"] == "newpower" and ts >= startTime:
