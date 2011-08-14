@@ -98,9 +98,9 @@ class ChatTester(Thread):
     def processListen (self):
         messages = self.API.getMessageData()
         for m in messages:
-            messageID = int(m["text"])
-            self.messageTimer.gotMessage(messageID)
-        time.sleep(.5)
+            messageID = m["text"]
+            if messageID.isdigit():
+                self.messageTimer.gotMessage(int(messageID))
                                 
     def randomRoom (self):
         room_ids = self.API.getRoomIds()
