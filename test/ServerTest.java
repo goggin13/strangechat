@@ -1,9 +1,12 @@
-import org.junit.*;
-import java.util.*;
-import play.test.*;
-import models.*;
-import enums.*;
-import models.powers.*;
+import java.util.List;
+
+import models.Server;
+import models.User;
+
+import org.junit.Test;
+
+import play.test.Fixtures;
+import play.test.UnitTest;
 
 public class ServerTest extends UnitTest {
     

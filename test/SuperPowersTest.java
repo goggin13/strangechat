@@ -1,30 +1,30 @@
-import org.junit.*;
-import play.test.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-import models.*;
-import com.google.gson.*;
-import java.lang.reflect .*;
-import com.google.gson.reflect.*;
-import controllers.*;
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-import play.libs.*;
-import play.libs.F.*;
-import enums.*;
-import models.powers.*;
-import jobs.*;
+import java.util.List;
+
+import models.StoredPower;
+import models.UserEvent;
+import models.WaitingRoom;
+import models.powers.Cloning;
+import models.powers.Emotion;
+import models.powers.IceBreaker;
+import models.powers.MindReader;
+import models.powers.Omniscience;
+import models.powers.XRayVision;
+
+import org.junit.Test;
+
+import com.google.gson.JsonObject;
+
+import enums.Power;
 
 public class SuperPowersTest extends MyFunctionalTest {
 		
 	@org.junit.Before
 	public void setUp() {
 	    GET("/mock/init");
-	    Users.remeetEligible = -1;
+	    WaitingRoom.get().remeetEligible = -1;
 	}
 	
-    @Test
+   @Test
     public void testEnumsMatchPowers () {
         assertEquals(Power.ICE_BREAKER, new IceBreaker().getPower());
         assertEquals(Power.MIND_READER, new MindReader().getPower());                
@@ -37,14 +37,14 @@ public class SuperPowersTest extends MyFunctionalTest {
 	@Test
 	public void testGetAdminEvents () {
 	    // put some events in there
-        heartbeatFor(pmo_db_id);
-        heartbeatForRoom(pmo_db_id, 15L);
-        heartbeatFor(pmo_db_id);  // these heartbeats without rooms shouldn't show up
-        heartbeatFor(pmo_db_id);        
+        heartbeatFor(pmo_db_id, pmo_session);
+        heartbeatForRoom(pmo_db_id, pmo_session, 15L);
+        heartbeatFor(pmo_db_id, pmo_session);  // these heartbeats without rooms shouldn't show up
+        heartbeatFor(pmo_db_id, pmo_session);        
     	notifyLogin(pmo_db_id, k_db_id); 
     	notifyLogout(pmo_db_id, k_db_id);
-    	heartbeatFor(pmo_db_id);
-    	heartbeatFor(k_db_id);
+    	heartbeatFor(pmo_db_id, pmo_session);
+    	heartbeatFor(k_db_id, k_session);
     	notifyMessage(pmo_db_id, k_db_id, "helloworld");
     	notifyChatMessage(k_db_id, pmo_db_id, "helloworld", 45L);
         notifyTyping(pmo_db_id, k_db_id, 15L, "helloworld");
@@ -102,11 +102,17 @@ public class SuperPowersTest extends MyFunctionalTest {
 	@Test
 	public void testUsePowers () {
 
-        earnAndUseIceBreakers(pmo_db_id, rando_2_db, 5);
+        long power_id = 1;  // hardcoded for PMO
+
+        // now use them!
+        for (int i = 0; i < 5; i++) {
+            JsonObject json = usePower(power_id, pmo_db_id, pmo_session, rando_2_db, rando_2_session, 15L);
+            assertEquals("okay", json.get("message").getAsString());
+            assertEquals("okay", json.get("status").getAsString());
+        }
         
         // both users should have events waiting for them about the use of it
-        JsonObject data = getListenResponse(rando_2_db, 0);
-        assertEquals("usedpower", data.get("type").getAsString());
+        JsonObject data = getListenItem("usedpower", rando_2_db, 0);
         assertEquals("15", data.get("room_id").getAsString());
         
         // just make sure result is there, its a random msg so we wont test for it
@@ -118,37 +124,36 @@ public class SuperPowersTest extends MyFunctionalTest {
         assertEquals("usedpower", data.get("type").getAsString());               
 	}
 	
-	protected void pairUsersInRoom (Long user1, Long user2) {
+	protected void pairUsersInRoom (Long user1, String sess1, Long user2, String sess2) {
 	    // pmo and KK request rooms
-		requestRoomFor(user1);
-	    requestRoomFor(user2);
+		requestRoomFor(user1, sess1);
+	    requestRoomFor(user2, sess2);
 		
 		// they should get matched up.
-		JsonObject data = getListenResponse(user1, 0);
-		assertEquals("join", data.get("type").getAsString());
+		JsonObject data = getListenItem("join", user1, 0);
 		assertEquals(user2.toString(), data.get("new_user").getAsString());
 
-		data = getListenResponse(user2, 0);
-		assertEquals("join", data.get("type").getAsString());
+		data = getListenItem("join", user2, 0);
 		assertEquals(user1.toString(), data.get("new_user").getAsString());
-	}	
+	}
 	
 	@Test
 	public void testUsePowersInMultiRooms () {
-        pairUsersInRoom(pmo_db_id, k_db_id);
-        pairUsersInRoom(pmo_db_id, rando_1_db);
+        pairUsersInRoom(pmo_db_id, pmo_session, k_db_id, k_session);
+        pairUsersInRoom(pmo_db_id, pmo_session, rando_1_db, rando_1_session);
 		
 		// earn emotion power
 		Long firstLevelTime = Emotion.levels.get(1);
         double iters = Math.ceil(firstLevelTime / 5.0);
         for (int i = 0; i < iters; i++) {
-            heartbeatForRoom(pmo_db_id, 15L);
+            heartbeatForRoom(pmo_db_id, pmo_session, 15L);
         }
     
         // and now after we wait, PMO should have a superpower notifications
-        assertResponseContains(pmo_db_id, "Emotion", 1, 0);        
+        assertResponseContains(pmo_db_id, "Emotion", 1, 0);  
+              
         // now use it without specifying a room
-        usePower(power_id, pmo_db_id, -1L, -1L);
+        usePower(power_id, pmo_db_id, pmo_session, -1L, "", -1L);
         
         // both kk and rando should get notifications
         JsonObject data = getListenItem("usedpower", pmo_db_id, 0);
@@ -159,4 +164,5 @@ public class SuperPowersTest extends MyFunctionalTest {
 		sp = data.get("superPower").getAsJsonObject();
         assertEquals("Emotion", sp.get("name").getAsString());
 	}
+	
 }

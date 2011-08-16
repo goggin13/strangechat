@@ -100,7 +100,7 @@ public class UserEvent {
 	    }
 	    
 		public String toString () {
-			return this.user_id + " ( " + this.type + " )";
+			return this.user_id + " - " + this.session_id + " ( " + this.type + " )";
 		}
 		
         // protected void finalize() {
@@ -118,12 +118,15 @@ public class UserEvent {
 		public final String name;
 		/** server this user is located on */
 		final public String server;
+		/** the other user's session */
+		public final String new_session;		
 		
-		public UserLogon (long user_id, long new_user, String name, String server, String session_id) {
+		public UserLogon (long user_id, long new_user, String name, String server, String session_id, String new_session) {
 			super("userlogon", user_id, session_id);
 			this.new_user = new_user;
 			this.name = name;
 			this.server = server;
+			this.new_session = new_session;
 			publishMe();
 		}
 		
@@ -132,8 +135,8 @@ public class UserEvent {
 		}		
 	}	
 	
-	public void addUserLogon (long user_id, long new_user, String name, String server, String session_id) {
-        new UserLogon(user_id, new_user, name, server, session_id);
+	public void addUserLogon (long user_id, long new_user, String name, String server, String session_id, String new_session) {
+        new UserLogon(user_id, new_user, name, server, session_id, new_session);
 	}
 	
 	/**
@@ -166,8 +169,8 @@ public class UserEvent {
 		/** the text of the message */
  		public final String text;
 		
-        public DirectMessage(long to, long from, String msg) {
-            super("directmessage", to, "");
+        public DirectMessage(long to, long from, String msg, String session) {
+            super("directmessage", to, session);
             this.from = from;
             this.text = msg;
 			publishMe();
@@ -180,8 +183,8 @@ public class UserEvent {
         
     }
 	    
-	public void addDirectMessage (long to, long from, String msg) {
-        new DirectMessage(to, from, msg);
+	public void addDirectMessage (long to, long from, String msg, String session) {
+        new DirectMessage(to, from, msg, session);
 	}    
 	    
 	/**
@@ -194,8 +197,8 @@ public class UserEvent {
 		/** optional room id that this message is pertinent to */
 		public final long room_id;
 		
-        public RoomMessage(long to, long from, long room_id, String msg) {
-            super("roommessage", to, "");
+        public RoomMessage(long to, long from, long room_id, String msg, String session) {
+            super("roommessage", to, session);
             this.from = from;
             this.text = msg;
 			this.room_id = room_id;
@@ -214,8 +217,8 @@ public class UserEvent {
         
     }
 	
-	public void addRoomMessage (long to, long from, long room_id, String msg) {
-        new RoomMessage(to, from, room_id, msg);
+	public void addRoomMessage (long to, long from, long room_id, String msg, String session) {
+        new RoomMessage(to, from, room_id, msg, session);
 	}	
 	
 	/** 
@@ -225,6 +228,8 @@ public class UserEvent {
         public final long new_user;
         /** an optional url displaying this new users avatar */
 		public final String avatar;
+		/** the other user's session */
+		public final String new_session;
 		/** the name of the user joining */
 		public final String alias;
 		/** the server the new user is on */
@@ -232,17 +237,18 @@ public class UserEvent {
 		/** the room id that you are now chatting in */
 		public final long room_id;
 		
-        public Join (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id) {
+        public Join (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id, String new_session) {
 			super("join", for_user, session_id);
             this.new_user = new_user;
 			this.avatar = avatar;
 			this.alias = name;
 			this.server = server;
 			this.room_id = room_id;
+			this.new_session = new_session;
 
 			// as soon as this event is created, we heartbeat for the given user; if they never received this event,
 			// we see their heartbeat fail and notify the other user
-            models.HeartBeat.beatInRoom(room_id, for_user);    
+            models.HeartBeat.beatInRoom(room_id, for_user, session_id);    
             	
 			publishMe();
         }
@@ -253,8 +259,15 @@ public class UserEvent {
         
     }
 
-	public void addJoin (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id) {
-        new Join(for_user, new_user, avatar, name, server, room_id, session_id);
+	public void addJoin (long for_user, 
+						 long new_user, 
+						 String avatar, 
+						 String name, 
+						 String server, 
+						 long room_id, 
+						 String session_id,
+						 String other_session) {
+        new Join(for_user, new_user, avatar, name, server, room_id, session_id, other_session);
 	}
 
 	/**
@@ -267,8 +280,8 @@ public class UserEvent {
 		/** the text they have typed so far */
 		final public String text;
 		
-        public UserIsTyping (long for_user, long typing_user, String text, long room_id) {
-            super("useristyping", for_user, "");
+        public UserIsTyping (long for_user, long typing_user, String text, long room_id, String session) {
+            super("useristyping", for_user, session);
             this.typing_user = typing_user;
 			this.room_id = room_id;
 			this.text = text;
@@ -280,8 +293,8 @@ public class UserEvent {
 		}		
 	}
 
-	public void addUserIsTyping (long for_user, long typing_user, String text, long room_id) {
-        new UserIsTyping(for_user, typing_user, text, room_id);
+	public void addUserIsTyping (long for_user, long typing_user, String text, long room_id, String session) {
+        new UserIsTyping(for_user, typing_user, text, room_id, session);
 	}
 
 	/**
@@ -395,7 +408,7 @@ public class UserEvent {
 	    }
 	    
 		public String toString () {
-			return super.toString() + " : " + this.superPower.name + " was used by " + this.by_user + " => " + this.result;
+			return super.toString() + " : " + this.by_user + ", " + this.superPower.name + "," + room_id + " => " + this.result;
 		}	    
 	}
 
@@ -458,27 +471,13 @@ public class UserEvent {
         return t;
     }
 	
-	/**
-	 */
 	public static class SuperPowerDeserializer implements JsonDeserializer<SuperPower> {
 	    public SuperPower deserialize (JsonElement json, Type typeOfT, JsonDeserializationContext context) {
             String name = json.getAsJsonObject().get("name").getAsString();
             return Power.valueOf(name.replace(' ', '_').toUpperCase()).getSuperPower();
 	    }
 	}
-	
 
-    // /**
-    //  * @return the id of the message at the top of the current event queue */
-    // public static long lastID () {
-    //  List<IndexedEvent> events = userEvents.availableEvents(0L);
-    //  if (events.size() > 0) {
-    //      return events.get(events.size() - 1).id;            
-    //  } else {
-    //      return 0L;
-    //  }
-    // }
-		
 	static UserEvent instance = null;
     public static UserEvent get() {
         if(instance == null) {

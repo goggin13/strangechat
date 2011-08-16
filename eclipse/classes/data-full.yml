@@ -86,3 +86,25 @@ User(blacklisted):
  
 BlackList(bl):
   user: blacklisted
+  
+  
+UserSession(1):
+  user: pmo
+  session: "pmo_session"
+  
+UserSession(2):
+  user: kristen
+  session: "k_session"
+
+UserSession(3):
+  user: goggin
+  session: "goggin_session"
+  
+UserSession(4):
+  user: rando1
+  session: "rando_1_session"
+  
+UserSession(5):
+  user: rando2
+  session: "rando_2_session"   
+                   

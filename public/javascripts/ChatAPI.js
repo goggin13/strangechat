@@ -8,6 +8,14 @@ var Util = (function (user_id, avatar, alias, callback) {
 		console.debug(msg);
 	};
 	
+	that.removeFromArray = function (arr, ele) {
+		var index = $.inArray(ele, arr);
+		if (index === -1) {
+			return;
+		}
+		arr.splice(index, 1);
+	};
+	
 	return that;
 }());
 
@@ -15,10 +23,10 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   "use strict";
   var that = {},
   my = {};
-  // my.home_url = "http://localhost:9000/";  // dev
+  my.home_url = "http://localhost:9000/";
   // my.home_url = "http://10.0.1.50:9000/";  // dev  
-  // my.home_url = "http://173.246.100.79/"; // prod 
-  my.home_url = "http://173.246.101.45/";  // staging
+  // my.home_url = "http://173.246.100.79/";  // prod 
+  // my.home_url = "http://173.246.101.45/";  // staging
 
   that.user_id = "";
   my.heartbeatServer = "";
@@ -27,7 +35,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   my.inputsToWatch = [];
   my.room_ids = [];
   my.lastReceived = 0;    
-  my.session_id = -1;
+  my.session_id = null;
   my.im_talking_to = {}; // map user_ids to room_ids
   that.superPowers = []; // filled after login so clients can retrieve
   that.superPowerDetails = {};
@@ -50,10 +58,9 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   };
   
   // mark an input to watch to send useristyping notifications
-  that.watchInput = function (input, room_id) {
+  that.watchInput = function (input) {
     my.inputsToWatch.push({
         input: input,
-        room_id: room_id,
         last: ""
     });
   };
@@ -64,9 +71,11 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     // add callback if this is cross domain
     if (url.indexOf(window.location.host) === -1) {
       url += "?callback=?";
-      // data["callback"] = "?";
     }
     
+    if (my.session_id != null) {
+      data["session"] = my.session_id;
+    }
     var hash = url + "?" + serialize(data);
     
     if (hash.indexOf("heartbeat") === -1 && hash.indexOf('imtyping') === -1) {
@@ -112,6 +121,11 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     my.messageHandler = f;
   };
 
+  that.resetMessageHandler = function () {
+    my.messageHandler = function (JSON) {
+    };
+  };
+
   // listen for chat invitations, direct messages, etc.
   that.listen = function (lastReceived) {
     var url = my.heartbeatServer + 'listen',
@@ -122,27 +136,14 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     my.currentListen = that.send(url, "GET", data, function (JSON, hash) {
       var response = {};
       $.each(JSON, function (key, val) {
-        if (val.data.type === "userlogon" && !MyContacts.has(val.data.new_user)) {
-          MyContacts.put(val.data.new_user, val.data.name, val.data.alias, val.data.server, val.data.avatar);
+        var d = val.data;
+        if ((d.type === "userlogon" || d.type === "join") && !MyContacts.has(d.new_user)) {
+          MyContacts.put(d.new_user, d.name, d.alias, d.server, d.avatar, d.new_session, d);
         }
-        if (val.data.type === "join") {
-          MyContacts.put(val.data.new_user, val.data.name, val.data.alias, val.data.server, val.data.avatar);
-        }     
-        if (val.data.session_id == my.session_id ||
-            (val.data.type !== "join" && // these are the only types 
-            val.data.type !== "leave" && // that are session_id signed, currently
-            val.data.type !== "userlogin" &&
-            val.data.type !== "userlogout" &&
-            val.data.type !== "newpower" &&
-            val.data.type !== "usedpower")) {
-          response[key] = val;
-          if (val.data.type === 'join') {
-             my.im_talking_to[val.data.new_user] = val.data.room_id;
-          } else if (val.data.type === "leave") {
-             // dont delete them from the phonebook, need them to 
-             // display left message; client will delete when done
-          }
-        }
+        if (d.type === "join") {
+          my.im_talking_to[val.data.new_user] = val.data.room_id;
+        }          
+        response[key] = val;
       });
       my.messageHandler(response);
       if (hash === my.currentListen) {
@@ -161,8 +162,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
       return;
     }
     $.each(JSON, function (key, val) {
-      MyContacts.put(key, val.name, val.alias, val.heartbeatServer.uri);
-      
+      MyContacts.put(key, val.name, val.alias, val.heartbeatServer.uri, val.avatar, val.session_id, val);
       if (val.alias == alias) {
         my.heartbeatServer = val.heartbeatServer.uri;
         my.session_id = val.session_id;
@@ -189,7 +189,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   that.login = function (user_id, avatar, alias, callback) {
     var url = my.home_url + 'signin',
       data = {
-        user_id: user_id,
+        sign_in_id: user_id,
         avatar: avatar,
         alias: alias,
       };
@@ -210,7 +210,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   that.directMessage = function (to, msg) {
     var url = MyContacts.getServerFor(to) + 'message',
       data = {
-        from_user: that.user_id,
+        user_id: that.user_id,
         for_user: to,
         msg: msg
       };
@@ -219,20 +219,27 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   };
   
   that.roomMessage = function (to, msg, room_id, errCallback) {
-    that.roomMessageInner(MyContacts.getServerFor(to), to, msg, room_id, errCallback);
+    var server = MyContacts.getServerFor(to);
+    that.roomMessageInner(server, to, msg, room_id, errCallback);
   };  
   
   that.roomMessageInner = function (server, to, msg, room_id, errCallback) {
     var url =  server + 'roommessage',
       data = {
-        from_user: that.user_id,
-        for_user: to,
+        user_id: that.user_id,
         msg: msg,
         room_id: room_id
       };
+    if (typeof(to) != "object") {
+      to = [to];
+    }   
+    $.each(to, function (i, recip) {
+      data["for_user[" + i + "]"] = recip;
+      data["for_session[" + i + "]"] = MyContacts.getSessionId(recip);   
+    });      
     that.send(url, "POST", data, function (JSON) {
       if (JSON.status == "error") {
-        errCallback();
+        if (errCallback) errCallback();
       }
     });
   };
@@ -264,6 +271,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     var url =  MyContacts.getServerFor(to) + 'imtyping',
       data = {
         for_user: to,
+        for_session: MyContacts.getSessionId(to),
         user_id: that.user_id,
         room_id: room_id,
         text: text
@@ -272,12 +280,12 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     });
   };
   
-  that.usePower = function (power_id, other_id, room_id, callback) {
+  that.usePower = function (power_id, other_id, room_id, isGroup, callback) {
     var url = my.home_url + 'usepower',
       data = {
         user_id: that.user_id,
         power_id: power_id,
-        other_id: oApp.groupKey ? -1 : other_id,
+        other_id: isGroup ? -1 : other_id,
         room_id: room_id,
       };
     that.send(url, "POST", data, callback);
@@ -298,8 +306,9 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   that.eliza = function (to, room_id, qry, callback) {
     var url = my.home_url + 'eliza',
       data = {
-        user_id: to,
-        from_user: that.user_id,
+        user_id: that.user_id,
+        for_user: to,
+        for_session: MyContacts.getSessionId(to),
         room_id: room_id,
         qry: $.trim(qry)
       };
@@ -347,7 +356,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   my.heartbeat = function () {
     var url = my.heartbeatServer + "heartbeat",
       data = {
-        for_user: that.user_id,
+        user_id: that.user_id,
         room_ids: my.room_ids
       };
     that.send(url, "POST", data, function (JSON) {

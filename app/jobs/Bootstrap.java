@@ -20,39 +20,9 @@ public class Bootstrap extends Job {
 		if (Play.mode == Play.Mode.DEV) {
             Fixtures.deleteDatabase();
             Fixtures.loadModels("bootstrap-data-dev.yml");
-            Users.remeetEligible = -1;
+            WaitingRoom.get().remeetEligible = -1;
 		} else {
-			Users.remeetEligible = 0;
-            // Server master = Server.getMasterServer();
-            // master.isChat = false;
-            // master.volume = 0;
-            // master.save();
-            // 
-            // Server chatter = Server.getChatServers().get(0); 
-            // chatter.volume = 1.0;
-            // chatter.save();
-            // 
-/*            List<User> users = User.all().fetch(400);
-              for (User u : users) {
-                  Logger.info("resetting user " + u.id);
-                  u.icebreakers_seen = new TreeSet<Integer>();
-                  u.save();
-              }*/
-            
-            // List<Room> rooms = Room.all().fetch(100);
-            // for (Room r : rooms) {
-            //     r.delete();
-            //     // if (r.isEmpty()) {
-            //         // r.delete();
-            //         // r.save();
-            //     // }
-            // }
-            
-            // List<StoredPower> allPowers = StoredPower.all.fetch(1500);
-            // for (StoredPower p : allPowers) {
-            //     
-            // }
-            
+			WaitingRoom.get().remeetEligible = 0;            
 		}
 		
 		if (Play.mode == Play.Mode.DEV) {

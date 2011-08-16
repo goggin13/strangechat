@@ -1,19 +1,13 @@
-import org.junit.*;
-import play.test.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-import models.*;
-import models.powers.*;
-import jobs.*;
-import com.google.gson.*;
-import java.lang.reflect .*;
-import com.google.gson.reflect.*;
-import controllers.*;
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-import play.libs.*;
-import play.libs.F.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import models.User;
+
+import org.junit.Test;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class GroupChatTests extends MyFunctionalTest {
 		
@@ -22,9 +16,10 @@ public class GroupChatTests extends MyFunctionalTest {
 	    GET("/mock/init");
 	}
 	       
-    private long joinGroupChat (long user_id, String key) {
+    private long joinGroupChat (long user_id, String sess, String key) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("user_id", user_id + "");
+        params.put("session", sess);
         params.put("key", key);
         JsonObject jsonObj = getJsonObj("/group", params);
         assertEquals("okay", jsonObj.get("status").getAsString());
@@ -53,13 +48,13 @@ public class GroupChatTests extends MyFunctionalTest {
         assertEquals(pmo_db_id, msg.get("from").getAsLong());
         assertEquals(room_id, msg.get("room_id").getAsLong());
     }
-    
-/*	@Test
+
+	@Test
 	public void testJoining () {   
-        long room_id1 = joinGroupChat(pmo_db_id, "hashedkey!@#$");
-        long room_id2 = joinGroupChat(k_db_id, "hashedkey!@#$");
-        long room_id3 = joinGroupChat(rando_1_db, "hashedkey!@#$");
-        long room_id4 = joinGroupChat(rando_2_db, "hashedkey!@#$");
+        long room_id1 = joinGroupChat(pmo_db_id, pmo_session, "hashedkey!@#$");
+        long room_id2 = joinGroupChat(k_db_id, k_session, "hashedkey!@#$");
+        long room_id3 = joinGroupChat(rando_1_db, rando_1_session, "hashedkey!@#$");
+        long room_id4 = joinGroupChat(rando_2_db, rando_2_session, "hashedkey!@#$");
         assertEquals(room_id1, room_id2);
         assertEquals(room_id2, room_id3);
         assertEquals(room_id3, room_id4);
@@ -79,7 +74,7 @@ public class GroupChatTests extends MyFunctionalTest {
         users.add(k_db_id);
         users.add(rando_1_db);
         
-        heartbeatFor(pmo_db_id);
+        heartbeatFor(pmo_db_id, pmo_session);
         // send a message to the group and check they all got it
         notifyChatMessage(pmo_db_id, users, "test message", room_id1);
         checkChatMessage(k_db_id, room_id1);
@@ -87,18 +82,18 @@ public class GroupChatTests extends MyFunctionalTest {
         checkChatMessage(rando_2_db, room_id1);                
         
     } 
-*/    
+    
     @Test
     public void testBroadcastToGroups () {
-		signoutUser(pmo_db_id);
-        signoutUser(k_db_id);
-		signoutUser(rando_1_db);
-        signoutUser(rando_2_db);
+		signoutUser(pmo_db_id, pmo_session);
+        signoutUser(k_db_id, k_session);
+		signoutUser(rando_1_db, rando_1_session);
+        signoutUser(rando_2_db, rando_2_session);
         
-        long room_id1 = joinGroupChat(pmo_db_id, "hashedkey!@#$");
-        long room_id2 = joinGroupChat(k_db_id, "hashedkey!@#$");
-        long room_id3 = joinGroupChat(rando_1_db, "hashedkey!@#$");
-        long room_id4 = joinGroupChat(rando_2_db, "hashedkey!@#$");
+        long room_id1 = joinGroupChat(pmo_db_id, pmo_session, "hashedkey!@#$");
+        long room_id2 = joinGroupChat(k_db_id, k_session, "hashedkey!@#$");
+        long room_id3 = joinGroupChat(rando_1_db, rando_1_session, "hashedkey!@#$");
+        long room_id4 = joinGroupChat(rando_2_db, rando_2_session, "hashedkey!@#$");
         assertEquals(room_id1, room_id2);
         assertEquals(room_id2, room_id3);
         assertEquals(room_id3, room_id4);
@@ -127,5 +122,5 @@ public class GroupChatTests extends MyFunctionalTest {
         assertEquals(User.admin_id, data.get("from").getAsLong());
         assertEquals("test broadcast", data.get("text").getAsString());        
     }
-	
+    
 }

@@ -19,6 +19,8 @@ setTimeout(function () {
   startChecking = true;
 }, 3000);
 
+
+
 // serialize a dict to url form, key=value&key2=....
 var serialize = function (dict) {
   "use strict";
@@ -69,44 +71,52 @@ var MyContacts = (function () {
     clearTimeout(my.title_timer);
   };
   
-  that.getObj = function (id) {
+  that.getIf = function (id, f) {
     if (!that.has(id)) {
       return "";
-    }
-    return my.contacts[id];
+    } 
+    return f();
+  };
+  
+  that.getObj = function (id) {
+    return that.getIf(id, function () { 
+      return my.contacts[id];
+    });
+  };
+  
+  that.getSessionId = function (id) {
+    return that.getIf(id, function () {
+      return my.contacts[id].session;
+    });
   };
   
   that.get = function (id) {
-    if (!that.has(id)) {
-      return "";
-    }
-    return my.contacts[id].name;
+    return that.getIf(id, function () { 
+      return my.contacts[id].name;
+    });
   };
+
+  that.getServerFor = function (id) {
+    return that.getIf(id, function () { 
+      return my.contacts[id].server;
+    });
+  };
+
+  that.getAliasFor = function (id) {
+    return that.getIf(id, function () { 
+      return my.contacts[id].alias;
+    });  
+  };
+
+  that.getAvatarFor = function (id) {
+    return that.getIf(id, function () { 
+      return my.contacts[id].avatar;
+    });
+  };  
   
   that.has = function (id) {
     return my.contacts.hasOwnProperty(id);
   };
-  
-  that.getServerFor = function (id) {
-    if (!that.has(id)) {
-      return "";
-    }    
-    return my.contacts[id].server;
-  };
-
-  that.getAliasFor = function (id) {
-    if (!that.has(id)) {
-      return "";
-    }    
-    return my.contacts[id].alias;
-  };
-
-  that.getAvatarFor = function (id) {
-    if (!that.has(id)) {
-      return "";
-    }    
-    return my.contacts[id].avatar;
-  };  
   
   // a map of heartbeat servers to users on them
   that.getIdListByServer = function (my_id) {
@@ -126,12 +136,13 @@ var MyContacts = (function () {
     delete my.contacts[id];
   };
   
-  that.put = function (id, name, alias, server, avatar, obj) {
+  that.put = function (id, name, alias, server, avatar, session, obj) {
     my.contacts[id] = {
       name: name,
       alias: alias,
       server: server,
       avatar: avatar,
+      session: session,
       obj: obj
     };
   };

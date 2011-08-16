@@ -7,8 +7,10 @@ import models.HeartBeat;
 import models.Room;
 import models.Server;
 import models.User;
+import models.WaitingRoom;
 import models.UserEvent;
 import play.mvc.Before;
+import play.*;
 
 /**
  * Demo page and home page, which is blank for now */
@@ -24,7 +26,7 @@ public class Application extends Index {
 		stats.put("users", User.count() + "");
 		stats.put("online", User.count("online", true) + "");
 		stats.put("rooms", Room.count() + "");
-		stats.put("waiting room", Users.waitingRoom.toString());
+		stats.put("waiting room", WaitingRoom.get().toString());
 		return stats;
 	}
 
@@ -52,7 +54,8 @@ public class Application extends Index {
 		HashMap<String, String> masterStats = getMasterStats();
 		HashMap<String, String> chatStats = getChatStats();
 		List<UserEvent.Event> events = UserEvent.get().currentMessages();
-        render(amMaster, masterStats, amChat, chatStats, events);
+		boolean isDev = Play.mode == Play.Mode.DEV;
+        render(amMaster, masterStats, amChat, chatStats, events, isDev);
     }
 
 	public static void demo () {

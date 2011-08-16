@@ -2,10 +2,14 @@ package controllers;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
+import models.Server;
 import models.User;
+import models.UserSession;
 import play.Logger;
+import play.mvc.Before;
 import play.mvc.Catch;
 
 import com.google.gson.Gson;
@@ -20,11 +24,101 @@ public abstract class Index extends CRUD {
 	/**
 	 * Catch any argument exceptions thrown by children methods, 
 	 * logs the error and returns a failed JSON response */
-	@Catch(Index.ArgumentException.class)
+	@Catch(ArgumentException.class)
     public static void log(Index.ArgumentException e) {
         Logger.error("Caught Illegal Argument %s", e);
-		returnFailed(e.toString(), e.getCallback());
+		returnFailed(e.toString());
     }
+	
+	@Before
+    static void checkAuthenticated () throws ArgumentException {
+        createSessionVariable("user_id", "session", "callerSession");
+        createSessionVariable("for_user", "for_session", "forSession");
+    }
+
+    private static void createSessionVariable (String user_key, String session_key, String save_key) {
+
+        Long user_id = params.get(user_key, Long.class);
+        String session = params.get(session_key, String.class);
+        boolean containsUserKey = user_id != null;
+        boolean containsSessKey = session != null;
+        
+        if (containsUserKey && containsSessKey && user_id != -1) {
+            
+            if (Server.onMaster()) {
+                UserSession sess = UserSession.getFor(user_id, session);
+                if (sess == null) {
+                    returnFailed(user_id + " and " + session + " do not map to a valid session");
+                } else {
+                    renderArgs.put(save_key, sess);
+                    renderArgs.put(save_key + "_faux", sess.toFaux());
+                }
+            } else {
+                UserSession.Faux sess = new UserSession.Faux(user_id, session);
+                renderArgs.put(save_key + "_faux", sess);
+            }
+        } else {
+            renderArgs.put(save_key, null);
+        }
+    }
+
+     static List<UserSession.Faux> currentForFauxSessionList () {
+    	 List<UserSession.Faux> sessions = new LinkedList<UserSession.Faux>();
+    	 UserSession.Faux current = currentForFauxSession();
+    	 if (current != null) {
+    		 sessions.add(current);
+    		 return sessions;
+    	 }
+    	 String saveKey;
+    	 boolean exists;
+    	 int i = 0;
+         do {
+        	 String userKey = "for_user[" + i + "]";
+        	 String sessKey = "for_session[" + i + "]";
+        	 saveKey = "for_user_" + i;
+        	 String fauxSaveKey = saveKey + "_faux";
+        	 createSessionVariable(userKey, sessKey, saveKey);
+        	 exists = renderArgs.data.containsKey(fauxSaveKey) &&
+        	            renderArgs.get(fauxSaveKey) != null;
+        	 if (exists) {
+        		 sessions.add(renderArgs.get(fauxSaveKey, UserSession.Faux.class));
+        	 }
+        	 i++;
+         } while (exists);
+         return sessions;
+     }
+
+    static UserSession.Faux currentForFauxSession () {
+        if(renderArgs.data.containsKey("forSession_faux")) {
+            return renderArgs.get("forSession_faux", UserSession.Faux.class);
+        }
+        return null;
+    }
+    
+    static UserSession currentForSession () {
+        if(renderArgs.data.containsKey("forSession")) {
+            return renderArgs.get("forSession", UserSession.class);
+        }
+        return null;
+    }
+
+    static UserSession.Faux currentFauxSession () {
+        if(renderArgs.data.containsKey("callerSession_faux")) {
+            return renderArgs.get("callerSession_faux", UserSession.Faux.class);
+        }
+        return null;
+    }
+    
+    static UserSession currentSession () {
+        if(renderArgs.data.containsKey("callerSession")) {
+            return renderArgs.get("callerSession", UserSession.class);
+        }
+        return null;
+    }
+	
+	static String callback () {
+	    return params.get("callback");
+	}
 	
 	/**
 	 * This method is utilized by children to protected
@@ -68,7 +162,7 @@ public abstract class Index extends CRUD {
  	/**
  	 * renders a JSON status error response from a list of errors
  	 * @param callback optional, used for cross domain requests */
- 	protected static void returnFailed (List<play.data.validation.Error> errors, String callback) {
+ 	protected static void returnFailed (List<play.data.validation.Error> errors) {
  	    String msg = "";
         for (play.data.validation.Error err : errors) {
             msg += err.message();
@@ -76,42 +170,37 @@ public abstract class Index extends CRUD {
  	    Logger.warn(msg);
  		Users.renderJSONP(
  			getErrorResponse(msg), 
- 			new TypeToken<HashMap<String, String>>() {}.getType(),
- 			callback
+ 			new TypeToken<HashMap<String, String>>() {}.getType()
  		);
  	}
 
 	/**
 	 * renders a JSON status error response
 	 * @param callback optional, used for cross domain requests */
-	protected static void returnFailed (String msg, String callback) {
+	protected static void returnFailed (String msg) {
 	    Logger.warn(msg);
 		Users.renderJSONP(
 			getErrorResponse(msg), 
-			new TypeToken<HashMap<String, String>>() {}.getType(),
-			callback
+			new TypeToken<HashMap<String, String>>() {}.getType()
 		);
 	}
 
 	/**
 	 * renders a JSON status okay response
 	 * @param callback optional, used for cross domain requests */
-	protected static void returnOkay (String msg, String callback) {
+	protected static void returnOkay (String msg) {
 		Users.renderJSONP(
 			getOkayResponse(msg), 
-			new TypeToken<HashMap<String, String>>() {}.getType(),
-			callback
+			new TypeToken<HashMap<String, String>>() {}.getType()
 		);
 	}
 
 	/**
-	 * renders a JSON status okay response
-	 * @param callback optional, used for cross domain requests */
-	protected static void returnOkay (String callback) {
+	 * renders a JSON status okay response */
+	protected static void returnOkay () {
 		Users.renderJSONP(
 			getOkayResponse(), 
-			new TypeToken<HashMap<String, String>>() {}.getType(),
-			callback
+			new TypeToken<HashMap<String, String>>() {}.getType()
 		);
 	}
 
@@ -119,9 +208,8 @@ public abstract class Index extends CRUD {
 	 * renders a JSON response, utilizing <code>callback</code> as necessary for
 	 * cross domain requests
 	 * @param myObj 	object to be JSONified
-	 * @param t 		describes the type of the object to be JSONified
- 	 * @param callback 	optional, used for cross domain requests */
-	protected static void renderJSONP (Object myObj, Type t, String callback) {
+	 * @param t 		describes the type of the object to be JSONified */
+	protected static void renderJSONP (Object myObj, Type t) {
 		String json;
 		GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new User.ChatExclusionStrategy());
 		Gson gson = gsonBuilder.create();
@@ -130,12 +218,13 @@ public abstract class Index extends CRUD {
 		} else {
 			json = gson.toJson(myObj); 
 		}
-		if (callback != null && !callback.equals("")) {
+		String callback = callback();
+		if (callback == null || callback.equals("")) {
+		    renderJSON(json);
+		} else {
 			json = callback + "(" + json + ")";
 			response.contentType = "application/javascript";
-			renderText(json);
-		} else {
-			renderJSON(json);
+			renderText(json);			
 		}
 	}
 	
@@ -144,33 +233,11 @@ public abstract class Index extends CRUD {
 	 * arguments.  These are thrown by individual methods, and caught and handled
 	 * in this class */
 	protected static class ArgumentException extends Exception {
-		/** The parameter that is invalid */
-		private final String field;
-		/** The error, e.g. "is null", "cant be negative" */		
-		private final String mistake;
-		/** Optional JSONP callback to be used when this exception is caught */
-		private final String callback;
 		
-		public ArgumentException (String err, String field, String callback) {
+		public ArgumentException (String err) {
 			super(err);   
-			this.mistake = err; 
-			this.field = field; 
-			this.callback = callback;
 		}
 
-		/** 
-		 * @return the message string which will be logged and displaed to the user
-		 * when this exception occurs */
-		public String toString () {
-			return "**Invalid argument** " + this.field + " " + this.mistake;
-		}
-
-		/**
-		 * @return the JSONP callback to use when returning the error for this
-		 * exception */
-		public String getCallback () {
-			return this.callback;
-		}
 	}
 	
 }

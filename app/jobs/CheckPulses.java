@@ -21,77 +21,46 @@ public class CheckPulses extends Job {
          return;
         }
         
-        AbstractMap<Long, Date> heartbeats = HeartBeat.getHeartBeats();
-        for (Long user_id : heartbeats.keySet()) {
-            Date lastBeat = heartbeats.get(user_id);
-            long diff = Utility.diffInSecs(new Date(), lastBeat);
-            if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
-                HeartBeat.removeBeatFor(user_id);
-                broadcastLogout(user_id);
+        List<HeartBeat> heartbeats = HeartBeat.getHeartBeats();
+        for (HeartBeat beat : heartbeats) {
+            if (beat.isOld()) {
+                if (beat.room_id > 0) {
+                	broadcastLeaveRoom(beat.room_id, beat.user_id, beat.session);
+                } else {
+                	broadcastLogout(beat.user_id, beat.session);
+                }
+                beat.remove();
             }
         }
-        
-		// check heartbeats in rooms
-        for (String key : HeartBeat.roombeats.keySet()) {
-         Date lastBeat = HeartBeat.roombeats.get(key);
-         long diff = Utility.diffInSecs(new Date(), lastBeat);
-         if (diff > HeartBeat.HEALTHY_HEARTBEAT) {
-             String parts[] = key.split("_");
-             HeartBeat.roombeats.remove(key);
-             long room_id = Long.parseLong(parts[0]);
-             long user_id = Long.parseLong(parts[1]);
-             broadcastLeaveRoom(room_id, user_id);
-         }
-        }
-
-        // this prevents memory from bloating up and bloating up, but I have no clue why
-        // it's necessary.  Sounds like its not usually necessary
-        // http://stackoverflow.com/questions/66540/system-gc-in-java
-        // http://stackoverflow.com/questions/2414105/why-is-it-a-bad-practice-to-call-system-gc
-        // http://stackoverflow.com/questions/4784987/calling-system-gc-explicitly
-        // if (counter++ % 900 == 0) {  // every 15 minutes
-           // Logger.info("request Garbage Collection");
-           // System.gc(); 
-        // }
     }
 
-	private static void broadcastLeaveRoom (Long room_id, Long user_id) {
+	private static void broadcastLeaveRoom (Long room_id, Long user_id, String session) {
 		if (Server.onMaster()) {
-			Room.removeUserFrom(room_id, user_id);
+		    Room r = Room.find("byRoom_id", room_id).first();
+		    UserSession sess = UserSession.getFor(user_id, session);
+            if (r != null && sess != null) {
+    		    r.removeParticipant(sess);			
+    		}
 		} else {	
 			String url = Server.getMasterServer().uri + "leaveroom";
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("user_id", user_id.toString());
+			params.put("session", session);
 			params.put("room_id", room_id.toString());
 			Utility.fetchUrl(url, params);
 		}
 	}
 	
-	private static void broadcastLogout (Long user_id) {
+	private static void broadcastLogout (Long user_id, String session) {
 		if (Server.onMaster()) {
-		    User u = User.findById(user_id);
-		    u.logout();
-		    removeFromWaitingRoom(user_id, true);
+		    WaitingRoom.get().remove(user_id, true);
 		} else {	
 			String url = Server.getMasterServer().uri + "signout";
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("user_id", user_id.toString());
+			params.put("session", session);			
 			Utility.fetchUrl(url, params);
 		}
 	}
 	
-	/**
-     * Removes all occurences of the given user from the waiting room
-     * @param user_id the id to remove from the room 
-     * @param removeAll if true, remove all of the occurences of this user,
-     *                  else just one */
-    private static void removeFromWaitingRoom (long user_id, boolean removeAll) {
-        while (Users.waitingRoom.contains(user_id)) {
-            Users.waitingRoom.remove(user_id);
-            if (!removeAll) {
-                return;
-            }
-        }
-    }
-    
 }

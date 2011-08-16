@@ -26,7 +26,7 @@ public class Room extends Model {
 
 	/** set of users in this chatroom */
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
-	public Set<User> participants;
+	public Set<UserSession> participants;
 	
 	/** id of this room */
 	@Required
@@ -34,7 +34,7 @@ public class Room extends Model {
 	
 	public Room (long room_id) {
 		this.room_id = room_id;
-		this.participants = new HashSet<User>();
+		this.participants = new HashSet<UserSession>();
 	}
 
     /**
@@ -44,8 +44,8 @@ public class Room extends Model {
             return true;
         } else {
             boolean active = false;
-            for (User p : this.participants) {
-                if (p.online) {
+            for (UserSession p : this.participants) {
+                if (p.user.online) {
                     active = true;
                 }
             }
@@ -58,29 +58,27 @@ public class Room extends Model {
      * has joined 
      * @param user_id1
      * @param user_id2 */
-	public void addUsers (long user_id1, long user_id2) {
-        User user1 = User.findById(user_id1);
-        User user2 = User.findById(user_id2);
+	public void addUsers (UserSession user1, UserSession user2) {
         this.addUser(user1);
         this.addUser(user2);
-        Room.updateRecentMeetingsFor(user1.id, user2.id);
-        Room.updateRecentMeetingsFor(user2.id, user1.id);        
+        Room.updateRecentMeetingsFor(user1.user, user2.user);
+        Room.updateRecentMeetingsFor(user2.user, user1.user);        
 	}
 			
 	/**
 	 * Remove a user from this room, and notify the other participants they have left
 	 * @param user the user to remove */
-	public void removeParticipant (User user) {
-		if (!this.participants.contains(user)) {
+	public void removeParticipant (UserSession left) {
+		if (!this.participants.contains(left)) {
 			return;
 		}
-		this.participants.remove(user);
+		this.participants.remove(left);
 		if (this.participants.size() > 0) {
 			this.save();
 			if (this.groupKey == null || this.groupKey.equals("")) {
-    			for (User u : this.participants) {
-    				u.notifyLeftRoom(user, room_id);
-                    user.notifyLeftRoom(u, room_id);
+    			for (UserSession u : this.participants) {
+    				u.notifyLeftRoom(left.toFaux(), room_id);
+                    left.notifyLeftRoom(u.toFaux(), room_id);
     			}			    
 			}			
 		} else {
@@ -92,12 +90,14 @@ public class Room extends Model {
 	 * Add the given user to this room, notifying the other 
 	 * participants.  If they are already in the room, does nothing
 	 * @param u */
-	public void addUser (User u) {
+	public void addUser (UserSession u) {
         if (this.participants.contains(u)) {
             return;
         }
-	    for (User p : this.participants) {
+	    for (UserSession p : this.participants) {
+	        System.out.println("tell " + p.user.id + " that " + u.user.id + " joined");
 	        p.notifyJoined(u, this.room_id);
+	        System.out.println("tell " + u.user.id + " that " + p.user.id + " joined");	        
 	        u.notifyJoined(p, this.room_id);
 	    }
 	    this.participants.add(u);
@@ -135,22 +135,18 @@ public class Room extends Model {
 	 * Update this users list of recent meetings, adding the given user id
 	 * @param user_id the user to update the meetings for
 	 * @param met_with_id the user id of the user they met with */
-	public static void updateRecentMeetingsFor (long user_id, long met_with_id) {
-        User user = User.findById(user_id);
-        User met_with = User.findById(met_with_id);
-        user.recentMeetings.remove(met_with);
-        user.recentMeetings.add(met_with);
-        if (user.recentMeetings.size() > 10) {
-            user.recentMeetings.remove(0);
+	public static void updateRecentMeetingsFor (User user1, User user2) {
+        user1.recentMeetings.remove(user2);
+        user1.recentMeetings.add(user2);
+        if (user1.recentMeetings.size() > 10) {
+            user1.recentMeetings.remove(0);
         }
-        user.save();
+        user1.save();
 	}
 
     /**
      * Check if the 2 given users are currently speaking together in a room */
-    public static boolean areSpeaking (long u1, long u2) {
-        User user1 = User.findById(u1);
-        User user2 = User.findById(u2);
+    public static boolean areSpeaking (User user1, User user2) {
         Set<Room> rooms_1 = user1.getNonGroupRooms();
         rooms_1.retainAll(user2.getNonGroupRooms());
         return rooms_1.size() > 0;
@@ -161,10 +157,11 @@ public class Room extends Model {
 	 * after the room is created.
 	 * @param user_id1
 	 * @param user_id2 */
-	public static void createRoomFor (long user_id1, long user_id2) {
+	public static Room createRoomFor (UserSession user1, UserSession user2) {
     	long room_id = nextRoomID.incrementAndGet();
     	Room r = new Room(room_id);
-    	r.addUsers(user_id1, user_id2);	    
+    	r.addUsers(user1, user2);
+    	return r;	    
 	}
 
 	/**
@@ -172,28 +169,11 @@ public class Room extends Model {
 	 * after the room is created.
 	 * @param user_id
 	 * @param bot */
-	public static void createBotRoomFor (long user_id, User bot) {
+	public static void createBotRoomFor (UserSession user1, UserSession bot) {
     	long room_id = nextRoomID.incrementAndGet();
     	Room r = new Room(room_id);
-        r.addUsers(user_id, bot.id);
-	}
-	
-	/**
-	 * Remove the given user from the given room
-	 * @param user_id the user_id of the User to remove from the room
-	 * @param room_id the id of the room to remove from
-	 * @return true on success, false if user_id or room_id does not exist */
-	public static boolean removeUserFrom (long room_id, long user_id) {
-		Room room = Room.find("byRoom_id", room_id).first();
-		User user = User.findById(user_id);
-		if (user == null) {
-			return false;
-		}
-		if (room == null) {
-			return false;
-		}
-		room.removeParticipant(user);
-		return true;
+    	// bot doesn't care about session_id, so we just pass null
+        r.addUsers(user1, bot);
 	}
 	
 	/**
@@ -205,10 +185,10 @@ public class Room extends Model {
 	/**
 	 * Add this user to an existing group chat, or start a new group chat
 	 * with the given key if none exists 
-	 * @param user the user to add
+	 * @param user the user to add 
 	 * @param key the group key of the room to join 
 	 * @return the room object for the group chat room */
-	public static Room joinGroupChat (User user, String key) {
+	public static Room joinGroupChat (UserSession user, String key) {
 	    Room myRoom = Room.find("byGroupKey", key).first();
         if (myRoom == null) {
             myRoom = Room.getEmptyRoom();

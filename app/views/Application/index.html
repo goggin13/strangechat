@@ -7,6 +7,11 @@
 	#{set title:'ChatServer' /}
 #{/else}
 
+#{if isDev}
+	<a href="@{Application.specrunner()}">Jasmine tests</a><br/>
+	<a href="@tests">Unit tests</a>
+#{/if}
+
 #{if amMaster} 
 	<p>I'm the Master server <br/>
 		#{list items:masterStats.keySet(), as:'stat'} 

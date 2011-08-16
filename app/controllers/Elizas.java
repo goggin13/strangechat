@@ -5,6 +5,7 @@ import java.util.HashMap;
 import models.Room;
 import models.User;
 import models.UserEvent;
+import models.UserSession;
 import models.Utility;
 import models.eliza.Eliza;
 
@@ -15,39 +16,41 @@ import models.eliza.Eliza;
 public class Elizas extends Index {
     private static HashMap<String, String> convo_ids = new HashMap<String, String>();
     
-    public static void reply (String qry, long from_user, long user_id, long room_id, String callback) {
+    public static void reply (String qry, long room_id) {
         if (qry == null) qry = "";
         String response = Eliza.respondTo(qry);
-        User u = User.findById(user_id);
-        User u2 = User.findById(from_user);
+        UserSession u = currentSession(); 
+        UserSession u2 = currentForSession();
         if (u == null || u2 == null) {
-            returnFailed("both from_user and user_id must map to existing users", callback);
+            returnFailed("both from_user and user_id must map to existing users");
         }
-        u.sendMessage(from_user, room_id, "@Azile " + qry);
-        u.sendMessage(Eliza.user_id, room_id, response);
-        u2.sendMessage(Eliza.user_id, room_id, response);
-        returnOkay(callback);
+        UserSession.Faux elizaSess = new UserSession.Faux(Eliza.user_id, "eliza_session");
+        u2.sendMessage(u.toFaux(), room_id, "@Azile " + qry);
+        u.sendMessage(elizaSess, room_id, response);
+        u2.sendMessage(elizaSess, room_id, response);
+        returnOkay();
     }
     
     /**
 	 * Get a room with the requested bot; will immediately generate a join
 	 * message
-	 * @param user_id your user_id
-	 * @param botid the string identifying the bot to request
-	 * @param callback optional JSONP callback*/
-	public static void requestBotRoom (long user_id, String bot_id, String callback) {
+	 * @param botid the string identifying the bot to request */
+	public static void requestBotRoom (String bot_id) {
 	    User bot = User.find("byBotid", bot_id).first();
         if (bot == null) {
-            returnFailed(bot_id + " does not map to a valid bot", callback);
+            returnFailed(bot_id + " does not map to a valid bot");
         }   
-        Room.createBotRoomFor(user_id, bot);
-		returnOkay(callback);
+	    UserSession u = currentSession();        
+	    UserSession botSess = new UserSession(bot, "-1");        
+        Room.createBotRoomFor(u, botSess);
+		returnOkay();
 	}
 
     
-    public static void talkTo (String bot_id, long bot_user_id, String qry, long user_id, long room_id, String callback) {
+    public static void talkTo (String bot_id, long bot_user_id, String qry, long room_id) {
+    	UserSession.Faux sess = currentFauxSession();
         String url = "http://www.pandorabots.com/pandora/talk-xml";
-        String key = user_id + "_" + bot_id;
+        String key = sess.user_id + "_" + bot_id;
         String custid = convo_ids.get(key);
         
         HashMap<String, String> params = new HashMap<String, String>();
@@ -71,8 +74,8 @@ public class Elizas extends Index {
             convo_ids.put(key, custid);
         }
         
-        new UserEvent.RoomMessage(user_id, bot_user_id, room_id, reply);
-        returnOkay(callback);
+        new UserEvent.RoomMessage(sess.user_id, bot_user_id, room_id, reply, sess.session);
+        returnOkay();
     }
         
 }

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.List;
 import enums.Power;
 
 public abstract class SuperPower {
@@ -76,7 +77,10 @@ public abstract class SuperPower {
         Power p = this.getPower();
         StoredPower sp = StoredPower.getOrCreate(p, user);
         sp.increment(level);
-    	user.notifyNewPower(sp);
+        List<UserSession> sessions = user.getSessions();
+        for (UserSession us : sessions) {
+            us.notifyNewPower(sp);
+        }
     	return sp;
     } 
     
@@ -97,6 +101,13 @@ public abstract class SuperPower {
     public int countPowers (User u) {
         Power p = this.getPower();
         int count = u.countPowers(p);
+        return count;
+    }
+
+    /** count how many available powers the given user has of this type */
+    public int countAvailablePowers (User u) {
+        Power p = this.getPower();
+        int count = u.countAvailablePowers(p);
         return count;
     }
     

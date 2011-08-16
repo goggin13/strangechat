@@ -18,7 +18,10 @@ public class BlackList extends Model {
     
     public BlackList (User u) {
         this.user = u;
-        u.logout();
+        List<UserSession> sessions = user.getSessions();
+        for (UserSession session : sessions) {
+            session.logout();
+        }
         u.save();
     }
     

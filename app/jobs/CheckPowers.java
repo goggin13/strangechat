@@ -29,8 +29,9 @@ public class CheckPowers extends Job {
             return;
         }
         
-        List<Server> chatServers = Server.getChatServers();
+        
         List<String> processedURIs = new LinkedList<String>();
+        List<Server> chatServers = Server.getChatServers();        
         for (Server s : chatServers) {
             if (!processedURIs.contains(s.uri)) {
                 processUpdates(getEvents(s));
@@ -49,7 +50,6 @@ public class CheckPowers extends Job {
     
     private static void processUpdates (List<UserEvent.Event> events) {
         for (UserEvent.Event event : events) {
-            System.out.println("admin process " + event.toString());
             if (event instanceof UserEvent.RoomMessage) {
                 UserEvent.RoomMessage rm = (UserEvent.RoomMessage)event;
                 if (rm.user_id == -1 || rm.from == -1) {

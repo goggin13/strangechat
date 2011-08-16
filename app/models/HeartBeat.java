@@ -1,48 +1,88 @@
 package models;
  
-import java.util.AbstractMap;
 import java.util.Date;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * This class maintains the collection of heartbeats and offers some
  * helper functions */
 public class HeartBeat {
+    
+    public long user_id;
+    public long room_id;
+    public String session;
+    public Date time;
+    
+    public HeartBeat (long u, String s, long r) {
+        this.user_id = u;
+        this.session = s;
+        this.room_id = r;
+        this.time = new Date();
+    }
+    
+    public boolean isOld () {
+        long diff = Utility.diffInSecs(new Date(), this.time);
+        return diff > HEALTHY_HEARTBEAT;
+    }
+    
+    public boolean equals (Object obj) {
+        if (obj == null ||
+            !(obj instanceof HeartBeat)) {
+            return false;
+        }
+        HeartBeat other = (HeartBeat)obj;
+        return other.user_id == this.user_id 
+               && ((other.room_id == -1
+                    && this.room_id == -1)
+                    || other.room_id == this.room_id)
+               && other.session.equals(this.session);
+    }
+    
+    public void remove () {
+    	heartbeats.remove(this);
+    }
+    
 	/** Amount of time a user can go without heartbeating before they are removed */
 	public static final int HEALTHY_HEARTBEAT = 6;
 	
 	/** A map of all the latest user_ids to heartbeats on this server */
-	public static AbstractMap<Long, Date> heartbeats = new ConcurrentHashMap<Long, Date>();
-	
-	/** A map of all the latest user_id_room_id to last heartbeat in that room on this server */
-	public static AbstractMap<String, Date> roombeats = new ConcurrentHashMap<String, Date>();
+	public static List<HeartBeat> heartbeats = new CopyOnWriteArrayList<HeartBeat>();
 	
 	/**
 	 * Update the heartbeat for the given user in the given room
 	 * @param room_id the id of the room to beat in
 	 * @param user_id the id of the user to beat for */
-	public static void beatInRoom (Long room_id, Long user_id) {
-        String key = room_id.toString() + "_" + user_id.toString();
-        roombeats.put(key, new Date());  
+	public static void beatInRoom (Long room_id, Long user_id, String session_id) {
+	    int index = getHeartbeat(user_id, session_id, room_id);
+	    HeartBeat hb = new HeartBeat(user_id, session_id, room_id);
+	    if (index > -1) {
+	        heartbeats.set(index, hb);
+	    } else {
+	        heartbeats.add(hb);
+	    }
+	    
 	}    
 	
-	public static void beatFor (Long for_user) {
-        heartbeats.put(for_user, new Date());
+	public static void beatInRoom (Long room_id, UserSession.Faux sess) {
+	    beatInRoom(room_id, sess.user_id, sess.session);
 	}
 	
-	public static AbstractMap<Long, Date> getHeartBeats () {
+	public static void beatFor (UserSession.Faux sess) {
+	    beatFor(sess.user_id, sess.session);
+	}
+	
+	public static void beatFor (Long user_id, String session_id) {
+        beatInRoom(-1L, user_id, session_id);
+	}
+	
+	public static List<HeartBeat> getHeartBeats () {
 	    return heartbeats;
 	}
-	
-	public static boolean isAlive (long user_id) {
-	    return heartbeats.containsKey(user_id);
-	}
-	
-	public static void removeBeatFor (Long user_id) {
-	    heartbeats.remove(user_id);
-	    if (heartbeats.size() == 0) {
-	        heartbeats.clear();
-	    }
+
+	private static int getHeartbeat (long user_id, String session, long room_id) {
+	    HeartBeat hb = new HeartBeat(user_id, session, room_id);
+	    return heartbeats.indexOf(hb);
 	}
 	
 }

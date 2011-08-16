@@ -12,11 +12,14 @@ import models.Server;
 import models.StoredPower;
 import models.SuperPower;
 import models.User;
+import models.WaitingRoom;
 import models.UserEvent;
+import models.UserSession;
 import models.UserExclusion;
 import models.Utility;
 import play.data.validation.Required;
 import play.libs.WS;
+import play.libs.F.T2;
 
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -26,38 +29,20 @@ import com.google.gson.reflect.TypeToken;
  * status in the system, assigning them rooms, passing chat requests, etc..
  */
 public class Users extends Index {
-	
-	/** list of ids of people waiting to be matched up with someone to chat */
-	public static List<Long> waitingRoom = new CopyOnWriteArrayList<Long>();
-		
-	/** How many meetings, 0 indexed, ago users must have interacted before they
-	 *  can be matched again.  0 means users can talk, then they have to talk to 
-	 *  at least one other person each.  -1 means they can be paired in back
-	 * 
-	 *  THIS IS SET IN BOOTSTRAP.JAVA;  YOU MUST MAKE CHANGES THERE OR THEY
-	 *  WILL BE OVERRIDDEN */
-	public static int remeetEligible = 0;
-	
-	/**
-	 * Maximum number of pending spots in the waiting room a single user can occupy */
-	public static int spotsPerUser = 2;
-	
+	    				
 	/**
 	 * This function signs in a user who has not linked their facebook account.  
 	 * @param user_id the user_id field of the user signing in
 	 * @param avatar optional, url of an avatar to display for this user
-	 * @param alias optional, an alias for this user 
-	 * @param callback optional, required for cross-doman requests */
-	public static void signin (long user_id, String avatar, String alias, String callback) {
-	    User user = User.getOrCreate(user_id);
+	 * @param alias optional, an alias for this user */
+	public static void signin (long sign_in_id, String avatar, String alias) {
+	    User user = User.getOrCreate(sign_in_id);
         if (BlackList.isBlacklisted(user)) {
-		    returnFailed("You have been blacklisted", callback);
+		    returnFailed("You have been blacklisted");
 		}
-    	
         Users.renderJSONP(
             getYourData(user, avatar, alias), 
-            new TypeToken<HashMap<String, User>>() {}.getType(),
-            callback
+            new TypeToken<HashMap<String, User>>() {}.getType()
         );   
 	}
 	
@@ -66,16 +51,11 @@ public class Users extends Index {
 	            String avatar,
 	            String alias) 
 	{	    
-	    
 		user.avatar = avatar == null ? "" : avatar;
 		user.alias = alias == null ? "" : alias;
-		user.login();
+		UserSession sess = user.login();
 		user.save();		
-		broadcastHeartbeat(user);
-		
-		// since this user is just logging in, if they have previous requests for the waiting room, we should
-		// null them out
-        removeFromWaitingRoom(user.id, true);
+		broadcastHeartbeat(sess);
 		
 		HashMap<String, User> data = new HashMap<String, User>();
 		data.put(user.id.toString(), user);
@@ -84,109 +64,52 @@ public class Users extends Index {
 	}
 	
 	/**
-	 * Mark this user as offline; remove them from the waiting room
-	 * @param user_id
-	 * @param callback optional JSONP callback
-	 */
-	public static void signout (long user_id, String callback) {
-	    User u = User.findById(user_id);
+	 * Mark this user as offline; remove them from the waiting room */
+	public static void signout () {
+	    UserSession u = currentSession();
 		if (u != null) {
-		    removeFromWaitingRoom(user_id, true);
+		    WaitingRoom.get().remove(u.user.id, true);
 		    u.logout();
-			returnOkay(callback);
+			returnOkay();
 		} else {
-			returnFailed("user " + user_id + " not found", callback);
+		    returnFailed("No valid user, session data passed (user_id, session)");
 		}
 	}
-	
-	/**
-	 * Helper for <code>requestRandomRoom</code>
-	 * @return true if these users are eligible to be paired in a room right now */
-	private static boolean canBePaired (long user_id1, long user_id2) {
-	    
-	    return !(user_id1 == user_id2)
-		        && UserExclusion.canSpeak(user_id1, user_id2)
-		        && (remeetEligible == -1 
-		            || !Room.hasMetRecently(user_id1, user_id2, remeetEligible))
-                && !Room.areSpeaking(user_id1, user_id2);
-	}
-	
-	/**
-	 * For super hero chat, indicate you are ready to start chatting.  Someone else will be
-	 * paired with you immediately if they are available, or whenever they do become available
-	 * @param user_id your user_id, so the random returned user isn't you 
-	 * @param callback optional JSONP callback*/
-	public static synchronized void requestRandomRoom (long user_id, String callback) {
-	    
-		if (waitingRoom.size() > 0) {
-		    long otherUserID = 0;
-			for (long id : waitingRoom) {
-				if (canBePaired(id, user_id)) {
-					otherUserID = id;
-					removeFromWaitingRoom(id, false);
-					break;
-				}
-			}
-			
-			if (otherUserID > 0) {
-			    Room.createRoomFor(otherUserID, user_id);	
-				returnOkay(callback);
-			}
-		}
-		
-		// no one there yet!
-		if (Collections.frequency(waitingRoom, user_id) < spotsPerUser) {
-		    waitingRoom.add(user_id);
-		}
-		
-		System.out.println("waiting room = " + waitingRoom);
-		returnOkay(callback);
-	}
-	
+
+    /**
+     * For super hero chat, indicate you are ready to start chatting.  Someone else will be
+     * paired with you immediately if they are available, or whenever they do become available
+     * @param user_id your user_id, so the random returned user isn't you 
+     * @param callback optional JSONP callback*/
+    public static void requestRandomRoom () {
+        UserSession user = currentSession();
+        if (user == null) {
+            returnFailed("No current session provided");
+        }
+        WaitingRoom.get().requestRandomRoom(user);
+        returnOkay();
+    }	
+    
 	/**
 	 * Join or create a group room with the given key
-	 * @param user_id the id of the user joining
-	 * @param key the key to link to the room
-     * @param callback optional JSONP callback */
-    public static void joinGroupChat (
-                    @Required long user_id, 
-                    @Required String key, 
-                    String callback) 
-    {
+	 * @param key the key to link to the room */
+    public static void joinGroupChat (@Required String key) {
         if (validation.hasErrors()) {
-            returnFailed(validation.errors(), callback);
+            returnFailed(validation.errors());
         }
-        User user = User.findById(user_id);
-        if (user == null) {
-            returnFailed("user_id must map to an existing user (" + user_id + ")", callback);
-        }
-        Room r = Room.joinGroupChat(user, key);
-        returnOkay(r.room_id + "", callback);
+        Room r = Room.joinGroupChat(currentSession(), key);
+        returnOkay(r.room_id + "");
     }
 	
-    /**
-     * Removes all occurences of the given user from the waiting room
-     * @param user_id the id to remove from the room 
-     * @param removeAll if true, remove all of the occurences of this user,
-     *                  else just one */
-    private static void removeFromWaitingRoom (long user_id, boolean removeAll) {
-        while (waitingRoom.contains(user_id)) {
-            waitingRoom.remove(user_id);
-            if (!removeAll) {
-                return;
-            }
-        }
-    }
-
     /**
      * This is only called from a unit test, and all it does it test if the waitingroom is
      * empty.  Two test bots wish to talk to eachother but don't want to accidentally get a 
      * real user */
     public static void waiting_room_is_empty () {
-        if (waitingRoom.size() == 0) {
+        if (WaitingRoom.get().empty()) {
             returnOkay(null);
         } else {
-            returnFailed("The waiting room is not empty", null);
+            returnFailed("The waiting room is not empty");
         }
     }
 
@@ -198,11 +121,11 @@ public class Users extends Index {
      * heartbeat on their own
      * @user the user to heartbeat for 
      * @return true if the heartbeat is successfuly sent */
-	private static boolean broadcastHeartbeat (User user) {
-	    String heartbeatURI = user.getHeartbeatURI();
+	private static boolean broadcastHeartbeat (UserSession user) {
+	    String heartbeatURI = user.user.getHeartbeatURI();
 	    String masterURI = Server.getMasterServer().uri;
 		if (masterURI.equals(heartbeatURI)) {
-		    HeartBeat.beatFor(user.id);
+		    HeartBeat.beatFor(user.toFaux());
 		    new UserEvent.HeartBeat(user.id);		    
 		    return true;
 		} else {	
@@ -217,12 +140,15 @@ public class Users extends Index {
 	
 	/**
 	 * Remove a user from a room, and notify other participants they left
-	 * @param user_id the user to remove from the room
-	 * @param room_id the room to remove them from
-	 * @param callback optional JSONP callback */
-	public static void leaveRoom (long user_id, long room_id, String callback) {
-		Room.removeUserFrom(room_id, user_id);
-		returnOkay(callback);
+	 * @param room_id the room to remove them from */
+	public static void leaveRoom (long room_id) {
+		Room room = Room.find("byRoom_id", room_id).first();
+		UserSession user = currentSession();
+		if (room == null) {
+			returnFailed("no room with id " + room_id);
+		}
+		room.removeParticipant(user);
+		returnOkay();
 	}
 	
 	/**
@@ -230,40 +156,33 @@ public class Users extends Index {
 	 * @param power_id the id of a {@link StoredPower} to use
 	 * @param user_id the user using the power
 	 * @param other_id the other user in the room
-	 * @param room_id optional, the room the event is in
-	 * @param callback optional jsonp callback */
-	public static void usePower (long power_id, long user_id, long other_id, long room_id, String callback) { 
-        if (power_id <= 0 || user_id <= 0) {
-            returnFailed("power_id, user_id, are both required", callback);
+	 * @param room_id optional, the room the event is in */
+	public static void usePower (long power_id, long room_id) { 
+        if (power_id <= 0) {
+            returnFailed("power_id is required");
         }
-	    User user = User.findById(user_id);
-	    User other = null;
-	    if (other_id > 0) {
-	        other = User.findById(other_id);
-	    }
-        if (user == null) {
-            returnFailed("user_id must map to existing user", callback);
-        }
+	    UserSession user = currentSession();
+	    UserSession other = currentForSession();
 	    
         StoredPower storedPower = StoredPower.findById(power_id);
         if (storedPower == null) {
-            returnFailed("no power by that ID exists", callback);
+            returnFailed("no power by that ID exists");
         } else if (!storedPower.canUse()) {
-            returnFailed("Use Power : You don't have any of that power remaining!", callback);
+            returnFailed("Use Power : You don't have any of that power remaining!");
         }
 
         SuperPower sp = storedPower.getSuperPower();
-        String result = storedPower.use(other);
+        String result = storedPower.use(other != null ? other.user : null);
         
-        user.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);
+        user.notifyUsedPower(user.toFaux(), room_id, sp, storedPower.level, result);
         if (room_id <= 0 || other == null) {
-            HashMap<User, Long> conversants = user.getConversants();
-            for (User u : conversants.keySet()) {
-                u.notifyUsedPower(user_id, conversants.get(u), sp, storedPower.level, result);
+            HashMap<UserSession, Long> conversants = user.getConversants();
+            for (UserSession u : conversants.keySet()) {
+                u.notifyUsedPower(user.toFaux(), conversants.get(u), sp, storedPower.level, result);
             }
         } else {            
-            other.notifyUsedPower(user_id, room_id, sp, storedPower.level, result);            
+            other.notifyUsedPower(user.toFaux(), room_id, sp, storedPower.level, result);            
         }
-        returnOkay(callback);
+        returnOkay();
 	}
 }

@@ -7,7 +7,9 @@ import java.util.List;
 import models.HeartBeat;
 import models.SuperPower;
 import models.UserEvent;
+import models.UserSession;
 import play.libs.F.IndexedEvent;
+import play.data.validation.Required;
 import models.eliza.Eliza;
 
 import com.google.gson.Gson;
@@ -34,10 +36,10 @@ public class Notify extends Index {
             }
         }
         
-        // still need to pass last recieved to admin listener, so do it here
+        // still need to pass last received to admin listener, so do it here
         int count = events.size();
         lastReceived = count > 0 ? events.get(count - 1).id : 0L;
-        data.add(new UserEvent.DirectMessage(-1L, -1L, lastReceived.toString()));
+        data.add(new UserEvent.DirectMessage(-1L, -1L, lastReceived.toString(), "no_session"));
         
         renderJSON(new Gson().toJson(data));
 	}
@@ -47,11 +49,11 @@ public class Notify extends Index {
 	 * @param facebook_id
 	 * @param lastReceived optional; the id of the last event seen. if omitted or zero,
 						   will assign to the most current event
-	 * @param callback optional JSONP callback
 	 */	
-	public static void listen (Long user_id, Long lastReceived, String callback) {
-		if (user_id == null) {
-			returnFailed("no user_id provided", callback);
+	public static void listen (Long lastReceived) {
+	    UserSession.Faux sess = currentFauxSession();
+		if (sess == null) {
+			returnFailed("no user_id, session provided");
 		}
 		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
 		int tries = 0;
@@ -59,123 +61,114 @@ public class Notify extends Index {
 		do {
 			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.get().nextEvents(lastReceived));
 			for (IndexedEvent<UserEvent.Event> e : events) {
-				if (e.data.user_id == user_id) {
+				if (e.data.user_id == sess.user_id &&
+				    e.data.session_id.equals(sess.session)) {
 					returnData.add(e);
 				}
 				lastReceived = e.id; 
 			}			
 		} while (returnData.size() == 0 && tries++ < maxTries);
-		
+
 		renderJSONP(
 			returnData, 
-			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType(),
-			callback
+			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType()
 		);
 	}
 	
 	/**
 	 * Creates a new event signifying a user has joined a room.  
-	 * @param for_user the user id who will recieve this notification
 	 * @param new_user the user id of the user who just joined
 	 * @param name the name to be passed with the new user
 	 * @param server the uri the new user is located on
 	 * @param avatar url to display for the new user
-	 * @param room_id the id of the room to join 
-	 * @param session_id current session id this event is pertinent	 */
-	public static void joined (Long for_user, Long new_user, String name, String server, String avatar, Long room_id, String session_id) {
-		UserEvent.get().addJoin(for_user, 
-						   new_user, 
+	 * @param room_id the id of the room to join */
+	public static void joined (String name, String server, String avatar, Long room_id) {
+		UserSession.Faux for_sess = currentForFauxSession();
+		UserSession.Faux from_sess = currentFauxSession();
+		if (for_sess == null || from_sess == null) {
+			returnFailed("cant create join without 2 valid faux sessions");
+		}
+		UserEvent.get().addJoin(for_sess.user_id, 
+						   from_sess.user_id, 
 						   avatar,
 						   name,
 						   server,
 						   room_id, 
-						   session_id);				
-        returnOkay(null);    
+						   for_sess.session,
+						   from_sess.session);				
+        returnOkay();    
 	}
 
 	/**
 	 * Creates a new event signifying a user has left a room.  
-	 * @param for_user the user id who will recieve this notification
-	 * @param left_user the user id of the user who has left
-	 * @param room_id the id of the room being left
-	 * @param session_id current session id this event is pertinent	  */	
-	public static void left (Long for_user, Long left_user, Long room_id, String session_id) {
-		UserEvent.get().addLeave(for_user, left_user, room_id, session_id);
-		returnOkay(null);	
+	 * @param room_id the id of the room being left */
+	public static void left (Long room_id) {
+		UserSession.Faux for_sess = currentForFauxSession();
+		UserSession.Faux from_sess = currentFauxSession();		
+		UserEvent.get().addLeave(for_sess.user_id, from_sess.user_id, room_id, for_sess.session);
+		returnOkay();	
 	}
 
 	/**
 	 * Creates a new event signifying a user has just logged on and is available
 	 * to chat
-	 * @param for_user the user id who will recieve this notification
-	 * @param new_user the user id of the user who just logged on
 	 * @param name the name to be passed with the new user
-	 * @param server the uri the new user is located on 
-	 * @param session_id current session id this event is pertinent	 */
-	public static void login (Long for_user, Long new_user, String name, String server, String session_id) {
-		UserEvent.get().addUserLogon(for_user, new_user, name, server, session_id);
-		returnOkay(null);	
+	 * @param server the uri the new user is located on */
+	public static void login (String name, String server) {
+		UserSession.Faux for_sess = currentForFauxSession();
+		UserSession.Faux from_sess = currentFauxSession();			
+		UserEvent.get().addUserLogon(for_sess.user_id, from_sess.user_id, name, server, for_sess.session, from_sess.session);
+		returnOkay();	
 	}
 
 	/**
 	 * Creates a new event signifying a user has logged out of the system
-	 * @param for_user the user id who will recieve this notification
-	 * @param left_user the user id of the user who has left 
 	 * @param session_id current session id this event is pertinent	 */	
-	public static void logout (Long for_user, Long left_user, String session_id) {
-		UserEvent.get().addUserLogout(for_user, left_user, session_id);
-		returnOkay(null);	
+	public static void logout () {
+		UserSession.Faux for_sess = currentForFauxSession();
+		UserSession.Faux from_sess = currentFauxSession();		
+		UserEvent.get().addUserLogout(for_sess.user_id, from_sess.user_id, for_sess.session);
+		returnOkay();	
 	}
 
 	/**
 	 * Creates a new event signifying a message from one user to another 
-	 * @param for_user the user id who will recieve this notification; note that this
-	 * 				   doesn't preclude more than one user from receiving this message, 
-	 *				   if there are more than 2 users in a room multiple events of this
-	 *				   type will be generated.  	
-	 * @param from_user the user id of the user who sent the message
-	 * @param msg the text of the message being sent
-	 * @param callback optional JSONP callback */
-	public static void message (Long for_user, Long from_user, String msg, String callback) {
-	    // MPG MUST CHANGE; ASSUMES SENDER SENDEE ON SAME SERVER
-	    if (!HeartBeat.isAlive(from_user) && from_user != Eliza.user_id) {
-	        returnFailed("You are dead", callback);
-	    }
-		UserEvent.get().addDirectMessage(for_user, from_user, msg);
-		returnOkay(callback);
+	 * @param msg the text of the message being sent */
+	public static void message (@Required String msg) {
+        if (validation.hasErrors()) {
+            returnFailed(validation.errors());
+        }	    
+		UserSession.Faux for_sess = currentForFauxSession();
+		UserSession.Faux from_sess = currentFauxSession();	
+		UserEvent.get().addDirectMessage(for_sess.user_id, from_sess.user_id, msg, for_sess.session);
+		returnOkay();
 	}
 
 	/**
 	 * Creates a new event signifying a message from one user to another IN a chatroom.    
-	 * @param for_user the user id who will recieve this notification; note that this
-	 * 				   doesn't preclude more than one user from receiving this message, 
-	 *				   if there are more than 2 users in a room multiple events of this
-	 *				   type will be generated.  	
-	 * @param from_user the user id of the user who sent the message
 	 * @param msg the text of the message being sent
-	 * @param room_id the pertinent room for this message
-	 * @param callback optional JSONP callback */
-	public static void roomMessage (List<Long> for_user, long from_user, String msg, Long room_id, String callback) {
-	    // MPG MUST CHANGE; ASSUMES SENDER SENDEE ON SAME SERVER	    
-	    if (!HeartBeat.isAlive(from_user) && from_user != Eliza.user_id) {
-	        returnFailed("You are dead", callback);
-	    }
-	    for (Long for_u : for_user) {
-	        UserEvent.get().addRoomMessage(for_u, from_user, room_id, msg);
-	    }
-		returnOkay(callback);
-	}
+	 * @param room_id the pertinent room for this message  */
+    public static void roomMessage (@Required String msg, @Required Long room_id) {
+        if (validation.hasErrors()) {
+            returnFailed(validation.errors());
+        }
+    	UserSession.Faux from_sess = currentFauxSession();
+		List<UserSession.Faux> for_sessions = currentForFauxSessionList();	
+        for (UserSession.Faux for_sess : for_sessions) {
+            UserEvent.get().addRoomMessage(for_sess.user_id, from_sess.user_id, room_id, msg, for_sess.session);
+        }
+        returnOkay();
+    }
 	
 	/**
 	 * Create a new event indicating the given user is currently typing 
-	 * @param for_user the user who should read this event 
-	 * @param user_id the user who is typing
 	 * @param room_id optional, the room the typing is occuring in
-	 * @param text the text that the user has typed so far 
-	 * @param callback optional JSONP callback */
-	public static void userIsTyping (Long for_user, Long user_id, Long room_id, String text, String callback) {
-		UserEvent.get().addUserIsTyping(for_user, user_id, text, room_id);
-		returnOkay(callback);
+	 * @param text the text that the user has typed so far */
+	public static void userIsTyping (Long room_id, String text) {
+		UserSession.Faux for_sess = currentForFauxSession();
+		UserSession.Faux from_sess = currentFauxSession();			
+		UserEvent.get().addUserIsTyping(for_sess.user_id, from_sess.user_id, text, room_id, for_sess.session);
+		returnOkay();
 	}	
 	
 	/**
@@ -185,25 +178,28 @@ public class Notify extends Index {
  	 * @param power_id the id of the stored power record
  	 * @param level the level of the new power
 	 * @param session_id current session id this event is pertinent	to */		 
-	 public static void newPower (Long for_user, String superPowerJSON, Long power_id, int level, String session_id) {
+	 public static void newPower (String superPowerJSON, Long power_id, int level) {
+		 UserSession.Faux for_sess = currentForFauxSession();
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);
-         UserEvent.get().addNewPower(for_user, superPower, power_id, level, session_id);
-         returnOkay(null);
+         UserEvent.get().addNewPower(for_sess.user_id, superPower, power_id, level, for_sess.session);
+         returnOkay();
 	 }
 	 
  	/**
  	 * Create an event telling a user that a superpower was used
- 	 * @param for_user the user who should read this event 	 
- 	 * @param by_user the user who used the power
  	 * @param room_id optional, the room_id that it was used in
  	 * @param superPowerJSON serialized power  
  	 * @param level the level of the used power 	 
- 	 * @param result the result of superpower.use()
- 	 * @param session_id current session id this event is pertinent	to */		 
- 	 public static void usedPower (Long for_user, Long by_user, Long room_id, String superPowerJSON, int level, String result, String session_id) {
+ 	 * @param result the result of superpower.use() */
+ 	 public static void usedPower (Long room_id, String superPowerJSON, int level, String result) {
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);	     
-         UserEvent.get().addUsedPower(for_user, by_user, room_id, superPower, level, result, session_id);
-         returnOkay(null);
+         UserSession.Faux used_by = currentFauxSession();
+         UserSession.Faux used_on = currentForFauxSession();
+         if (used_by == null || used_on == null) {
+             returnFailed("must specify sessions for used power");
+         }
+         UserEvent.get().addUsedPower(used_on.user_id, used_by.user_id, room_id, superPower, level, result, used_on.session);
+         returnOkay();
  	 }
 	
 	/**
@@ -214,132 +210,148 @@ public class Notify extends Index {
 	 * <code>User.HEALTHY_HEARTBEAT</code> seconds, the master is notified that this 
 	 * user logged out 
 	 * @param for_user the user_id of the user logging out 
-	 * @param room_ids optional, list of rooms this user is currently in
-	 * @param callback optional JSONP callback */
-	public static void heartbeat (Long for_user, List<Long> room_ids, String callback) {
-		HeartBeat.beatFor(for_user);
+	 * @param room_ids optional, list of rooms this user is currently in */
+	public static void heartbeat (List<Long> room_ids) {
+	    UserSession.Faux sess = currentFauxSession();
+	    if (sess == null) {
+	        returnFailed("user_id and session are required");
+	    }
+		HeartBeat.beatFor(sess);
 		if (room_ids != null && room_ids.size() > 0 && room_ids.get(0) != null) {
-		    UserEvent.get().addHeartBeat(for_user);
+		    UserEvent.get().addHeartBeat(sess.user_id);
 			for (long rid : room_ids) {
-				HeartBeat.beatInRoom(rid, for_user);
+				HeartBeat.beatInRoom(rid, sess);
 			}
 		}
-		returnOkay(callback);
+		returnOkay();
 	}
 	
 	/* 
 	 * All of the following are helpers used by clients wishing to make requests to this
 	 * controller.  They are used mostly by the Users controller and USers object, and 
 	 * also by the unit tests */
-		
-    public static HashMap<String, String> getNotifyLeftParams (Long for_user, Long left_user, Long room_id) {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("left_user", left_user.toString());
+	
+	private static HashMap<String, String> getBasic (long for_user, String for_session, long user_id, String session) {
+		HashMap<String, String> params = new HashMap<String, String>();
+        params.put("for_user", for_user + "");
+        params.put("for_session", for_session);
+        params.put("user_id", user_id + "");
+        params.put("session", session);
+        return params;
+	}
+	
+    public static HashMap<String, String> getNotifyLeftParams (long for_user, String for_session, long user_id, String session, Long room_id) {
+        HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("room_id", room_id.toString());
         return params;
     }
 
     public static HashMap<String, String> getNotifyUsedPowerParams (
-                    Long for_user, 
-                    Long by_user, 
+    				long for_user, 
+    				String for_session, 
+    				long user_id, 
+    				String session,    		 
                     Long room_id, 
                     SuperPower power, 
                     int level, 
-                    String result, 
-                    String session_id) 
+                    String result) 
     {
-        HashMap<String, String> params = new HashMap<String, String>();
+        HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("superPowerJSON", power.toJSON());
-        params.put("by_user", by_user.toString());
         params.put("result", result); 
         params.put("level", level + "");       
         params.put("room_id", (room_id != null ? room_id.toString() : ""));
-        params.put("for_user", for_user.toString());
-        params.put("session_id", session_id);
         return params;        
     }
 
-    public static HashMap<String, String> getNotifyNewPowerParams (Long for_user, SuperPower p, Long power_id, int level, String session_id) {
-        HashMap<String, String> params = new HashMap<String, String>();
+    public static HashMap<String, String> getNotifyNewPowerParams (long for_user, 
+    															   String for_session, 
+    															   SuperPower p, 
+    															   Long power_id, 
+    															   int level) 
+    {
+        HashMap<String, String> params = getBasic(for_user, for_session, -1, "");
         params.put("superPowerJSON", p.toJSON());
         params.put("power_id", power_id.toString());
         params.put("level", level + "");
-        params.put("for_user", for_user.toString());
-        params.put("session_id", session_id);
         return params;
     }
 
-    public static HashMap<String, String> getNotifyTypingParams (Long for_user, Long user_id, Long room_id, String txt) {
-    	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("user_id", user_id.toString());
+    public static HashMap<String, String> getNotifyTypingParams (long for_user, 
+    															 String for_session, 
+    															 long user_id, 
+    															 String session, 
+    															 Long room_id, 
+    															 String txt) {
+    	HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("room_id", room_id.toString());
         params.put("text", "helloworld");
         return params;
     }
 
-    public static HashMap<String, String> getNotifyLogoutParams (Long for_user, Long left_user) {
-    	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("left_user", left_user.toString());
-        return params;
+    public static HashMap<String, String> getNotifyLogoutParams (long for_user, String for_session, long user_id, String session) {
+    	return getBasic(for_user, for_session, user_id, session);
     }
 
-    public static HashMap<String, String> getNotifyLoginParams (Long for_user, Long new_user, String name, String server) {
-    	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("new_user", new_user.toString());
+    public static HashMap<String, String> getNotifyLoginParams (long for_user, String for_session, long user_id, String session, String name, String server) {
+    	HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("name", name);
         params.put("server", server);                
         return params;
     }
 
-    public static HashMap<String, String> getNotifyMessageParams (Long from_user, Long for_user, String msg) {
-    	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("from_user", from_user.toString());
+    public static HashMap<String, String> getNotifyMessageParams (long for_user, String for_session, long user_id, String session, String msg) {
+    	HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("msg", msg);
         return params;
     }
     
-    public static HashMap<String, String> getNotifyChatMessageParams (Long from_user, Long for_user, String msg, Long room_id) {
-    	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());        
-        params.put("from_user", from_user.toString());
+    public static HashMap<String, String> getNotifyChatMessageParams (long for_user, 
+    																  String for_session, 
+    																  long user_id, 
+    																  String session, 
+    																  String msg, 
+    																  Long room_id) {
+    	HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("msg", msg);
         params.put("room_id", room_id.toString());
         return params;
     }
 
-    public static HashMap<String, String> getNotifyChatMessageParams (Long from_user, List<Long> for_users, String msg, Long room_id) {
+    public static HashMap<String, String> getNotifyChatMessageParams (List<Long> for_users,  
+    													    		  List<String> for_sessions,
+    													    		  long user_id,
+    													    		  String session,
+    													    		  String msg, 
+    													    		  Long room_id) {
     	HashMap<String, String> params = new HashMap<String, String>();
     	int i = 0;
         for (long for_user : for_users) {
-            params.put("for_user[" + i++ + "]", for_user + "");
+            params.put("for_user[" + i + "]", for_user + "");
+            params.put("for_session[" + i + "]", for_sessions.get(i) + "");
+            i++;
         }
-        params.put("from_user", from_user.toString());
+        params.put("user_id", user_id + "");
+        params.put("session", session);        
         params.put("msg", msg);
         params.put("room_id", room_id.toString());
         return params;
     }
 
-    public static HashMap<String, String> getNotifyJoinedParams (Long for_user, 
-                                                                  Long new_user, 
-                                                                  String avatar, 
-                                                                  String name, 
-                                                                  String server, 
-                                                                  Long room_id, 
-                                                                  String session_id) 
+    public static HashMap<String, String> getNotifyJoinedParams (long for_user, 
+																 String for_session, 
+																 long user_id, 
+																 String session, 
+                                                                 String avatar, 
+                                                                 String name, 
+                                                                 String server, 
+                                                                 Long room_id) 
     {
-    	HashMap<String, String> params = new HashMap<String, String>();
-        params.put("for_user", for_user.toString());
-        params.put("new_user", new_user.toString());
+    	HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("avatar", avatar);
         params.put("name", name);
         params.put("server", server);
         params.put("room_id", room_id.toString());	    
-        params.put("session_id", session_id);
         return params;
     }	
 	

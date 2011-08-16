@@ -10,11 +10,14 @@ public abstract class IntervalPower extends SuperPower {
 	public abstract Long getFieldValue (User user);
 	    
 	public int isQualified (User user) {	    
+        if (countAvailablePowers(user) >= 100) {
+            return 0;
+        }
         int count = countPowers(user);
         long current = getFieldValue(user);
         long used = count * this.award_interval;
-        long available = current - used;
-        return (count < 100 && available >= this.award_interval) ? 1 : 0;
+        long availableSeconds = current - used;
+        return (availableSeconds >= this.award_interval) ? 1 : 0;
 	}
 	
 }

@@ -10,10 +10,10 @@ import math
 
 class ChatAPI():
     """Manages all interactions with the chat apis"""
-    CHAT_ROOT = 'http://localhost:9000/'   # Dev
+    # CHAT_ROOT = 'http://localhost:9000/'   # Dev
     # CHAT_ROOT = 'http://localhost:8080/'   # Dev    
     # CHAT_ROOT = 'http://173.246.100.79/' # live
-    # CHAT_ROOT = 'http://173.246.101.45/' # staging
+    CHAT_ROOT = 'http://173.246.101.45/' # staging
     
     def __init__ (self, user_id, name=None, avatar=None):
         self.user_id = user_id
@@ -76,7 +76,7 @@ class ChatAPI():
             return
         for d in data:
             ts = d['data']['timestamp'] / 1000
-            
+
             if d["data"]["type"] == "join" and (not startTime or ts >= startTime):
                 room_id = d["data"]["room_id"]
                 self.speak("joined room %d with %s" % (room_id, d["data"]["new_user"]))
@@ -90,7 +90,7 @@ class ChatAPI():
             if d["data"]["type"] == "roommessage" and ts >= startTime:
                 d = d["data"]
                 # print d["room_id"], d["user_id"], d["from"]
-                self.speak("chat from %s : %s" % (d["from"], d["text"]))
+                # self.speak("chat from %s : %s" % (d["from"], d["text"]))
                 self.msg_received_count += 1
                 
             elif d["data"]["type"] == "newpower" and ts >= startTime:
@@ -99,7 +99,7 @@ class ChatAPI():
                 power_name = d["superPower"]["name"]
                 self.speak("sweet, new power %s - %s" % (power_name, power_id))
                 self.use_power(power_id)
-                
+
         return room_id
          
     def getMessageData (self):
@@ -188,5 +188,5 @@ class ChatAPI():
         return json.loads(content)           
 
     def speak(self, txt):
-        pass 
-        # print self.name, txt
+        # pass 
+        print self.name, txt

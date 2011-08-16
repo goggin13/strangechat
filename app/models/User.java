@@ -133,11 +133,12 @@ public class User extends Model {
 	/**
 	 * log this user in, and notify any of their friends that
 	 * are online that they are available */	
-	public void login () {
+	public UserSession login () {
 		this.online = true;
-        this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis());
+		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis());
 		this.lastLogin = Utility.time();
 		this.populateSuperPowerDetails();
+		return new UserSession(this, this.session_id);
 	}
 	
 	/**
@@ -152,17 +153,7 @@ public class User extends Model {
 	        this.superPowerDetails.put(sp.power, sp.getSuperPower());
 	    }
 	}
-	
-	/**
-	 * log this user out, and notify any of their friends that
-	 * are online that they are no longer available */	
-	public void logout () {
-	    Logger.info(this.id + " logging out");
-		this.online = false;
-		this.removeMeFromRooms();
-		this.save();
-	}	
-	
+		
 	/**
 	 * @return string representation of this user
 	 */	
@@ -191,60 +182,7 @@ public class User extends Model {
 		    "user_id != ? and online = ? order by rand()", this.user_id, true
 		).first();
 	}
-	
-	/**
-	 * All the rooms this user is in
-	 * @return a list of all the rooms this user is participating in */
-	public Set<Room> getRooms () {
-	    List<Room> roomList = Room.find(
-	        "select distinct r from Room r join r.participants as p where p = ?", this
-	    ).fetch();
-	    Set<Room> roomSet = new HashSet<Room>(roomList);
-	    return roomSet;
-	}
-	
-	/**
-	 * All the rooms this user is in
-	 * @return a list of all the rooms this user is participating in */
-	public Set<Room> getNonGroupRooms () {
-	    List<Room> roomList = Room.find(
-	        "select distinct r from Room r join r.participants as p where p = ? and r.groupKey = ?", this, ""
-	    ).fetch();
-	    Set<Room> roomSet = new HashSet<Room>(roomList);
-	    return roomSet;
-	}	
-	
-	/**
-	 * A List of users this user is talking to right now */
-	public HashMap<User, Long> getConversants () {
-	    Set<Room> roomSet = getRooms();
-	    HashMap<User, Long> users = new HashMap<User, Long>();
-	    for (Room r : roomSet) {
-            for (User u : r.participants) {
-                if (u.id != this.id) {
-                    users.put(u, r.room_id);
-                }
-            }
-	    }
-	    return users;
-	}
-		
-	/**
-	 * Check if this user is listening on the master server
-	 * @return <code>true</code> if this user's heartbeat server
-	 * 		   matches the master servers uri */
-	public boolean imOnMaster () {
-        return this.heartbeatServer.uri.equals(Server.getMasterServer().uri);
-	}
-	
-	/**
-	 * Remove this user from any chat rooms they are in */
-	public void removeMeFromRooms () {
-		for (Room r : this.getRooms()) {
-		    r.removeParticipant(this);
-		}
-	}
-
+					
     /**
      * Return a list of all the ice breakers this user has seen 
      * @return list of indices of icebreakers */
@@ -333,139 +271,19 @@ public class User extends Model {
 		    superPower.awardIfQualified(this);
 		}
     }
-
-    /**
-     * Send this user a notification that a super power was used */
-    public void sendMessage (long from, long room_id, String text) {
-		if (!this.imOnMaster()) {
-		    HashMap<String, String> params 
-		        = Notify.getNotifyChatMessageParams(from, this.id, text, room_id);
-    		notifyMe("roommessage", params);            
-        } else {
-            logWrongServer();
-			new UserEvent.RoomMessage(this.id, from, room_id, text);
-		}        
-    }
-
-    /**
-     * Send this user a notification that a super power was used */
-    public void notifyUsedPower (long used_by, long room_id, SuperPower power, int level, String result) {
-		if (!this.imOnMaster()) {
-		    HashMap<String, String> params 
-		        = Notify.getNotifyUsedPowerParams(this.id, used_by, room_id, power, level, result, this.session_id);
-    		notifyMe("usedpower", params);            
-        } else {
-            logWrongServer();
-			new UserEvent.UsedPower(this.id, used_by, room_id, power, level, result, this.session_id);
-		}        
-    } 
-    
-	/**
-	 * Send this user a notification that they have recieved a new power
-	 * @param power the new power they have received */
-	public void notifyNewPower (StoredPower power) {
-		if (!this.imOnMaster()) {
-		    HashMap<String, String> params 
-		        = Notify.getNotifyNewPowerParams(this.id, power.getSuperPower(), power.id, power.level, this.session_id);
-    		notifyMe("newpower", params);            
-        } else {
-            logWrongServer();            
-			new UserEvent.NewPower(this.id, power.getSuperPower(), power.id, power.level, this.session_id);
-		}
-	}
-
-	/**
-	 * Send this user a notification that someone in the room
-	 * they were chatting in has left 
-	 * @param user the user who left the room
-	 * @param room_id the id of the room */
-	public void notifyLeftRoom (User user, long room_id) {
-		if (!this.imOnMaster()) {
-          	HashMap<String, String> params 
-          	    = Notify.getNotifyLeftParams(this.id, user.id, room_id);
-			notifyMe("left", params);   
-        } else {
-            logWrongServer();              
-			new UserEvent.Leave(this.id, user.id, room_id, this.session_id);
-		}
-	}
-
-	/**
-	 * Notify this user that someone has joined them in a room
-	 * @param otherUser the user joining the room
-	 * @param room_id the id of the room being joined */
-	public void notifyJoined (User otherUser, long room_id) {
-		if (!this.imOnMaster()) {
-          	HashMap<String, String> params 
-          	    = Notify.getNotifyJoinedParams(this.id, 
-          	                                   otherUser.id, 
-          	                                   otherUser.avatar, 
-          	                                   otherUser.alias, 
-          	                                   otherUser.heartbeatServer.uri, 
-          	                                   room_id, 
-          	                                   this.session_id);
-			notifyMe("joined", params);   
-        } else {
-            logWrongServer();              
-			new UserEvent.Join(this.id, 
-							   otherUser.id, 
-							   otherUser.avatar,
-							   otherUser.alias,
-							   otherUser.heartbeatServer.uri,
-							   room_id,
-							   this.session_id);
-		}
-	}
-
-	/**
-	 * Inform this user that one of their friends has logged out 
-	 * @param left_user the user_id of the user who has left */
-	public void notifyMeLogout (long left_user) {
-		if (!this.imOnMaster()) {
-          	HashMap<String, String> params 
-          	    = Notify.getNotifyLogoutParams(this.id, left_user);
-			notifyMe("logout", params);   
-        } else {
-            logWrongServer();              
-			new UserEvent.UserLogout(this.id, left_user, this.session_id);
-		}
-	}
-
-	/**
-	 * Inform this user that one of their friends has logged on
-	 * @param newUser the user who has logged on */
-	public void notifyMeLogin (User newUser) {
-		String name = newUser.alias;
-		String server = newUser.heartbeatServer.uri;
-		if (!this.imOnMaster()) {
-			HashMap<String, String> params
-			    = Notify.getNotifyLoginParams(this.id, newUser.id, name, server);
-			notifyMe("login", params);
-	    } else {
-			new UserEvent.UserLogon(this.id, newUser.id, name, server, this.session_id);
-		}		
-	}
 	
-	private void logWrongServer () {
-	    if (Play.mode != Play.Mode.DEV) {
-	        Logger.error("No users should be getting notifications on master");
-	    }
+	public List<UserSession> getSessions () {
+	    return UserSession.find("byUser", this).fetch();
 	}
-	
-	/**
-	 * Helper for previous notify functions; sends the given parameters
-	 * to the /notify/<code>action</code> url of this users heartbeat server
-	 * @param action the notify action to take, eg <code>login</code>, <code>logout</code>, etc...
-	 * @param params the parameters to pass along to that notified */	
-	private void notifyMe (String action, HashMap<String, String> params) {
-		String url = this.heartbeatServer.uri + "notify/" + action;
-        params.put("session_id", this.session_id);
-		WS.HttpResponse resp = Utility.fetchUrl(url, params);
-		JsonObject json = resp.getJson().getAsJsonObject();	
-		if (!json.get("status").getAsString().equals("okay")) {
-		    Logger.error("bad response from notification (%s)", url);
-		}	
-	}
+		
+	public boolean equals (Object obj) {
+	    if (obj == null ||
+            !(obj instanceof User)) {
+            return false;
+        }
+        User other = (User)obj;
+        return other.id == this.id;
+	}	
 			
 	/**
 	 * Return a user with id <code>user_id</code>, either an 
@@ -487,10 +305,10 @@ public class User extends Model {
     /**
      * Broadcast a message to all online users */
     public static void broadcast (String msg) {
-        List<User> users = User.findAll();
-        for (User u : users) {
-            System.out.println("broadcast to " + u.id);
-            u.sendMessage(User.admin_id, -1, msg);
+        List<UserSession> users = UserSession.findAll();
+        UserSession.Faux adminSess = new UserSession.Faux(User.admin_id, "dummy_session");
+        for (UserSession u : users) {
+            u.sendMessage(adminSess, -1, msg);
         }
     }
     
@@ -516,5 +334,29 @@ public class User extends Model {
                  || f.getName().equals("recentMeetings");
 		}
  	}
+	
+	/**
+	 * All the rooms this user is in
+	 * @return a list of all the rooms this user is participating in */
+	public Set<Room> getRooms () {
+	    List<UserSession> sessions = getSessions();
+	    Set<Room> roomSet = new HashSet<Room>();
+	    for (UserSession session : sessions) {
+	        roomSet.addAll(session.getRooms());
+	    }
+	    return roomSet;
+	}
+
+	/**
+	 * All the rooms this user is in
+	 * @return a list of all the rooms this user is participating in */
+	public Set<Room> getNonGroupRooms () {
+	    List<UserSession> sessions = getSessions();
+	    Set<Room> roomSet = new HashSet<Room>();
+	    for (UserSession session : sessions) {
+	        roomSet.addAll(session.getNonGroupRooms());
+	    }
+	    return roomSet;
+	}	
 		
 }
