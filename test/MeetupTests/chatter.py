@@ -76,13 +76,11 @@ class ChatTester(Thread):
         self.API.requestAndListen()
         for i in range(0, self.num_iters):
             self.API.heartbeat()
-            for r in range(0, 2):
-                room_id = self.randomRoom()
-                if room_id:
-                    messageID = self.messageTimer.nextID()
-                    self.messageTimer.sentMessage(messageID)
-                    self.API.messageRoom(messageID, room_id)
-                    time.sleep(.2)
+            room_id = self.randomRoom()
+            if room_id:
+                messageID = self.messageTimer.nextID()
+                self.messageTimer.sentMessage(messageID)
+                self.API.messageRoom(messageID, room_id)
             
             self.API.heartbeat()
             self.processListen()
@@ -116,7 +114,7 @@ class ChatTester(Thread):
     def speak(self, txt):
         print self.name, txt
     
-ROOT_ID = 1040
+ROOT_ID = random.randint(1, 10000000000)
 NUM_USERS = 8
 NUM_ITERS = 4000
 messageTimer =  MessageTimer()

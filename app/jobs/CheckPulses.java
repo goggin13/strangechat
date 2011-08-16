@@ -51,7 +51,7 @@ public class CheckPulses extends Job {
         // http://stackoverflow.com/questions/4784987/calling-system-gc-explicitly
         // if (counter++ % 900 == 0) {  // every 15 minutes
            // Logger.info("request Garbage Collection");
-           System.gc(); 
+           // System.gc(); 
         // }
     }
 
