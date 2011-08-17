@@ -2,6 +2,7 @@ package controllers;
 
 import models.User;
 import models.UserEvent;
+import models.WaitingRoom;
 import play.Play;
 import play.mvc.Before;
 import play.test.Fixtures;
@@ -23,11 +24,13 @@ public class Mock extends Index {
 
 	public static void resetEventQueue () {
         UserEvent.get().resetEventQueue();
+        WaitingRoom.get().flush();
 		returnOkay(null);
 	}
 
     public static void init () {
         UserEvent.get().resetEventQueue();
+        WaitingRoom.get().flush();
 		Fixtures.deleteDatabase();
         Fixtures.loadModels("data-full.yml");
     }

@@ -8,7 +8,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * This class maintains the collection of heartbeats and offers some
  * helper functions */
 public class HeartBeat {
-    
+	/** Amount of time a user can go without heartbeating before they are removed */
+	public static final int HEALTHY_HEARTBEAT = 6;
+	
+	/** A map of all the latest user_ids to heartbeats on this server */
+	public static List<HeartBeat> heartbeats = new CopyOnWriteArrayList<HeartBeat>();
+	    
     public long user_id;
     public long room_id;
     public String session;
@@ -33,9 +38,7 @@ public class HeartBeat {
         }
         HeartBeat other = (HeartBeat)obj;
         return other.user_id == this.user_id 
-               && ((other.room_id == -1
-                    && this.room_id == -1)
-                    || other.room_id == this.room_id)
+               && (other.room_id == this.room_id)
                && other.session.equals(this.session);
     }
     
@@ -43,12 +46,10 @@ public class HeartBeat {
     	heartbeats.remove(this);
     }
     
-	/** Amount of time a user can go without heartbeating before they are removed */
-	public static final int HEALTHY_HEARTBEAT = 6;
-	
-	/** A map of all the latest user_ids to heartbeats on this server */
-	public static List<HeartBeat> heartbeats = new CopyOnWriteArrayList<HeartBeat>();
-	
+    public String toString () {
+        return "<3 " + (this.room_id > 0 ? "[" + this.room_id + "] " : "") + this.user_id + "( " + this.session + " )";
+    }
+    	
 	/**
 	 * Update the heartbeat for the given user in the given room
 	 * @param room_id the id of the room to beat in

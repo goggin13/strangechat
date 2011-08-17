@@ -24,7 +24,8 @@ public class Application extends Index {
 	private static HashMap<String, String> getMasterStats () {
 		HashMap<String, String> stats = new HashMap<String, String>();
 		stats.put("users", User.count() + "");
-		stats.put("online", User.count("online", true) + "");
+		stats.put("online", User.count("select count(distinct user_id) from UserSession") + "");
+		stats.put("sessions", User.count("select count(*) from UserSession") + "");		
 		stats.put("rooms", Room.count() + "");
 		stats.put("waiting room", WaitingRoom.get().toString());
 		return stats;

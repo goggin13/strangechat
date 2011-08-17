@@ -68,8 +68,9 @@ public class Users extends Index {
 	public static void signout () {
 	    UserSession u = currentSession();
 		if (u != null) {
-		    WaitingRoom.get().remove(u.user.id, true);
+		    WaitingRoom.get().remove(u.user.id, u.session, true);
 		    u.logout();
+		    u.delete();
 			returnOkay();
 		} else {
 		    returnFailed("No valid user, session data passed (user_id, session)");
@@ -81,12 +82,13 @@ public class Users extends Index {
      * paired with you immediately if they are available, or whenever they do become available
      * @param user_id your user_id, so the random returned user isn't you 
      * @param callback optional JSONP callback*/
-    public static void requestRandomRoom () {
+    public static synchronized void requestRandomRoom () {
         UserSession user = currentSession();
         if (user == null) {
             returnFailed("No current session provided");
         }
         WaitingRoom.get().requestRandomRoom(user);
+        System.out.println(WaitingRoom.get());
         returnOkay();
     }	
     
@@ -126,12 +128,11 @@ public class Users extends Index {
 	    String masterURI = Server.getMasterServer().uri;
 		if (masterURI.equals(heartbeatURI)) {
 		    HeartBeat.beatFor(user.toFaux());
-		    new UserEvent.HeartBeat(user.id);		    
 		    return true;
 		} else {	
 			String url = heartbeatURI + "heartbeat";
 			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("for_user", user.id + "");
+			params.put("for_user", user.user.id + "");
 			WS.HttpResponse resp = Utility.fetchUrl(url, params);
 			JsonObject json = resp.getJson().getAsJsonObject();
 			return json.get("status").getAsString().equals("okay");
@@ -154,8 +155,6 @@ public class Users extends Index {
 	/**
 	 * Use the given power, and notify the relevant users.
 	 * @param power_id the id of a {@link StoredPower} to use
-	 * @param user_id the user using the power
-	 * @param other_id the other user in the room
 	 * @param room_id optional, the room the event is in */
 	public static void usePower (long power_id, long room_id) { 
         if (power_id <= 0) {

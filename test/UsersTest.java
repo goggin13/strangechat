@@ -138,8 +138,8 @@ public class UsersTest extends MyFunctionalTest {
 		assertTrue(newUser2.equals(k_db_id) || newUser2.equals(pmo_db_id));
 		assertFalse(newUser1.equals(newUser2));
 		
-		GET("/leaveroom?user_id=" + pmo_db_id + "&room_id=" + room_id);
-		GET("/leaveroom?user_id=" + k_db_id + "&room_id=" + room_id);		
+		GET("/leaveroom?user_id=" + pmo_db_id + "&room_id=" + room_id + "&session=" + pmo_session);
+		GET("/leaveroom?user_id=" + k_db_id + "&room_id=" + room_id + "&session=" + k_session);		
         
         // But now they should be eligible again
 	    requestRoomFor(pmo_db_id, pmo_session);
@@ -153,9 +153,8 @@ public class UsersTest extends MyFunctionalTest {
         data = getListenItem("join", k_db_id, 0);
         assertEquals(pmo_db_id + "", data.get("new_user").getAsString());
                 
-        // fade out of room
-		GET("/leaveroom?user_id=" + pmo_db_id + "&room_id=" + room_id);
-		GET("/leaveroom?user_id=" + k_db_id + "&room_id=" + room_id);
+		GET("/leaveroom?user_id=" + pmo_db_id + "&room_id=" + room_id + "&session=" + pmo_session);
+		GET("/leaveroom?user_id=" + k_db_id + "&room_id=" + room_id + "&session=" + k_session);
 
         JsonArray p_resp = getWholeListenResponse(pmo_db_id, 0);
         JsonArray k_resp = getWholeListenResponse(k_db_id, 0);
@@ -175,5 +174,4 @@ public class UsersTest extends MyFunctionalTest {
 		newUser1 = data.get("new_user").getAsLong();
 		assertTrue(newUser1 == pmo_db_id || newUser1 == k_db_id);		        
 	}
-	
 }

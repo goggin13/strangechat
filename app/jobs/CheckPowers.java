@@ -59,7 +59,7 @@ public class CheckPowers extends Job {
                 User from = getUser(rm.from); 
                 if (to == null || from == null) {
                     continue;
-                } 
+                }
                 String text = rm.text;
                 
                 if (text.equals(REVEAL_CODE)) {
@@ -83,7 +83,7 @@ public class CheckPowers extends Job {
                 if (user != null) {
                     user.joinCount += 1;
                     user.save();                    
-                }           
+                }
             } else if (event instanceof UserEvent.HeartBeat) {
                 UserEvent.HeartBeat hb = (UserEvent.HeartBeat)event;
                 User user = getUser(hb.for_user_id);                

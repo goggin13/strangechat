@@ -17,26 +17,7 @@ public class NotificationTests extends MyFunctionalTest {
 	public void setUp() {
 	    GET("/mock/init");
 	}
-	
-   @Test
-    public void testHeartbeatFadeout () {
-        requestRoomFor(pmo_db_id, pmo_session);
-	    requestRoomFor(k_db_id, k_session);
-        
-        // send one heartbeat to register
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("user_id", k_db_id + "");
-        params.put("session", k_session);
-        postAndAssertOkay("/heartbeat", params);
-        
-        goToSleep(9);
-        Promise<String> p = new CheckPulses().now();
-        goToSleep(2);       
-        
-    	JsonObject data = getListenItem("leave", pmo_db_id, 0);
-    	assertEquals(k_db_id + "", data.get("left_user").getAsString());
-    }
-        
+	        
     @Test
     public void testNotifyLogout () {
         notifyLogout(pmo_db_id, k_db_id);       

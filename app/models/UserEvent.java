@@ -103,9 +103,6 @@ public class UserEvent {
 			return this.user_id + " - " + this.session_id + " ( " + this.type + " )";
 		}
 		
-        // protected void finalize() {
-            // Logger.info("finalising event class");
-        // }
 	}
 	
 	/**

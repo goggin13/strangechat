@@ -27,6 +27,8 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.JsonObject;
 
+import java.util.Random;
+
 import controllers.Notify;
 import enums.Power;
 
@@ -135,7 +137,8 @@ public class User extends Model {
 	 * are online that they are available */	
 	public UserSession login () {
 		this.online = true;
-		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis());
+		Random r = new Random();
+		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis() + r.nextInt());
 		this.lastLogin = Utility.time();
 		this.populateSuperPowerDetails();
 		return new UserSession(this, this.session_id);

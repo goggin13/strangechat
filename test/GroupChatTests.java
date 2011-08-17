@@ -85,10 +85,6 @@ public class GroupChatTests extends MyFunctionalTest {
     
     @Test
     public void testBroadcastToGroups () {
-		signoutUser(pmo_db_id, pmo_session);
-        signoutUser(k_db_id, k_session);
-		signoutUser(rando_1_db, rando_1_session);
-        signoutUser(rando_2_db, rando_2_session);
         
         long room_id1 = joinGroupChat(pmo_db_id, pmo_session, "hashedkey!@#$");
         long room_id2 = joinGroupChat(k_db_id, k_session, "hashedkey!@#$");

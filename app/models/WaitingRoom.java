@@ -18,34 +18,34 @@ public class WaitingRoom {
 	 *  WILL BE OVERRIDDEN */
    public int remeetEligible = 0;
 	
-	/**
-	 * Maximum number of pending spots in the waiting room a single user can occupy */
+	/** Maximum number of pending spots in the waiting room a single user can occupy */
    public int spotsPerUser = 2;
     
    /** list of ids of people waiting to be matched up with someone to chat */
    private List<UserSession.Faux> waitingRoom = new CopyOnWriteArrayList<UserSession.Faux>();
    
    /**
-    * Return how many spots the given user is occupying 
+    * Return how many spots the given user is occupying, either in a room
+    * or in line to a room 
     * @param user_id to id of the user to count 
     * @return how many times they appear in the queue */
-   public int countSpots (long user_id) {
+   public int countSpots (User user) {
        int count = 0;
        for (UserSession.Faux slot : waitingRoom) {
-           if (slot.user_id == user_id) {
+           if (slot.user_id == user.id) {
                count++;
            }
        }
-       return count;
+       return count + user.getNonGroupRooms().size();
    }
    
    /**
     * @return the index of the given user in the waiting room, or -1 if not in line */
-   public int indexOf (long user_id) {
+   public int indexOf (long user_id, String session) {
        int i = -1;
        for (UserSession.Faux slot : waitingRoom) {
            i++;
-           if (slot.user_id == user_id) {
+           if (slot.user_id == user_id && slot.session.equals(session)) {
                return i;
            }
        }
@@ -69,7 +69,7 @@ public class WaitingRoom {
 		for (UserSession.Faux slot : waitingRoom) {
 			if (canBePaired(user, slot.toReal())) {
 				other = slot;
-				remove(slot.user_id, false);
+				remove(slot.user_id, slot.session, false);
 				break;
 			}
 		}			
@@ -77,10 +77,12 @@ public class WaitingRoom {
 		if (other != null) {
 		    UserSession otherSess = other.toReal();
 		    Room.createRoomFor(user, otherSess);	
-        } else if (countSpots(user.user.id) < spotsPerUser) {
-        	waitingRoom.add(user.toFaux());
+        } else {
+            while (countSpots(user.user) >= spotsPerUser) {
+                remove(user.user.id, user.session, false);
+            } 
+            waitingRoom.add(user.toFaux());            
         }
-
 	}   
    
    /**
@@ -88,14 +90,14 @@ public class WaitingRoom {
     * @param user_id the id to remove from the room 
     * @param removeAll if true, remove all of the occurences of this user,
     *                  else just one */
-   public void remove (long user_id, boolean removeAll) {
-       int index = indexOf(user_id);
+   public void remove (long user_id, String session, boolean removeAll) {
+       int index = indexOf(user_id, session);
        while (index > -1) {
            waitingRoom.remove(index);
            if (!removeAll) {
                return;
            }
-           index = indexOf(user_id);
+           index = indexOf(user_id, session);
        } 
    }
    

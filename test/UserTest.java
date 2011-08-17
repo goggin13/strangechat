@@ -102,7 +102,10 @@ public class UserTest extends UnitTest {
         r.addUsers(pmo_sess, rando_1_sess);
         r = new Room(8);
         r.addUsers(pmo_sess, rando_2_sess);   
-		assertFalse(Room.hasMetRecently(k_db_id, pmo_db_id, 1));				
+		assertFalse(Room.hasMetRecently(k_db_id, pmo_db_id, 1));
+		
+		assertEquals(3, pmo.getRooms().size());				
+		assertEquals(3, pmo.getNonGroupRooms().size());				
 	}
 	
     // @Test

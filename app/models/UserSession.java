@@ -218,7 +218,6 @@ public class UserSession extends Model {
 	 * are online that they are no longer available */	
 	public void logout () {
 	    Logger.info(this.user.id + " logging out");
-		this.user.online = false;
 		this.removeMeFromRooms();
 		this.save();
 	}
@@ -230,7 +229,7 @@ public class UserSession extends Model {
 	    HashMap<UserSession, Long> users = new HashMap<UserSession, Long>();
 	    for (Room r : roomSet) {
             for (UserSession uSess : r.participants) {
-                if (uSess.user.id != this.id) {
+                if (uSess.user.id != this.user.id) {
                     users.put(uSess, r.room_id);
                 }
             }
@@ -253,18 +252,22 @@ public class UserSession extends Model {
 	 * All the rooms this user is in
 	 * @return a list of all the rooms this user is participating in */
 	public Set<Room> getNonGroupRooms () {
-	    List<Room> roomList = Room.find(
-	        "select distinct r from Room r join r.participants as p where p = ? and r.groupKey = ?", this, ""
-	    ).fetch();
-	    Set<Room> roomSet = new HashSet<Room>(roomList);
-	    return roomSet;
-	}
+	    Set<Room> roomList = getRooms();
+	    List<Room> nonGroupList = new LinkedList<Room>();
+	    for (Room r : roomList) {
+	       if (r.groupKey == null || r.groupKey.equals("")) {
+	           nonGroupList.add(r);
+	       }
+	    }
+	    Set<Room> nonGroupSet = new HashSet<Room>(nonGroupList);
+	    return nonGroupSet;
+   }
 		 
    public String toString () {
        return this.user.id + " (" + this.session + ")";
    }	
-	
-   public UserSession.Faux toFaux() {
+   
+   public UserSession.Faux toFaux () {
 	   return new Faux(this.user.id, this.session);
    }
     
@@ -281,12 +284,15 @@ public class UserSession extends Model {
        }
        
        public UserSession toReal () {
-           System.out.println("id = " + user_id + ", sess = " + session);
            UserSession sess = UserSession.find("byUser_idAndSession", user_id, session).first();
            if (sess == null) {
                Logger.error("Called toReal() on UserSession.Faux which doesnt map to real object");
            }
     	   return sess;
+       }
+       
+       public String toString () {
+           return "(" + user_id + ", " + session + ")";
        }
    }
 }

@@ -1,22 +1,22 @@
-/*global document: false, Util, $: false, base_url: false, alert: false, sign_up_in_prompt:false, AjaxLoader:false, SignUp:false, oApp, jQuery */
+/*global document: false, MyUtil, $: false, base_url: false, alert: false, sign_up_in_prompt:false, AjaxLoader:false, SignUp:false, oApp, jQuery */
 /*jslint white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
 
-var Util = (function (user_id, avatar, alias, callback) {
-	var that = {};
-	
-	that.debug = function (msg) {
-		console.debug(msg);
-	};
-	
-	that.removeFromArray = function (arr, ele) {
-		var index = $.inArray(ele, arr);
-		if (index === -1) {
-			return;
-		}
-		arr.splice(index, 1);
-	};
-	
-	return that;
+var MyUtil = (function (user_id, avatar, alias, callback) {
+ var that = {};
+ 
+ that.debug = function (msg) {
+   console.debug(msg);
+ };
+ 
+ that.removeFromArray = function (arr, ele) {
+   var index = $.inArray(ele, arr);
+   if (index === -1) {
+     return;
+   }
+   arr.splice(index, 1);
+ };
+ 
+ return that;
 }());
 
 var ChatAPI = function (user_id, avatar, alias, callback) {
@@ -78,8 +78,9 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     }
     var hash = url + "?" + serialize(data);
     
-    if (hash.indexOf("heartbeat") === -1 && hash.indexOf('imtyping') === -1) {
-      Util.debug("GET " + hash);
+    // hash.indexOf("heartbeat") === -1 && 
+    if (hash.indexOf('imtyping') === -1) {
+      MyUtil.debug("GET " + hash);
     }
     
 	  $.ajaxSetup({cache: false});  // required for IE to not cache AJAX requests    
@@ -90,19 +91,19 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
         dataType: 'json',
         success: function(JSON) {
           if (!JSON.hasOwnProperty('status')) {
-            Util.debug(JSON);
+            MyUtil.debug(JSON);
           } else if (JSON.status == "error") {
-            Util.debug("ERROR!!!");
-            Util.debug(JSON);
+            MyUtil.debug("ERROR!!!");
+            MyUtil.debug(JSON);
           }
           if (callback) {
             callback(JSON, hash);
           }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-          Util.debug("BAD RESPONSE");
-          Util.debug(textStatus);
-          Util.debug(errorThrown);
+          MyUtil.debug("BAD RESPONSE");
+          MyUtil.debug(textStatus);
+          MyUtil.debug(errorThrown);
         }
     });
     return hash;
@@ -136,11 +137,12 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     my.currentListen = that.send(url, "GET", data, function (JSON, hash) {
       var response = {};
       $.each(JSON, function (key, val) {
-        var d = val.data;
-        if ((d.type === "userlogon" || d.type === "join") && !MyContacts.has(d.new_user)) {
+        var d = val.data,
+          isErr = d.hasOwnProperty("status") && d.status == "error";
+        if (!isErr && (d.type === "userlogon" || d.type === "join")) {
           MyContacts.put(d.new_user, d.name, d.alias, d.server, d.avatar, d.new_session, d);
         }
-        if (d.type === "join") {
+        if (!isErr && d.type === "join") {
           my.im_talking_to[val.data.new_user] = val.data.room_id;
         }          
         response[key] = val;
@@ -285,7 +287,8 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
       data = {
         user_id: that.user_id,
         power_id: power_id,
-        other_id: isGroup ? -1 : other_id,
+        for_user: isGroup ? -1 : other_id,
+        for_session: isGroup ? "" : MyContacts.getSessionId(other_id),
         room_id: room_id,
       };
     that.send(url, "POST", data, callback);
@@ -297,7 +300,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
         user_id: that.user_id,
         room_id: room_id
       };
-    Util.removeFromArray(my.room_ids, room_id);
+    MyUtil.removeFromArray(my.room_ids, room_id);
     that.send(url, "POST", data, function (JSON) {
     });
   };

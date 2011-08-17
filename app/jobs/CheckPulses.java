@@ -53,7 +53,12 @@ public class CheckPulses extends Job {
 	
 	private static void broadcastLogout (Long user_id, String session) {
 		if (Server.onMaster()) {
-		    WaitingRoom.get().remove(user_id, true);
+		    WaitingRoom.get().remove(user_id, session, true);
+		    UserSession sess = UserSession.getFor(user_id, session);
+		    if (sess != null) {
+    		    sess.logout();
+    		    sess.delete();		        
+		    }
 		} else {	
 			String url = Server.getMasterServer().uri + "signout";
 			HashMap<String, String> params = new HashMap<String, String>();

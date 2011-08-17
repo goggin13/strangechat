@@ -16,9 +16,6 @@ public class PowerRewardsTest extends MyFunctionalTest {
 	       
 	@Test
 	public void testCloning () {
-		signoutUser(pmo_db_id, pmo_session);
-        signoutUser(k_db_id, k_session);
-		signoutUser(rando_1_db, rando_1_session);
 				
 		// chat 20 messages so we can get a new power (woo hoo!)
 		int msgCount = Cloning.CHAT_MSGS_REQUIRED + 2;
@@ -52,8 +49,6 @@ public class PowerRewardsTest extends MyFunctionalTest {
         requestRoomFor(pmo_db_id, pmo_session);
         requestRoomFor(rando_1_db, rando_1_session);
         
-        // data = getListenItem("join", pmo_db_id, 0);
-        // assertEquals(rando_1_db, data.get("new_user").getAsLong());
         data = getListenItem("join", rando_1_db, 0);
         assertEquals(pmo_db_id, data.get("new_user").getAsLong());
         

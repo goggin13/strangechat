@@ -59,7 +59,9 @@ public class Notify extends Index {
 		int tries = 0;
 		int maxTries = 100;
 		do {
+        System.out.println("WAITING FOR " + sess.user_id + " : " + sess.session);		    
 			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.get().nextEvents(lastReceived));
+        System.out.println("CONSIDERING " + sess.user_id + " : " + sess.session);		    			
 			for (IndexedEvent<UserEvent.Event> e : events) {
 				if (e.data.user_id == sess.user_id &&
 				    e.data.session_id.equals(sess.session)) {
@@ -69,6 +71,10 @@ public class Notify extends Index {
 			}			
 		} while (returnData.size() == 0 && tries++ < maxTries);
 
+        System.out.println("RETURNING FOR " + sess.user_id + " : " + sess.session);
+        for (IndexedEvent<UserEvent.Event> es : returnData) {
+            System.out.println("\t" + es.data.type);
+        }
 		renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType()
@@ -311,7 +317,8 @@ public class Notify extends Index {
     																  long user_id, 
     																  String session, 
     																  String msg, 
-    																  Long room_id) {
+    																  Long room_id) 
+    {
     	HashMap<String, String> params = getBasic(for_user, for_session, user_id, session);
         params.put("msg", msg);
         params.put("room_id", room_id.toString());

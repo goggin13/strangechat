@@ -75,12 +75,10 @@ public class Room extends Model {
 		this.participants.remove(left);
 		if (this.participants.size() > 0) {
 			this.save();
-			if (this.groupKey == null || this.groupKey.equals("")) {
-    			for (UserSession u : this.participants) {
-    				u.notifyLeftRoom(left.toFaux(), room_id);
-                    left.notifyLeftRoom(u.toFaux(), room_id);
-    			}			    
-			}			
+			for (UserSession u : this.participants) {
+				u.notifyLeftRoom(left.toFaux(), room_id);
+                left.notifyLeftRoom(u.toFaux(), room_id);
+			}			    
 		} else {
 			this.delete();
 		}		
@@ -95,9 +93,7 @@ public class Room extends Model {
             return;
         }
 	    for (UserSession p : this.participants) {
-	        System.out.println("tell " + p.user.id + " that " + u.user.id + " joined");
 	        p.notifyJoined(u, this.room_id);
-	        System.out.println("tell " + u.user.id + " that " + p.user.id + " joined");	        
 	        u.notifyJoined(p, this.room_id);
 	    }
 	    this.participants.add(u);
