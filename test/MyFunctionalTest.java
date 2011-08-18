@@ -106,6 +106,10 @@ public class MyFunctionalTest extends FunctionalTest {
         return returnData;
     }	
 	
+	protected void heartbeatFor (long user_id) {
+	    heartbeatFor(user_id, sessionMap.get(user_id));
+	}
+	
 	protected void heartbeatFor (long user_id, String sess) {
 	    HashMap<String, String> params = new HashMap<String, String>();
 	    params.put("user_id", user_id + "");

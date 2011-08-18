@@ -11,6 +11,8 @@ import play.libs.F.Promise;
 
 import com.google.gson.JsonObject;
 
+import controllers.Notify;
+
 public class NotificationTests extends MyFunctionalTest {
 			
 	@org.junit.Before
@@ -18,7 +20,7 @@ public class NotificationTests extends MyFunctionalTest {
 	    GET("/mock/init");
 	}
 	        
-    @Test
+   @Test
     public void testNotifyLogout () {
         notifyLogout(pmo_db_id, k_db_id);       
 
@@ -170,5 +172,27 @@ public class NotificationTests extends MyFunctionalTest {
         assertEquals(User.admin_id, data.get("from").getAsLong());
         assertEquals("test broadcast", data.get("text").getAsString());
 		
+    }
+    
+    @Test
+    public void testNotifyFlushBeats () {
+        heartbeatFor(pmo_db_id, pmo_session);
+        HashMap<String, String> params = Notify.getFlushHeartBeatParams(pmo_db_id, pmo_session);
+        JsonObject jsonObj = postAndValidateResponse("/notify/flushheartbeats", params);
+        assertEquals("okay", jsonObj.get("status").getAsString());
+    }
+ 
+    @Test 
+    public void testNotifyIsAlive () {
+        heartbeatFor(pmo_db_id, pmo_session);
+        HashMap<String, String> params = Notify.getCheckAliveParams(pmo_db_id, pmo_session);
+        JsonObject jsonObj = postAndValidateResponse("/notify/isalive", params);
+        assertEquals("okay", jsonObj.get("status").getAsString());
+        assertEquals(true, jsonObj.get("message").getAsBoolean());
+        
+        signoutUser(pmo_db_id, pmo_session);
+        jsonObj = postAndValidateResponse("/notify/isalive", params);
+        assertEquals("okay", jsonObj.get("status").getAsString());
+        assertEquals(false, jsonObj.get("message").getAsBoolean());        
     }
 }

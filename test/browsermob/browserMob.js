@@ -38,11 +38,10 @@ var sendChat = function (msg) {
 
 sendChat("hello " + theirName + ", " + " my name is " + myName);
 
-for (i = 1; i < 11; i++) {  
+for (i = 1; i < 25; i++) {  
   sendChat(myName + " hello" + i);    
   selenium.waitForTextPresent(theirName + " hello" + i);
 }
 
-selenium.click("css=.chat_box.chatting .leave_chat");
 browserMob.endStep();
 browserMob.endTransaction();

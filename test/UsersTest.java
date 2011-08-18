@@ -69,6 +69,9 @@ public class UsersTest extends MyFunctionalTest {
 	
 	@Test
 	public void testMeetUpFunction () {
+	    heartbeatFor(pmo_db_id);
+	    heartbeatFor(k_db_id);
+	    	    
 		// pmo registers to get paired
 	    requestRoomFor(pmo_db_id, pmo_session);
 
