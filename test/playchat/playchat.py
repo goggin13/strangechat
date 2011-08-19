@@ -52,7 +52,7 @@ class MessageTimer ():
                     totalDiff += diffSecs
                     totalReceived += 1
                     curCount += 1
-                    if total - curCount < tailLength:
+                    if curCount > (total - tailLength):
                         tailDiff += diffSecs
                         curTailCount += 1
             totalCount = len(self.messages)
