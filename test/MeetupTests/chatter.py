@@ -128,7 +128,7 @@ class ChatTester(Thread):
     
 ROOT_ID = random.randint(1, 10000000000)
 NUM_USERS = 8
-NUM_ITERS = 4000
+NUM_ITERS = 1000
 messageTimer =  MessageTimer()
 thread_queue = Queue.Queue()
 
