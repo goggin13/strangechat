@@ -105,7 +105,7 @@ class ChatTester(Thread):
                     self.messageTimer.gotMessage(int(messageID))
             
 ROOT_ID = random.randint(1, 10000)
-NUM_USERS = 8
+NUM_USERS = 4
 NUM_ITERS = 4000
 messageTimer =  MessageTimer()
 thread_queue = Queue.Queue()
