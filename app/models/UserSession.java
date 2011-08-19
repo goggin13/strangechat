@@ -262,6 +262,37 @@ public class UserSession extends Model {
 	    Set<Room> nonGroupSet = new HashSet<Room>(nonGroupList);
 	    return nonGroupSet;
    }
+	
+   /**
+    * Contact this users heartbeat server and ensure there is still a 
+    * heartbeat for them */
+   public boolean doubleCheckImAlive () {
+       	if (!this.imOnMaster()) {
+       	    String url = this.user.heartbeatServer.uri + "notify/isalive";
+         	HashMap<String, String> params = Notify.getCheckAliveParams(this.user.id, this.session);
+         	JsonObject json = Utility.fetchUrl(url, params).getJson().getAsJsonObject();
+			return json.get("status").getAsString().equals("okay");
+       } else {
+           return HeartBeat.isAlive(this.user.id, this.session);
+		}
+   }
+   
+   /**
+    * contact this users heartbeat server and inform them
+    * this user has logged out
+    * @return <code>false</code> if error contacting server */
+   public boolean flushMyHeartBeats () {
+       if (!this.imOnMaster()) {
+           HashMap<String, String> params = Notify.getFlushHeartBeatParams(this.user.id, this.session);
+           String url = this.user.heartbeatServer.uri + "notify/flushheartbeats";
+           JsonObject json = Utility.fetchUrl(url, params).getJson().getAsJsonObject();
+    	   return json.get("status").getAsString().equals("okay");
+       } else {
+           HeartBeat.removeAll(this.toFaux());
+           return true;
+       }
+     
+   }
 		 
    public String toString () {
        return this.user.id + " (" + this.session + ")";

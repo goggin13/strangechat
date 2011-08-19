@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.AbstractMap;
 
 import play.Logger;
 import play.libs.F.ArchivedEventStream;
@@ -20,14 +22,18 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import enums.Power;
+import controllers.Index;
 
 /* 
  * A wrapper for the UserEvent classes.  See comment on {@link Event} for 
  * more detail */
 public class UserEvent {
-    private static final int streamSize = 2000;
-	final private ArchivedEventStream<UserEvent.Event> userEvents = new ArchivedEventStream<UserEvent.Event>(streamSize);
-	
+    private static final int adminStreamSize = 2000;
+    private static final int userStreamSize = 100;
+    final private ArchivedEventStream<UserEvent.Event> adminEvents = new ArchivedEventStream<UserEvent.Event>(adminStreamSize);
+	private static AbstractMap<Long, ArchivedEventStream<UserEvent.Event>> eventStreams = 
+	        new ConcurrentHashMap<Long, ArchivedEventStream<UserEvent.Event>>();
+	        
 	/**
      * For long polling, as we are sometimes disconnected, we need to pass 
      * the last event seen id, to be sure to not miss any message.  Gets the
@@ -36,8 +42,14 @@ public class UserEvent {
 	 * 						with ids greater than lastReceived are returned
 	 * @return list of messages with ids > lastReceived
      */
-    public Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents (long lastReceived) {
-        return userEvents.nextEvents(lastReceived);
+    public Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents (long user_id, long lastReceived) {
+        Index.ATimer t = new Index.ATimer("get_activity_stream");
+        ArchivedEventStream<UserEvent.Event> stream = getOrCreateStream(user_id);
+        t.stop();
+        Index.ATimer t2 = new Index.ATimer("get_promise");
+        Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents = stream.nextEvents(lastReceived);
+        t2.stop();
+        return nextEvents;
     }
 
 	/**
@@ -45,25 +57,42 @@ public class UserEvent {
 	 * @return list of all messages in the queue
      */
     public List<UserEvent.Event> currentMessages () {
-		List<UserEvent.Event> events = userEvents.archive();
+		List<UserEvent.Event> events = adminEvents.archive();
 		Collections.reverse(events);
         return events;
     }
     
     public List<IndexedEvent> availableEvents (long lastReceived) {
-        return userEvents.availableEvents(lastReceived);
+        return adminEvents.availableEvents(lastReceived);
     }
 
-    public void publish (Event e) {
-        userEvents.publish(e); 
+    public void publish (long user_id, Event e) {
+        if (!e.type.equals("dummy")) {
+            getOrCreateStream(user_id).publish(e);
+        }
+        adminEvents.publish(e);
+    }
+
+    private ArchivedEventStream<UserEvent.Event> getOrCreateStream (long user_id) {
+        ArchivedEventStream<UserEvent.Event> eventStream;
+        if (eventStreams.containsKey(user_id)) {
+          // System.out.println("return existing stream for " + user_id);
+          eventStream = eventStreams.get(user_id);  
+        } else {
+          // System.out.println("start new stream for " + user_id);
+          eventStream = new ArchivedEventStream<UserEvent.Event>(userStreamSize); 
+          eventStreams.put(user_id, eventStream);
+        }
+        return eventStream;
     }
 
 	/**
 	 * Reset the user event queue, flushing out existing events */
     public void resetEventQueue () {
-        for (int i = 0; i < streamSize; i++) {
-            publish(new DummyEvent());
+        for (int i = 0; i < adminStreamSize; i++) {
+            publish(-1, new DummyEvent());
         }
+        eventStreams.clear();
     }
 
 	/**
@@ -96,7 +125,9 @@ public class UserEvent {
 	        if (this.user_id != -1) {
                System.out.println(this);
             }
-            UserEvent.get().publish(this);
+            if (!this.type.equals("dummy")) {
+                UserEvent.get().publish(this.user_id, this);
+            }            
 	    }
 	    
 		public String toString () {

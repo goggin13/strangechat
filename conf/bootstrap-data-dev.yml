@@ -3,7 +3,7 @@
 
 Server(master):
   name: master.com
-  uri: http://localhost:9000/
+  uri: http://10.0.1.50:9000/
   roomCount: 4
   nextID: 1
   isMaster: true
@@ -12,7 +12,7 @@ Server(master):
 
 Server(chat1):
   name: chat1.com
-  uri: http://localhost:9000/
+  uri: http://10.0.1.50:9000/
   roomCount: 4
   nextID: 1
   isMaster: false

@@ -9,8 +9,9 @@
 
 #{if isDev}
 	<a href="@{Application.specrunner()}">Jasmine tests</a><br/>
-	<a href="@tests">Unit tests</a>
+	<a href="@tests">Unit tests</a><br/>
 #{/if}
+<a href="@{Notify.timers()}">Timers</a>
 
 #{if amMaster} 
 	<p>I'm the Master server <br/>

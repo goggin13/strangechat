@@ -77,6 +77,36 @@ public class HeartBeat {
         beatInRoom(-1L, user_id, session_id);
 	}
 	
+	public static boolean isAlive (long user_id, String session) {
+	    for (HeartBeat beat : heartbeats) {
+	        if (beat.user_id == user_id &&
+	            beat.session.equals(session)) {
+	                return true;
+	        }    
+	    }
+	    return false;
+	}
+	
+	public static int indexOf (UserSession.Faux sess) {
+	    int i = -1;
+        for (HeartBeat beat : heartbeats) {
+            i++;
+            if (beat.user_id == sess.user_id 
+                && beat.session.equals(sess.session)) {
+                return i;
+            }
+        }
+        return -1;
+	}
+	
+	public static void removeAll (UserSession.Faux sess) {
+	    int index = indexOf(sess);
+	    while (index > -1) {
+	        heartbeats.remove(index);
+	        index = indexOf(sess);
+	    } 
+	}
+	
 	public static List<HeartBeat> getHeartBeats () {
 	    return heartbeats;
 	}

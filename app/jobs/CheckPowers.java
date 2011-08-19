@@ -14,7 +14,7 @@ import controllers.Index;
 import java.lang.reflect .*;
 
 
-@Every("10s")
+// @Every("10s")
 public class CheckPowers extends Job {
     private static HashMap<String, Long> lastReceived = new HashMap<String, Long>();
     private static Set<Long> myUsers = new HashSet<Long>();
@@ -28,7 +28,6 @@ public class CheckPowers extends Job {
         if (!Server.onMaster()) {
             return;
         }
-        
         
         List<String> processedURIs = new LinkedList<String>();
         List<Server> chatServers = Server.getChatServers();        

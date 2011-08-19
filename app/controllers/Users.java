@@ -64,15 +64,25 @@ public class Users extends Index {
 	}
 	
 	/**
-	 * Mark this user as offline; remove them from the waiting room */
-	public static void signout () {
-	    UserSession u = currentSession();
-		if (u != null) {
-		    WaitingRoom.get().remove(u.user.id, u.session, true);
-		    u.logout();
-		    u.delete();
+	 * Mark this user as offline; remove them from the waiting room;
+	 * @param fromChatServer if this is <code>true</code>, then it means
+	 * we are getting this request from their chat server.  They will have
+	 * already silenced this users heartbeat.  If we are not getting this from
+	 * the chat server, we should contact their chat server, and tell them
+	 * to flush this heartbeat. */
+	public static void signout (boolean fromChatServer) {
+	    UserSession sess = currentSession();
+	    UserSession.Faux sessFaux = currentFauxSession();
+		if (sess != null) {
+		    sess.flushMyHeartBeats();
+		    WaitingRoom.get().remove(sess.user.id, sess.session, true);
+		    sess.logout();
+		    sess.delete();
 			returnOkay();
 		} else {
+		    if (sessFaux != null) {
+		        WaitingRoom.get().remove(sessFaux.user_id, sessFaux.session, true);
+		    }
 		    returnFailed("No valid user, session data passed (user_id, session)");
 		}
 	}

@@ -67,10 +67,18 @@ public class WaitingRoom {
 	    
 		UserSession.Faux other = null;
 		for (UserSession.Faux slot : waitingRoom) {
-			if (canBePaired(user, slot.toReal())) {
-				other = slot;
-				remove(slot.user_id, slot.session, false);
-				break;
+		    UserSession waiting = slot.toReal();
+			if (canBePaired(user, waiting)) {
+			    boolean isAlive = waiting.doubleCheckImAlive();
+			    
+			    // either way, remove this user from the waiting room
+			    remove(slot.user_id, slot.session, false);
+			    
+			    // if they are alive, then pair them up
+			    if (isAlive) {
+			        other = slot;
+			        break;
+			    }
 			}
 		}			
 

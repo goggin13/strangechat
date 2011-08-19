@@ -278,7 +278,7 @@ public class User extends Model {
 	public List<UserSession> getSessions () {
 	    return UserSession.find("byUser", this).fetch();
 	}
-		
+			
 	public boolean equals (Object obj) {
 	    if (obj == null ||
             !(obj instanceof User)) {

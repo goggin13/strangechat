@@ -15,6 +15,7 @@ import controllers.Users;
 
 @Every("5s")
 public class CheckPulses extends Job {
+	private static int counter;
 	
 	public void doJob() {
         if (!Server.imAChatServer()) {
@@ -32,6 +33,12 @@ public class CheckPulses extends Job {
                 beat.remove();
             }
         }
+        
+        // call every 3 hours (60 * 60 * 3 / 5)
+        if (counter++ % 2160 == 0) {
+            System.gc();
+        }
+        
     }
 
 	private static void broadcastLeaveRoom (Long room_id, Long user_id, String session) {
@@ -55,11 +62,13 @@ public class CheckPulses extends Job {
 		if (Server.onMaster()) {
 		    WaitingRoom.get().remove(user_id, session, true);
 		    UserSession sess = UserSession.getFor(user_id, session);
+		    HeartBeat.removeAll(new UserSession.Faux(user_id, session));
 		    if (sess != null) {
     		    sess.logout();
     		    sess.delete();		        
 		    }
 		} else {	
+		    HeartBeat.removeAll(new UserSession.Faux(user_id, session));
 			String url = Server.getMasterServer().uri + "signout";
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("user_id", user_id.toString());

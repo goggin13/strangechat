@@ -5,7 +5,9 @@ var MyUtil = (function (user_id, avatar, alias, callback) {
  var that = {};
  
  that.debug = function (msg) {
-   console.debug(msg);
+   if (window.console) {
+     console.debug(msg);      
+   }
  };
  
  that.removeFromArray = function (arr, ele) {
@@ -34,7 +36,8 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   my.HEARTBEAT_FREQUENCY = 5000;
   my.inputsToWatch = [];
   my.room_ids = [];
-  my.lastReceived = 0;    
+  my.lastReceived = 0;   
+  my.waitingForJoin = 0; 
   my.session_id = null;
   my.im_talking_to = {}; // map user_ids to room_ids
   that.superPowers = []; // filled after login so clients can retrieve
@@ -113,7 +116,9 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   // As soon as you call Leaveroom with this id, it will automatically
   // remove you. 
   that.beatInRoom = function (room_id) {
-    my.room_ids.push(room_id);
+    if ($.inArray(my.room_ids, room_id) == -1) {
+      my.room_ids.push(room_id);
+    }
   };
 
   // assign the message function to be called when 
@@ -135,17 +140,31 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
         lastReceived: lastReceived
       };
     my.currentListen = that.send(url, "GET", data, function (JSON, hash) {
-      var response = {};
+      var response = {},
+        joins = {}; // room_id => event-id
+        
       $.each(JSON, function (key, val) {
         var d = val.data,
           isErr = d.hasOwnProperty("status") && d.status == "error";
+          
+        response[key] = val;          
+        
         if (!isErr && (d.type === "userlogon" || d.type === "join")) {
           MyContacts.put(d.new_user, d.name, d.alias, d.server, d.avatar, d.new_session, d);
         }
-        if (!isErr && d.type === "join") {
+        if (!isErr && d.type === "leave" 
+                   && joins.hasOwnProperty(val.data.room_id)) {
+          my.waitingForJoin++;
+          delete response[key];
+          delete response[joins[val.data.room_id]];
+          MyUtil.debug("ReRequesting");
+          that.requestRandomRoom();
+        } else if (!isErr && d.type === "join") {
           my.im_talking_to[val.data.new_user] = val.data.room_id;
+          my.waitingForJoin--;
+          joins[val.data.room_id] = key;
         }          
-        response[key] = val;
+        
       });
       my.messageHandler(response);
       if (hash === my.currentListen) {
@@ -252,6 +271,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
       data = {
         user_id: that.user_id
       };
+    my.waitingForJoin++;  
     that.send(url, "POST", data, function (JSON) {
     });
   };
@@ -340,7 +360,7 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
       };
     that.send(url, "GET", data, function (JSON) {
       if (JSON.status == "okay") {
-        my.room_ids.push(JSON.message);
+        that.beatInRoom(JSON.message);
         if (callback) {
           callback(JSON);
         }        

@@ -11,7 +11,8 @@ import models.UserSession;
 import play.libs.F.IndexedEvent;
 import play.data.validation.Required;
 import models.eliza.Eliza;
-
+import play.libs.F.T2;
+import java.util.AbstractMap;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -20,6 +21,16 @@ import com.google.gson.reflect.TypeToken;
  * for the individual chat servers, as well as providing an interface for
  * clients to listen to. */  
 public class Notify extends Index {
+	
+	public static void flushtimers () {
+	    myTimer.flushTimers();
+	    timers();
+	}
+	
+	public static void timers () {
+	    AbstractMap<String, T2<Long, Long>> timers = myTimer.getTimers();
+        render(timers);
+    }
 	
 	/**
 	 * This is the admin function for listening to events on this server.  It does not long poll.
@@ -51,30 +62,21 @@ public class Notify extends Index {
 						   will assign to the most current event
 	 */	
 	public static void listen (Long lastReceived) {
+	    
 	    UserSession.Faux sess = currentFauxSession();
 		if (sess == null) {
 			returnFailed("no user_id, session provided");
 		}
-		List<IndexedEvent<UserEvent.Event>> returnData = new LinkedList<IndexedEvent<UserEvent.Event>>();
-		int tries = 0;
-		int maxTries = 100;
-		do {
-        System.out.println("WAITING FOR " + sess.user_id + " : " + sess.session);		    
-			List<IndexedEvent<UserEvent.Event>> events = await(UserEvent.get().nextEvents(lastReceived));
-        System.out.println("CONSIDERING " + sess.user_id + " : " + sess.session);		    			
-			for (IndexedEvent<UserEvent.Event> e : events) {
-				if (e.data.user_id == sess.user_id &&
-				    e.data.session_id.equals(sess.session)) {
-					returnData.add(e);
-				}
-				lastReceived = e.id; 
-			}			
-		} while (returnData.size() == 0 && tries++ < maxTries);
-
-        System.out.println("RETURNING FOR " + sess.user_id + " : " + sess.session);
+		
+		ATimer t = new ATimer("waiting_on_events");
+		List<IndexedEvent<UserEvent.Event>> returnData = 
+		    await(UserEvent.get().nextEvents(sess.user_id, lastReceived));
+		t.stop();
+		    
         for (IndexedEvent<UserEvent.Event> es : returnData) {
             System.out.println("\t" + es.data.type);
         }
+        
 		renderJSONP(
 			returnData, 
 			new TypeToken<List<IndexedEvent<UserEvent.Event>>>() {}.getType()
@@ -143,9 +145,9 @@ public class Notify extends Index {
 	public static void message (@Required String msg) {
         if (validation.hasErrors()) {
             returnFailed(validation.errors());
-        }	    
+        }	
 		UserSession.Faux for_sess = currentForFauxSession();
-		UserSession.Faux from_sess = currentFauxSession();	
+		UserSession.Faux from_sess = currentFauxSession();
 		UserEvent.get().addDirectMessage(for_sess.user_id, from_sess.user_id, msg, for_sess.session);
 		returnOkay();
 	}
@@ -155,6 +157,7 @@ public class Notify extends Index {
 	 * @param msg the text of the message being sent
 	 * @param room_id the pertinent room for this message  */
     public static void roomMessage (@Required String msg, @Required Long room_id) {
+        ATimer t = new ATimer("message");
         if (validation.hasErrors()) {
             returnFailed(validation.errors());
         }
@@ -163,6 +166,7 @@ public class Notify extends Index {
         for (UserSession.Faux for_sess : for_sessions) {
             UserEvent.get().addRoomMessage(for_sess.user_id, from_sess.user_id, room_id, msg, for_sess.session);
         }
+        t.stop();
         returnOkay();
     }
 	
@@ -215,7 +219,6 @@ public class Notify extends Index {
 	 * alive in the system. Once their heartbeat fades for more than 
 	 * <code>User.HEALTHY_HEARTBEAT</code> seconds, the master is notified that this 
 	 * user logged out 
-	 * @param for_user the user_id of the user logging out 
 	 * @param room_ids optional, list of rooms this user is currently in */
 	public static void heartbeat (List<Long> room_ids) {
 	    UserSession.Faux sess = currentFauxSession();
@@ -232,12 +235,53 @@ public class Notify extends Index {
 		returnOkay();
 	}
 	
+	/**
+	 * return a message indicating whether the given user is alive or dead, eg if
+	 * there is a remaining heartbeat for them.  The function will return the normal JSON
+	 * response, e.g. a two element map of "status" and "message".  If the user is alive, 
+	 * you will get "status" => "okay" and "message" => "true".  If dead, message will read false. */
+	public static void isalive (long check_user, String check_session) {
+        if (validation.hasErrors()) {
+            returnFailed(validation.errors());
+        }	    
+	    returnOkay(HeartBeat.isAlive(check_user, check_session) 
+	               ? "true" 
+	               : "false");
+	}
+
+	/**
+	 * return a message indicating whether the given user is alive or dead, eg if
+	 * there is a remaining heartbeat for them.  The function will return the normal JSON
+	 * response, e.g. a two element map of "status" and "message".  If the user is alive, 
+	 * you will get "status" => "okay" and "message" => "true".  If dead, message will read false. */
+	public static void flushheartbeats (@Required long flush_user, @Required String flush_session) {
+        if (validation.hasErrors()) {
+            returnFailed(validation.errors());
+        }	    
+	    HeartBeat.removeAll(new UserSession.Faux(flush_user, flush_session));
+	    returnOkay();
+	}
+	
 	/* 
 	 * All of the following are helpers used by clients wishing to make requests to this
 	 * controller.  They are used mostly by the Users controller and USers object, and 
 	 * also by the unit tests */
+	 
+	public static HashMap<String, String> getFlushHeartBeatParams (long user_id, String session) {
+		HashMap<String, String> params = new HashMap<String, String>();
+     params.put("flush_user", user_id + "");
+     params.put("flush_session", session);
+     return params;
+	}	
+
+	public static HashMap<String, String> getCheckAliveParams (long user_id, String session) {
+		HashMap<String, String> params = new HashMap<String, String>();
+        params.put("check_user", user_id + "");
+        params.put("check_session", session);
+        return params;
+	}
 	
-	private static HashMap<String, String> getBasic (long for_user, String for_session, long user_id, String session) {
+	public static HashMap<String, String> getBasic (long for_user, String for_session, long user_id, String session) {
 		HashMap<String, String> params = new HashMap<String, String>();
         params.put("for_user", for_user + "");
         params.put("for_session", for_session);
