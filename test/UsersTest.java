@@ -177,4 +177,5 @@ public class UsersTest extends MyFunctionalTest {
 		newUser1 = data.get("new_user").getAsLong();
 		assertTrue(newUser1 == pmo_db_id || newUser1 == k_db_id);		        
 	}
+	
 }
