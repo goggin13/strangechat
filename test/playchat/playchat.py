@@ -52,8 +52,8 @@ class ChatTester(Thread):
     An instance of ChatTester logs in to the chat server and
     performs requests for rooms, speaks, etc...
     """
-    # CHAT_SERVER = "http://localhost:8090/"
-    CHAT_SERVER = "http://173.246.101.127/"
+    CHAT_SERVER = "http://localhost:8090/"
+    # CHAT_SERVER = "http://173.246.101.127/"
     lastReceived = 0
     
     def __init__ (self, id, thread_queue, messageTimer):
@@ -99,9 +99,10 @@ class ChatTester(Thread):
             
         for msg in json.loads(content):
             self.lastReceived = msg["id"]
-            messageID = msg["data"]["text"]
-            if messageID.isdigit():
-                self.messageTimer.gotMessage(int(messageID))
+            if msg["data"]["type"] == "message":
+                messageID = msg["data"]["text"]
+                if messageID.isdigit():
+                    self.messageTimer.gotMessage(int(messageID))
             
 ROOT_ID = random.randint(1, 10000)
 NUM_USERS = 8
