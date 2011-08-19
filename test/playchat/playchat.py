@@ -52,8 +52,8 @@ class ChatTester(Thread):
     An instance of ChatTester logs in to the chat server and
     performs requests for rooms, speaks, etc...
     """
-    CHAT_SERVER = "http://localhost:8090/"
-    # CHAT_SERVER = "http://173.246.101.127/"
+    # CHAT_SERVER = "http://localhost:8090/"
+    CHAT_SERVER = "http://173.246.101.127/"
     lastReceived = 0
     
     def __init__ (self, id, thread_queue, messageTimer):
