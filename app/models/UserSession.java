@@ -45,9 +45,13 @@ public class UserSession extends Model {
     /** Session key for this session */
     public String session;
     
+    /** socket_id for pusher */
+    public String socket;
+    
     public UserSession (User u, String s) {
         this.user = u;
         this.session = s;
+        this.socket = "";
         this.save();
     }
     

@@ -23,59 +23,6 @@ import com.google.gson.reflect.TypeToken;
  * A convenience class to hold common methods used
  * by the our controllers */
 public abstract class Index extends CRUD {
-
-
-    protected static Timer myTimer = new Timer();
-	protected static class Timer {
-    	private static AbstractMap<String, T2<Long, Long>> timers = 
-    	        new ConcurrentHashMap<String, T2<Long, Long>>();	    
-    	
-    	public void addToTimer (ATimer t) {
-    	    T2<Long, Long> tuple;
-    	    long count = 1;
-    	    long totalTime = t.duration();
-    	    String event = t.label;
-    	    if (timers.containsKey(event)) {
-    	        tuple = timers.get(event);
-    	        count += tuple._1;
-    	        totalTime += tuple._2;
-    	    } 
-            timers.put(event, new T2<Long, Long>(count, totalTime));
-    	}        
-    	
-    	public AbstractMap<String, T2<Long, Long>> getTimers () {
-    	    return timers;
-    	} 
-    	
-    	public void flushTimers () {
-    	    timers.clear();
-    	}
-	}
-	
-	public static class ATimer {
-	    private long start;
-	    private long end;
-	    public String label;
-	    
-	    public ATimer (String l) {
-	        this.label = l;
-	        this.start = System.currentTimeMillis();
-	    }
-	    
-	    public ATimer stop () {
-	        this.end = System.currentTimeMillis();
-	        myTimer.addToTimer(this);
-	        return this;
-	    }
-	    
-	    public long duration () {
-            // System.out.println("END = " + this.end);
-            // System.out.println("START = " + this.start);
-            // System.out.println("DIFF = " + (this.end - this.start));
-            // System.out.println("DIFF2 = " + ((this.end - this.start) / 1000));
-	        return this.end - this.start;
-	    }
-	}
 	
 	/**
 	 * Catch any argument exceptions thrown by children methods, 

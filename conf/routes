@@ -6,6 +6,10 @@
 GET     /                                       Application.index
 GET     /demo																		Application.demo
 *       /broadcast															Application.broadcast
+*       /pusher															    Application.pusherDemo
+POST    /pusher/auth 														Notify.pusherAuth
+*       /setsocket	 														Notify.setMySocket
+*				/push																		Notify.push
 
 # User actions
 *		     /signin																Users.signin

@@ -1,4 +1,4 @@
 cd ~/strangechat
 git pull
-python test/MeetupTests/chatter.py
+exit 1 #exit shell script
 

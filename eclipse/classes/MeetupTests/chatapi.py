@@ -12,8 +12,8 @@ class ChatAPI():
     """Manages all interactions with the chat apis"""
     # CHAT_ROOT = 'http://localhost:9000/'   # Dev
     # CHAT_ROOT = 'http://localhost:8080/'   # Dev    
-    # CHAT_ROOT = 'http://173.246.100.79/' # live
-    CHAT_ROOT = 'http://173.246.101.45/' # staging
+    CHAT_ROOT = 'http://173.246.100.79/' # live
+    # CHAT_ROOT = 'http://173.246.101.45/' # staging
     
     def __init__ (self, user_id, name=None, avatar=None):
         self.user_id = user_id
@@ -34,7 +34,7 @@ class ChatAPI():
     def login(self):
         """Login into the chat master server"""
         data = self.request("signin", {
-            'user_id': self.user_id,
+            'sign_in_id': self.user_id,
             'avatar': self.avatar,
             'alias': self.name
         }, self.CHAT_ROOT)
@@ -43,7 +43,8 @@ class ChatAPI():
         for k, v in data.iteritems():
             if v['alias'] == self.name:
                 self.myData = v
-                self.user_id = v["id"]    
+                self.user_id = v["id"]  
+                self.session = v["session_id"]  
                 self.name = "user-%d" % self.user_id        
                 self.heartbeatServer = v["heartbeatServer"]["uri"] 
                 self.speak("set my data, id = %s, server = %s " % (self.user_id, self.heartbeatServer))  
@@ -82,7 +83,8 @@ class ChatAPI():
                 self.speak("joined room %d with %s" % (room_id, d["data"]["new_user"]))
                 self.room_ids.append(room_id)
                 self.contacts[d["data"]["new_user"]] = {
-                    "server": d["data"]["server"]
+                    "server": d["data"]["server"],
+                    "session": d["data"]["new_session"]
                 }
                 self.other_user_id = d["data"]["new_user"]
                 self.room_to_user[room_id] = d["data"]["new_user"]
@@ -133,8 +135,10 @@ class ChatAPI():
         """Send a message to a user in a room"""
         # self.speak("msg from %d to %d" % (self.user_id, to))
         self.request("roommessage", {
-            'from_user': self.user_id,
+            'user_id': self.user_id,
+            'session': self.session,
             'for_user': to,
+            'for_session': self.contacts[to]["session"],
             'msg': text,
             'room_id': room_id
         }, self.contacts[to]['server'])
@@ -142,6 +146,7 @@ class ChatAPI():
     def listen (self):
         data = self.request("listen", {
             'user_id': self.user_id,
+            'session': self.session,
             'lastReceived': self.lastReceived
         }, self.heartbeatServer)
         if not data:
@@ -152,21 +157,26 @@ class ChatAPI():
 
     def heartbeat (self):
         self.request("heartbeat", {
-            'for_user': self.user_id,
+            'user_id': self.user_id,
+            'session': self.session,
             'room_ids': ",".join(map(str, self.room_ids))
         }, self.heartbeatServer)
 
     def use_power (self, power_id):
         self.request("usepower", {
             'user_id': self.user_id,
+            'session': self.session,
             'power_id': power_id,
-            'other_id': self.other_user_id,
+            'for_user': self.other_user_id,
             'room_id': self.room_ids[0] if len(self.room_ids) > 0 else -1
         }, self.CHAT_ROOT)        
 
     def requestRoom (self):
         self.speak("request room")
-        self.request("requestrandomroom", {'user_id': self.user_id}, self.CHAT_ROOT)
+        self.request("requestrandomroom", {
+            'user_id': self.user_id,
+            'session': self.session,
+        }, self.CHAT_ROOT)
         
     def request (self, path, data, server):
         h = httplib2.Http(timeout=self.timeout)  

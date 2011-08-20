@@ -1,6 +1,10 @@
 /*global document: false, MyUtil, $: false, base_url: false, alert: false, sign_up_in_prompt:false, AjaxLoader:false, SignUp:false, oApp, jQuery */
 /*jslint white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
 
+var channels = {
+  RANDOM_CHANNEL: "presence-random-chat"
+};
+
 var MyUtil = (function (user_id, avatar, alias, callback) {
  var that = {};
  
@@ -42,6 +46,8 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   my.im_talking_to = {}; // map user_ids to room_ids
   that.superPowers = []; // filled after login so clients can retrieve
   that.superPowerDetails = {};
+  
+  my.pendingResponse = false;
   
   my.messageHandler = function (JSON) {};
   
@@ -195,7 +201,6 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     });
     if (my.heartbeatServer) {
       that.listen(my.lastReceived);
-      setInterval(my.heartbeat, my.HEARTBEAT_FREQUENCY);
     } else {
       JSON = {
         status: "error",
@@ -265,17 +270,6 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     });
   };
   
-  // indicate you wish to get paired with a random user
-  that.requestRandomRoom = function () {
-    var url = my.home_url + 'requestrandomroom',
-      data = {
-        user_id: that.user_id
-      };
-    my.waitingForJoin++;  
-    that.send(url, "POST", data, function (JSON) {
-    });
-  };
-
   // indicate you wish to get paired with a random user
   that.requestBotRoom = function (bot_id) {
     var url = my.home_url + 'elizas/requestbotroom',
@@ -374,21 +368,131 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
       that.roomMessageInner(server, people, msg, room_id, errCallback);
     });
   };
-  
-  // send out a heartbeat to let the server know "I'm still here"
-  my.heartbeat = function () {
-    var url = my.heartbeatServer + "heartbeat",
+    
+  my.sendMySocketID = function (callback) {
+    var url = my.home_url + "setsocket",
       data = {
         user_id: that.user_id,
-        room_ids: my.room_ids
-      };
-    that.send(url, "POST", data, function (JSON) {
+        socket_id: my.pusher.connection.socket_id
+      };    
+    that.send(url, "POST", data, callback);
+  };
+
+  that.membersToChannelName = function (member1, member2) {
+    var list = [member1.name, member2.name];
+    list.sort();
+    return member1.name + "_" + member2.name;
+  };
+
+  that.push = function (channel, event, data) {
+    var url = my.home_url + "push",
+      data = {
+        user_id: that.user_id,
+        event: event,
+        channel: channel,
+        message: data,
+        socket_id: my.pusher.connection.socket_id
+      };    
+    that.send(url, "POST", data, callback);
+  };
+
+  my.propsalFailed = function () {
+    console.debug("RESET");
+    my.pendingResponse = false;
+    my.waitingForChat = true;
+  };
+
+  that.proposeMeetUp = function (member) {
+    my.pendingResponse = member.info.user_id;
+    console.debug("propose to " + my.pendingResponse);
+    var join = Object.spawn(JoinRequest, {
+      to_user: member.info.user_id,
+      from_user: that.user_id
     });
+    setTimeout(function () {
+      my.propsalFailed();
+    }, 1000);    
+    that.push(channels.RANDOM_CHANNEL, types.JOIN_REQUEST, join.toJson());
+
+  };
+
+  that.acceptMeetUp = function (with_user_id) {
+    var accept = Object.spawn(AcceptRequest, {
+      to_user: with_user_id,
+      from_user: that.user_id
+    });
+    that.push(channels.RANDOM_CHANNEL, types.ACCEPT_REQUEST, accept.toJson());
+  };
+
+  that.canIPairWithMember = function (member) {
+    return member.info.user_id != that.user_id;
+  };
+
+  // indicate you wish to get paired with a random user
+  that.requestRandomRoom = function () {
+    // subscribe to random-presence channel
+    my.randomChatChannel = my.pusher.subscribe(channels.RANDOM_CHANNEL);
+    
+    my.randomChatChannel.bind(types.JOIN_REQUEST, function(data) {
+      if (data.to_user == that.user_id
+          && (my.waitingForChat || my.pendingResponse == data.from_user)) {
+        that.acceptMeetUp(data.from_user); 
+        my.randomChatChannel.disconnect();
+        document.writeln("<p>paired [" + data.from_user + "," + that.user_id + "]</p>");        
+      }
+    });
+
+    my.randomChatChannel.bind(types.ACCEPT_REQUEST, function (data) {
+      if (data.to_user == that.user_id) {
+        document.writeln("<p>paired [" + data.from_user + "," + that.user_id + "]</p>");        
+      }
+    });
+    
+    my.randomChatChannel.bind(types.PUSHER_LOGIN, function (members) {    
+      var matched = false;
+      members.each(function(member) {
+        if (!matched && that.canIPairWithMember(member)) {
+          matched = true;
+          that.proposeMeetUp(member);
+        }
+      });
+      if (!matched) {
+        my.waitingForChat = true;
+      }
+    });  
+    
+    my.randomChatChannel.bind(types.PUSHER_MEMBER_LOGON, function (member) {    
+      if (my.waitingForChat && that.canIPairWithMember(member)) {
+        that.proposeMeetUp(member);        
+      }
+    }); 
+    
+    my.randomChatChannel.bind(types.PUSHER_MEMBER_LOGOFF, function (member) {    
+      if (my.pendingResponse == member.info.user_id) {
+        my.propsalFailed();
+      }
+    });     
+  };
+  
+  my.initPusher = function (callback) {
+    my.pusher = new Pusher('28fec1752d526c34d156');
+		my.pusher.connection.bind('connected', function() {	// wait to connect
+		  that.login(user_id, avatar, alias, function () {  // send Play! our socket key
+		    document.writeln("<p>I'm " + that.user_id + "</p>");
+		    my.sendMySocketID(function (JSON) {             
+  			  if (JSON.status == "okay") {                  // if all good, request a room
+            callback();
+  			  }
+  			});
+		  });
+		});
   };
   
   my.init = function () {
+		my.initPusher(function () {
+		  that.requestRandomRoom();
+		});
     my.checkInputsForTyping();
-		that.login(user_id, avatar, alias, callback);
     return that;
   };
   

@@ -8,6 +8,8 @@ import models.HeartBeat;
 import models.SuperPower;
 import models.UserEvent;
 import models.UserSession;
+import models.pusher.*;
+
 import play.libs.F.IndexedEvent;
 import play.data.validation.Required;
 import models.eliza.Eliza;
@@ -22,15 +24,33 @@ import com.google.gson.reflect.TypeToken;
  * clients to listen to. */  
 public class Notify extends Index {
 	
-	public static void flushtimers () {
-	    myTimer.flushTimers();
-	    timers();
+	public static void pusherAuth (String socket_id, String channel_name) {
+	    Pusher pusher = new Pusher();
+        UserSession userSession = UserSession.find("bySocket", socket_id).first();
+        BasicUserInfo userInfo = new BasicUserInfo(
+            userSession.user.id,
+            userSession.user.alias, 
+            userSession.user.avatar
+        );        
+        PresenceChannelData channelData = new PresenceChannelData(userSession.session, userInfo);
+        renderJSON(pusher.createAuthString(socket_id, channel_name, channelData));
 	}
 	
-	public static void timers () {
-	    AbstractMap<String, T2<Long, Long>> timers = myTimer.getTimers();
-        render(timers);
-    }
+	public static void push (String channel, String event, String message, String socket_id) {
+	    Pusher pusher = new Pusher();
+	    pusher.trigger(channel, event, message, socket_id);
+	    returnOkay();
+	}
+	
+	public static void setMySocket (String socket_id) {
+	    UserSession sess = currentSession();
+	    if (sess == null) {
+	        returnFailed("Need valid session to set socket id");
+	    }
+	    sess.socket = socket_id;
+	    sess.save();
+	    returnOkay();
+	}
 	
 	/**
 	 * This is the admin function for listening to events on this server.  It does not long poll.
@@ -68,10 +88,8 @@ public class Notify extends Index {
 			returnFailed("no user_id, session provided");
 		}
 		
-		ATimer t = new ATimer("waiting_on_events");
 		List<IndexedEvent<UserEvent.Event>> returnData = 
 		    await(UserEvent.get().nextEvents(sess.user_id, lastReceived));
-		t.stop();
 		    
         for (IndexedEvent<UserEvent.Event> es : returnData) {
             System.out.println("\t" + es.data.type);
@@ -157,7 +175,6 @@ public class Notify extends Index {
 	 * @param msg the text of the message being sent
 	 * @param room_id the pertinent room for this message  */
     public static void roomMessage (@Required String msg, @Required Long room_id) {
-        ATimer t = new ATimer("message");
         if (validation.hasErrors()) {
             returnFailed(validation.errors());
         }
@@ -166,7 +183,6 @@ public class Notify extends Index {
         for (UserSession.Faux for_sess : for_sessions) {
             UserEvent.get().addRoomMessage(for_sess.user_id, from_sess.user_id, room_id, msg, for_sess.session);
         }
-        t.stop();
         returnOkay();
     }
 	

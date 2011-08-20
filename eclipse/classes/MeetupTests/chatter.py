@@ -44,14 +44,26 @@ class MessageTimer ():
         with self.msgLock:
             totalDiff = 0
             totalReceived = 0
+            total = len(self.messages)
+
+            tailLength = 100
+            tailDiff = 0
+            curTailCount = 0
+            curCount = 0
+
             for msg, data in self.messages.iteritems():
                 if "received" in data:
                     diff = data["received"] - data["sent"]
                     diffSecs = float(diff.microseconds) / 1000000
                     totalDiff += diffSecs
                     totalReceived += 1
+                    curCount += 1
+                    if total - curCount < tailLength:
+                        tailDiff += diffSecs
+                        curTailCount += 1
             totalCount = len(self.messages)
             print "received %d / %d, average = %f" % (totalReceived, totalCount, totalDiff/totalCount)
+            print "\tlast %d messages, average = %f" % (curTailCount, tailDiff/curTailCount)
            
 class ChatTester(Thread):
     """ 
@@ -116,7 +128,7 @@ class ChatTester(Thread):
     
 ROOT_ID = random.randint(1, 10000000000)
 NUM_USERS = 8
-NUM_ITERS = 4000
+NUM_ITERS = 1000
 messageTimer =  MessageTimer()
 thread_queue = Queue.Queue()
 

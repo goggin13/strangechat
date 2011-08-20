@@ -7,10 +7,12 @@ import models.HeartBeat;
 import models.Room;
 import models.Server;
 import models.User;
-import models.WaitingRoom;
 import models.UserEvent;
+import models.WaitingRoom;
+import models.pusher.*;
+
+import play.Play;
 import play.mvc.Before;
-import play.*;
 
 /**
  * Demo page and home page, which is blank for now */
@@ -47,6 +49,10 @@ public class Application extends Index {
         } else {
             returnOkay(null);
         }
+	}
+		
+	public static void pusherDemo () {
+	    render();
 	}
 	
     public static void index() {

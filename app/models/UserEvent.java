@@ -43,12 +43,8 @@ public class UserEvent {
 	 * @return list of messages with ids > lastReceived
      */
     public Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents (long user_id, long lastReceived) {
-        Index.ATimer t = new Index.ATimer("get_activity_stream");
         ArchivedEventStream<UserEvent.Event> stream = getOrCreateStream(user_id);
-        t.stop();
-        Index.ATimer t2 = new Index.ATimer("get_promise");
         Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents = stream.nextEvents(lastReceived);
-        t2.stop();
         return nextEvents;
     }
 
