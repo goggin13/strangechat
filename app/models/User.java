@@ -122,7 +122,7 @@ public class User extends Model {
 	    this.recentMeetings = new LinkedList<User>();
 	    this.icebreakers_seen = new TreeSet<Integer>();
 	    this.save();
-	    addStartUpPowers();
+/*	    addStartUpPowers();*/
 	}
 	
 	private void addStartUpPowers () {

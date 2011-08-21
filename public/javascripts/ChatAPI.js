@@ -48,33 +48,25 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   that.superPowerDetails = {};
   
   my.pendingResponse = false;
-  
-  my.messageHandler = function (JSON) {};
-  
-  my.checkInputsForTyping = function () {
-    $.each(my.inputsToWatch, function (key, data) {
-      var newVal = data.input.val();
-      if (newVal != data.last) {
-        that.imTypingInRoom(
-          data.input.attr('id'), 
-          newVal, 
-          data.input.attr('room_id')
-        );
-      }
-      data.last = newVal;
-    });
-    setTimeout(my.checkInputsForTyping, 1000);
+ 
+	my.messageHandler = function (JSON) {};
+  my.joinHandler = function (JSON) {};
+
+	that.registerJoinHandler = function (f) {
+		my.joinHandler = f;
+	};
+
+  // assign the message function to be called when 
+  // new events arrive
+  that.registerMessageHandler = function (f) {
+    my.messageHandler = f;
   };
-  
-  // mark an input to watch to send useristyping notifications
-  that.watchInput = function (input) {
-    my.inputsToWatch.push({
-        input: input,
-        last: ""
-    });
+
+  that.resetMessageHandler = function () {
+    my.messageHandler = function (JSON) {};
   };
-  
-  // send an API call, either POST, or GET, with given data.
+
+// send an API call, either POST, or GET, with given data.
   // on success the given callback function is called
   that.send = function (url, method, data, callback) {
     // add callback if this is cross domain
@@ -118,71 +110,6 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     return hash;
   };
 
-  // tell the API to keep you alive in the given room.
-  // As soon as you call Leaveroom with this id, it will automatically
-  // remove you. 
-  that.beatInRoom = function (room_id) {
-    if ($.inArray(my.room_ids, room_id) == -1) {
-      my.room_ids.push(room_id);
-    }
-  };
-
-  // assign the message function to be called when 
-  // new events arrive
-  that.registerMessageHandler = function (f) {
-    my.messageHandler = f;
-  };
-
-  that.resetMessageHandler = function () {
-    my.messageHandler = function (JSON) {
-    };
-  };
-
-  // listen for chat invitations, direct messages, etc.
-  that.listen = function (lastReceived) {
-    var url = my.heartbeatServer + 'listen',
-      data = {
-        user_id: that.user_id,
-        lastReceived: lastReceived
-      };
-    my.currentListen = that.send(url, "GET", data, function (JSON, hash) {
-      var response = {},
-        joins = {}; // room_id => event-id
-        
-      $.each(JSON, function (key, val) {
-        var d = val.data,
-          isErr = d.hasOwnProperty("status") && d.status == "error";
-          
-        response[key] = val;          
-        
-        if (!isErr && (d.type === "userlogon" || d.type === "join")) {
-          MyContacts.put(d.new_user, d.name, d.alias, d.server, d.avatar, d.new_session, d);
-        }
-        if (!isErr && d.type === "leave" 
-                   && joins.hasOwnProperty(val.data.room_id)) {
-          my.waitingForJoin++;
-          delete response[key];
-          delete response[joins[val.data.room_id]];
-          MyUtil.debug("ReRequesting");
-          that.requestRandomRoom();
-        } else if (!isErr && d.type === "join") {
-          my.im_talking_to[val.data.new_user] = val.data.room_id;
-          my.waitingForJoin--;
-          joins[val.data.room_id] = key;
-        }          
-        
-      });
-      my.messageHandler(response);
-      if (hash === my.currentListen) {
-        if (JSON.length > 0) {
-          that.listen(JSON[JSON.length - 1].id);          
-        } else {
-          that.listen(lastReceived);
-        }
-      }
-    });
-  };
-
   my.loginCallback = function (JSON, alias, callback) {
     if (JSON.hasOwnProperty("status") && JSON.status == "error") {
       callback(JSON);
@@ -199,14 +126,6 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
       }
       
     });
-    if (my.heartbeatServer) {
-      that.listen(my.lastReceived);
-    } else {
-      JSON = {
-        status: "error",
-        message: "Sorry! We couldn't log you in"
-      };
-    }
 		if (callback) {
 			callback(JSON);
 		}
@@ -224,151 +143,6 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
       });     
   };
 
-  that.logout = function (callback) {
-    var url = my.home_url + 'signout',
-      data = {
-        user_id: that.user_id,
-      };
-      that.send(url, "POST", data, callback);     
-  };
-  
-  // send a direct message to another friend
-  that.directMessage = function (to, msg) {
-    var url = MyContacts.getServerFor(to) + 'message',
-      data = {
-        user_id: that.user_id,
-        for_user: to,
-        msg: msg
-      };
-    that.send(url, "POST", data, function (JSON) {
-    });
-  };
-  
-  that.roomMessage = function (to, msg, room_id, errCallback) {
-    var server = MyContacts.getServerFor(to);
-    that.roomMessageInner(server, to, msg, room_id, errCallback);
-  };  
-  
-  that.roomMessageInner = function (server, to, msg, room_id, errCallback) {
-    var url =  server + 'roommessage',
-      data = {
-        user_id: that.user_id,
-        msg: msg,
-        room_id: room_id
-      };
-    if (typeof(to) != "object") {
-      to = [to];
-    }   
-    $.each(to, function (i, recip) {
-      data["for_user[" + i + "]"] = recip;
-      data["for_session[" + i + "]"] = MyContacts.getSessionId(recip);   
-    });      
-    that.send(url, "POST", data, function (JSON) {
-      if (JSON.status == "error") {
-        if (errCallback) errCallback();
-      }
-    });
-  };
-  
-  // indicate you wish to get paired with a random user
-  that.requestBotRoom = function (bot_id) {
-    var url = my.home_url + 'elizas/requestbotroom',
-      data = {
-        user_id: that.user_id,
-        bot_id: bot_id
-      };
-    that.send(url, "POST", data);
-  };
-  
-  that.imTypingInRoom = function (to, text, room_id) {
-    if (!to) {
-      return;
-    }
-    var url =  MyContacts.getServerFor(to) + 'imtyping',
-      data = {
-        for_user: to,
-        for_session: MyContacts.getSessionId(to),
-        user_id: that.user_id,
-        room_id: room_id,
-        text: text
-      };
-    that.send(url, "POST", data, function (JSON) {
-    });
-  };
-  
-  that.usePower = function (power_id, other_id, room_id, isGroup, callback) {
-    var url = my.home_url + 'usepower',
-      data = {
-        user_id: that.user_id,
-        power_id: power_id,
-        for_user: isGroup ? -1 : other_id,
-        for_session: isGroup ? "" : MyContacts.getSessionId(other_id),
-        room_id: room_id,
-      };
-    that.send(url, "POST", data, callback);
-  };
-  
-  that.leaveRoom = function (room_id) {
-    var url = my.home_url + 'leaveroom',
-      data = {
-        user_id: that.user_id,
-        room_id: room_id
-      };
-    MyUtil.removeFromArray(my.room_ids, room_id);
-    that.send(url, "POST", data, function (JSON) {
-    });
-  };
-  
-  // get a response from Eliza
-  that.eliza = function (to, room_id, qry, callback) {
-    var url = my.home_url + 'eliza',
-      data = {
-        user_id: that.user_id,
-        for_user: to,
-        for_session: MyContacts.getSessionId(to),
-        room_id: room_id,
-        qry: $.trim(qry)
-      };
-    that.send(url, "GET", data, callback);
-  };
-  
-  // get a response from a bot
-  that.talkToBot = function (bot_user_id, bot_id, qry, room_id, callback) {
-    var url = my.heartbeatServer + 'elizas/talkTo',
-      data = {
-        bot_user_id: bot_user_id,
-        bot_id: bot_id,
-        user_id: that.user_id,
-        room_id: room_id,
-        qry: qry
-      };
-    that.send(url, "GET", data, callback);
-  };
-  
-  // initiate or join a group chat
-  that.startGroupChat = function (group_key, callback) {
-    var url = my.home_url + 'group',
-      data = {
-        user_id: that.user_id,
-        key: group_key
-      };
-    that.send(url, "GET", data, function (JSON) {
-      if (JSON.status == "okay") {
-        that.beatInRoom(JSON.message);
-        if (callback) {
-          callback(JSON);
-        }        
-      }
-    });
-  };
-  
-  that.sendGroupChat = function (msg, room_id, errCallback) {
-    var people = MyContacts.getIdListByServer(that.user_id);
-    $.each(people, function (server, people) {
-      that.roomMessageInner(server, people, msg, room_id, errCallback);
-    });
-  };
-    
   my.sendMySocketID = function (callback) {
     var url = my.home_url + "setsocket",
       data = {
@@ -397,7 +171,6 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   };
 
   my.propsalFailed = function () {
-    console.debug("RESET");
     my.pendingResponse = false;
     my.waitingForChat = true;
   };
@@ -444,7 +217,9 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
 
     my.randomChatChannel.bind(types.ACCEPT_REQUEST, function (data) {
       if (data.to_user == that.user_id) {
-        document.writeln("<p>paired [" + data.from_user + "," + that.user_id + "]</p>");        
+				my.joinHandler({
+					user_id: data.from_user
+				});	
       }
     });
     
@@ -474,14 +249,16 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
     });     
   };
   
-  my.initPusher = function (callback) {
+  my.initPusher = function (login_callback, socket_callback) {
     my.pusher = new Pusher('28fec1752d526c34d156');
 		my.pusher.connection.bind('connected', function() {	// wait to connect
-		  that.login(user_id, avatar, alias, function () {  // send Play! our socket key
-		    document.writeln("<p>I'm " + that.user_id + "</p>");
+		  that.login(user_id, avatar, alias, function (JSON) {  // send Play! our socket key
+		    if (login_callback) {
+					login_callback(JSON);
+				}
 		    my.sendMySocketID(function (JSON) {             
   			  if (JSON.status == "okay") {                  // if all good, request a room
-            callback();
+            socket_callback();
   			  }
   			});
 		  });
@@ -489,10 +266,9 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   };
   
   my.init = function () {
-		my.initPusher(function () {
+		my.initPusher(callback, function () {
 		  that.requestRandomRoom();
 		});
-    my.checkInputsForTyping();
     return that;
   };
   

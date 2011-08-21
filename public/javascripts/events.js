@@ -36,6 +36,7 @@ var JoinRequest = Object.spawn(Event, {
 var AcceptRequest = Object.spawn(Event, {
   type: types.ACCEPT_REQUEST
 });
+
 // var join = Object.spawn(JoinRequest, {for_user: 4});
 // var accept = Object.spawn(AcceptJoin, {for_user: 2});
 
