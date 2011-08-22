@@ -18,6 +18,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -62,10 +63,7 @@ public class UserEvent {
         return adminEvents.availableEvents(lastReceived);
     }
 
-    public void publish (long user_id, Event e) {
-        if (!e.type.equals("dummy")) {
-            getOrCreateStream(user_id).publish(e);
-        }
+    public void publish (Event e) {
         adminEvents.publish(e);
     }
 
@@ -86,7 +84,7 @@ public class UserEvent {
 	 * Reset the user event queue, flushing out existing events */
     public void resetEventQueue () {
         for (int i = 0; i < adminStreamSize; i++) {
-            publish(-1, new DummyEvent());
+            publish(new DummyEvent());
         }
         eventStreams.clear();
     }
@@ -102,7 +100,7 @@ public class UserEvent {
 		final public String type;
 	
 		/** the user_id this event is pertintent to */
-		final public long user_id;
+		final public long from;
 
 		/** timestamp the event was created */
 		final public long timestamp;
@@ -112,22 +110,17 @@ public class UserEvent {
 		
 		public Event (String type, long user_id, String session_id) {
 	        this.type = type;
-			this.user_id = user_id;
+			this.from = user_id;
 			this.session_id = session_id;
 	        this.timestamp = System.currentTimeMillis();
 	    }
 	
 	    public void publishMe () {
-	        if (this.user_id != -1) {
-               System.out.println(this);
-            }
-            if (!this.type.equals("dummy")) {
-                UserEvent.get().publish(this.user_id, this);
-            }            
+            UserEvent.get().publish(this);
 	    }
 	    
 		public String toString () {
-			return this.user_id + " - " + this.session_id + " ( " + this.type + " )";
+			return this.from + " - " + this.session_id + " ( " + this.type + " )";
 		}
 		
 	}
@@ -383,6 +376,15 @@ public class UserEvent {
 	        this.level = level;
 	        publishMe();
 	    }
+
+	    public String toJson () {
+	        Gson gson = new Gson();
+            String json = gson.toJson(
+                this,
+                new TypeToken<NewPower>() {}.getType()
+            );
+            return json;
+	    }
 	    
 		public String toString () {
 			return super.toString() + " : " + this.superPower.name + " awarded (L " + this.level +")";
@@ -407,12 +409,16 @@ public class UserEvent {
 		}	    
 	}
 
+    public static class AcceptRequest extends Event {
+        public AcceptRequest (long for_user) {
+            super("acceptrequest", for_user, null);
+            publishMe();
+        }     
+    }
+    
 	/** 
 	 * Notifies a user that a super power was used */
-	public static class UsedPower {
-	    
-	    /** the id of the user who used the power */
-	    final public long from;
+	public static class UsedPower extends Event {
 	    
 	    /** details about the super power */
 	    final public SuperPower superPower;
@@ -424,10 +430,11 @@ public class UserEvent {
 	    final public int level;	    
 	    
 	    public UsedPower (long by_user, SuperPower sp, int level, String result) {
+	        super("usedpower", by_user, null);
 	        this.superPower = sp;
-	        this.from = by_user;
 	        this.result = result;
 	        this.level = level;
+	        publishMe();
 	    }
 	    
 	    public String toJson () {
@@ -449,24 +456,21 @@ public class UserEvent {
      * Takes a JSON string and deserializes it into a list of events 
      * @param jsonStr the string of JSON to convert
      * @return list of deserialized events */
-    public static List<UserEvent.Event> deserializeEvents (String jsonStr) {
+    public static UserEvent.Event deserializeEvent (String jsonStr) {
         Gson gson = new GsonBuilder()
                     .registerTypeAdapter(SuperPower.class, new SuperPowerDeserializer())
                     .create();
                     
         JsonParser parser = new JsonParser();
-        JsonArray array = parser.parse(jsonStr).getAsJsonArray();
+        JsonObject jsonObj = parser.parse(jsonStr).getAsJsonObject();
 
-        List<UserEvent.Event> events = new LinkedList<UserEvent.Event>();
-        for (JsonElement e : array) {
-            String type = e.getAsJsonObject().get("type").getAsString();
-            Type t = typeStringToType(type);
-            if (t != null) {
-                UserEvent.Event event = gson.fromJson(e, t);
-                events.add(event);
-            }
-        }     
-        return events;
+        String type = jsonObj.getAsJsonObject().get("type").getAsString();
+        Type t = typeStringToType(type);
+        if (t != null) {
+            UserEvent.Event event = gson.fromJson(jsonObj, t);
+            return event;
+        }
+        return null;
     }
 	    
 	/**
@@ -477,24 +481,12 @@ public class UserEvent {
     public static Type typeStringToType (String type) {
         Type t = null;
         
-        if (type.equals("heartbeat")) {
-            t = new TypeToken<UserEvent.HeartBeat>() {}.getType();
-        } else if (type.equals("join")) {
-            t = new TypeToken<UserEvent.Join>() {}.getType();   
-        } else if (type.equals("leave")) {
-            t = new TypeToken<UserEvent.Leave>() {}.getType(); 
-        } else if (type.equals("useristyping")) {
-            t = new TypeToken<UserEvent.UserIsTyping>() {}.getType(); 
-        } else if (type.equals("userlogon")) {
-            t = new TypeToken<UserEvent.UserLogon>() {}.getType(); 
-        } else if (type.equals("userlogout")) {   
-            t = new TypeToken<UserEvent.UserLogout>() {}.getType();                                                                           
-        } else if (type.equals("directmessage")) {  
-            t = new TypeToken<UserEvent.DirectMessage>() {}.getType();                                                                                            
+        if (type.equals("AcceptRequest")) {
+            t = new TypeToken<UserEvent.AcceptRequest>() {}.getType();                                                                                            
         } else if (type.equals("roommessage")) {
             t = new TypeToken<UserEvent.RoomMessage>() {}.getType(); 
-        } else if (type.equals("newpower")) {    
-            t = new TypeToken<UserEvent.NewPower>() {}.getType();             
+        } else if (type.equals("usedpower")) {    
+            t = new TypeToken<UserEvent.UsedPower>() {}.getType();             
         }
         
         return t;

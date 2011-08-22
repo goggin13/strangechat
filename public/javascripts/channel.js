@@ -21,14 +21,12 @@ var Channel = function (spec) {
 	};
 
 	that.bindLogon = function (f) {
-	  that.subscribe();
 	  that.bind(types.PUSHER_MEMBER_LOGON, function (member) {
 	    f(member.info.user_id);
 	  });	  
 	};
 
 	that.bindLogoff = function (f) {
-	  that.subscribe();
 	  that.bind(types.PUSHER_MEMBER_LOGOFF, function (member) {
 	    f(member.info.user_id);
 	  });
@@ -41,6 +39,7 @@ var Channel = function (spec) {
 	};
 	
 	that.bind = function (event, f) {
+	  that.subscribe();
 	  my.channel.bind(event, f);
 	};
 	

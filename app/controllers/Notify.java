@@ -44,13 +44,22 @@ public class Notify extends Index {
 	                @Required String channel, 
 	                @Required String event, 
 	                @Required String message, 
-	                String socket_id) 
+	                String socket_id,
+	                String callback) 
 	{
         if (validation.hasErrors()) {
             returnFailed(validation.errors());
         }	    
 	    Pusher pusher = new Pusher();
-	    pusher.trigger(channel, event, message, socket_id);
+	    if (socket_id != null) {
+	        pusher.trigger(channel, event, message, socket_id);
+	    } else {
+	        pusher.trigger(channel, event, message);
+	    }
+	    UserEvent.Event ue = UserEvent.deserializeEvent(message);
+	    if (ue != null) {
+	        UserEvent.get().publish(ue);
+	    } 
 	    returnOkay();
 	}
 	

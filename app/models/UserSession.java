@@ -90,14 +90,11 @@ public class UserSession extends Model {
 	 * Send this user a notification that they have recieved a new power
 	 * @param power the new power they have received */
 	public void notifyNewPower (StoredPower power) {
-		if (!this.imOnMaster()) {
-		    HashMap<String, String> params 
-		        = Notify.getNotifyNewPowerParams(this.user.id, this.session, power.getSuperPower(), power.id, power.level);
-    		notifyMe("newpower", params);            
-        } else {
-            logWrongServer();            
-			UserEvent.get().addNewPower(this.user.id, power.getSuperPower(), power.id, power.level, this.session);
-		}
+		Pusher pusher = new Pusher();
+        UserEvent.NewPower message = new UserEvent.NewPower(this.user.id, power.getSuperPower(), power.id, power.level, this.session);
+        System.out.println("publush to " + this.user.getChannelName());
+        System.out.println(message.toJson());
+	    pusher.trigger(this.user.getChannelName(), "newpower", message.toJson());
 	}
 
 	/**
@@ -185,7 +182,7 @@ public class UserSession extends Model {
 	 * @return <code>true</code> if this user's heartbeat server
 	 * 		   matches the master servers uri */
 	public boolean imOnMaster () {
-        return this.user.heartbeatServer.uri.equals(Server.getMasterServer().uri);
+        return true;
 	}
 	
 	/**
@@ -297,11 +294,7 @@ public class UserSession extends Model {
    public String toString () {
        return this.user.id + " (" + this.session + ")";
    }	
-   
-   public String channelName () {
-       return this.toString();
-   }
-   
+      
    public UserSession.Faux toFaux () {
 	   return new Faux(this.user.id, this.session);
    }

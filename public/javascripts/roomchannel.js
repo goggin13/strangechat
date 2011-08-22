@@ -28,15 +28,12 @@ var RoomChannel = function (spec) {
   };
   
   that.bindToMessage = function (f) {
-    that.subscribe();
     that.bind(my.types.ROOM_MESSAGE, function (data) {
-      console.debug("NEW MESSAGE");
       f(data);
     });
   };
 
   that.bindToIsTyping = function (f) {
-    that.subscribe();
     that.bind(my.types.USER_TYPING, function (data) {
       f(data);
     });
@@ -53,23 +50,20 @@ var RoomChannel = function (spec) {
   };
 
   that.bindToUsedPower = function (f) {
-    that.subscribe();
     that.bind(my.types.USED_POWER, function (data) {
       f(data);
     });
   };
   
-  that.userIsTyping = function (to, from, text) {
+  that.userIsTyping = function (from, text) {
     my.push(UserIsTyping({
-      to: to,
       from: from,
       text: text,
     }));
   };
 
-  that.message = function (to, from, msg) {
+  that.message = function (from, msg) {
     my.push(RoomMessage({
-      to: to,
       from: from,
       text: msg,
     }));

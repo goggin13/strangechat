@@ -287,6 +287,10 @@ public class User extends Model {
         User other = (User)obj;
         return other.id == this.id;
 	}	
+
+    public String getChannelName () {
+        return this.id + "_channel";
+    }
 			
 	/**
 	 * Return a user with id <code>user_id</code>, either an 
@@ -298,8 +302,6 @@ public class User extends Model {
 		User user = User.find("byUser_id", user_id).first();
 		if (user == null) {
 			user = new User(user_id);
-			Server server = Server.getMyHeartbeatServer(user);
-            user.heartbeatServer = server;
 		}
 		user.populateSuperPowerDetails();
 		return user;

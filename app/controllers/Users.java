@@ -189,7 +189,6 @@ public class Users extends Index {
         
         Pusher pusher = new Pusher();
         UserEvent.UsedPower message = new UserEvent.UsedPower(user.user.id, sp, storedPower.level, result);
-	    pusher.trigger(channel, "usedpower", message.toJson());
-        returnOkay();
+	    Notify.push(channel, "usedpower", message.toJson(), null, callback());
 	}
 }

@@ -29,6 +29,7 @@ var MatchMaker = function (spec) {
   my.user = spec.user;
   my.pusher = spec.pusher;
   my.callback = spec.callback;
+  my.successful = false;
   
   that.membersToChannelName = function (user_id, user_id2) {
     var list = [user_id, user_id2];
@@ -45,6 +46,21 @@ var MatchMaker = function (spec) {
     return user_id 
            && my.user.user_id 
            && user_id != my.user.user_id;
+  };
+  
+  my.proposeToAll = function (eligible) {
+    var availableCount = eligible.length,
+      i = 0,
+      proposeTo = function () {
+        if (!my.successful && i < availableCount) {
+          my.proposeMeetUp(eligible[i++]);        
+          setTimeout(proposeTo, 1000);          
+        }
+      };
+
+    if (availableCount > 0) {
+      proposeTo();
+    }
   };
   
   my.proposeMeetUp = function (user_id) {
@@ -68,6 +84,7 @@ var MatchMaker = function (spec) {
       alias: my.user.alias
     });
     my.randomChannel.push(my.types.ACCEPT_REQUEST, accept.toJson());
+    my.successful = true;
   };    
   
   that.matchMe = function () {
@@ -109,12 +126,15 @@ var MatchMaker = function (spec) {
     });
 
     my.randomChannel.bindLogin(function (members) {    
-      var matched = false;
+      var eligible = [];      
       members.each(function(member) {
-        if (!matched && my.canIPairWithMember(member.info.user_id)) {
-          matched = true;
-          my.proposeMeetUp(member.info.user_id);
+        var user_id = member.info.user_id;
+        if (my.canIPairWithMember(user_id)) {
+          if ($.inArray(user_id, eligible) == -1) {
+            eligible.push(member.info.user_id); 
+          }
         }
+        my.proposeToAll(eligible);
       });
     });  
 

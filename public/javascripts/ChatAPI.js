@@ -31,24 +31,17 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   // my.home_url = "http://173.246.101.45/";  // staging
   
   that.user_id = "";
-  my.heartbeatServer = "";
-  my.currentListen = "";
-  my.HEARTBEAT_FREQUENCY = 5000;
   my.inputsToWatch = [];
   that.room_ids = [];
-  my.lastReceived = 0;   
-  my.waitingForJoin = 0; 
   my.session_id = null;
   that.im_talking_to = {}; // map user_ids to room_ids
   that.superPowers = []; // filled after login so clients can retrieve
   that.superPowerDetails = {};
   
   that.user = null;
-  my.pendingResponse = false;
   my.superhero_id = user_id;
   my.channels = {};
   
-	my.messageHandler = function (JSON) {};
 
   that.roommessage = function (to_user, channel, message) {
     var roomChannel = my.channels[channel];
@@ -167,11 +160,19 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     matchMaker.matchMe();
   };
   
+  that.bindNewPower = function (f) {
+    my.userChannel.bindNewPower(f);
+  };
+  
   my.initPusher = function (login_callback) {
     my.pusher = APusher({home_url: my.home_url});
 		my.pusher.bindConnected(function() {	// wait to connect
 		  that.login(user_id, avatar, alias, function (JSON_login) {  // send Play! our socket key
         my.pusher.setUserInfo(my.session, that.user_id);
+    		my.userChannel = UserChannel({
+          user: that.user,
+          pusher: my.pusher
+    		});        
 		    my.sendMySocketID(function (JSON) {             
   			  if (JSON.status == "okay") {
     		    if (login_callback) {

@@ -30,9 +30,8 @@ public class Mock extends Index {
 
     public static void init () {
         UserEvent.get().resetEventQueue();
-        WaitingRoom.get().flush();
 		Fixtures.deleteDatabase();
-        Fixtures.loadModels("data-full.yml");
+        // Fixtures.loadModels("data-full.yml");
     }
 
     public static void initblacklist () {
