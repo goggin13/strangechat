@@ -214,7 +214,9 @@ public abstract class Index extends CRUD {
 		String json;
 		GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new User.ChatExclusionStrategy());
 		Gson gson = gsonBuilder.create();
-		if (t != null) {
+		if (myObj instanceof String) {
+		    json = (String)myObj;
+		} else if (t != null) {
 			json = gson.toJson(myObj, t); 
 		} else {
 			json = gson.toJson(myObj); 
@@ -228,7 +230,11 @@ public abstract class Index extends CRUD {
 			renderText(json);			
 		}
 	}
-	
+    
+    // Invalid signature: Expected HMAC SHA256 hex digest of 1368.26206:presence-random-chat:
+    // {"user_id":"c71c345417154d49a2e060e2bd7d01ac","user_info":{"name":"SuperMan","avatar":"http://bnter.com/web/assets/images/8996__w320_h320.jpg","user_id":8}}, 
+    // but got 86ccb52ad49e2a637d4e6c04bd9bad4b830d8ff41949f52976e0604683211a52
+    
 	/**
 	 * Simple exception class used by our controllers to handle invalid
 	 * arguments.  These are thrown by individual methods, and caught and handled

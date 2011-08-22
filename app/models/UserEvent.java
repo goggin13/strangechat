@@ -409,35 +409,40 @@ public class UserEvent {
 
 	/** 
 	 * Notifies a user that a super power was used */
-	public static class UsedPower extends Event {
+	public static class UsedPower {
+	    
 	    /** the id of the user who used the power */
-	    final public long by_user;
+	    final public long from;
+	    
 	    /** details about the super power */
 	    final public SuperPower superPower;
-	    /** optionally, the room_id this was used */
-	    final public long room_id;
+	    
 	    /** the result of using the power */
 	    final public String result;
+	    
 	    /** The level of the new super power */
 	    final public int level;	    
 	    
-	    public UsedPower (long for_user, long by_user, long room_id, SuperPower sp, int level, String result, String session_id) {
-	        super("usedpower", for_user, session_id);
+	    public UsedPower (long by_user, SuperPower sp, int level, String result) {
 	        this.superPower = sp;
-	        this.by_user = by_user;
-	        this.room_id = room_id;
+	        this.from = by_user;
 	        this.result = result;
 	        this.level = level;
-	        publishMe();
 	    }
 	    
-		public String toString () {
-			return super.toString() + " : " + this.by_user + ", " + this.superPower.name + "," + room_id + " => " + this.result;
-		}	    
+	    public String toJson () {
+	        Gson gson = new Gson();
+            String json = gson.toJson(
+                this,
+                new TypeToken<UsedPower>() {}.getType()
+            );
+            return json;
+	    }
+	    	    
 	}
 
 	public void addUsedPower (long for_user, long by_user, long room_id, SuperPower sp, int level, String result, String session_id) {
-        new UsedPower(for_user, by_user, room_id, sp, level, result, session_id);
+        // new UsedPower(for_user, by_user, room_id, sp, level, result, session_id);
 	}
 
     /**

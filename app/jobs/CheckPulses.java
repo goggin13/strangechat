@@ -13,7 +13,6 @@ import models.*;
 import controllers.Index;
 import controllers.Users;
 
-@Every("5s")
 public class CheckPulses extends Job {
 	private static int counter;
 	

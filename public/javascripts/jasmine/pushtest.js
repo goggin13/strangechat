@@ -11,16 +11,17 @@ describe('PushFunctions', function () {
 			user_id: 997,
 			avatar: "http://bnter.com/web/assets/images/13616__w320_h320.jpg",
 			alias: "Mr.T"		
-		};
+		}, user4 = {
+		  user_id: 996,
+		  avatar: "http://bnter.com/web/assets/images/13616__w320_h320.jpg",
+		  alias: "AnotherGuy"		
+	  };
 
   describe("logging in", function () {
     it('Will log you in', function () {
      var testLogin = function (JSON, user) {
-       var me;
-       $.each(JSON, function (k, v) {
-         me = v;
-         me["powers"] = v.superPowers;
-       }); 
+       var me = JSON[user.user_id];
+       expect(me).toBeDefined();
        expect(me.alias).toEqual(user.alias);
        expect(me.avatar).toEqual(user.avatar);
      },
@@ -39,54 +40,113 @@ describe('PushFunctions', function () {
      user3["api"] = ChatAPI(user3.user_id, user3.avatar, user3.alias, function (JSON) {
        testLogin(JSON, user3);
        loggedIn++;
-      });     
+     });  
+     user4["api"] = ChatAPI(user4.user_id, user4.avatar, user4.alias, function (JSON) {
+       testLogin(JSON, user4);
+       loggedIn++;
+     });         
      waitsFor(function () { 
-       return loggedIn == 3;
-     }, "waiting for users to log in", 2000);     
+       return loggedIn == 4;
+     }, "waiting for users to log in", 4000);     
     });
   });
 
   describe("get a room", function () {
     it('should pair two users', function () {
-      var msg1 = false,
-        msg2 = false,
-        checkJoinFor = function (JSON, user_id, avatar, alias, isUser1) {
-          if (isUser1) {
-            user1["room_id"] = val.data.room_id;
-          } else {
-            user2["room_id"] = val.data.room_id;     
-          }
-          expect(val.data.new_user).toEqual(user_id);
-          expect(val.data.avatar).toEqual(avatar);
-          expect(val.data.alias).toEqual(alias); 
-          expect(hasJoin).toEqual(true);
-        };
-        mh1 = function (JSON) {           
-          checkJoinFor(JSON, user2.api.user_id, user2.avatar, user2.alias, true);
-          user1.api.resetMessageHandler();
-          msg1 =  true;
-        },
-        mh2 = function (JSON) {
-          checkJoinFor(JSON, user1.api.user_id, user1.avatar, user1.alias, false);
-          user2.api.resetMessageHandler();
-          msg2 =  true
-        };
+      var msg1 = false, msg2 = false, msg3 = false, msg4 = false;
       
-      user1.api.registerJoinHandler(mh1);
-      user2.api.registerJoinHandler(mh2);
-      user1.api.requestRandomRoom();
-      user2.api.requestRandomRoom();
+      user1.api.requestRandomRoom(function (user) {
+        expect(user.avatar).toEqual(user2.avatar);
+        expect(user.alias).toEqual(user2.alias);        
+        msg1 = true;
+      });
+      user2.api.requestRandomRoom(function (user) {
+        expect(user.avatar).toEqual(user1.avatar);
+        expect(user.alias).toEqual(user1.alias);        
+        msg2 = true;
+      });
       
-      waitsFor(function () { 
+      waitsFor(function () {
         return msg1 && msg2;
-      }, "Join rooms timed out", 3000);
+      }, "waiting to get joined", 4000);
       
       runs(function () {
-        expect(user1.room_id).toBeDefined();
-        expect(user2.room_id).toBeDefined();        
-        expect(user1.room_id).toEqual(user2.room_id);
+        var user2Data = user1.api.im_talking_to[user2.api.user_id],
+          user1Data = user2.api.im_talking_to[user1.api.user_id];
+        expect(user1Data).toBeDefined();
+        expect(user2Data).toBeDefined();        
+        
+        user3.api.requestRandomRoom(function () {
+          msg3 = true;
+        });
+        
+        waits(1000);
+        runs(function () {
+          
+          expect(msg3).toEqual(false);
+          user4.api.requestRandomRoom(function () {
+            msg4 = true;
+          });
+          
+          waitsFor(function () {
+            return msg3 && msg4;
+          }, "second set to join", 4000);
+          runs(function () {
+            var user3Data = user4.api.im_talking_to[user3.api.user_id],
+              user4Data = user3.api.im_talking_to[user4.api.user_id];
+            expect(user3Data).toBeDefined();
+            expect(user4Data).toBeDefined();        
+          });
+          
+        });
+        
       });
 		});
   });
 
+  describe("sending messages", function () {
+    it('other user should receive it', function () {
+      var msg1 = false, msg2 = false;
+      
+      user3.api.requestRandomRoom(function (user) { 
+        msg1 = true; 
+        expect(user.user_id).toEqual(user4.api.user_id);
+      });
+      user4.api.requestRandomRoom(function (user) { 
+        msg2 = true; 
+        expect(user.user_id).toEqual(user3.api.user_id);        
+      });
+      
+      waitsFor(function () {
+        return msg1 && msg2;
+      }, "get matched up", 2000);
+      
+      runs(function () {
+        var user4Data = user3.api.im_talking_to[user4.api.user_id],
+          user3Data = user4.api.im_talking_to[user3.api.user_id],
+          user3channel = user3Data.channel,
+          user4channel = user4Data.channel,
+          messageCount = 0,
+          mh = function (message, from_user, to_user, from_user_lbl) {
+            expect(message.from).toEqual(from_user);
+            expect(message.to).toEqual(to_user);
+            expect(message.text).toEqual("hello from " + from_user_lbl);
+            messageCount++;
+          };
+        user3channel.bindToMessage(function (message) {
+          mh(message, user4.api.user_id, user3.api.user_id, "4");              
+        });
+        user4channel.bindToMessage(function (message) {
+          mh(message, user3.api.user_id, user4.api.user_id, "3");               
+        });        
+        
+        user3channel.message(user4.api.user_id, user3.api.user_id, "hello from 3");
+        user4channel.message(user3.api.user_id, user4.api.user_id, "hello from 4");        
+        
+        waitsFor(function () {
+          return messageCount == 2;
+        }, "waiting for messages to go through", 4000);
+      });   
+     });
+  });
 });

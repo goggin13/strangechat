@@ -33,10 +33,22 @@ public class Notify extends Index {
             userSession.user.avatar
         );        
         PresenceChannelData channelData = new PresenceChannelData(userSession.session, userInfo);
-        renderJSON(pusher.createAuthString(socket_id, channel_name, channelData));
+        String auth = pusher.createAuthString(socket_id, channel_name, channelData);
+        renderJSONP(
+            auth,
+            null
+        );
 	}
 	
-	public static void push (String channel, String event, String message, String socket_id) {
+	public static void push (
+	                @Required String channel, 
+	                @Required String event, 
+	                @Required String message, 
+	                String socket_id) 
+	{
+        if (validation.hasErrors()) {
+            returnFailed(validation.errors());
+        }	    
 	    Pusher pusher = new Pusher();
 	    pusher.trigger(channel, event, message, socket_id);
 	    returnOkay();

@@ -95,13 +95,7 @@ var MyContacts = (function () {
       return my.contacts[id].name;
     });
   };
-
-  that.getServerFor = function (id) {
-    return that.getIf(id, function () { 
-      return my.contacts[id].server;
-    });
-  };
-
+  
   that.getAliasFor = function (id) {
     return that.getIf(id, function () { 
       return my.contacts[id].alias;
@@ -117,34 +111,13 @@ var MyContacts = (function () {
   that.has = function (id) {
     return my.contacts.hasOwnProperty(id);
   };
-  
-  // a map of heartbeat servers to users on them
-  that.getIdListByServer = function (my_id) {
-    var ls = {};
-    $.each(my.contacts, function (k, v) {
-      if (my_id != k) {
-        var server = v.server,
-          ids = ls.hasOwnProperty(server) ? ls[server] : [];
-        ids.push(k);
-        ls[server] = ids;
-      }
-    });
-    return ls;
-  };
-  
+    
   that.remove = function (id) {
     delete my.contacts[id];
   };
   
-  that.put = function (id, name, alias, server, avatar, session, obj) {
-    my.contacts[id] = {
-      name: name,
-      alias: alias,
-      server: server,
-      avatar: avatar,
-      session: session,
-      obj: obj
-    };
+  that.put = function (user) {
+    my.contacts[user.user_id] = user;
   };
   
   return that;

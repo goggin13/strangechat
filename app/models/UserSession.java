@@ -29,6 +29,7 @@ import com.google.gson.JsonObject;
 
 import controllers.Notify;
 import enums.Power;
+import models.pusher.*;
 
 /**
  * A user session is an abstraction for a browser window that the user has open; 
@@ -79,15 +80,10 @@ public class UserSession extends Model {
 
     /**
      * Send this user a notification that a super power was used */
-    public void notifyUsedPower (UserSession.Faux from, long room_id, SuperPower power, int level, String result) {
-		if (!this.imOnMaster()) {
-		    HashMap<String, String> params 
-		        = Notify.getNotifyUsedPowerParams(this.user.id, this.session, from.user_id, from.session, room_id, power, level, result);
-    		notifyMe("usedpower", params);            
-        } else {
-            logWrongServer();
-			UserEvent.get().addUsedPower(this.user.id, from.user_id, room_id, power, level, result, this.session);
-		}        
+    public void notifyUsedPower (UserSession.Faux from, String channel, SuperPower power, int level, String result) {
+        Pusher pusher = new Pusher();
+        UserEvent.UsedPower message = new UserEvent.UsedPower(from.user_id, power, level, result);
+	    pusher.trigger(channel, "usedpower", message.toJson());
     } 
     
 	/**
@@ -301,6 +297,10 @@ public class UserSession extends Model {
    public String toString () {
        return this.user.id + " (" + this.session + ")";
    }	
+   
+   public String channelName () {
+       return this.toString();
+   }
    
    public UserSession.Faux toFaux () {
 	   return new Faux(this.user.id, this.session);

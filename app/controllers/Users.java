@@ -17,6 +17,7 @@ import models.UserEvent;
 import models.UserSession;
 import models.UserExclusion;
 import models.Utility;
+import models.pusher.*;
 import play.data.validation.Required;
 import play.libs.WS;
 import play.libs.F.T2;
@@ -55,10 +56,9 @@ public class Users extends Index {
 		user.alias = alias == null ? "" : alias;
 		UserSession sess = user.login();
 		user.save();		
-		broadcastHeartbeat(sess);
 		
 		HashMap<String, User> data = new HashMap<String, User>();
-		data.put(user.id.toString(), user);
+		data.put(user.user_id + "", user);
 		
 		return data;	    
 	}
@@ -165,13 +165,17 @@ public class Users extends Index {
 	/**
 	 * Use the given power, and notify the relevant users.
 	 * @param power_id the id of a {@link StoredPower} to use
-	 * @param room_id optional, the room the event is in */
-	public static void usePower (long power_id, long room_id) { 
-        if (power_id <= 0) {
-            returnFailed("power_id is required");
-        }
+	 * @param channel optional, the channel this power is being used in */
+	public static void usePower (@Required long power_id, @Required String channel) { 
+        if (validation.hasErrors()) {
+            returnFailed(validation.errors());
+        }	    
 	    UserSession user = currentSession();
 	    UserSession other = currentForSession();
+	    
+	    if (user == null) {
+	        returnFailed("valid session is required");
+	    }
 	    
         StoredPower storedPower = StoredPower.findById(power_id);
         if (storedPower == null) {
@@ -183,15 +187,9 @@ public class Users extends Index {
         SuperPower sp = storedPower.getSuperPower();
         String result = storedPower.use(other != null ? other.user : null);
         
-        user.notifyUsedPower(user.toFaux(), room_id, sp, storedPower.level, result);
-        if (room_id <= 0 || other == null) {
-            HashMap<UserSession, Long> conversants = user.getConversants();
-            for (UserSession u : conversants.keySet()) {
-                u.notifyUsedPower(user.toFaux(), conversants.get(u), sp, storedPower.level, result);
-            }
-        } else {            
-            other.notifyUsedPower(user.toFaux(), room_id, sp, storedPower.level, result);            
-        }
+        Pusher pusher = new Pusher();
+        UserEvent.UsedPower message = new UserEvent.UsedPower(user.user.id, sp, storedPower.level, result);
+	    pusher.trigger(channel, "usedpower", message.toJson());
         returnOkay();
 	}
 }
