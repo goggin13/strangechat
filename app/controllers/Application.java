@@ -73,4 +73,8 @@ public class Application extends Index {
 		render();
 	}
 	
+	public static void greenscript () {
+	    render();
+	}
+	
 }

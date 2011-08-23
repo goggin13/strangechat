@@ -17,7 +17,7 @@ public enum Power {
 	EMOTION(new Emotion()),
 	X_RAY_VISION(new XRayVision());
     // BRAIN_MASH(new BrainMash()),
-    // FREEZE(new Freeze()),    
+    // FREEZE(new Freeze());
     
 	private String str; 
 	private SuperPower sp;

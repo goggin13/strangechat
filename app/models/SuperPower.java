@@ -77,10 +77,7 @@ public abstract class SuperPower {
         Power p = this.getPower();
         StoredPower sp = StoredPower.getOrCreate(p, user);
         sp.increment(level);
-        List<UserSession> sessions = user.getSessions();
-        for (UserSession us : sessions) {
-            us.notifyNewPower(sp);
-        }
+        user.notifyNewPower(sp);
     	return sp;
     } 
     

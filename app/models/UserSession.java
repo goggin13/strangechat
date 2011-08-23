@@ -87,17 +87,6 @@ public class UserSession extends Model {
     } 
     
 	/**
-	 * Send this user a notification that they have recieved a new power
-	 * @param power the new power they have received */
-	public void notifyNewPower (StoredPower power) {
-		Pusher pusher = new Pusher();
-        UserEvent.NewPower message = new UserEvent.NewPower(this.user.id, power.getSuperPower(), power.id, power.level, this.session);
-        System.out.println("publush to " + this.user.getChannelName());
-        System.out.println(message.toJson());
-	    pusher.trigger(this.user.getChannelName(), "newpower", message.toJson());
-	}
-
-	/**
 	 * Send this user a notification that someone in the room
 	 * they were chatting in has left 
 	 * @param user the user who left the room

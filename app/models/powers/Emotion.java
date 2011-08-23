@@ -8,7 +8,7 @@ import enums.Power;
 public class Emotion extends SuperPower {
     public static final HashMap<Integer, Long> levels = new HashMap<Integer, Long>();
 	public static int levelCount = 1;
-	private static Long min = 60L;
+	private static Long min = 15L;  // just make a "minute" shorter for new interval powers
 
 	static {
         levels.put(levelCount++, 2L * min);
@@ -34,6 +34,7 @@ public class Emotion extends SuperPower {
 	    if (targetLevel > levelCount) {
 	        return 0;
 	    }
+	    
 	    Long targetTime = levels.get(targetLevel);
 	    Long chatTime = user.chatTime;
 	    

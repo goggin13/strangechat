@@ -125,27 +125,26 @@ var MatchMaker = function (spec) {
       }
     });
 
-    my.randomChannel.bindLogin(function (members) {    
+    my.randomChannel.bindLogin(function (users) {    
       var eligible = [];      
-      members.each(function(member) {
-        var user_id = member.info.user_id;
-        if (my.canIPairWithMember(user_id)) {
-          if ($.inArray(user_id, eligible) == -1) {
-            eligible.push(member.info.user_id); 
+      $.each(users, function(k, user) {
+        if (my.canIPairWithMember(user.user_id)) {
+          if ($.inArray(user.user_id, eligible) == -1) {
+            eligible.push(user.user_id); 
           }
         }
         my.proposeToAll(eligible);
       });
     });  
 
-    my.randomChannel.bindLogon(function (user_id) {      
-      if (my.waitingForChat && my.canIPairWithMember(user_id)) {
-        my.proposeMeetUp(user_id);        
+    my.randomChannel.bindLogon(function (user) {      
+      if (my.waitingForChat && my.canIPairWithMember(user.user_id)) {
+        my.proposeMeetUp(user.user_id);        
       }
     }); 
 
-    my.randomChannel.bindLogoff(function (user_id) {    
-      if (my.pendingResponse == user_id) {
+    my.randomChannel.bindLogoff(function (user) {    
+      if (my.pendingResponse == user.user_id) {
         my.propsalFailed();
       }
     });    

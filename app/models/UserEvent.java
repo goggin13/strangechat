@@ -362,23 +362,20 @@ public class UserEvent {
 	/** 
 	 * Notifies a user that they have recieved a new super power */
 	public static class NewPower extends Event {
-	    /** the id of the stored power to hit when you use it */
-	    final public long power_id;
 	    /** details about the super power */
 	    final public SuperPower superPower;
-	    /** The level of the new super power */
-	    final public int level;
+	    /** details about the super power */
+	    final public StoredPower storedPower;	    
 	    
-	    public NewPower (long for_user, SuperPower sp, long power_id, int level, String session_id) {
+	    public NewPower (long for_user, StoredPower stored, String session_id) {
 	        super("newpower", for_user, session_id);
-	        this.superPower = sp;
-	        this.power_id = power_id;
-	        this.level = level;
-	        publishMe();
+	        this.superPower = stored.getSuperPower();
+	        this.storedPower = stored;
 	    }
 
 	    public String toJson () {
-	        Gson gson = new Gson();
+    		GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new User.ChatExclusionStrategy());
+    		Gson gson = gsonBuilder.create();
             String json = gson.toJson(
                 this,
                 new TypeToken<NewPower>() {}.getType()
@@ -387,13 +384,13 @@ public class UserEvent {
 	    }
 	    
 		public String toString () {
-			return super.toString() + " : " + this.superPower.name + " awarded (L " + this.level +")";
+			return super.toString() + " : " + this.superPower.name + " awarded (L " + this.storedPower.level +")";
 		}	    
 	}
 
-	public void addNewPower (long for_user, SuperPower sp, long power_id, int level, String session_id) {
-        new NewPower(for_user, sp, power_id, level, session_id);
-	}
+    // public void addNewPower (long for_user, SuperPower sp, long power_id, int level, String session_id) {
+        // new NewPower(for_user, sp, power_id, level, session_id);
+    // }
 
 	/** 
 	 * Notifies a user that they have recieved a new super power */
@@ -485,6 +482,8 @@ public class UserEvent {
             t = new TypeToken<UserEvent.AcceptRequest>() {}.getType();                                                                                            
         } else if (type.equals("roommessage")) {
             t = new TypeToken<UserEvent.RoomMessage>() {}.getType(); 
+        } else if (type.equals("useristyping")) {
+            t = new TypeToken<UserEvent.UserIsTyping>() {}.getType();            
         } else if (type.equals("usedpower")) {    
             t = new TypeToken<UserEvent.UsedPower>() {}.getType();             
         }

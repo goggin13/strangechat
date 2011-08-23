@@ -41,6 +41,7 @@ public class Users extends Index {
         if (BlackList.isBlacklisted(user)) {
 		    returnFailed("You have been blacklisted");
 		}
+		System.out.println("Logging in " + user.id);
         Users.renderJSONP(
             getYourData(user, avatar, alias), 
             new TypeToken<HashMap<String, User>>() {}.getType()

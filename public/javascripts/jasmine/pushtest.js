@@ -18,48 +18,48 @@ describe('PushFunctions', function () {
 	  };
 
   beforeEach(function () {
-    var isDone = false;
-    $.getJSON("http://localhost:9000/mock/init", function () {
-      isDone = true;
-    });
-    waitsFor(function () {
-      return isDone;
-    }, "reset failed", 1000);
-    runs(function () {
-      var testLogin = function (JSON, user) {
-        var me = JSON[user.user_id];
-        expect(me).toBeDefined();
-        expect(me.alias).toEqual(user.alias);
-        expect(me.avatar).toEqual(user.avatar);
-      },
-      loggedIn = 0;
-      user1["api"] = ChatAPI(user1.user_id, user1.avatar, user1.alias, function (JSON) {
-        testLogin(JSON, user1);
-        loggedIn++;
-        $.each(JSON, function (k, v) {
-           user1["powers"] = v.superPowers;
-         });  
-      });
-      user2["api"] = ChatAPI(user2.user_id, user2.avatar, user2.alias, function (JSON) {
-        testLogin(JSON, user2);
-        loggedIn++;
-      });
-      user3["api"] = ChatAPI(user3.user_id, user3.avatar, user3.alias, function (JSON) {
-        testLogin(JSON, user3);
-        loggedIn++;
-      });  
-      user4["api"] = ChatAPI(user4.user_id, user4.avatar, user4.alias, function (JSON) {
-        testLogin(JSON, user4);
-        loggedIn++;
-      });         
-      waitsFor(function () { 
-        return loggedIn == 4;
-      }, "waiting for users to log in", 4000);
-    });
-  });
+     var isDone = false;
+     $.getJSON("http://localhost:9000/mock/init", function () {
+       isDone = true;
+     });
+     waitsFor(function () {
+       return isDone;
+     }, "reset failed", 1000);
+     runs(function () {
+       var testLogin = function (JSON, user) {
+         var me = JSON[user.user_id];
+         expect(me).toBeDefined();
+         expect(me.alias).toEqual(user.alias);
+         expect(me.avatar).toEqual(user.avatar);
+       },
+       loggedIn = 0;
+       user1["api"] = ChatAPI(user1.user_id, user1.avatar, user1.alias, function (JSON) {
+         testLogin(JSON, user1);
+         loggedIn++;
+         $.each(JSON, function (k, v) {
+            user1["powers"] = v.superPowers;
+          });  
+       });
+       user2["api"] = ChatAPI(user2.user_id, user2.avatar, user2.alias, function (JSON) {
+         testLogin(JSON, user2);
+         loggedIn++;
+       });
+       user3["api"] = ChatAPI(user3.user_id, user3.avatar, user3.alias, function (JSON) {
+         testLogin(JSON, user3);
+         loggedIn++;
+       });  
+       user4["api"] = ChatAPI(user4.user_id, user4.avatar, user4.alias, function (JSON) {
+         testLogin(JSON, user4);
+         loggedIn++;
+       });         
+       waitsFor(function () { 
+         return loggedIn == 4;
+       }, "waiting for users to log in", 4000);
+     });
+   });
 
-  xdescribe("get a room", function () {
-    it('should pair two users', function () {
+  describe("get a room", function () {
+    it('should pair two users', function () {     
       var msg1 = false, msg2 = false, msg3 = false, msg4 = false;
       
       user1.api.requestRandomRoom(function (user) {
@@ -124,7 +124,7 @@ describe('PushFunctions', function () {
       
       waitsFor(function () {
         return msg1 && msg2;
-      }, "get matched up", 2000);
+      }, "get matched up", 4000);
       
       runs(function () {
         var user4Data = user3.api.im_talking_to[user4.api.user_id],
@@ -133,6 +133,7 @@ describe('PushFunctions', function () {
           user4channel = user4Data.channel,
           messageCount = 0,
           power_id = user4.api.superPowers[0].id,
+          loggedInCount = 0,
           mh = function (message, from_user, from_user_lbl, type) {
             expect(message.type).toEqual(type);            
             expect(message.from).toEqual(from_user);
@@ -142,6 +143,8 @@ describe('PushFunctions', function () {
           ph = function (power) {
             messageCount++;
           };
+        user3channel.bindLogin(function () { loggedInCount++ });
+        user4channel.bindLogin(function () { loggedInCount++ });        
         user3channel.bindToMessage(function (message) {
           mh(message, user4.api.user_id, "4", "roommessage");              
         });
@@ -161,27 +164,31 @@ describe('PushFunctions', function () {
           ph();
         });    
         
-        user3channel.message(user3.api.user_id, "hello from 3");
-        user4channel.message(user4.api.user_id, "hello from 4");        
-        user3channel.userIsTyping(user3.api.user_id, "hello from 3");
-        user4channel.userIsTyping(user4.api.user_id, "hello from 4");
-        user4channel.usePower(power_id, user4.api.user);
-        
         waitsFor(function () {
-          return messageCount == 6;
-        }, "waiting for messages to go through", 4000);
+          return loggedInCount == 2;
+        }, "users to both subscribe", 4000);
+        runs(function () {
+          user3channel.message(user3.api.user_id, "hello from 3");
+          user4channel.message(user4.api.user_id, "hello from 4");        
+          user3channel.userIsTyping(user3.api.user_id, "hello from 3");
+          user4channel.userIsTyping(user4.api.user_id, "hello from 4");
+          user4channel.usePower(power_id, user4.api.user);   
+          waitsFor(function () {
+            return messageCount == 6;
+          }, "messages to go through", 4000);                 
+        });
       });   
     });
   });  
   
-  describe("qualify for mind reader", function () {
+  xdescribe("qualify for mind reader", function () {
     it("should occur after using 3 icebreakers", function () {
       var msg1 = false, msg2 = false;
       
       user3.api.requestRandomRoom(function (user) { msg1 = true; });
       user4.api.requestRandomRoom(function (user) { msg2 = true; });
       
-      waitsFor(function () { return msg1 && msg2; }, "get matched up", 2000);
+      waitsFor(function () { return msg1 && msg2; }, "get matched up", 4000);
       
       runs(function () {
         var user4Data = user3.api.im_talking_to[user4.api.user_id],
@@ -194,9 +201,9 @@ describe('PushFunctions', function () {
         }
         
         user4.api.bindNewPower(function (power) {
-          expect(power.power_id).toBeDefined();
+          expect(power.storedPower.id).toBeDefined();
           expect(power.superPower.name).toEqual("Mind Reader");
-          expect(power.level).toEqual(1);
+          expect(power.storedPower.level).toEqual(1);
           gotIt = true;
         });
         

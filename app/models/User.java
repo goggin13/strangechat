@@ -31,6 +31,7 @@ import java.util.Random;
 
 import controllers.Notify;
 import enums.Power;
+import models.pusher.*;
 
 /**
  * A chat user in the system, who can be online or off, and the maintained meta
@@ -76,17 +77,17 @@ public class User extends Model {
 	@ElementCollection  
 	public Set<Integer> icebreakers_seen;
 
-    /** True if this user is currently online */	
+    /** True if this user is currently online */
     public long lastLogin;
 	
-	/** True if this user is currently online */	
+	/** True if this user is currently online */
 	public boolean online;
 
     /** total seconds chatting */
     public long chatTime;  		
 
     /** total messages sent */
-    public int messageCount;  		
+    public int messageCount;	
 
     /** total messages received */
     public int gotMessageCount;
@@ -105,7 +106,6 @@ public class User extends Model {
 
 	/** The server this user was assigned to heartbeat on */	
 	@ManyToOne
-	@Required
 	public Server heartbeatServer;
 	
 	public User (long u) {
@@ -262,6 +262,15 @@ public class User extends Model {
 	    } 
 	    return sp.level;
     }
+
+	/**
+	 * Send this user a notification that they have recieved a new power
+	 * @param power the new power they have received */
+	public void notifyNewPower (StoredPower power) {
+		Pusher pusher = new Pusher();
+        UserEvent.NewPower message = new UserEvent.NewPower(this.id, power, "");
+	    pusher.trigger(this.getChannelName(), "newpower", message.toJson());
+	}
 
     /**
      * Check all of the super powers and see if I am eligible for any

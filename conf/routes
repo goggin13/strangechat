@@ -36,6 +36,11 @@ GET     /favicon.ico                            404
 # Import Secure routes
 *       /                                       module:secure
 
+# Enable GreenScript dynamic configuration
+# IMPORTANT: make sure this routine map be different from your
+# staticDir map to compressed file folder
+GET /gsconf module:greenscript
+
 # Import CRUD routes
 *      /admin              module:crud
 

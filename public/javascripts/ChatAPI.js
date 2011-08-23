@@ -5,8 +5,8 @@ var MyUtil = (function (user_id, avatar, alias, callback) {
  var that = {};
  
  that.debug = function (msg) {
-   if (window.console) {
-     console.debug(msg);      
+   if (window && window.console) {
+     console.log(msg);      
    }
  };
  
@@ -17,6 +17,20 @@ var MyUtil = (function (user_id, avatar, alias, callback) {
    }
    arr.splice(index, 1);
  };
+ 
+ // serialize a dict to url form, key=value&key2=....
+ that.serialize = function (dict) {
+   "use strict";
+   var vals = [],
+     key;
+   for (key in dict) {
+     if (dict.hasOwnProperty(key)) {
+       vals.push(key + '=' + dict[key]);
+     }
+   }
+   return vals.join('&');
+ };
+ 
  
  return that;
 }());
@@ -59,7 +73,7 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     if (that.user != null) {
       data["session"] = that.user.session;
     }
-    var hash = url + "?" + serialize(data);
+    var hash = url + "?" + MyUtil.serialize(data);
     
     // hash.indexOf("heartbeat") === -1 && 
     if (hash.indexOf('imtyping') === -1) {
@@ -92,6 +106,13 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     return hash;
   };
 
+  that.getGroupChannel = function (groupKey) {
+    return RoomChannel({
+	    channel_name: "presence-group-" + groupKey,
+	    pusher: my.pusher
+	  });
+  };
+
   my.loginCallback = function (JSON, alias, callback) {
     if (JSON.hasOwnProperty("status") && JSON.status == "error") {
       callback(JSON);
@@ -108,7 +129,7 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     that.superPowers = me.superPowers;
     that.superPowerDetails = me.superPowerDetails;  
     
-    MyContacts.put(that.user);
+    // MyContacts.put(that.user);
     that.user_id = that.user.user_id;
 		if (callback) {
 			callback(JSON);

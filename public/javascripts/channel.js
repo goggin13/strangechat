@@ -8,6 +8,15 @@ var Channel = function (spec) {
 	my.pusher = spec.pusher;
 	my.subscribed = false;
 	
+	my.memberToUser = function (m) {
+	  return User({
+      user_id: m.info.user_id,
+      alias: m.info.name,
+      session: m.info.session,
+      avatar: m.info.avatar	    
+	  });
+	};
+	
 	that.subscribe = function () {
 	  if (my.subscribed) {
 	    return;
@@ -22,19 +31,23 @@ var Channel = function (spec) {
 
 	that.bindLogon = function (f) {
 	  that.bind(types.PUSHER_MEMBER_LOGON, function (member) {
-	    f(member.info.user_id);
+	    f(my.memberToUser(member));
 	  });	  
 	};
 
 	that.bindLogoff = function (f) {
 	  that.bind(types.PUSHER_MEMBER_LOGOFF, function (member) {
-	    f(member.info.user_id);
+	    f(my.memberToUser(member));
 	  });
 	};
 	
 	that.bindLogin = function (f) {
 	  that.bind(types.PUSHER_LOGIN, function (members) {
-	    f(members);
+	    var users = [];
+	    members.each(function (m) {
+	      users.push(my.memberToUser(m));
+	    });
+	    f(users);
 	  });
 	};
 	

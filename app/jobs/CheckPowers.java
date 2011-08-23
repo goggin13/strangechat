@@ -24,7 +24,6 @@ public class CheckPowers extends Job {
     public static final int HEARTBEAT_INTERVAL = 5; 
     
     public void doJob () {
-            
         processUpdates(getEvents());
 
         for (Long id : myUsers) {
@@ -63,11 +62,22 @@ public class CheckPowers extends Job {
                 from.save();
             } else if (event instanceof UserEvent.AcceptRequest) {
                 UserEvent.AcceptRequest j = (UserEvent.AcceptRequest)event;
+                if (j.from == -1) {
+                     continue;
+                 }
                 User user = getUser(j.from);     
                 if (user != null) {
                     user.joinCount += 1;
                     user.save();                    
                 }
+            } else if (event instanceof UserEvent.UsedPower) {
+                User from = getUser(event.from);
+            } else if (event instanceof UserEvent.UserIsTyping) {
+                User from = getUser(event.from);              
+                if (from != null) {
+                    from.chatTime += 15;
+                    from.save();                   
+                }                
             } else if (!(event instanceof UserEvent.Event)) {
                 Logger.error("Processing super power check and encountered a bad event");
             } 

@@ -67,7 +67,6 @@ var RoomChannel = function (spec) {
       from: from,
       text: msg,
     }));
-    console.debug("PUsh Message");
   };
   
   return that;

@@ -228,7 +228,7 @@ public class Notify extends Index {
 	 public static void newPower (String superPowerJSON, Long power_id, int level) {
 		 UserSession.Faux for_sess = currentForFauxSession();
          SuperPower superPower = SuperPower.fromJSON(superPowerJSON);
-         UserEvent.get().addNewPower(for_sess.user_id, superPower, power_id, level, for_sess.session);
+         // UserEvent.get().addNewPower(for_sess.user_id, superPower, power_id, level, for_sess.session);
          returnOkay();
 	 }
 	 

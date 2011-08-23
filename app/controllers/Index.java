@@ -48,16 +48,14 @@ public abstract class Index extends CRUD {
         
         if (containsUserKey && containsSessKey && user_id != -1) {
             
-            if (Server.onMaster()) {
-                UserSession sess = UserSession.getFor(user_id, session);
-                if (sess == null) {
-                    returnFailed(user_id + " and " + session + " do not map to a valid session");
-                } else {
-                    renderArgs.put(save_key, sess);
-                }
-            } 
-            UserSession.Faux sess = new UserSession.Faux(user_id, session);
-            renderArgs.put(save_key + "_faux", sess);    
+            UserSession sess = UserSession.getFor(user_id, session);
+            if (sess == null) {
+                returnFailed(user_id + " and " + session + " do not map to a valid session");
+            } else {
+                renderArgs.put(save_key, sess);
+            }
+            UserSession.Faux sessFaux = new UserSession.Faux(user_id, session);
+            renderArgs.put(save_key + "_faux", sessFaux);    
         } else {
             renderArgs.put(save_key, null);
         }
