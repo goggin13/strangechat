@@ -18,7 +18,8 @@ c.blacklistRequests("http://www\\.google\\.com/buzz/.*", 200);
 
 var timeout = 30000;
 var icebreaker_timeout = 4000;
-var NUM_ITERS = 50;
+var NUM_ITERS = 25;
+var MESSAGE_PAUSE_TIME = 1000;
 
 selenium.setTimeout(timeout);
 
@@ -60,12 +61,10 @@ sendChat("hello " + theirName + ", " + " my name is " + myName);
 sendIceBreaker();
 
 for (i = 1; i < NUM_ITERS; i++) {  
+  selenium.pause(MESSAGE_PAUSE_TIME);
   sendChat(myName + " hello" + i);    
   selenium.waitForTextPresent(theirName + " hello" + i);
   var elapsedTime = timestamp() - iceBreakerTimer;
-  browserMob.log("------------------------------------------------------------------------");
-  browserMob.log("elapsed = " + elapsedTime);
-  browserMob.log("------------------------------------------------------------------------");  
   if (elapsedTime > 17) {
     sendIceBreaker();
   }
