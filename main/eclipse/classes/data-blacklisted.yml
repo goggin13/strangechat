@@ -1,0 +1,27 @@
+Server(master):
+  name: master.com
+  uri: http://localhost:9000/
+  roomCount: 4
+  nextID: 1
+  isMaster: true
+  isChat: true
+  volume: .5
+  
+Server(chat1):
+  name: chat1.com
+  uri: http://localhost:9000/
+  roomCount: 4
+  nextID: 1
+  isMaster: false
+  isChat: true
+  volume: .5
+
+User(goggin):
+  user_id: 100002292928724
+  name: "Matthew Goggin"
+  online: true
+  heartbeatServer: chat1
+  superpowers: gstoredpower
+ 
+BlackList(bl):
+  user: goggin

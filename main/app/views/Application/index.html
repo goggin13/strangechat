@@ -1,0 +1,36 @@
+#{extends 'main.html' /}
+
+#{if amMaster} 
+	#{set title:'Master' /}
+#{/if}
+#{else}
+	#{set title:'ChatServer' /}
+#{/else}
+
+#{if isDev}
+	<a href="@{Application.specrunner()}">Jasmine tests</a><br/>
+	<a href="@tests">Unit tests</a><br/>
+#{/if}
+
+#{if amMaster} 
+	<p>I'm the Master server <br/>
+		#{list items:masterStats.keySet(), as:'stat'} 
+			${masterStats.get(stat)} | ${stat} <br/>
+		#{/list}
+	</p>
+#{/if}
+
+#{if amChat} 
+	<p>
+		I'm a chat server <br/>
+		#{list items:chatStats.keySet(), as:'stat'} 
+			${chatStats.get(stat)} | ${stat} <br/>
+		#{/list}				
+	</p>
+	<p>EVENT QUEUE <br/>
+		#{list items:events, as:'e'} 
+			#{if e.type != "nothing"}
+				${e} <br/>
+			#{/if}
+		#{/list}
+#{/if}

@@ -1,0 +1,110 @@
+# you describe your data using the YAML notation here
+# and then load them using Fixtures.load("data.yml")
+
+Server(master):
+  name: master.com
+  uri: http://localhost:9000/
+  roomCount: 4
+  nextID: 1
+  isMaster: true
+  isChat: true
+  volume: .5
+  
+Server(chat1):
+  name: chat1.com
+  uri: http://localhost:9000/
+  roomCount: 4
+  nextID: 1
+  isMaster: false
+  isChat: true
+  volume: .5
+  
+User(pmo):
+  user_id: 24403414
+  alias: "Patrick Moberg"
+  online: true
+  heartbeatServer: chat1
+
+User(kristen):
+  user_id: 411183
+  alias: "Kristen Diver"
+  online: true
+  heartbeatServer: chat1
+
+StoredPower(gstoredpower):
+  owner: pmo
+  power: "ICE_BREAKER"
+  owner: pmo
+  available: 1
+  used: false
+           
+User(goggin):
+  user_id: 100002292928724
+  alias: "Matthew Goggin"
+  online: true
+  heartbeatServer: chat1
+  superpowers: gstoredpower
+  
+User(rando1):
+  user_id: 11
+  alias: "John Smith"
+  online: true
+  heartbeatServer: chat1
+  
+User(rando2):
+  user_id: 12
+  alias: "Jane Doe"
+  online: true
+  heartbeatServer: chat1
+
+User(testBot):
+  botid: 843ad5ae9e34019a
+  alias: "Test"
+  online: true
+  avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+  heartbeatServer: chat1
+  isBot: true
+
+StoredPower(sp):
+  power: "ICE_BREAKER"
+  used: 12
+  owner: rando2
+    
+StoredPower(sp2):
+  power: "X_RAY_VISION"
+  owner: rando2
+  
+StoredPower(sp3):
+  power: "MIND_READER"
+  owner: rando2
+
+User(blacklisted):
+  user_id: 15
+  alias: "John Smith II"
+  online: false
+  heartbeatServer: chat1 
+ 
+BlackList(bl):
+  user: blacklisted
+  
+  
+UserSession(1):
+  user: pmo
+  session: "pmo_session"
+  
+UserSession(2):
+  user: kristen
+  session: "k_session"
+
+UserSession(3):
+  user: goggin
+  session: "goggin_session"
+  
+UserSession(4):
+  user: rando1
+  session: "rando_1_session"
+  
+UserSession(5):
+  user: rando2
+  session: "rando_2_session"   
+                   

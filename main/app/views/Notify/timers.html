@@ -1,0 +1,34 @@
+
+<style type="text/css">
+	th {
+		text-align: left;
+		border-bottom: medium solid darkgray;
+		border-right: medium solid darkgray;		
+	}
+	td {
+		padding: 5px;
+	}
+</style>
+
+<p>timers</p>
+
+<table>
+	<tr>
+		<th>Label</th>
+		<th>Count</th>
+		<th>Avg</th>
+		<th>Total</th>
+	</tr>
+#{list items:timers.keySet(), as:'timer'} 
+	<tr>
+		<th>${timer} </th>
+		<td>${timers.get(timer)._1}</td>
+		#{if timers.get(timer)._2 > 0}
+			<td>${(timers.get(timer)._2 / timers.get(timer)._1) / 1000}</td>
+		#{else}
+			<td>--</td>
+		#{/else}
+		#{/if}
+		<td>${timers.get(timer)._2}</td>
+	</tr>
+#{/list}

@@ -1,0 +1,3698 @@
+***** TEST PASSED *****
+=====================================================
+Script Log
+=====================================================
+Tip: Calls to browserMob.log('text') will log the supplied text to this field - great for debugging!
+
+=====================================================
+Transaction information
+=====================================================
+Start: Thu Aug 18 11:27:17 EDT 2011
+End: Thu Aug 18 11:27:47 EDT 2011
+Time Active: 30124ms
+Time Paused: 0ms
+Bytes Transfered: 654525
+Total Steps: 1
+
+
+=====================================================
+Step 1
+=====================================================
+Start: Thu Aug 18 11:27:17 EDT 2011
+End: Thu Aug 18 11:27:46 EDT 2011
+Time Active: 29117ms
+Time Paused: 0ms
+Bytes Transfered: 654471
+Total Objects: 131
+
+	259b	301	157ms	http://superheroclubhouse.com/staging
+	5166b	200	140ms	http://superheroclubhouse.com/strangechat/staging/
+	4575b	200	133ms	http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151214958284
+	551b	200	116ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_gender_male.png
+	12676b	200	114ms	http://superheroclubhouse.com/staging/web/assets/images/logo.png
+	617b	200	131ms	http://superheroclubhouse.com/staging/web/assets/images/square_phonebooth.png
+	2088b	200	114ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_body_type_2.png
+	727b	200	124ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_gender_female.png
+	1464b	200	133ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_body_type_3.png
+	1830b	200	133ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_body_type_1.png
+	5218b	200	131ms	http://api.mixpanel.com/site_media/js/api/mixpanel.js
+	50492b	200	286ms	http://superheroclubhouse.com/staging/web/assets/images/bg.png
+	1918b	200	108ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_4.png
+	1693b	200	119ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_2.png
+	1507b	200	116ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_1.png
+	1637b	200	113ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_3.png
+	1682b	200	112ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_2.png
+	1253b	200	164ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_3.png
+	1532b	200	117ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_1.png
+	1402b	200	122ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_3.png
+	1016b	200	112ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_2.png
+	2139b	200	123ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_4.png
+	1695b	200	116ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_1.png
+	50898b	200	336ms	http://superheroclubhouse.com/staging/web/assets/js/jquery.js?v=151377068428
+	1252b	200	126ms	http://superheroclubhouse.com/staging/web/assets/js/jquery.colorbox-min.js?v=15220016510
+	4314b	200	147ms	http://superheroclubhouse.com/staging/web/assets/js/misc.js?v=151823513914
+	4125b	200	141ms	http://superheroclubhouse.com/staging/web/assets/js/choose_avatar.js?v=151557310608
+	1884b	200	149ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_4.png
+	1385b	200	114ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_female_1.png
+	579b	200	121ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_female_2.png
+	1357b	200	115ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_1.png
+	2041b	200	115ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_female_3.png
+	1145b	200	118ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_2.png
+	1098b	200	115ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_3.png
+	1312b	200	114ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_4.png
+	316b	200	115ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_1.png
+	854b	200	111ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_2.png
+	797b	200	112ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_3.png
+	710b	200	111ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_4.png
+	393b	200	117ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_1.png
+	348b	200	112ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_2.png
+	384b	200	118ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_3.png
+	738b	200	127ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_4.png
+	1664b	200	121ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_shirt_type_2.png
+	1257b	200	120ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_shirt_type_1.png
+	1481b	200	114ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_cape.png
+	669b	200	114ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_sweatband.png
+	1457b	200	121ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_gloves.png
+	963b	200	122ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_layer.png
+	1067b	200	113ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_wristbands.png
+	1169b	200	114ms	http://superheroclubhouse.com/staging/web/assets/images/icons/icon_bow.png
+	75873b	200	346ms	http://superheroclubhouse.com/staging/web/assets/images/buttons.png
+	1136b	200	117ms	http://superheroclubhouse.com/staging/web/assets/images/check.png
+	50b	200	126ms	http://api.mixpanel.com/track/?data=eyJldmVudCI6ICJtcF9wYWdlX3ZpZXciLCJwcm9wZXJ0aWVzIjogeyJtcF9icm93c2VyIjogIkZpcmVmb3giLCJtcF9wbGF0Zm9ybSI6ICJNYWMgT1MgWCIsIm1wX3BhZ2UiOiAiaHR0cDovL3N1cGVyaGVyb2NsdWJob3VzZS5jb20vc3RyYW5nZWNoYXQvc3RhZ2luZy8iLCJ0b2tlbiI6ICI2ZThiYzNiMTE5YWFjN2JhOTRkOGI0OWY4ZGY2NDBlMCIsInRpbWUiOiAxMzEzNjgxMjM5fX0%3D&ip=1&callback=mpq.metrics.jsonp_callback&_=1313681239194
+	1390b	200	153ms	https://s3.amazonaws.com/superheroclubhouse/avatars/male/eyes/male_eyes_1.png
+	23812b	200	173ms	https://s3.amazonaws.com/superheroclubhouse/avatars/male/body/tan_male_body_normal.png
+	670b	200	159ms	https://s3.amazonaws.com/superheroclubhouse/avatars/male/mouth/male_mouth_1.png
+	125b	200	152ms	https://s3.amazonaws.com/superheroclubhouse/avatars/male/background/white_male_background.png
+	2273b	200	43ms	http://static.chartbeat.com/js/chartbeat.js
+	26b	302	605ms	http://superheroclubhouse.com/strangechat/staging/
+	4518b	200	137ms	http://superheroclubhouse.com/staging/chat
+	4575b	200	143ms	http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151728580900
+	1026b	200	180ms	http://superheroclubhouse.com/staging/web/assets/css/jquery.cssemoticons.css?v=151430012175
+	0b	200	0ms	http://connect.facebook.net/en_US/all.js
+	45479b	200	304ms	http://superheroclubhouse.com/staging/web/assets/images/users/ccc54ed70643244d466d8978712cf192.png
+	52004b	200	352ms	http://superheroclubhouse.com/staging/web/assets/js/jquery-ui-1.8.14.js?v=151510229415
+	1499b	200	131ms	http://superheroclubhouse.com/staging/web/assets/images/made_by_bnter.png
+	784b	200	128ms	http://superheroclubhouse.com/staging/web/assets/images/who.png
+	4314b	200	137ms	http://superheroclubhouse.com/staging/web/assets/js/misc.js?v=151643291675
+	1240b	200	135ms	http://superheroclubhouse.com/staging/web/assets/js/jquery.cssemoticons.min.js?v=15211106360
+	673b	200	113ms	http://superheroclubhouse.com/staging/web/assets/images/loading.gif
+	1259b	200	135ms	http://superheroclubhouse.com/staging/web/assets/js/mycontacts.js?v=151255374062
+	1252b	200	130ms	http://superheroclubhouse.com/staging/web/assets/js/jquery.colorbox-min.js?v=15101312302
+	50898b	200	325ms	http://superheroclubhouse.com/staging/web/assets/js/jquery.js?v=1573253667
+	2999b	200	140ms	http://superheroclubhouse.com/staging/web/assets/js/chatapi.js?v=15691935473
+	2079b	200	139ms	http://superheroclubhouse.com/staging/web/assets/js/util.js?v=151879158726
+	2248b	200	141ms	http://superheroclubhouse.com/staging/web/assets/js/jquery.flip.min.js?v=151373145505
+	5662b	200	136ms	http://superheroclubhouse.com/staging/web/assets/js/chatwindow.js?v=151535477218
+	5972b	200	390ms	http://www.facebook.com/plugins/like.php?app_id=129522557136212&href=http%3A%2F%2Fsuperheroclubhouse.com&send=false&layout=standard&width=55&show_faces=false&action=like&colorscheme=light&font&height=25
+	55692b	200	280ms	http://superheroclubhouse.com/staging/web/assets/images/chat_bg.png
+	50b	200	127ms	http://api.mixpanel.com/track/?data=eyJldmVudCI6ICJtcF9wYWdlX3ZpZXciLCJwcm9wZXJ0aWVzIjogeyJtcF9yZWZlcnJlciI6ICJodHRwOi8vc3VwZXJoZXJvY2x1YmhvdXNlLmNvbS9zdHJhbmdlY2hhdC9zdGFnaW5nLyIsIm1wX2Jyb3dzZXIiOiAiRmlyZWZveCIsIm1wX3BsYXRmb3JtIjogIk1hYyBPUyBYIiwibXBfcGFnZSI6ICJodHRwOi8vc3VwZXJoZXJvY2x1YmhvdXNlLmNvbS9zdGFnaW5nL2NoYXQiLCJ0b2tlbiI6ICI2ZThiYzNiMTE5YWFjN2JhOTRkOGI0OWY4ZGY2NDBlMCIsInRpbWUiOiAxMzEzNjgxMjQxfX0%3D&ip=1&callback=mpq.metrics.jsonp_callback&_=1313681241022
+	3520b	200	142ms	http://superheroclubhouse.com/staging/web/assets/js/strangechat.js?v=15617699874
+	3705b	200	136ms	http://superheroclubhouse.com/staging/web/assets/js/clubhouse.js?v=151224023077
+	951b	200	96ms	http://173.246.101.45/signin?callback=jsonp1313681241465&_=1313681241819&sign_in_id=14463&avatar=http%3A%2F%2Fsuperheroclubhouse.com%2Fstaging%2Fweb%2Fassets%2Fimages%2Fusers%2Fccc54ed70643244d466d8978712cf192.png&alias=Bronze+Mesmerizing+Warrior
+	49361b	200	138ms	http://static.ak.fbcdn.net/rsrc.php/v1/yh/r/HpPi2r-IES3.js
+	1177b	200	43ms	http://static.ak.fbcdn.net/rsrc.php/v1/y7/r/ql9vukDCc4R.png
+	390b	200	57ms	http://173.246.101.127/listen?callback=jsonp1313681241466&_=1313681242018&user_id=242&lastReceived=0&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	87ms	http://173.246.101.45/requestrandomroom?callback=jsonp1313681241467&_=1313681242063&user_id=242&session=1fa7b62ba8e3da21e756f61a4866e749
+	3766b	200	36ms	http://static.ak.fbcdn.net/rsrc.php/v1/yJ/r/_BgntKHXyit.css
+	47476b	200	301ms	http://superheroclubhouse.com/staging/web/assets/images/users/067a98071514d857c45ca81d27b7440a.png
+	206b	200	3414ms	http://173.246.101.127/listen?callback=jsonp1313681241468&_=1313681242204&user_id=242&lastReceived=979660&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	62ms	http://173.246.101.127/roommessage?callback=jsonp1313681241469&_=1313681242349&user_id=242&msg=hello+Psychic+Revolting+Corona%2C++my+name+is+Bronze+Mesmerizing+Warrior&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	26ms	http://173.246.101.127/roommessage?callback=jsonp1313681241470&_=1313681242453&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello1&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	212b	200	999ms	http://173.246.101.127/listen?callback=jsonp1313681241471&_=1313681245623&user_id=242&lastReceived=979666&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	273ms	http://173.246.101.127/listen?callback=jsonp1313681241472&_=1313681246626&user_id=242&lastReceived=979667&session=1fa7b62ba8e3da21e756f61a4866e749
+	182b	200	715ms	http://173.246.101.127/listen?callback=jsonp1313681241473&_=1313681246905&user_id=242&lastReceived=979668&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	29ms	http://173.246.101.127/roommessage?callback=jsonp1313681241474&_=1313681246969&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello2&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	29ms	http://173.246.101.127/heartbeat?callback=jsonp1313681241475&_=1313681247019&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	4971ms	http://173.246.101.127/listen?callback=jsonp1313681241476&_=1313681247623&user_id=242&lastReceived=979671&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	27ms	http://173.246.101.127/heartbeat?callback=jsonp1313681241477&_=1313681252019&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+	212b	200	1022ms	http://173.246.101.127/listen?callback=jsonp1313681241478&_=1313681252600&user_id=242&lastReceived=979674&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	38ms	http://173.246.101.127/roommessage?callback=jsonp1313681241479&_=1313681252668&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello3&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	723ms	http://173.246.101.127/listen?callback=jsonp1313681241480&_=1313681253625&user_id=242&lastReceived=979677&session=1fa7b62ba8e3da21e756f61a4866e749
+	182b	200	290ms	http://173.246.101.127/listen?callback=jsonp1313681241481&_=1313681254355&user_id=242&lastReceived=979678&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	30ms	http://173.246.101.127/roommessage?callback=jsonp1313681241482&_=1313681254414&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello4&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	213b	200	975ms	http://173.246.101.127/listen?callback=jsonp1313681241483&_=1313681254649&user_id=242&lastReceived=979680&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	170ms	http://173.246.101.127/listen?callback=jsonp1313681241484&_=1313681255626&user_id=242&lastReceived=979682&session=1fa7b62ba8e3da21e756f61a4866e749
+	212b	200	843ms	http://173.246.101.127/listen?callback=jsonp1313681241485&_=1313681255803&user_id=242&lastReceived=979683&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	30ms	http://173.246.101.127/roommessage?callback=jsonp1313681241486&_=1313681255867&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello5&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	213b	200	996ms	http://173.246.101.127/listen?callback=jsonp1313681241487&_=1313681256650&user_id=242&lastReceived=979685&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	30ms	http://173.246.101.127/heartbeat?callback=jsonp1313681241488&_=1313681257018&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	37ms	http://173.246.101.127/listen?callback=jsonp1313681241489&_=1313681257649&user_id=242&lastReceived=979687&session=1fa7b62ba8e3da21e756f61a4866e749
+	212b	200	935ms	http://173.246.101.127/listen?callback=jsonp1313681241490&_=1313681257692&user_id=242&lastReceived=979688&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	31ms	http://173.246.101.127/roommessage?callback=jsonp1313681241491&_=1313681257761&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello6&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	396ms	http://173.246.101.127/listen?callback=jsonp1313681241492&_=1313681258630&user_id=242&lastReceived=979690&session=1fa7b62ba8e3da21e756f61a4866e749
+	182b	200	596ms	http://173.246.101.127/listen?callback=jsonp1313681241493&_=1313681259032&user_id=242&lastReceived=979691&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	28ms	http://173.246.101.127/roommessage?callback=jsonp1313681241494&_=1313681259092&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello7&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	204b	200	411ms	http://173.246.101.127/listen?callback=jsonp1313681241495&_=1313681259631&user_id=242&lastReceived=979693&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	1331ms	http://173.246.101.127/listen?callback=jsonp1313681241496&_=1313681260050&user_id=242&lastReceived=979694&session=1fa7b62ba8e3da21e756f61a4866e749
+	212b	200	1242ms	http://173.246.101.127/listen?callback=jsonp1313681241497&_=1313681261387&user_id=242&lastReceived=979696&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	54ms	http://173.246.101.127/roommessage?callback=jsonp1313681241498&_=1313681261450&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello8&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	25ms	http://173.246.101.127/heartbeat?callback=jsonp1313681241499&_=1313681262022&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	571ms	http://173.246.101.127/listen?callback=jsonp1313681241500&_=1313681262632&user_id=242&lastReceived=979699&session=1fa7b62ba8e3da21e756f61a4866e749
+	182b	200	423ms	http://173.246.101.127/listen?callback=jsonp1313681241501&_=1313681263209&user_id=242&lastReceived=979701&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	47ms	http://173.246.101.127/roommessage?callback=jsonp1313681241502&_=1313681263279&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello9&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	205b	200	950ms	http://173.246.101.127/listen?callback=jsonp1313681241503&_=1313681263635&user_id=242&lastReceived=979703&session=1fa7b62ba8e3da21e756f61a4866e749
+	214b	200	2043ms	http://173.246.101.127/listen?callback=jsonp1313681241504&_=1313681264591&user_id=242&lastReceived=979704&session=1fa7b62ba8e3da21e756f61a4866e749
+	54b	200	53ms	http://173.246.101.127/roommessage?callback=jsonp1313681241505&_=1313681264661&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello10&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+	206b	200	187ms	http://173.246.101.127/listen?callback=jsonp1313681241506&_=1313681266637&user_id=242&lastReceived=979707&session=1fa7b62ba8e3da21e756f61a4866e749
+	0b	-998	77ms	http://173.246.101.127/listen?callback=jsonp1313681241507&_=1313681266830&user_id=242&lastReceived=979708&session=1fa7b62ba8e3da21e756f61a4866e749
+	0b	-998	1015ms	http://173.246.101.45/leaveroom?callback=jsonp1313681241508&_=1313681266892&user_id=242&room_id=141&session=1fa7b62ba8e3da21e756f61a4866e749
+
+
+=====================================================
+Full HTTP Headers
+=====================================================
+http://superheroclubhouse.com/staging
+Response time: 157 ms (TTFB 54 ms)
+DNS: 174.122.66.106 (27 ms)
+
+GET /staging HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 301 Moved Permanently
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Location: http://superheroclubhouse.com/strangechat/staging/
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Length: 259
+Content-Type: text/html; charset=iso-8859-1
+----------------------------------------------------------
+http://superheroclubhouse.com/strangechat/staging/
+Response time: 140 ms (TTFB 79 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /strangechat/staging/ HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Set-Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f; expires=Sun, 15-Aug-2021 15:08:42 GMT; path=/
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Type: text/html; charset=UTF-8
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/logo.png
+Response time: 114 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/logo.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "25283a5-3184-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 12676
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_gender_male.png
+Response time: 116 ms (TTFB 59 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_gender_male.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528385-227-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 551
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_body_type_2.png
+Response time: 114 ms (TTFB 55 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_body_type_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252837c-828-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 2088
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151214958284
+Response time: 133 ms (TTFB 79 ms)
+DNS: 174.122.66.106 (2 ms)
+
+GET /staging/web/assets/css/loggedout.css?v=151214958284 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:42 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 4575
+Content-Type: text/css; charset: UTF-8
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_gender_female.png
+Response time: 124 ms (TTFB 69 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_gender_female.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528384-2d7-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 727
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/square_phonebooth.png
+Response time: 131 ms (TTFB 69 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/square_phonebooth.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "25283b1-269-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 617
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_body_type_1.png
+Response time: 133 ms (TTFB 65 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_body_type_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252837b-726-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1830
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_body_type_3.png
+Response time: 133 ms (TTFB 60 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_body_type_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252837d-5b8-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1464
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_4.png
+Response time: 108 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_type_4.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252838d-77e-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1918
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_3.png
+Response time: 113 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_female_type_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528388-665-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1637
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_1.png
+Response time: 116 ms (TTFB 58 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_type_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252838a-5e3-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1507
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/jquery.colorbox-min.js?v=15220016510
+Response time: 126 ms (TTFB 68 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/jquery.colorbox-min.js?v=15220016510 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:43 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 1252
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/misc.js?v=151823513914
+Response time: 147 ms (TTFB 87 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/misc.js?v=151823513914 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:43 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 4314
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/bg.png
+Response time: 286 ms (TTFB 61 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/bg.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151214958284
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528360-c53c-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 50492
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_4.png
+Response time: 149 ms (TTFB 85 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_female_type_4.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528389-75c-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1884
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_3.png
+Response time: 164 ms (TTFB 93 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hat_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528390-4e5-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1253
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_3.png
+Response time: 122 ms (TTFB 58 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_type_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252838c-57a-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1402
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_female_2.png
+Response time: 121 ms (TTFB 63 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hat_female_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528393-243-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 579
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_1.png
+Response time: 115 ms (TTFB 60 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mask_type_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528397-54d-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1357
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_4.png
+Response time: 123 ms (TTFB 64 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hat_4.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528391-85b-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 2139
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_1.png
+Response time: 116 ms (TTFB 62 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_female_type_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528386-69f-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1695
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/jquery.js?v=151377068428
+Response time: 336 ms (TTFB 95 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/jquery.js?v=151377068428 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:43 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_type_2.png
+Response time: 119 ms (TTFB 56 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_type_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252838b-69d-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1693
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_4.png
+Response time: 114 ms (TTFB 58 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mask_type_4.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252839a-520-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1312
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_1.png
+Response time: 115 ms (TTFB 59 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_eyes_type_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252837f-13c-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 316
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_3.png
+Response time: 112 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_eyes_type_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528381-31d-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 797
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_1.png
+Response time: 117 ms (TTFB 63 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hat_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252838e-5fc-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1532
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_4.png
+Response time: 111 ms (TTFB 58 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_eyes_type_4.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528382-2c6-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 710
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_1.png
+Response time: 117 ms (TTFB 59 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mouth_type_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252839b-189-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 393
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_2.png
+Response time: 112 ms (TTFB 60 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mouth_type_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252839c-15c-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 348
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_3.png
+Response time: 115 ms (TTFB 60 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mask_type_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528399-44a-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1098
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_shirt_type_2.png
+Response time: 121 ms (TTFB 61 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_shirt_type_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "25283a2-680-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1664
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_4.png
+Response time: 127 ms (TTFB 63 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mouth_type_4.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252839e-2e2-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 738
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/choose_avatar.js?v=151557310608
+Response time: 141 ms (TTFB 72 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/choose_avatar.js?v=151557310608 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:43 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 4125
+Content-Type: text/javascript
+----------------------------------------------------------
+http://api.mixpanel.com/site_media/js/api/mixpanel.js
+Response time: 131 ms (TTFB 68 ms)
+DNS: 173.203.237.96 (4 ms)
+
+GET /site_media/js/api/mixpanel.js HTTP/1.1
+Host: api.mixpanel.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: nginx/0.7.65
+Date: Thu, 18 Aug 2011 15:27:19 GMT
+Content-Type: application/x-javascript
+Last-Modified: Tue, 09 Aug 2011 03:35:41 GMT
+Vary: Accept-Encoding
+Expires: Fri, 19 Aug 2011 15:27:19 GMT
+Cache-Control: max-age=86400
+Content-Encoding: gzip
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_eyes_type_2.png
+Response time: 111 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_eyes_type_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528380-356-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 854
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_female_1.png
+Response time: 114 ms (TTFB 59 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hat_female_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528392-569-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1385
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_gloves.png
+Response time: 121 ms (TTFB 66 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_accessory_gloves.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528377-5b1-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1457
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_layer.png
+Response time: 122 ms (TTFB 65 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mask_layer.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528395-3c3-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 963
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mask_type_2.png
+Response time: 118 ms (TTFB 61 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mask_type_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528398-479-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1145
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_bow.png
+Response time: 114 ms (TTFB 61 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_bow.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252837e-491-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1169
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_shirt_type_1.png
+Response time: 120 ms (TTFB 53 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_shirt_type_1.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "25283a0-4e9-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1257
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_cape.png
+Response time: 114 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_accessory_cape.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528376-5c9-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1481
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_sweatband.png
+Response time: 114 ms (TTFB 58 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_accessory_sweatband.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528379-29d-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 669
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_2.png
+Response time: 112 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hat_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252838f-3f8-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1016
+Content-Type: image/png
+----------------------------------------------------------
+http://api.mixpanel.com/track/?data=eyJldmVudCI6ICJtcF9wYWdlX3ZpZXciLCJwcm9wZXJ0aWVzIjogeyJtcF9icm93c2VyIjogIkZpcmVmb3giLCJtcF9wbGF0Zm9ybSI6ICJNYWMgT1MgWCIsIm1wX3BhZ2UiOiAiaHR0cDovL3N1cGVyaGVyb2NsdWJob3VzZS5jb20vc3RyYW5nZWNoYXQvc3RhZ2luZy8iLCJ0b2tlbiI6ICI2ZThiYzNiMTE5YWFjN2JhOTRkOGI0OWY4ZGY2NDBlMCIsInRpbWUiOiAxMzEzNjgxMjM5fX0%3D&ip=1&callback=mpq.metrics.jsonp_callback&_=1313681239194
+Response time: 126 ms (TTFB 69 ms)
+DNS: 173.203.237.96 (0 ms)
+
+GET /track/?data=eyJldmVudCI6ICJtcF9wYWdlX3ZpZXciLCJwcm9wZXJ0aWVzIjogeyJtcF9icm93c2VyIjogIkZpcmVmb3giLCJtcF9wbGF0Zm9ybSI6ICJNYWMgT1MgWCIsIm1wX3BhZ2UiOiAiaHR0cDovL3N1cGVyaGVyb2NsdWJob3VzZS5jb20vc3RyYW5nZWNoYXQvc3RhZ2luZy8iLCJ0b2tlbiI6ICI2ZThiYzNiMTE5YWFjN2JhOTRkOGI0OWY4ZGY2NDBlMCIsInRpbWUiOiAxMzEzNjgxMjM5fX0%3D&ip=1&callback=mpq.metrics.jsonp_callback&_=1313681239194 HTTP/1.1
+Host: api.mixpanel.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: nginx/0.7.65
+Date: Thu, 18 Aug 2011 15:27:19 GMT
+Content-Type: text/javascript
+Vary: Accept-Encoding
+Expires: Thu, 18 Aug 2011 15:27:18 GMT
+Access-Control-Max-Age: 1728000
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, OPTIONS
+Access-Control-Allow-Headers: X-Requested-With
+Content-Encoding: gzip
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hat_female_3.png
+Response time: 115 ms (TTFB 54 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hat_female_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528394-7f9-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 2041
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_accessory_wristbands.png
+Response time: 113 ms (TTFB 54 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_accessory_wristbands.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252837a-42b-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1067
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_mouth_type_3.png
+Response time: 118 ms (TTFB 61 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_mouth_type_3.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252839d-180-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 384
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/icons/icon_hair_female_type_2.png
+Response time: 112 ms (TTFB 54 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/icons/icon_hair_female_type_2.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "2528387-692-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1682
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/check.png
+Response time: 117 ms (TTFB 55 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/check.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151214958284
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252836e-470-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1136
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/buttons.png
+Response time: 346 ms (TTFB 63 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/buttons.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151214958284
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:43 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252836b-12861-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 75873
+Content-Type: image/png
+----------------------------------------------------------
+https://s3.amazonaws.com/superheroclubhouse/avatars/male/eyes/male_eyes_1.png
+Response time: 153 ms (TTFB 47 ms)
+DNS: 72.21.214.199 (1 ms)
+
+GET /superheroclubhouse/avatars/male/eyes/male_eyes_1.png HTTP/1.1
+Host: s3.amazonaws.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+accountId: 0
+
+HTTP/1.1 200 OK
+x-amz-id-2: dz00DBjtyrDIkrlpoPApbXZ56JFRLwI5XPJ1lFiGebV1VB9ga6fI5V/gZnFC+Wd4
+x-amz-request-id: 0B5A4928AC8FB010
+Date: Thu, 18 Aug 2011 15:27:20 GMT
+Last-Modified: Wed, 03 Aug 2011 21:29:04 GMT
+ETag: "6b51dce3e1368d154ca13161f808173a"
+Accept-Ranges: bytes
+Content-Type: image/png
+Content-Length: 1390
+Server: AmazonS3
+----------------------------------------------------------
+https://s3.amazonaws.com/superheroclubhouse/avatars/male/background/white_male_background.png
+Response time: 152 ms (TTFB 48 ms)
+DNS: 72.21.214.199 (0 ms)
+
+GET /superheroclubhouse/avatars/male/background/white_male_background.png HTTP/1.1
+Host: s3.amazonaws.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+accountId: 0
+
+HTTP/1.1 200 OK
+x-amz-id-2: Q822G0IdPhSUkvzpr/fhECr1CGfSNJXbuylrP4m9apTHcvdcWOITqWE0Bi01A/f/
+x-amz-request-id: 37B7D9236AE203FE
+Date: Thu, 18 Aug 2011 15:27:20 GMT
+Last-Modified: Wed, 03 Aug 2011 21:28:53 GMT
+ETag: "3f49993c398b3862179b0f00d65869fa"
+Accept-Ranges: bytes
+Content-Type: image/png
+Content-Length: 125
+Server: AmazonS3
+----------------------------------------------------------
+https://s3.amazonaws.com/superheroclubhouse/avatars/male/mouth/male_mouth_1.png
+Response time: 159 ms (TTFB 43 ms)
+DNS: 72.21.214.199 (1 ms)
+
+GET /superheroclubhouse/avatars/male/mouth/male_mouth_1.png HTTP/1.1
+Host: s3.amazonaws.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+accountId: 0
+
+HTTP/1.1 200 OK
+x-amz-id-2: 6e5Qom/ZhzvBQpiJFytORi9L26Fse46aM7NvGMlAgoK8pyNf/xbGBs2x/5tdJenW
+x-amz-request-id: AB62B4427A5CDC07
+Date: Thu, 18 Aug 2011 15:27:20 GMT
+Last-Modified: Wed, 03 Aug 2011 21:29:23 GMT
+ETag: "0d05fb809467dfb36a4cb20e0316f647"
+Accept-Ranges: bytes
+Content-Type: image/png
+Content-Length: 670
+Server: AmazonS3
+----------------------------------------------------------
+https://s3.amazonaws.com/superheroclubhouse/avatars/male/body/tan_male_body_normal.png
+Response time: 173 ms (TTFB 46 ms)
+DNS: 72.21.214.199 (3 ms)
+
+GET /superheroclubhouse/avatars/male/body/tan_male_body_normal.png HTTP/1.1
+Host: s3.amazonaws.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+accountId: 0
+
+HTTP/1.1 200 OK
+x-amz-id-2: RrcRTJKkqpx/2od3oMuhDVmok6SX1YhuZm1qRswIPeZ2TegXgzv+hIHa+r2hqGS6
+x-amz-request-id: 46C5586726A51957
+Date: Thu, 18 Aug 2011 15:27:20 GMT
+Last-Modified: Wed, 03 Aug 2011 21:28:58 GMT
+ETag: "a995cd4ab12b1d1d798e705e217d1150"
+Accept-Ranges: bytes
+Content-Type: image/png
+Content-Length: 23812
+Server: AmazonS3
+----------------------------------------------------------
+http://static.chartbeat.com/js/chartbeat.js
+Response time: 43 ms (TTFB 20 ms)
+DNS: 24.143.204.210 (4 ms)
+
+GET /js/chartbeat.js HTTP/1.1
+Host: static.chartbeat.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Apache
+ETag: "e76e08c9d8113ae5dbd74a6536b5b950:1298207703"
+Last-Modified: Sun, 20 Feb 2011 13:15:03 GMT
+Accept-Ranges: bytes
+Content-Type: application/x-javascript
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Cache-Control: max-age=604800
+Date: Thu, 18 Aug 2011 15:27:20 GMT
+Content-Length: 2273
+----------------------------------------------------------
+http://superheroclubhouse.com/strangechat/staging/
+Response time: 605 ms (TTFB 554 ms)
+DNS: 174.122.66.106 (0 ms)
+
+POST /strangechat/staging/ HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+Content-Type: application/x-www-form-urlencoded
+accountId: 0
+Content-Length: 505
+Connection: Keep-Alive
+
+save_avatar=&groupKey=&super_hero_name=Bronze+Mesmerizing+Warrior&gender=1&body=3&body_color=C2986B&hair=0&hair_color=EEE80D&hat=0&girlhair=0&girlhair_color=EEE80D&accessories=0&mask=0&mask_color=32A9D6&eyes=1&mouth=1&shirt=0&shirt_color=BD3732&tshirt=0&tshirt_color=32A9D6&cape=0&cape_color=BD3732&sweatband=0&sweatband_color=BD3732&gloves=0&gloves_color=32A9D6&wristbands=0&wristbands_color=BD3732&mask_layer=0&mask_layer_color=BD3732&bow=0&bow_color=32A9D6&background=1&background_color=FFFFFF&fbtoken=
+
+HTTP/1.1 302 Found
+Date: Thu, 18 Aug 2011 15:08:44 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Location: http://superheroclubhouse.com/staging/chat
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 26
+Content-Type: text/html; charset=UTF-8
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/chat
+Response time: 137 ms (TTFB 74 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/chat HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/strangechat/staging/
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Type: text/html; charset=UTF-8
+----------------------------------------------------------
+http://connect.facebook.net/en_US/all.js
+Response time: 0 ms (TTFB 0 ms)
+
+GET /en_US/all.js HTTP/1.1
+
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151728580900
+Response time: 143 ms (TTFB 79 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/css/loggedout.css?v=151728580900 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 4575
+Content-Type: text/css; charset: UTF-8
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/who.png
+Response time: 128 ms (TTFB 73 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/who.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "25283b5-310-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 784
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/made_by_bnter.png
+Response time: 131 ms (TTFB 72 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/made_by_bnter.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "25283a6-5db-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 1499
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/css/jquery.cssemoticons.css?v=151430012175
+Response time: 180 ms (TTFB 117 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/css/jquery.cssemoticons.css?v=151430012175 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 1026
+Content-Type: text/css; charset: UTF-8
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/loading.gif
+Response time: 113 ms (TTFB 57 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/loading.gif HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "25283a4-2a1-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 673
+Content-Type: image/gif
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/jquery.cssemoticons.min.js?v=15211106360
+Response time: 135 ms (TTFB 74 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/jquery.cssemoticons.min.js?v=15211106360 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 1240
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/misc.js?v=151643291675
+Response time: 137 ms (TTFB 75 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/misc.js?v=151643291675 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 4314
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/mycontacts.js?v=151255374062
+Response time: 135 ms (TTFB 76 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/mycontacts.js?v=151255374062 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 1259
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/users/ccc54ed70643244d466d8978712cf192.png
+Response time: 304 ms (TTFB 61 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/users/ccc54ed70643244d466d8978712cf192.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Thu, 18 Aug 2011 15:08:45 GMT
+ETag: W/"253002f-b1a7-fd32f940"
+Accept-Ranges: bytes
+Content-Length: 45479
+Content-Type: image/png
+----------------------------------------------------------
+http://api.mixpanel.com/track/?data=eyJldmVudCI6ICJtcF9wYWdlX3ZpZXciLCJwcm9wZXJ0aWVzIjogeyJtcF9yZWZlcnJlciI6ICJodHRwOi8vc3VwZXJoZXJvY2x1YmhvdXNlLmNvbS9zdHJhbmdlY2hhdC9zdGFnaW5nLyIsIm1wX2Jyb3dzZXIiOiAiRmlyZWZveCIsIm1wX3BsYXRmb3JtIjogIk1hYyBPUyBYIiwibXBfcGFnZSI6ICJodHRwOi8vc3VwZXJoZXJvY2x1YmhvdXNlLmNvbS9zdGFnaW5nL2NoYXQiLCJ0b2tlbiI6ICI2ZThiYzNiMTE5YWFjN2JhOTRkOGI0OWY4ZGY2NDBlMCIsInRpbWUiOiAxMzEzNjgxMjQxfX0%3D&ip=1&callback=mpq.metrics.jsonp_callback&_=1313681241022
+Response time: 127 ms (TTFB 70 ms)
+DNS: 173.203.237.96 (0 ms)
+
+GET /track/?data=eyJldmVudCI6ICJtcF9wYWdlX3ZpZXciLCJwcm9wZXJ0aWVzIjogeyJtcF9yZWZlcnJlciI6ICJodHRwOi8vc3VwZXJoZXJvY2x1YmhvdXNlLmNvbS9zdHJhbmdlY2hhdC9zdGFnaW5nLyIsIm1wX2Jyb3dzZXIiOiAiRmlyZWZveCIsIm1wX3BsYXRmb3JtIjogIk1hYyBPUyBYIiwibXBfcGFnZSI6ICJodHRwOi8vc3VwZXJoZXJvY2x1YmhvdXNlLmNvbS9zdGFnaW5nL2NoYXQiLCJ0b2tlbiI6ICI2ZThiYzNiMTE5YWFjN2JhOTRkOGI0OWY4ZGY2NDBlMCIsInRpbWUiOiAxMzEzNjgxMjQxfX0%3D&ip=1&callback=mpq.metrics.jsonp_callback&_=1313681241022 HTTP/1.1
+Host: api.mixpanel.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: nginx/0.7.65
+Date: Thu, 18 Aug 2011 15:27:21 GMT
+Content-Type: text/javascript
+Vary: Accept-Encoding
+Expires: Thu, 18 Aug 2011 15:27:20 GMT
+Access-Control-Max-Age: 1728000
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, OPTIONS
+Access-Control-Allow-Headers: X-Requested-With
+Content-Encoding: gzip
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/jquery-ui-1.8.14.js?v=151510229415
+Response time: 352 ms (TTFB 105 ms)
+DNS: 174.122.66.106 (1 ms)
+
+GET /staging/web/assets/js/jquery-ui-1.8.14.js?v=151510229415 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/jquery.colorbox-min.js?v=15101312302
+Response time: 130 ms (TTFB 74 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/jquery.colorbox-min.js?v=15101312302 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 1252
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/chatapi.js?v=15691935473
+Response time: 140 ms (TTFB 86 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/chatapi.js?v=15691935473 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 2999
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/util.js?v=151879158726
+Response time: 139 ms (TTFB 74 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/util.js?v=151879158726 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 2079
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/jquery.flip.min.js?v=151373145505
+Response time: 141 ms (TTFB 78 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/jquery.flip.min.js?v=151373145505 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 2248
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/chatwindow.js?v=151535477218
+Response time: 136 ms (TTFB 73 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/chatwindow.js?v=151535477218 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 5662
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/jquery.js?v=1573253667
+Response time: 325 ms (TTFB 95 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/jquery.js?v=1573253667 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:45 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/chat_bg.png
+Response time: 280 ms (TTFB 59 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/chat_bg.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/web/assets/css/loggedout.css?v=151728580900
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:45 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 20:44:40 GMT
+ETag: "252836d-d98c-90b07e00"
+Accept-Ranges: bytes
+Content-Length: 55692
+Content-Type: image/png
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/strangechat.js?v=15617699874
+Response time: 142 ms (TTFB 70 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/strangechat.js?v=15617699874 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:46 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:46 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 3520
+Content-Type: text/javascript
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/js/clubhouse.js?v=151224023077
+Response time: 136 ms (TTFB 71 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/js/clubhouse.js?v=151224023077 HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:46 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.5
+Cache-Control: must-revalidate
+Expires: Sun, 21 Aug 2011 03:08:46 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 3705
+Content-Type: text/javascript
+----------------------------------------------------------
+http://www.facebook.com/plugins/like.php?app_id=129522557136212&href=http%3A%2F%2Fsuperheroclubhouse.com&send=false&layout=standard&width=55&show_faces=false&action=like&colorscheme=light&font&height=25
+Response time: 390 ms (TTFB 166 ms)
+DNS: 69.171.224.13 (2 ms)
+
+GET /plugins/like.php?app_id=129522557136212&href=http%3A%2F%2Fsuperheroclubhouse.com&send=false&layout=standard&width=55&show_faces=false&action=like&colorscheme=light&font&height=25 HTTP/1.1
+Host: www.facebook.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+Pragma: no-cache
+Content-Encoding: gzip
+Content-Type: text/html; charset=utf-8
+X-FB-Server: 10.54.153.49
+X-Cnection: close
+Date: Thu, 18 Aug 2011 15:27:21 GMT
+----------------------------------------------------------
+http://static.ak.fbcdn.net/rsrc.php/v1/y7/r/ql9vukDCc4R.png
+Response time: 43 ms (TTFB 21 ms)
+DNS: 24.143.204.224 (6 ms)
+
+GET /rsrc.php/v1/y7/r/ql9vukDCc4R.png HTTP/1.1
+Host: static.ak.fbcdn.net
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://www.facebook.com/plugins/like.php?app_id=129522557136212&href=http%3A%2F%2Fsuperheroclubhouse.com&send=false&layout=standard&width=55&show_faces=false&action=like&colorscheme=light&font&height=25
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Content-Length: 1177
+Content-Type: image/png
+Last-Modified: Mon, 04 Jul 2011 01:53:07 GMT
+X-FB-Server: 10.30.146.197
+X-Cnection: close
+Cache-Control: public, max-age=29417237
+Expires: Tue, 24 Jul 2012 02:54:38 GMT
+Date: Thu, 18 Aug 2011 15:27:21 GMT
+----------------------------------------------------------
+http://173.246.101.45/signin?callback=jsonp1313681241465&_=1313681241819&sign_in_id=14463&avatar=http%3A%2F%2Fsuperheroclubhouse.com%2Fstaging%2Fweb%2Fassets%2Fimages%2Fusers%2Fccc54ed70643244d466d8978712cf192.png&alias=Bronze+Mesmerizing+Warrior
+Response time: 96 ms (TTFB 68 ms)
+DNS: 173.246.101.45 (3 ms)
+
+GET /signin?callback=jsonp1313681241465&_=1313681241819&sign_in_id=14463&avatar=http%3A%2F%2Fsuperheroclubhouse.com%2Fstaging%2Fweb%2Fassets%2Fimages%2Fusers%2Fccc54ed70643244d466d8978712cf192.png&alias=Bronze+Mesmerizing+Warrior HTTP/1.1
+Host: 173.246.101.45
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:21 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:21 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:21 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 951
+Date: Thu, 18 Aug 2011 15:27:21 GMT
+----------------------------------------------------------
+http://static.ak.fbcdn.net/rsrc.php/v1/yh/r/HpPi2r-IES3.js
+Response time: 138 ms (TTFB 22 ms)
+DNS: 24.143.204.224 (3 ms)
+
+GET /rsrc.php/v1/yh/r/HpPi2r-IES3.js HTTP/1.1
+Host: static.ak.fbcdn.net
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://www.facebook.com/plugins/like.php?app_id=129522557136212&href=http%3A%2F%2Fsuperheroclubhouse.com&send=false&layout=standard&width=55&show_faces=false&action=like&colorscheme=light&font&height=25
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Content-Type: application/x-javascript; charset=utf-8
+Last-Modified: Wed, 17 Aug 2011 21:01:33 GMT
+Content-Encoding: gzip
+X-FB-Server: 10.138.16.184
+Content-Length: 49361
+Vary: Accept-Encoding
+Cache-Control: public, max-age=31470399
+Expires: Thu, 16 Aug 2012 21:14:00 GMT
+Date: Thu, 18 Aug 2011 15:27:21 GMT
+----------------------------------------------------------
+http://173.246.101.45/requestrandomroom?callback=jsonp1313681241467&_=1313681242063&user_id=242&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 87 ms (TTFB 86 ms)
+
+GET /requestrandomroom?callback=jsonp1313681241467&_=1313681242063&user_id=242&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.45
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:22 GMT
+----------------------------------------------------------
+http://static.ak.fbcdn.net/rsrc.php/v1/yJ/r/_BgntKHXyit.css
+Response time: 36 ms (TTFB 15 ms)
+DNS: 24.143.204.226 (0 ms)
+
+GET /rsrc.php/v1/yJ/r/_BgntKHXyit.css HTTP/1.1
+Host: static.ak.fbcdn.net
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://www.facebook.com/plugins/like.php?app_id=129522557136212&href=http%3A%2F%2Fsuperheroclubhouse.com&send=false&layout=standard&width=55&show_faces=false&action=like&colorscheme=light&font&height=25
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Content-Type: text/css; charset=utf-8
+Last-Modified: Mon, 15 Aug 2011 03:22:06 GMT
+Content-Encoding: gzip
+X-FB-Server: 10.138.64.186
+Content-Length: 3766
+Vary: Accept-Encoding
+Cache-Control: public, max-age=31364744
+Expires: Wed, 15 Aug 2012 15:53:06 GMT
+Date: Thu, 18 Aug 2011 15:27:22 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241466&_=1313681242018&user_id=242&lastReceived=0&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 57 ms (TTFB 33 ms)
+DNS: 173.246.101.127 (2 ms)
+
+GET /listen?callback=jsonp1313681241466&_=1313681242018&user_id=242&lastReceived=0&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 390
+Date: Thu, 18 Aug 2011 15:27:22 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241469&_=1313681242349&user_id=242&msg=hello+Psychic+Revolting+Corona%2C++my+name+is+Bronze+Mesmerizing+Warrior&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 62 ms (TTFB 33 ms)
+DNS: 173.246.101.127 (0 ms)
+
+GET /roommessage?callback=jsonp1313681241469&_=1313681242349&user_id=242&msg=hello+Psychic+Revolting+Corona%2C++my+name+is+Bronze+Mesmerizing+Warrior&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:22 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241470&_=1313681242453&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello1&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 26 ms (TTFB 24 ms)
+
+GET /roommessage?callback=jsonp1313681241470&_=1313681242453&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello1&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:22 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:22 GMT
+----------------------------------------------------------
+http://superheroclubhouse.com/staging/web/assets/images/users/067a98071514d857c45ca81d27b7440a.png
+Response time: 301 ms (TTFB 61 ms)
+DNS: 174.122.66.106 (0 ms)
+
+GET /staging/web/assets/images/users/067a98071514d857c45ca81d27b7440a.png HTTP/1.1
+Host: superheroclubhouse.com
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: 4session_id=d57a1e64812fd6f8d70c20a4e62f852f
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2011 15:08:46 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Wed, 17 Aug 2011 23:00:01 GMT
+ETag: "2530065-b974-74bd1e40"
+Accept-Ranges: bytes
+Content-Length: 47476
+Content-Type: image/png
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241468&_=1313681242204&user_id=242&lastReceived=979660&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 3414 ms (TTFB 3413 ms)
+
+GET /listen?callback=jsonp1313681241468&_=1313681242204&user_id=242&lastReceived=979660&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:25 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:25 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:25 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 206
+Date: Thu, 18 Aug 2011 15:27:25 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241471&_=1313681245623&user_id=242&lastReceived=979666&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 999 ms (TTFB 998 ms)
+
+GET /listen?callback=jsonp1313681241471&_=1313681245623&user_id=242&lastReceived=979666&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 212
+Date: Thu, 18 Aug 2011 15:27:26 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241472&_=1313681246626&user_id=242&lastReceived=979667&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 273 ms (TTFB 272 ms)
+
+GET /listen?callback=jsonp1313681241472&_=1313681246626&user_id=242&lastReceived=979667&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:26 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241474&_=1313681246969&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello2&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 29 ms (TTFB 28 ms)
+
+GET /roommessage?callback=jsonp1313681241474&_=1313681246969&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello2&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:26 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:26 GMT
+----------------------------------------------------------
+http://173.246.101.127/heartbeat?callback=jsonp1313681241475&_=1313681247019&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 29 ms (TTFB 28 ms)
+
+GET /heartbeat?callback=jsonp1313681241475&_=1313681247019&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:27 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:27 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:27 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:27 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241473&_=1313681246905&user_id=242&lastReceived=979668&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 715 ms (TTFB 714 ms)
+
+GET /listen?callback=jsonp1313681241473&_=1313681246905&user_id=242&lastReceived=979668&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:27 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:27 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:27 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 182
+Date: Thu, 18 Aug 2011 15:27:27 GMT
+----------------------------------------------------------
+http://173.246.101.127/heartbeat?callback=jsonp1313681241477&_=1313681252019&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 27 ms (TTFB 26 ms)
+
+GET /heartbeat?callback=jsonp1313681241477&_=1313681252019&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:32 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241476&_=1313681247623&user_id=242&lastReceived=979671&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 4971 ms (TTFB 4970 ms)
+
+GET /listen?callback=jsonp1313681241476&_=1313681247623&user_id=242&lastReceived=979671&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:32 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241479&_=1313681252668&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello3&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 38 ms (TTFB 37 ms)
+
+GET /roommessage?callback=jsonp1313681241479&_=1313681252668&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello3&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:32 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:32 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241478&_=1313681252600&user_id=242&lastReceived=979674&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 1022 ms (TTFB 1021 ms)
+
+GET /listen?callback=jsonp1313681241478&_=1313681252600&user_id=242&lastReceived=979674&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:33 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:33 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:33 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 212
+Date: Thu, 18 Aug 2011 15:27:33 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241480&_=1313681253625&user_id=242&lastReceived=979677&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 723 ms (TTFB 722 ms)
+
+GET /listen?callback=jsonp1313681241480&_=1313681253625&user_id=242&lastReceived=979677&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:34 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241482&_=1313681254414&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello4&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 30 ms (TTFB 29 ms)
+
+GET /roommessage?callback=jsonp1313681241482&_=1313681254414&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello4&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:34 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241481&_=1313681254355&user_id=242&lastReceived=979678&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 290 ms (TTFB 289 ms)
+
+GET /listen?callback=jsonp1313681241481&_=1313681254355&user_id=242&lastReceived=979678&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:34 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 182
+Date: Thu, 18 Aug 2011 15:27:34 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241483&_=1313681254649&user_id=242&lastReceived=979680&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 975 ms (TTFB 973 ms)
+
+GET /listen?callback=jsonp1313681241483&_=1313681254649&user_id=242&lastReceived=979680&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 213
+Date: Thu, 18 Aug 2011 15:27:35 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241484&_=1313681255626&user_id=242&lastReceived=979682&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 170 ms (TTFB 169 ms)
+
+GET /listen?callback=jsonp1313681241484&_=1313681255626&user_id=242&lastReceived=979682&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:35 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241486&_=1313681255867&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello5&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 30 ms (TTFB 29 ms)
+
+GET /roommessage?callback=jsonp1313681241486&_=1313681255867&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello5&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:35 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:35 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241485&_=1313681255803&user_id=242&lastReceived=979683&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 843 ms (TTFB 843 ms)
+
+GET /listen?callback=jsonp1313681241485&_=1313681255803&user_id=242&lastReceived=979683&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:36 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:36 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:36 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 212
+Date: Thu, 18 Aug 2011 15:27:36 GMT
+----------------------------------------------------------
+http://173.246.101.127/heartbeat?callback=jsonp1313681241488&_=1313681257018&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 30 ms (TTFB 29 ms)
+
+GET /heartbeat?callback=jsonp1313681241488&_=1313681257018&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:37 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241487&_=1313681256650&user_id=242&lastReceived=979685&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 996 ms (TTFB 995 ms)
+
+GET /listen?callback=jsonp1313681241487&_=1313681256650&user_id=242&lastReceived=979685&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 213
+Date: Thu, 18 Aug 2011 15:27:37 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241489&_=1313681257649&user_id=242&lastReceived=979687&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 37 ms (TTFB 37 ms)
+
+GET /listen?callback=jsonp1313681241489&_=1313681257649&user_id=242&lastReceived=979687&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:37 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241491&_=1313681257761&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello6&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 31 ms (TTFB 30 ms)
+
+GET /roommessage?callback=jsonp1313681241491&_=1313681257761&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello6&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:37 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:37 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241490&_=1313681257692&user_id=242&lastReceived=979688&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 935 ms (TTFB 934 ms)
+
+GET /listen?callback=jsonp1313681241490&_=1313681257692&user_id=242&lastReceived=979688&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:38 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:38 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:38 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 212
+Date: Thu, 18 Aug 2011 15:27:38 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241492&_=1313681258630&user_id=242&lastReceived=979690&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 396 ms (TTFB 395 ms)
+
+GET /listen?callback=jsonp1313681241492&_=1313681258630&user_id=242&lastReceived=979690&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:39 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241494&_=1313681259092&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello7&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 28 ms (TTFB 27 ms)
+
+GET /roommessage?callback=jsonp1313681241494&_=1313681259092&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello7&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:39 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241493&_=1313681259032&user_id=242&lastReceived=979691&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 596 ms (TTFB 595 ms)
+
+GET /listen?callback=jsonp1313681241493&_=1313681259032&user_id=242&lastReceived=979691&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:39 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 182
+Date: Thu, 18 Aug 2011 15:27:39 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241495&_=1313681259631&user_id=242&lastReceived=979693&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 411 ms (TTFB 410 ms)
+
+GET /listen?callback=jsonp1313681241495&_=1313681259631&user_id=242&lastReceived=979693&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:40 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:40 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:40 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 204
+Date: Thu, 18 Aug 2011 15:27:40 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241496&_=1313681260050&user_id=242&lastReceived=979694&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 1331 ms (TTFB 1331 ms)
+
+GET /listen?callback=jsonp1313681241496&_=1313681260050&user_id=242&lastReceived=979694&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:41 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:41 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:41 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:41 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241498&_=1313681261450&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello8&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 54 ms (TTFB 33 ms)
+DNS: 173.246.101.127 (0 ms)
+
+GET /roommessage?callback=jsonp1313681241498&_=1313681261450&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello8&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:41 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:41 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:41 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:41 GMT
+----------------------------------------------------------
+http://173.246.101.127/heartbeat?callback=jsonp1313681241499&_=1313681262022&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 25 ms (TTFB 23 ms)
+
+GET /heartbeat?callback=jsonp1313681241499&_=1313681262022&user_id=242&room_ids%5B%5D=141&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:42 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:42 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:42 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:42 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241497&_=1313681261387&user_id=242&lastReceived=979696&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 1242 ms (TTFB 1242 ms)
+
+GET /listen?callback=jsonp1313681241497&_=1313681261387&user_id=242&lastReceived=979696&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:42 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:42 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:42 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 212
+Date: Thu, 18 Aug 2011 15:27:42 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241500&_=1313681262632&user_id=242&lastReceived=979699&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 571 ms (TTFB 570 ms)
+
+GET /listen?callback=jsonp1313681241500&_=1313681262632&user_id=242&lastReceived=979699&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:43 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241502&_=1313681263279&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello9&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 47 ms (TTFB 46 ms)
+
+GET /roommessage?callback=jsonp1313681241502&_=1313681263279&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello9&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:43 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241501&_=1313681263209&user_id=242&lastReceived=979701&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 423 ms (TTFB 422 ms)
+
+GET /listen?callback=jsonp1313681241501&_=1313681263209&user_id=242&lastReceived=979701&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:43 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 182
+Date: Thu, 18 Aug 2011 15:27:43 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241503&_=1313681263635&user_id=242&lastReceived=979703&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 950 ms (TTFB 949 ms)
+
+GET /listen?callback=jsonp1313681241503&_=1313681263635&user_id=242&lastReceived=979703&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:44 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:44 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:44 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 205
+Date: Thu, 18 Aug 2011 15:27:44 GMT
+----------------------------------------------------------
+http://173.246.101.127/roommessage?callback=jsonp1313681241505&_=1313681264661&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello10&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 53 ms (TTFB 34 ms)
+DNS: 173.246.101.127 (0 ms)
+
+GET /roommessage?callback=jsonp1313681241505&_=1313681264661&user_id=242&msg=Bronze+Mesmerizing+Warrior+hello10&room_id=141&for_user%5B0%5D=186&for_session%5B0%5D=d512c9fc09ccadf29d40aea9f2a0606c&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:44 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:44 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:44 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:44 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241504&_=1313681264591&user_id=242&lastReceived=979704&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 2043 ms (TTFB 2042 ms)
+
+GET /listen?callback=jsonp1313681241504&_=1313681264591&user_id=242&lastReceived=979704&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:46 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:46 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:46 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 214
+Date: Thu, 18 Aug 2011 15:27:46 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241506&_=1313681266637&user_id=242&lastReceived=979707&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 187 ms (TTFB 186 ms)
+
+GET /listen?callback=jsonp1313681241506&_=1313681266637&user_id=242&lastReceived=979707&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+Cookie: PLAY_FLASH=; PLAY_ERRORS=; PLAY_SESSION=
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:46 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:46 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:46 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 206
+Date: Thu, 18 Aug 2011 15:27:46 GMT
+----------------------------------------------------------
+http://173.246.101.127/listen?callback=jsonp1313681241507&_=1313681266830&user_id=242&lastReceived=979708&session=1fa7b62ba8e3da21e756f61a4866e749
+Error: java.net.SocketException: Socket closed
+Response time: 77 ms (TTFB 0 ms)
+
+GET /listen?callback=jsonp1313681241507&_=1313681266830&user_id=242&lastReceived=979708&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+----------------------------------------------------------
+http://173.246.101.127/heartbeat?callback=jsonp1313681241509&_=1313681267036&user_id=242&room_ids=&session=1fa7b62ba8e3da21e756f61a4866e749
+Response time: 23 ms (TTFB 22 ms)
+
+GET /heartbeat?callback=jsonp1313681241509&_=1313681267036&user_id=242&room_ids=&session=1fa7b62ba8e3da21e756f61a4866e749 HTTP/1.1
+Host: 173.246.101.127
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.20; BrowserMob RBU) Gecko/20110803 Firefox/3.6.20
+Accept: */*
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+keep-alive: 115
+Proxy-Connection: keep-alive
+Referer: http://superheroclubhouse.com/staging/chat
+accountId: 0
+Connection: Keep-Alive
+
+HTTP/1.1 200 OK
+Server: Play! Framework;1.2.1;prod
+Content-Type: application/javascript
+Set-Cookie: PLAY_FLASH=;Expires=Thu, 18-Aug-11 15:27:47 GMT;Path=/
+Set-Cookie: PLAY_ERRORS=;Expires=Thu, 18-Aug-11 15:27:47 GMT;Path=/
+Set-Cookie: PLAY_SESSION=;Expires=Thu, 18-Aug-11 15:27:47 GMT;Path=/
+Cache-Control: no-cache
+Content-Length: 54
+Date: Thu, 18 Aug 2011 15:27:47 GMT
+----------------------------------------------------------

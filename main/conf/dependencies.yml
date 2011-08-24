@@ -1,0 +1,7 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> secure
+    - play -> crud
+    - play -> playapps 1.4

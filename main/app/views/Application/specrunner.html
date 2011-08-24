@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="shortcut icon" type="image/png" href="@{'/public/images/jasmine_favicon.png'}">
+  <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/jasmine.css'}">
+
+	<script src="http://localhost:9000/public/javascripts/jasmine/jasmine.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/jasmine/jasmine-html.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://localhost:9000/public/javascripts/jasmine/jasmine.console_reporter.js" type="text/javascript" charset="utf-8"></script>
+	
+  <!-- include source files here... -->
+  <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+  <script src="http://localhost:9000/public/javascripts/jquery-1.5.2.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/events.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/user.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/channel.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/roomchannel.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/userchannel.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/pusher.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/matchmaker.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/json2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/MyContacts.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:9000/public/javascripts/ChatAPI.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- include spec files here... -->
+<!-- script src="@{'/public/javascripts/jasmine/apitest.js'}" type="text/javascript" charset="utf-8"></script> -->
+	<script src="http://localhost:9000/public/javascripts/jasmine/pushtest.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var trivialReporter = new jasmine.TrivialReporter();
+
+      jasmineEnv.addReporter(trivialReporter);
+			jasmine.getEnv().addReporter(new jasmine.ConsoleReporter()); 
+			
+      jasmineEnv.specFilter = function(spec) {
+        return trivialReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
+</head>
+
+<body>
+</body>
+</html>
