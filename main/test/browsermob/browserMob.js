@@ -18,7 +18,7 @@ c.blacklistRequests("http://www\\.google\\.com/buzz/.*", 200);
 
 var timeout = 30000;
 var icebreaker_timeout = 4000;
-var NUM_ITERS = 25;
+var NUM_ITERS = 20;
 var MESSAGE_PAUSE_TIME = 1000;
 
 selenium.setTimeout(timeout);
