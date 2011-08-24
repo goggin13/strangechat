@@ -40,18 +40,20 @@ var timestamp = function () {
 }
 
 var sendChat = function (msg) {
+  selenium.pause(MESSAGE_PAUSE_TIME);  
   selenium.type("css=.chat_input", msg);
   selenium.keyDown("css=.chat_input", "\\13");    
 }
 
 var iceBreakerTimer = -1;
 var sendIceBreaker = function () {
+  selenium.pause(MESSAGE_PAUSE_TIME);
   var xPath = '//img[@alt="IceBreaker"]';  
   var curCount = parseInt(selenium.getXpathCount(xPath), 10);
   var nextCount = curCount + 1;
   var testScript = "selenium.getXpathCount('" + xPath +"') >= " + nextCount;
   selenium.click("css=.chatting .ice_breaker");
-  // selenium.waitForCondition(testScript, icebreaker_timeout);
+  selenium.waitForCondition(testScript, icebreaker_timeout);
   // selenium.waitForXpathCount(xPath, nextCount);  
   iceBreakerTimer = timestamp();
 }
@@ -61,7 +63,6 @@ sendChat("hello " + theirName + ", " + " my name is " + myName);
 sendIceBreaker();
 
 for (i = 1; i < NUM_ITERS; i++) {  
-  selenium.pause(MESSAGE_PAUSE_TIME);
   sendChat(myName + " hello" + i);    
   selenium.waitForTextPresent(theirName + " hello" + i);
   var elapsedTime = timestamp() - iceBreakerTimer;
