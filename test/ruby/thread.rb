@@ -6,7 +6,7 @@ require "pusher-client"
 
 NUM_TESTERS = 2
 CHANNEL = "test-channel"
-ROOT_URL = "http://localhost:9000/"
+ROOT_URL = "http://10.0.1.50:9000/"
 ROOT_ID = 1000
 NUM_ITERS = 200
 
