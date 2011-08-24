@@ -18,7 +18,7 @@ c.blacklistRequests("http://www\\.google\\.com/buzz/.*", 200);
 
 var timeout = 30000;
 var icebreaker_timeout = 4000;
-var NUM_ITERS = 150;
+var NUM_ITERS = 50;
 
 selenium.setTimeout(timeout);
 
@@ -50,7 +50,7 @@ var sendIceBreaker = function () {
   var nextCount = curCount + 1;
   var testScript = "selenium.getXpathCount('" + xPath +"') >= " + nextCount;
   selenium.click("css=.chatting .ice_breaker");
-  selenium.waitForCondition(testScript, icebreaker_timeout);
+  // selenium.waitForCondition(testScript, icebreaker_timeout);
   // selenium.waitForXpathCount(xPath, nextCount);  
   iceBreakerTimer = timestamp();
 }
