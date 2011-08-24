@@ -109,7 +109,7 @@ describe('PushFunctions', function () {
 		});
   });
 
-  xdescribe("sending events", function () {
+  describe("sending events", function () {
     it('other user should receive message', function () {
       var msg1 = false, msg2 = false;
       
@@ -181,7 +181,7 @@ describe('PushFunctions', function () {
     });
   });  
   
-  xdescribe("qualify for mind reader", function () {
+  describe("qualify for mind reader", function () {
     it("should occur after using 3 icebreakers", function () {
       var msg1 = false, msg2 = false;
       

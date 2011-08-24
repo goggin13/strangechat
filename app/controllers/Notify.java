@@ -59,6 +59,9 @@ public class Notify extends Index {
 	    UserEvent.Event ue = UserEvent.deserializeEvent(message);
 	    if (ue != null) {
 	        UserEvent.get().publish(ue);
+	        if (ue instanceof UserEvent.RoomMessage) {
+	            System.out.println(channel + " : " + ((UserEvent.RoomMessage)ue).text);
+	        }
 	    } 
 	    returnOkay();
 	}
@@ -200,10 +203,7 @@ public class Notify extends Index {
             returnFailed(validation.errors());
         }
     	UserSession.Faux from_sess = currentFauxSession();
-		List<UserSession.Faux> for_sessions = currentForFauxSessionList();	
-        for (UserSession.Faux for_sess : for_sessions) {
-            UserEvent.get().addRoomMessage(for_sess.user_id, from_sess.user_id, room_id, msg, for_sess.session);
-        }
+        UserEvent.get().addRoomMessage(from_sess.user_id, msg);
         returnOkay();
     }
 	

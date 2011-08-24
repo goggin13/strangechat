@@ -74,7 +74,7 @@ public class Elizas extends Index {
             convo_ids.put(key, custid);
         }
         
-        new UserEvent.RoomMessage(sess.user_id, bot_user_id, room_id, reply, sess.session);
+        new UserEvent.RoomMessage(bot_user_id, reply);
         returnOkay();
     }
         

@@ -207,25 +207,18 @@ public class UserEvent {
 	/**
 	 * Represents a direct message from one user to another in a chatroom */
     public static class RoomMessage extends Event {
-		/** the user_id of the user who sent the message */
-        public final long from;
 		/** the text of the message */
  		public final String text;
-		/** optional room id that this message is pertinent to */
-		public final long room_id;
 		
-        public RoomMessage(long to, long from, long room_id, String msg, String session) {
-            super("roommessage", to, session);
-            this.from = from;
+        public RoomMessage(long from, String msg) {
+            super("roommessage", from, "");
             this.text = msg;
-			this.room_id = room_id;
 			publishMe();
         }
 
 		public String toString () {
 			return super.toString() 
-				   + " : message from " + this.from + ", " + this.text
-				   + ", in room " + this.room_id;
+				   + " : message from " + this.from + ", " + this.text;
 		}
 		
         // protected void finalize() {
@@ -234,8 +227,8 @@ public class UserEvent {
         
     }
 	
-	public void addRoomMessage (long to, long from, long room_id, String msg, String session) {
-        new RoomMessage(to, from, room_id, msg, session);
+	public void addRoomMessage (long from, String msg) {
+        new RoomMessage(from, msg);
 	}	
 	
 	/** 

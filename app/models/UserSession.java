@@ -74,7 +74,7 @@ public class UserSession extends Model {
     		notifyMe("roommessage", params);            
         } else {
             logWrongServer();
-			UserEvent.get().addRoomMessage(this.user.id, from.user_id, room_id, text, this.session);
+			UserEvent.get().addRoomMessage(from.user_id, text);
 		}        
     }
 
