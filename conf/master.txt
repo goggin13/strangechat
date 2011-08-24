@@ -1,2 +1,0 @@
-this files only purpose is to indicate the server is a master server.  
-delete it and on restart this server will not act as the master server

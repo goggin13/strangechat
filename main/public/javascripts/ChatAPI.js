@@ -39,10 +39,11 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   "use strict";
   var that = {},
   my = {};
-  my.home_url = "http://localhost:9000/";
+  // my.home_url = "http://localhost:9000/";
   // my.home_url = "http://10.0.1.50:9000/";  // dev  
   // my.home_url = "http://173.246.100.79/";  // prod 
   // my.home_url = "http://173.246.101.45/";  // staging
+  my.home_url = "http://173.246.101.127/";
   
   that.user_id = "";
   my.inputsToWatch = [];
