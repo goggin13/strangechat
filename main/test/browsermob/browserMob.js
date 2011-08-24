@@ -48,10 +48,10 @@ var sendIceBreaker = function () {
   var xPath = '//img[@alt="IceBreaker"]';  
   var curCount = parseInt(selenium.getXpathCount(xPath), 10);
   var nextCount = curCount + 1;
-  var testScript = "selenium.getXpathCount('" + xPath +"') == " + nextCount;
+  var testScript = "selenium.getXpathCount('" + xPath +"') >= " + nextCount;
   selenium.click("css=.chatting .ice_breaker");
-  // selenium.waitForCondition(testScript, icebreaker_timeout);
-  selenium.waitForXpathCount(xPath, nextCount);  
+  selenium.waitForCondition(testScript, icebreaker_timeout);
+  // selenium.waitForXpathCount(xPath, nextCount);  
   iceBreakerTimer = timestamp();
 }
 
