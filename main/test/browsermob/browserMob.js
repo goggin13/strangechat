@@ -66,7 +66,7 @@ for (i = 1; i < NUM_ITERS; i++) {
   sendChat(myName + " hello" + i);    
   selenium.waitForTextPresent(theirName + " hello" + i);
   var elapsedTime = timestamp() - iceBreakerTimer;
-  if (elapsedTime > 17) {
+  if (elapsedTime > 17 && i < NUM_ITERS - 2) {
     sendIceBreaker();
   }
 }
