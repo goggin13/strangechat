@@ -1,5 +1,6 @@
 package controllers;
 
+import jobs.CheckPowers;
 import models.User;
 import models.UserEvent;
 import models.WaitingRoom;
@@ -26,6 +27,11 @@ public class Mock extends Index {
         UserEvent.get().resetEventQueue();
         WaitingRoom.get().flush();
 		returnOkay(null);
+	}
+
+	public static void checkPowers () {
+	    new CheckPowers().now();
+	    returnOkay();
 	}
 
     public static void init () {

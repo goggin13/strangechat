@@ -1,4 +1,6 @@
-package models;
+package models.powers;
+
+import models.User;
 
 public abstract class IntervalPower extends SuperPower {
     public int award_interval = 120;

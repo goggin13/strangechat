@@ -5,31 +5,20 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
+import models.powers.SuperPower;
+import models.pusher.Pusher;
 import play.Logger;
 import play.Play;
-import play.data.validation.Required;
 import play.db.jpa.Model;
 import play.libs.WS;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
 import com.google.gson.JsonObject;
 
 import controllers.Notify;
-import enums.Power;
-import models.pusher.*;
 
 /**
  * A user session is an abstraction for a browser window that the user has open; 

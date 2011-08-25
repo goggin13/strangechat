@@ -1,36 +1,39 @@
 #{extends 'main.html' /}
 
 #{if amMaster} 
-	#{set title:'Master' /}
+	#{set title:'StrangeChat' /}
 #{/if}
-#{else}
-	#{set title:'ChatServer' /}
-#{/else}
+
+#{greenscript.js "admin < ChatAPI < json2 < matchmaker < pusher < userchannel < roomchannel < channel < user < events < pusher.min.js < jquery-1.5.2.min.js < " /}
 
 #{if isDev}
 	<a href="@{Application.specrunner()}">Jasmine tests</a><br/>
-	<a href="@tests">Unit tests</a><br/>
 #{/if}
+	<a href="@{Application.broadcast()}">Broadcast</a><br/>
 
-#{if amMaster} 
-	<p>I'm the Master server <br/>
-		#{list items:masterStats.keySet(), as:'stat'} 
-			${masterStats.get(stat)} | ${stat} <br/>
-		#{/list}
-	</p>
-#{/if}
 
-#{if amChat} 
-	<p>
-		I'm a chat server <br/>
-		#{list items:chatStats.keySet(), as:'stat'} 
-			${chatStats.get(stat)} | ${stat} <br/>
-		#{/list}				
-	</p>
-	<p>EVENT QUEUE <br/>
-		#{list items:events, as:'e'} 
-			#{if e.type != "nothing"}
-				${e} <br/>
-			#{/if}
-		#{/list}
+<p>
+	#{list items:masterStats.keySet(), as:'stat'} 
+		${masterStats.get(stat)} | ${stat} <br/>
+	#{/list}
+</p>
+
+#{if admin == null}
+	<p>You need to set up an admin user to view active</p>
+	<script type="text/javascript">
+			oApp = false;		
+	</script>
 #{/if}
+#{else}
+	<script type="text/javascript">
+	    
+			var oApp = {
+				user_id: ${admin.user_id},
+				alias: "${admin.alias}",
+			  avatar: "${admin.avatar}"
+			};
+	</script>
+	<ul id="user_list">
+		<li id="user_count">Logging in....</li>
+	</ul>
+#{/else}

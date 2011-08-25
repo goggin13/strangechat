@@ -1,22 +1,21 @@
 package jobs;
  
-import play.jobs.*;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
-import play.*;
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
-import java.util.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import models.*;
-import controllers.Index;
-import java.lang.reflect .*;
+import models.User;
+import models.UserEvent;
+import play.Logger;
+import play.jobs.Every;
+import play.jobs.Job;
+import play.libs.F.IndexedEvent;
 
 
 @Every("10s")
 public class CheckPowers extends Job {
-    private static Set<Long> myUsers = new HashSet<Long>();
+    private static AbstractMap<Long, User> myUsers = new HashMap<Long, User>();
     
     private static long lastReceived = 0L;
     public static final String REVEAL_CODE = "!@#$%^&$#@";
@@ -26,11 +25,9 @@ public class CheckPowers extends Job {
     public void doJob () {
         processUpdates(getEvents());
 
-        for (Long id : myUsers) {
-           User u = User.findById(id);
-           if (u != null) {
-              u.checkForNewPowers();
-           }
+        for (User u : myUsers.values()) {
+            u.save();
+            u.checkForNewPowers();
         }
         myUsers.clear();        
     }
@@ -39,7 +36,7 @@ public class CheckPowers extends Job {
         for (UserEvent.Event event : events) {
             if (event instanceof UserEvent.RoomMessage) {
                 UserEvent.RoomMessage rm = (UserEvent.RoomMessage)event;
-                if (rm.from == -1) {
+                if (rm.from < 0) {
                     continue;
                 }
                 User from = getUser(rm.from); 
@@ -59,24 +56,30 @@ public class CheckPowers extends Job {
                 } else {
                     from.messageCount += 1;             
                 }                           
-                from.save();
+                // from.save();
             } else if (event instanceof UserEvent.AcceptRequest) {
                 UserEvent.AcceptRequest j = (UserEvent.AcceptRequest)event;
-                if (j.from == -1) {
+                if (j.from < 0) {
                      continue;
                  }
                 User user = getUser(j.from);     
                 if (user != null) {
                     user.joinCount += 1;
-                    user.save();                    
+                    // user.save();                    
                 }
             } else if (event instanceof UserEvent.UsedPower) {
-                User from = getUser(event.from);
+                if (event.from < 0) {
+                    continue;
+                }                
+                getUser(event.from);
             } else if (event instanceof UserEvent.UserIsTyping) {
+                if (event.from < 0) {
+                    continue;
+                }                
                 User from = getUser(event.from);              
                 if (from != null) {
                     from.chatTime += 15;
-                    from.save();                   
+                    // from.save();                   
                 }                
             } else if (!(event instanceof UserEvent.Event)) {
                 Logger.error("Processing super power check and encountered a bad event");
@@ -85,12 +88,17 @@ public class CheckPowers extends Job {
     }
     
     private static User getUser (long id) {
-        User u = User.findById(id);
-        if (u == null) {
-            Logger.warn("attempted to process event for non-existant user (%s)", id);
-            return null;
+        User u;
+        if (myUsers.containsKey(id)) {
+            u = myUsers.get(id);
+        } else {
+            u = User.findById(id);
+            if (u == null) {
+                Logger.warn("attempted to process event for non-existant user (%s)", id);
+            } else {
+                myUsers.put(id, u);
+            }
         }
-        myUsers.add(id);
         return u;
     }
     

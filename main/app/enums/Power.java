@@ -1,6 +1,12 @@
 package enums;
-import models.*;
-import models.powers.*;
+import models.powers.Cloning;
+import models.powers.Emotion;
+import models.powers.IceBreaker;
+import models.powers.MindReader;
+import models.powers.Omniscience;
+import models.powers.SuperPower;
+import models.powers.XRayVision;
+import models.powers.GoldCoin;
 
 // Creating a new SuperPower
 // 1: Create a new member in this class
@@ -15,6 +21,7 @@ public enum Power {
 	OMNISCIENCE(new Omniscience()),
 	CLONING(new Cloning()),	
 	EMOTION(new Emotion()),
+	GOLD_COIN(new GoldCoin()),
 	X_RAY_VISION(new XRayVision());
     // BRAIN_MASH(new BrainMash()),
     // FREEZE(new Freeze());

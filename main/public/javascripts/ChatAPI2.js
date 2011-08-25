@@ -323,10 +323,6 @@ var ChatAPI = function (user_id, avatar, alias, callback) {
   that.eliza = function (to, room_id, qry, callback) {
     var url = my.home_url + 'eliza',
       data = {
-        user_id: that.user_id,
-        for_user: to,
-        for_session: MyContacts.getSessionId(to),
-        room_id: room_id,
         qry: $.trim(qry)
       };
     that.send(url, "GET", data, callback);

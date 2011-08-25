@@ -1,9 +1,10 @@
 package models.pusher;
 
 import play.Play;
+import play.exceptions.UnexpectedException;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
-import play.exceptions.UnexpectedException;
+
 import com.google.gson.Gson;
 
 /**

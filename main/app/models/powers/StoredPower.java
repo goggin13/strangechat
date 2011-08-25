@@ -1,11 +1,12 @@
 
-package models;
+package models.powers;
  
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
+import models.User;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 import enums.Power;

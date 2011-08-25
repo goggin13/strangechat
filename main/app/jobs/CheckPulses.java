@@ -1,17 +1,15 @@
 package jobs;
  
-import play.jobs.*;
+import java.util.HashMap;
+import java.util.List;
 
-import play.*;
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
-import java.util.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import models.*;
-import controllers.Index;
-import controllers.Users;
+import models.HeartBeat;
+import models.Room;
+import models.Server;
+import models.UserSession;
+import models.Utility;
+import models.WaitingRoom;
+import play.jobs.Job;
 
 public class CheckPulses extends Job {
 	private static int counter;

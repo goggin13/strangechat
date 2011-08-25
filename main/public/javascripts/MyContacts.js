@@ -20,20 +20,6 @@ setTimeout(function () {
 }, 3000);
 
 
-
-// serialize a dict to url form, key=value&key2=....
-var serialize = function (dict) {
-  "use strict";
-  var vals = [],
-    key;
-  for (key in dict) {
-    if (dict.hasOwnProperty(key)) {
-      vals.push(key + '=' + dict[key]);
-    }
-  }
-  return vals.join('&');
-};
-
 // address book, maintains map of ids to names and servers
 var MyContacts = (function () {
   "use strict";
@@ -44,11 +30,11 @@ var MyContacts = (function () {
   my.title_timer = null;
   
   // set the page title to reflect new chat with id
-  that.setPageTitle = function (id, isJoin) {
+  that.setPageTitle = function (name, isJoin) {
     var toggle = false,
       newTitle = isJoin 
-                 ? that.getAliasFor(id) + " enters"
-                 : "new message from " + that.getAliasFor(id);
+                 ? name + " enters"
+                 : "new message from " + name;
     
     if (!window.isActive && startChecking) { 
       
@@ -69,55 +55,6 @@ var MyContacts = (function () {
   that.resetPageTitle = function () {
     document.title = my.original_title;
     clearTimeout(my.title_timer);
-  };
-  
-  that.getIf = function (id, f) {
-    if (!that.has(id)) {
-      return "";
-    } 
-    return f();
-  };
-  
-  that.getObj = function (id) {
-    return that.getIf(id, function () { 
-      return my.contacts[id];
-    });
-  };
-  
-  that.getSessionId = function (id) {
-    return that.getIf(id, function () {
-      return my.contacts[id].session;
-    });
-  };
-  
-  that.get = function (id) {
-    return that.getIf(id, function () { 
-      return my.contacts[id].name;
-    });
-  };
-  
-  that.getAliasFor = function (id) {
-    return that.getIf(id, function () { 
-      return my.contacts[id].alias;
-    });  
-  };
-
-  that.getAvatarFor = function (id) {
-    return that.getIf(id, function () { 
-      return my.contacts[id].avatar;
-    });
-  };  
-  
-  that.has = function (id) {
-    return my.contacts.hasOwnProperty(id);
-  };
-    
-  that.remove = function (id) {
-    delete my.contacts[id];
-  };
-  
-  that.put = function (user) {
-    my.contacts[user.user_id] = user;
   };
   
   return that;

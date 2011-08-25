@@ -58,6 +58,23 @@ describe('PushFunctions', function () {
      });
    });
 
+  afterEach(function () {
+    var user4Data = user3.api.im_talking_to[user4.api.user_id],
+      user3Data = user4.api.im_talking_to[user3.api.user_id],
+      dataList = [user4Data, user3Data],
+      apiList = [user1.api, user2.api, user3.api, user4.api];
+    $.each(dataList, function (k, data) {
+      if (data && data.channel) {
+        data.channel.bindToMessage(function (message) {});
+        data.channel.bindToIsTyping(function (message) {});
+        data.channel.bindToUsedPower(function (power) {});
+      }
+    });
+    $.each(apiList, function (k, api) {
+      api.bindNewPower(function (power) {});
+    });
+  });
+  
   describe("get a room", function () {
     it('should pair two users', function () {     
       var msg1 = false, msg2 = false, msg3 = false, msg4 = false;
@@ -133,7 +150,6 @@ describe('PushFunctions', function () {
           user4channel = user4Data.channel,
           messageCount = 0,
           power_id = user4.api.superPowers[0].id,
-          loggedInCount = 0,
           mh = function (message, from_user, from_user_lbl, type) {
             expect(message.type).toEqual(type);            
             expect(message.from).toEqual(from_user);
@@ -143,40 +159,42 @@ describe('PushFunctions', function () {
           ph = function (power) {
             messageCount++;
           };
-        user3channel.bindLogin(function () { loggedInCount++ });
-        user4channel.bindLogin(function () { loggedInCount++ });        
+        // user3channel.bindLogin(function () { loggedInCount++ });
+        // user4channel.bindLogin(function () { loggedInCount++ });        
         user3channel.bindToMessage(function (message) {
+          console.debug("MH " + 1);
           mh(message, user4.api.user_id, "4", "roommessage");              
         });
         user4channel.bindToMessage(function (message) {
+          console.debug("MH " + 2);          
           mh(message, user3.api.user_id, "3", "roommessage");               
         });       
         user3channel.bindToIsTyping(function (message) {
+          console.debug("MH " + 3);          
           mh(message, user4.api.user_id, "4", "useristyping");              
         });
         user4channel.bindToIsTyping(function (message) {
+          console.debug("MH " + 4);          
           mh(message, user3.api.user_id, "3", "useristyping");               
         });
         user3channel.bindToUsedPower(function (power) {
+          console.debug("MH " + 5);  
           ph();
         });
         user4channel.bindToUsedPower(function (power) {
+          console.debug("MH " + 6);          
           ph();
         });    
         
+        user3channel.message(user3.api.user_id, "hello from 3");
+        user4channel.message(user4.api.user_id, "hello from 4");        
+        user3channel.userIsTyping(user3.api.user_id, "hello from 3");
+        user4channel.userIsTyping(user4.api.user_id, "hello from 4");
+        user4channel.usePower(power_id, user4.api.user);   
+        
         waitsFor(function () {
-          return loggedInCount == 2;
-        }, "users to both subscribe", 4000);
-        runs(function () {
-          user3channel.message(user3.api.user_id, "hello from 3");
-          user4channel.message(user4.api.user_id, "hello from 4");        
-          user3channel.userIsTyping(user3.api.user_id, "hello from 3");
-          user4channel.userIsTyping(user4.api.user_id, "hello from 4");
-          user4channel.usePower(power_id, user4.api.user);   
-          waitsFor(function () {
-            return messageCount == 6;
-          }, "messages to go through", 4000);                 
-        });
+          return messageCount == 6;
+        }, "messages to go through", 4000);                 
       });   
     });
   });  
@@ -201,18 +219,59 @@ describe('PushFunctions', function () {
         }
         
         user4.api.bindNewPower(function (power) {
-          expect(power.storedPower.id).toBeDefined();
-          expect(power.superPower.name).toEqual("Mind Reader");
-          expect(power.storedPower.level).toEqual(1);
-          gotIt = true;
+          if (power.superPower.name == "Mind Reader") {          
+            expect(power.storedPower.id).toBeDefined();
+            expect(power.superPower.name).toEqual("Mind Reader");
+            expect(power.storedPower.level).toEqual(1);
+            gotIt = true;
+          }
         });
         
+        user4.api.checkPowers();
         waitsFor(function () {
           return gotIt;
-        }, "receiving icebreaker", 12000);
-        runs(function () {
+        }, "receiving mind reader", 12000);
+      });
+    });
+  });
+  
+  describe("qualify for gold coins", function () {
+    it("should occur after chatting for 100 seconds", function () {
+      var msg = 0;
+      
+      user3.api.requestRandomRoom(function (user) { msg++; });
+      user4.api.requestRandomRoom(function (user) { msg++; });
+      
+      waitsFor(function () { return msg == 2; }, "get matched up", 4000);
+      
+      runs(function () {
+        var user4Data = user3.api.im_talking_to[user4.api.user_id],
+          user3Data = user4.api.im_talking_to[user3.api.user_id],
+          user3channel = user3Data.channel,
+          user4channel = user4Data.channel,
+          power_id = user4.api.superPowers[0].id,
+          gotIt = false;
           
+        user3channel.bindToIsTyping(function () {});  
+        user4channel.bindToIsTyping(function () {});  
+        for (var i = 0; i < 20; i++) {
+          user4channel.userIsTyping(user4.api.user_id, "hello from 4");
+        }
+        
+        user4.api.bindNewPower(function (power) {
+          if (power.superPower.name == "Gold Coin") {
+            expect(power.storedPower.id).toBeDefined();
+            expect(power.storedPower.level).toEqual(1);
+            expect(power.storedPower.available).toEqual(1);            
+            gotIt = true;            
+          }
         });
+        
+        user4.api.checkPowers();
+        waitsFor(function () {
+          return gotIt;
+        }, "receiving a gold coin", 5000);
+
       });
     });
   });

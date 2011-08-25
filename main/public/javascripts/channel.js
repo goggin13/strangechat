@@ -1,11 +1,10 @@
 
 
-
 var Channel = function (spec) {
 	var that = {},
 		my = {};
-	that.channel_name = spec.channel_name;
 	my.pusher = spec.pusher;
+  that.channel_name = spec.channel_name + (my.pusher.isLocal() ? "-local" : "");	
 	my.subscribed = false;
 	
 	my.memberToUser = function (m) {
@@ -28,6 +27,14 @@ var Channel = function (spec) {
     });
     my.subscribed = true;
 	};
+
+  that.bindBroadcast = function (f) {
+    that.bind(types.BROADCAST, f);
+  };
+
+  that.bindBlackList = function (f) {
+    that.bind(types.BLACKLIST, f);
+  };  
 
 	that.bindLogon = function (f) {
 	  that.bind(types.PUSHER_MEMBER_LOGON, function (member) {

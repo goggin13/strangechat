@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,21 +18,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import play.Logger;
-import play.Play;
-import play.data.validation.Required;
+import models.powers.StoredPower;
+import models.powers.SuperPower;
+import models.pusher.Pusher;
 import play.db.jpa.Model;
-import play.libs.WS;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
-import com.google.gson.JsonObject;
 
-import java.util.Random;
-
-import controllers.Notify;
 import enums.Power;
-import models.pusher.*;
 
 /**
  * A chat user in the system, who can be online or off, and the maintained meta

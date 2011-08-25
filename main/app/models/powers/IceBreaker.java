@@ -4,9 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
 
-import models.SuperPower;
 import models.User;
 import play.Logger;
 
@@ -78,42 +76,41 @@ public class IceBreaker extends SuperPower {
 	    
 	    static {
             messages.add("Did you like your high school experience?");
-            messages.add("Would you rather watch The Office or Mad Men?");
+            messages.add("Have any unrequited loves?");
             messages.add("Have you ever wanted to be an astronaut?");
-            messages.add("Will Lindsay Lohan ever make a comeback?");
+            messages.add("Would you rather be stuck in an elevator or locked in a bathroom?");
             messages.add("Do you think the world will end in 2012?");
             messages.add("Who are your heroes?");
-            messages.add("Which is better: Harry Potter or Twilight?");
-            messages.add("Do you prefer sweet or savory?");
+            messages.add("When do you have your best ideas?");
+            messages.add("If you won the lottery, what would be your first big purchase?");
             messages.add("If you could only wear one color clothing for the rest of your life, what would you choose?");
             messages.add("What’s your favorite kind of candy?");
             messages.add("What the craziest thing you’ve ever done?");
-            messages.add("If you had to lose an arm or lose a leg, which would you choose?");
+            messages.add("Does deja vu exist or are we all just slightly psychic?");
             messages.add("Would you rather fly or be able to run faster than 60 mph?");
             messages.add("What’s more important: a dream wedding or a perfect birthday?");
             messages.add("Where did you have your first kiss?");
             messages.add("What’s the worst thing you’ve ever done?");
             messages.add("If you had all the money you needed, would you still work?");
-            messages.add("Is Bill Murray the best comedian of all time?");
-            messages.add("What’s better: Italian or Chinese food?");
-            messages.add("What’s the best pizza topping?");
-            messages.add("What do you put in your coffee?");
+            messages.add("What's your kryptonite?");
+            messages.add("Is it more important for superheros to be strong or fast?");
+            messages.add("Are you better with recognizing faces or remembering names?");
             messages.add("Do you think Barack Obama is a good President?");
-            messages.add("Do you like to sit by the window or on the aisle on planes?");
+            messages.add("Why do villains always have to spend twenty minutes explaining why they're evil when they catch you?");
             messages.add("Do you like Facebook or Twitter more?");
             messages.add("Who is your favorite author?");
             messages.add("What was the worst class in middle school?");
             messages.add("What super power do you wish you possessed?");
             messages.add("What’s your favorite board game?");
-            messages.add("Do you play Angry Birds?");     
+            messages.add("Do you have any superhero siblings?");
             messages.add("Have you ever quit a job and why?");
             messages.add("Were you a fan of the Backstreet Boys? Who was your favorite?");
             messages.add("What’s your favorite word?");
             messages.add("What’s your favorite number?");
             messages.add("What would be the title of your memoir?");
-            messages.add("How would you describe yourself in two words?");                   
+            messages.add("How would you describe yourself in two words?                   ");
             messages.add("What's something romantic to do on a first date?");
-            messages.add("What's it like to be in loveeee?");
+            messages.add("What's it like to be in love?");
             messages.add("What's your fondest memory from being small?");
             messages.add("Do you have any tattoos?");
             messages.add("What's the best meal you've ever had?");
@@ -128,10 +125,10 @@ public class IceBreaker extends SuperPower {
             messages.add("Do you like spicy food and why?");
             messages.add("Who was your first crush?");
             messages.add("Do you own any pets?");
-            messages.add("Which is a stronger emotion: anger or love? How do you know?");
+            messages.add("What is Angelina Jolie's super power?");
             messages.add("What are the 3 most important things in your life?");
             messages.add("What time period would you time travel to?");
-            messages.add("What's the best chain restaurant to make out in?");
+            messages.add("Which female superhero would you want to hang out with?");
             messages.add("What instruments do you play?");
             messages.add("What is your favorite band?");
             messages.add("Where did humans come from?");
@@ -139,7 +136,7 @@ public class IceBreaker extends SuperPower {
             messages.add("If God had a face what would it look like?");
             messages.add("What's a funny joke?");
             messages.add("What do women want?");
-            messages.add("What do boys smell like? What about girls?");
+            messages.add("Is it more important to be happy or to be stable in life?");
             messages.add("How do you know if it's love?");
             messages.add("How do you know if someone likes you?");
             messages.add("What makes you laugh?");
@@ -170,34 +167,28 @@ public class IceBreaker extends SuperPower {
             messages.add("What's your theme song?");
             messages.add("What song do you sing in the shower?");
             messages.add("Where do you come from?");
-            messages.add("What fabric makes the best costume?");
+            messages.add("What's your favorite television show?");
             messages.add("Do you peep out people's underwear with your x-ray vision?");
             messages.add("Do you have special superhero transportation?");
             messages.add("Where do you change into your superhero costume?");
             messages.add("Have you ever had any wardrobe malfunctions?");
             messages.add("Does your mask get itchy?");
-            messages.add("Have you ever smelled what The Rock is cooking?");  
+            messages.add("Have you ever smelled what The Rock is cooking?  ");
             messages.add("Do you think Jean Grey should have been with Wolverine or Cyclops?");
             messages.add("Was Godzilla just misunderstood?");
             messages.add("What was your best age?");
-            messages.add("Nature or nurture?");
+            messages.add("Would you give up everything to accomplish your dreams?");
             messages.add("Do politics matter?");
             messages.add("What's your favorite inspirational quote?");
             messages.add("In-n-Out or Shake Shack?");
             messages.add("Favorite city?");
-            messages.add("Favorite text editor?");
-            messages.add("Who's sexier, you or your significant other?");
             messages.add("What planet are you from?");
             messages.add("Why did the chicken cross the road?");
             messages.add("Where will you be when Ozzy comes for you?");
             messages.add("When did you learn you were special?");
             messages.add("How do you get to work?");
-            messages.add("Who you think you are, Mr. Big Stuff?");
             messages.add("What did you do after your first kiss?");
-            messages.add("Why are you so odd?");
-            messages.add("Where were you when I needed you?");
-            messages.add("How've you been, guy?");            
-                      
+            messages.add("Why are you so odd?");          
 	    }
 	    
 	    // seen MUST BE SORTED

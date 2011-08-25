@@ -1,5 +1,4 @@
 package models.powers;
-import models.IntervalPower;
 import models.User;
 
 public class Freeze extends IntervalPower {

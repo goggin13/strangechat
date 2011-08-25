@@ -1,0 +1,10 @@
+
+
+#user_list img {
+    height: 35px;
+    width: 35px;
+}
+
+#user_list {
+    list-style:none;
+}

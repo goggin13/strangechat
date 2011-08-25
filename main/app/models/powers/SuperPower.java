@@ -1,11 +1,13 @@
-package models;
+package models.powers;
 import java.lang.reflect.Type;
+
+import models.User;
+import models.UserEvent;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.List;
 import enums.Power;
 
 public abstract class SuperPower {

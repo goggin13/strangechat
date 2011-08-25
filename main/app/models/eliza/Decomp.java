@@ -1,6 +1,5 @@
 package models.eliza;
 
-import java.lang.Math;
 
 /**
  *  Eliza decomposition rule

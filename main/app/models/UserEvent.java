@@ -1,20 +1,19 @@
 package models;
  
 import java.lang.reflect.Type;
+import java.util.AbstractMap;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.AbstractMap;
 
-import play.Logger;
+import models.powers.StoredPower;
+import models.powers.SuperPower;
 import play.libs.F.ArchivedEventStream;
 import play.libs.F.IndexedEvent;
 import play.libs.F.Promise;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -23,7 +22,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import enums.Power;
-import controllers.Index;
 
 /* 
  * A wrapper for the UserEvent classes.  See comment on {@link Event} for 
@@ -123,8 +121,21 @@ public class UserEvent {
 			return this.from + " - " + this.session_id + " ( " + this.type + " )";
 		}
 		
+		public String toJson () {
+		    return toJson(new TypeToken<Event>() {});
+		}
+		
+		public String toJson (TypeToken t) {
+	        Gson gson = new Gson();
+            String json = gson.toJson(
+                this,
+                t.getType()
+            );
+            return json;
+	    }
+		
 	}
-	
+    
 	/**
 	 * This event indicates to clients that this user has just logged
 	 * into the system and is ready to chat */
@@ -221,9 +232,9 @@ public class UserEvent {
 				   + " : message from " + this.from + ", " + this.text;
 		}
 		
-        // protected void finalize() {
-            // Logger.info("finalising RoomMessage class");
-        // }        
+	    public String toJson () {
+            return toJson(new TypeToken<RoomMessage>() {});
+	    }   
         
     }
 	
@@ -367,19 +378,15 @@ public class UserEvent {
 	    }
 
 	    public String toJson () {
-    		GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new User.ChatExclusionStrategy());
-    		Gson gson = gsonBuilder.create();
-            String json = gson.toJson(
-                this,
-                new TypeToken<NewPower>() {}.getType()
-            );
-            return json;
+            return toJson(new TypeToken<NewPower>() {});
 	    }
 	    
 		public String toString () {
 			return super.toString() + " : " + this.superPower.name + " awarded (L " + this.storedPower.level +")";
 		}	    
 	}
+
+    
 
     // public void addNewPower (long for_user, SuperPower sp, long power_id, int level, String session_id) {
         // new NewPower(for_user, sp, power_id, level, session_id);
@@ -398,6 +405,24 @@ public class UserEvent {
 			return "dummy event";
 		}	    
 	}
+
+	public static class Broadcast extends Event {
+	    final public String text;
+	    
+	    public Broadcast (String t) {
+	        super("broadcast", -1, null);
+	        text = t;
+	    }
+	    
+	    public String toJson () {
+            return toJson(new TypeToken<Broadcast>() {});
+	    }	    
+	    
+		public String toString () {
+			return "broadcast - " + text;
+		}	    
+	}
+
 
     public static class AcceptRequest extends Event {
         public AcceptRequest (long for_user) {
@@ -428,12 +453,7 @@ public class UserEvent {
 	    }
 	    
 	    public String toJson () {
-	        Gson gson = new Gson();
-            String json = gson.toJson(
-                this,
-                new TypeToken<UsedPower>() {}.getType()
-            );
-            return json;
+            return toJson(new TypeToken<UsedPower>() {});
 	    }
 	    	    
 	}

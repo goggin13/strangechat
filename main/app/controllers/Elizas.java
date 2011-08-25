@@ -8,6 +8,7 @@ import models.UserEvent;
 import models.UserSession;
 import models.Utility;
 import models.eliza.Eliza;
+import models.pusher.Pusher;
 
 /**
  * This controller is responsible for keeping track of users, updating their
@@ -16,18 +17,17 @@ import models.eliza.Eliza;
 public class Elizas extends Index {
     private static HashMap<String, String> convo_ids = new HashMap<String, String>();
     
-    public static void reply (String qry, long room_id) {
-        if (qry == null) qry = "";
-        String response = Eliza.respondTo(qry);
-        UserSession u = currentSession(); 
-        UserSession u2 = currentForSession();
-        if (u == null || u2 == null) {
-            returnFailed("both from_user and user_id must map to existing users");
+    public static void reply (String channel, String qry) {
+        if (qry == null) {
+            qry = "";
         }
-        UserSession.Faux elizaSess = new UserSession.Faux(Eliza.user_id, "eliza_session");
-        u2.sendMessage(u.toFaux(), room_id, "@Azile " + qry);
-        u.sendMessage(elizaSess, room_id, response);
-        u2.sendMessage(elizaSess, room_id, response);
+        System.out.println(qry);
+        String response = Eliza.get().respondTo(qry);
+        System.out.println(response);
+        String json = new UserEvent.RoomMessage(Eliza.user_id, response).toJson();
+        System.out.println(json);
+        System.out.println(channel);
+        new Pusher().trigger(channel, "roommessage", json);
         returnOkay();
     }
     
@@ -47,10 +47,9 @@ public class Elizas extends Index {
 	}
 
     
-    public static void talkTo (String bot_id, long bot_user_id, String qry, long room_id) {
-    	UserSession.Faux sess = currentFauxSession();
+    public static void talkTo (String bot_id, long bot_user_id, String channel, String qry) {
         String url = "http://www.pandorabots.com/pandora/talk-xml";
-        String key = sess.user_id + "_" + bot_id;
+        String key = channel + "_" + bot_id;
         String custid = convo_ids.get(key);
         
         HashMap<String, String> params = new HashMap<String, String>();

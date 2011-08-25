@@ -1,7 +1,6 @@
 package models.powers;
 import java.util.HashMap;
 
-import models.SuperPower;
 import models.User;
 import enums.Power;
 
@@ -11,7 +10,7 @@ public class Emotion extends SuperPower {
 	private static Long min = 15L;  // just make a "minute" shorter for new interval powers
 
 	static {
-        levels.put(levelCount++, 2L * min);
+        levels.put(levelCount++, 30L * min);
         levels.put(levelCount++, 5L * min);
         levels.put(levelCount, 10L * min);
 	}	

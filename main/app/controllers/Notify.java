@@ -5,16 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import models.HeartBeat;
-import models.SuperPower;
 import models.UserEvent;
 import models.UserSession;
-import models.pusher.*;
-
-import play.libs.F.IndexedEvent;
+import models.powers.SuperPower;
+import models.pusher.BasicUserInfo;
+import models.pusher.PresenceChannelData;
+import models.pusher.Pusher;
 import play.data.validation.Required;
-import models.eliza.Eliza;
-import play.libs.F.T2;
-import java.util.AbstractMap;
+import play.libs.F.IndexedEvent;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,7 +25,11 @@ public class Notify extends Index {
 	
 	public static void pusherAuth (String socket_id, String channel_name) {
 	    Pusher pusher = new Pusher();
+	    System.out.println(socket_id);
         UserSession userSession = UserSession.find("bySocket", socket_id).first();
+        if (userSession == null) {
+            returnFailed("pusherAuth failed, no valid user session passed");
+        }
         BasicUserInfo userInfo = new BasicUserInfo(
             userSession.user.id,
             userSession.user.alias, 
@@ -39,7 +42,7 @@ public class Notify extends Index {
             null
         );
 	}
-	
+
 	public static void push (
 	                @Required String channel, 
 	                @Required String event, 
@@ -71,6 +74,7 @@ public class Notify extends Index {
 	    if (sess == null) {
 	        returnFailed("Need valid session to set socket id");
 	    }
+	    System.out.println("setting socket");
 	    sess.socket = socket_id;
 	    sess.save();
 	    returnOkay();
@@ -226,8 +230,8 @@ public class Notify extends Index {
  	 * @param level the level of the new power
 	 * @param session_id current session id this event is pertinent	to */		 
 	 public static void newPower (String superPowerJSON, Long power_id, int level) {
-		 UserSession.Faux for_sess = currentForFauxSession();
-         SuperPower superPower = SuperPower.fromJSON(superPowerJSON);
+//		 UserSession.Faux for_sess = currentForFauxSession();
+//         superPower = SuperPower.fromJSON(superPowerJSON);
          // UserEvent.get().addNewPower(for_sess.user_id, superPower, power_id, level, for_sess.session);
          returnOkay();
 	 }

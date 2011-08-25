@@ -1,26 +1,21 @@
 package controllers;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import models.BlackList;
 import models.HeartBeat;
 import models.Room;
 import models.Server;
-import models.StoredPower;
-import models.SuperPower;
 import models.User;
-import models.WaitingRoom;
 import models.UserEvent;
 import models.UserSession;
-import models.UserExclusion;
 import models.Utility;
-import models.pusher.*;
+import models.WaitingRoom;
+import models.powers.StoredPower;
+import models.powers.SuperPower;
+import models.pusher.Pusher;
 import play.data.validation.Required;
 import play.libs.WS;
-import play.libs.F.T2;
 
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -39,7 +34,7 @@ public class Users extends Index {
 	public static void signin (long sign_in_id, String avatar, String alias) {
 	    User user = User.getOrCreate(sign_in_id);
         if (BlackList.isBlacklisted(user)) {
-		    returnFailed("You have been blacklisted");
+		    returnFailed("You have been blacklisted; <br/> If you think this is an error, please contact info@bnter.com");
 		}
 		System.out.println("Logging in " + user.id);
         Users.renderJSONP(
@@ -55,7 +50,7 @@ public class Users extends Index {
 	{	    
 		user.avatar = avatar == null ? "" : avatar;
 		user.alias = alias == null ? "" : alias;
-		UserSession sess = user.login();
+		user.login();
 		user.save();		
 		
 		HashMap<String, User> data = new HashMap<String, User>();
@@ -99,7 +94,6 @@ public class Users extends Index {
             returnFailed("No current session provided");
         }
         WaitingRoom.get().requestRandomRoom(user);
-        System.out.println(WaitingRoom.get());
         returnOkay();
     }	
     
@@ -127,30 +121,6 @@ public class Users extends Index {
     }
 
     /**
-     * Broadcast a heartbeat for the given User, either to this server if we are
-     * their heartbeat server, else send the request to the appropriate server.
-     * This function is called on login for a user, we heartbeat at their assigned server
-     * to catch the case where they login, receive a response, but fail before they begin to 
-     * heartbeat on their own
-     * @user the user to heartbeat for 
-     * @return true if the heartbeat is successfuly sent */
-	private static boolean broadcastHeartbeat (UserSession user) {
-	    String heartbeatURI = user.user.getHeartbeatURI();
-	    String masterURI = Server.getMasterServer().uri;
-		if (masterURI.equals(heartbeatURI)) {
-		    HeartBeat.beatFor(user.toFaux());
-		    return true;
-		} else {	
-			String url = heartbeatURI + "heartbeat";
-			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("for_user", user.user.id + "");
-			WS.HttpResponse resp = Utility.fetchUrl(url, params);
-			JsonObject json = resp.getJson().getAsJsonObject();
-			return json.get("status").getAsString().equals("okay");
-		}
-	}
-	
-	/**
 	 * Remove a user from a room, and notify other participants they left
 	 * @param room_id the room to remove them from */
 	public static void leaveRoom (long room_id) {
@@ -188,7 +158,6 @@ public class Users extends Index {
         SuperPower sp = storedPower.getSuperPower();
         String result = storedPower.use(other != null ? other.user : null);
         
-        Pusher pusher = new Pusher();
         UserEvent.UsedPower message = new UserEvent.UsedPower(user.user.id, sp, storedPower.level, result);
 	    Notify.push(channel, "usedpower", message.toJson(), null, callback());
 	}

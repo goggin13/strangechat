@@ -1,5 +1,4 @@
 package models.powers;
-import models.SuperPower;
 import models.User;
 import enums.Power;
 

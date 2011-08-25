@@ -3,7 +3,7 @@ var APusher = function (spec) {
   var that = {},
     my = {};
   my.home_url = spec.home_url;
-  if (my.home_url .indexOf(window.location.host) === -1) {
+  if (my.home_url.indexOf(window.location.host) === -1) {
     Pusher.channel_auth_endpoint = my.home_url + 'pusher/auth';
     Pusher.channel_auth_transport = 'jsonp';
   }
@@ -13,6 +13,11 @@ var APusher = function (spec) {
   my.pusher = new Pusher('c6c59a2e80e51c248a47');
   my.session = "";
   my.user_id = -1;
+  
+  that.isLocal = function () {
+    return my.home_url.indexOf("localhost") > -1
+           || my.home_url.indexOf("10.0.1.50") > -1;
+  };
   
   that.setUserInfo = function (session, user_id) {
     my.session = session;

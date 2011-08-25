@@ -1,7 +1,6 @@
 package models.eliza;
 
-import java.awt.*;
-import play.*;
+import play.Play;
 
 /**
  *  Eliza Application.
@@ -11,18 +10,25 @@ public class Eliza {
     
     private static String devScript = "conf/script.txt";
     private static String prodScript = "data/script.txt"; 
-    private static ElizaMain instance = null;
+    private static ElizaMain eliza = null;
+    private static Eliza instance = null;
     
-    public static void init () {
-        if (instance == null) {
-            instance = new ElizaMain();
+    private Eliza () {
+    }
+
+    public String respondTo (String s) {
+		return eliza.processInput(s);
+    }
+
+    public static Eliza get () {
+        if (eliza == null) {
+            eliza = new ElizaMain();
             boolean isDev = Play.mode == Play.Mode.DEV;
-            instance.readScript(isDev ? devScript : prodScript);
+            eliza.readScript(isDev ? devScript : prodScript);
         }
+        if (instance == null) {
+            instance = new Eliza();
+        }
+        return instance;
     }
-
-    public static String respondTo (String s) {
-		return instance.processInput(s);
-    }
-
 }

@@ -40,10 +40,10 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   var that = {},
   my = {};
   // my.home_url = "http://localhost:9000/";
-  // my.home_url = "http://10.0.1.50:9000/";  // dev  
+  my.home_url = "http://10.0.1.50:9000/";  // dev  
   // my.home_url = "http://173.246.100.79/";  // prod 
   // my.home_url = "http://173.246.101.45/";  // staging
-  my.home_url = "http://173.246.101.127/";
+  // my.home_url = "http://173.246.101.127/";
   
   that.user_id = "";
   my.inputsToWatch = [];
@@ -56,13 +56,9 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   that.user = null;
   my.superhero_id = user_id;
   my.channels = {};
+  my.broadcastHandler = false;
+  my.pusher = false
   
-
-  that.roommessage = function (to_user, channel, message) {
-    var roomChannel = my.channels[channel];
-    roomChannel.message(to_user, that.user.user_id, message);
-  };
-
   // send an API call, either POST, or GET, with given data.
   // on success the given callback function is called
   that.send = function (url, method, data, callback) {
@@ -108,8 +104,9 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   };
 
   that.getGroupChannel = function (groupKey) {
+    var channel_name = "presence-group-" + groupKey;
     return RoomChannel({
-	    channel_name: "presence-group-" + groupKey,
+	    channel_name: channel_name,
 	    pusher: my.pusher
 	  });
   };
@@ -120,7 +117,7 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
       return;
     }
     var me = JSON[my.superhero_id];
-    
+    console.debug(me);
     that.user = User({user_id: me.id,
       session: me.session_id,
       alias: me.alias,
@@ -153,7 +150,12 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
         alias: alias,
       };
       that.send(url, "POST", data, function (JSON) {
-        my.loginCallback(JSON, alias, callback);
+        if (JSON.hasOwnProperty("status") && JSON.status == "error") {
+          $("#content").html(JSON.message);
+        } else {
+          my.loginCallback(JSON, alias, callback);
+        }
+        
       });     
   };
 
@@ -164,6 +166,16 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
         socket_id: my.pusher.getSocketID()
       };    
     that.send(url, "POST", data, callback);
+  };
+
+  // get a response from Eliza
+  that.eliza = function (channel, qry, callback) {
+    var url = my.home_url + 'eliza',
+      data = {
+        channel: channel,
+        qry: $.trim(qry)
+      };
+    that.send(url, "GET", data, callback);
   };
 
   // indicate you wish to get paired with a random user
@@ -182,27 +194,59 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     matchMaker.matchMe();
   };
   
+  that.getBroadcastChannel = function () {
+    return my.broadcastChannel;
+  };
+  
   that.bindNewPower = function (f) {
     my.userChannel.bindNewPower(f);
+  };
+  
+  that.bindBroadcast = function (f) {
+    my.broadcastHandler = f;
+  };
+  
+  my.blacklistWrapper = function (msg) {
+    if (msg.text == that.user.user_id) {
+      window.location.reload();
+    }
+  };
+  
+  my.broadcastWrapper = function (msg) {
+    if (!my.broadcastHandler) {
+      alert(msg.text);
+    } else {
+      my.broadcastHandler(msg);
+    }
   };
   
   my.initPusher = function (login_callback) {
     my.pusher = APusher({home_url: my.home_url});
 		my.pusher.bindConnected(function() {	// wait to connect
 		  that.login(user_id, avatar, alias, function (JSON_login) {  // send Play! our socket key
-        my.pusher.setUserInfo(my.session, that.user_id);
+        my.pusher.setUserInfo(that.user.session, that.user.user_id);
     		my.userChannel = UserChannel({
           user: that.user,
           pusher: my.pusher
-    		});        
+    		});     
+    		   
 		    my.sendMySocketID(function (JSON) {             
   			  if (JSON.status == "okay") {
+      	
+      		  my.broadcastChannel = Channel({
+      		    channel_name: "presence-SHCH-broadcast",
+          	  pusher: my.pusher
+      		  });
+      		  my.broadcastChannel.bindBroadcast(my.broadcastWrapper);  			    
+    		    my.broadcastChannel.bindBlackList(my.blacklistWrapper);
     		    if (login_callback) {
               login_callback(JSON_login);
     				}
+  			
   			  }
   			});
 		  });
+
 		});
   };
   

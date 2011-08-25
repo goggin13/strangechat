@@ -20,14 +20,14 @@ var AcceptRequest = function (spec) {
 var MatchMaker = function (spec) {
   var that = {},
     my = {};
+  my.pusher = spec.pusher;
   spec.channel_name = "presence-random-chat";
-  my.randomChannel = Channel(spec);
+  my.randomChannel = Channel(spec);    
   my.types = {
     JOIN_REQUEST: "JoinRequest",
     ACCEPT_REQUEST: "AcceptRequest",    
   };
   my.user = spec.user;
-  my.pusher = spec.pusher;
   my.callback = spec.callback;
   my.successful = false;
   
@@ -87,6 +87,42 @@ var MatchMaker = function (spec) {
     my.successful = true;
   };    
   
+  // login to the given channel, and ensure the user described by userData joins you there.
+  // if they do, call the appropriate callback
+  my.loginToChannel = function (channel_name, userData) {
+    var otherUserSignedIn = false,
+      returnData = function () {
+        userData["channel"] = channel;
+        my.callback(userData);
+        otherUserSignedIn = true;
+      };
+    
+    channel = RoomChannel({
+	    channel_name: channel_name,
+	    pusher: my.pusher
+	  });
+	  
+	  channel.subscribe();
+	  channel.bindLogin(function (users) {
+	    $.each(users, function (k, user) {
+	      if (user.user_id == userData.user_id) {
+          returnData();
+	        return false;
+	      }
+	    });
+	  });
+	  channel.bindLogon(function (user) {
+      if (user.user_id == userData.user_id) {
+        returnData();
+      }
+	  });
+	  setTimeout(function () {
+	    if (!otherUserSignedIn) {
+	      that.matchMe();
+	    }
+	  }, 1500);
+  };
+  
   that.matchMe = function () {
     var waitingForChat = true,
       sentAcceptTo = false;
@@ -102,26 +138,22 @@ var MatchMaker = function (spec) {
 
     my.randomChannel.bind(my.types.ACCEPT_REQUEST, function (data) {
       if (data.to == my.user.user_id && waitingForChat) {
+        waitingForChat = false;
+        my.randomChannel.disconnect();
+        if (sentAcceptTo != data.from) {
+          my.acceptMeetUp(data.from);
+          sentAcceptTo = data.from;
+        }        
+        
   			var userData = User({
   			    user_id: data.from,
   			    avatar: data.avatar,
   			    session: data.session,
   			    alias: data.alias
   			  }),
-  			  channel_name = that.membersToChannelName(data.from, my.user.user_id),
-  			  channel = RoomChannel({
-  			    channel_name: channel_name,
-  			    pusher: my.pusher
-  			  });
-  			
-  			userData["channel"] = channel;
-  			my.callback(userData);
-  			waitingForChat = false;
-  			if (sentAcceptTo != data.from) {
-  			  my.acceptMeetUp(data.from);
-  			  sentAcceptTo = data.from;
-  			}
-  			my.randomChannel.disconnect();
+  			  channel_name = that.membersToChannelName(data.from, my.user.user_id);
+  			  
+  			my.loginToChannel(channel_name, userData);  			
       }
     });
 

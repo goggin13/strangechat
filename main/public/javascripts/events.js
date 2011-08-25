@@ -3,9 +3,10 @@
 var types = {
   PUSHER_LOGIN: "pusher:subscription_succeeded",
   PUSHER_MEMBER_LOGON: "pusher:member_added",
-  PUSHER_MEMBER_LOGOFF: "pusher:member_removed"
+  PUSHER_MEMBER_LOGOFF: "pusher:member_removed",
+  BROADCAST: 'broadcast',
+  BLACKLIST: 'blacklist'
 };
-
 
 var Event = function (spec) {
   var that = {},
@@ -22,5 +23,12 @@ var Event = function (spec) {
     return JSON.stringify(that);
   };
   
+  return that;
+};
+
+var Broadcast = function (spec) {
+  var that = Event(spec);
+  that.type = types.BROADCAST;
+  that.text = spec.text;
   return that;
 };
