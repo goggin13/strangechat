@@ -53,7 +53,7 @@ var sendIceBreaker = function () {
   var nextCount = curCount + 1;
   var testScript = "selenium.getXpathCount('" + xPath +"') >= " + nextCount;
   selenium.click("css=.chatting .ice_breaker");
-  // selenium.waitForCondition(testScript, icebreaker_timeout);
+  selenium.waitForCondition(testScript, icebreaker_timeout);
   // selenium.waitForXpathCount(xPath, nextCount);  
   iceBreakerTimer = timestamp();
 }
