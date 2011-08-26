@@ -28,7 +28,7 @@ public class Cloning extends SuperPower {
 	}
 	
 	@Override
-	public String use (User caller, User subject, String[] params) {
+	public String use (User caller, User subject) {
 	    return "cloning";
 	}
 	

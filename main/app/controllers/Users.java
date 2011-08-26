@@ -1,6 +1,8 @@
 package controllers;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import models.BlackList;
 import models.User;
@@ -75,11 +77,9 @@ public class Users extends Index {
            returnFailed("valid user and session required to use a karma kube");
        } else if (kube == null) {
 	       returnFailed(kube_id + " does not reference a valid kube");
-	   } else if (!kube.full()) {
-		   returnFailed("There's nothing in this Kube!");
 	   } else if (kube.opened) {
 		   returnFailed("This kube's already been opened!");
-	   } else if (!kube.awarded() || !kube.getRecipient().get().equals(sess.user)) {
+	   } else if (!kube.hasBeenSent() || !kube.getRecipient().get().equals(sess.user)) {
 	       returnFailed("This kube does not belong to you");
 	   }
        
@@ -94,12 +94,14 @@ public class Users extends Index {
 	 * @param power_id the id of a {@link StoredPower} to use
 	 * @param channel, the channel this power is being used in 
 	 * @param params optional, params to pass to SuperPower.use */
-	public static void usePower (@Required long power_id, @Required String channel, String[] params) { 
+	public static void usePower (@Required long power_id, @Required String channel, List<String> params) { 
         if (validation.hasErrors()) {
             returnFailed(validation.errors());
         }	    
 	    UserSession user = currentSession();
 	    UserSession other = currentForSession();
+	    
+	    System.out.println(params);
 	    
 	    if (user == null) {
 	        returnFailed("valid session is required");
@@ -114,7 +116,7 @@ public class Users extends Index {
 
         SuperPower sp = storedPower.getSuperPower();
         if (params == null) {
-            params = new String[0];
+            params = new LinkedList<String>();
         }
         String result = storedPower.use(other != null ? other.user : null, params);
         

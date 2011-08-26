@@ -46,7 +46,7 @@ public class Emotion extends SuperPower {
 	}
 	
 	@Override
-	public String use (User caller, User subject, String[] params) {
+	public String use (User caller, User subject) {
 	    return "emotion";
 	}
 	

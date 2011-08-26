@@ -61,6 +61,10 @@ var APusher = function (spec) {
     if (url.indexOf(window.location.host) === -1) {
       url += "?callback=?";
     }      
+    
+    // MyUtil.debug("GET " + url);
+    // MyUtil.debug(data);
+    
     $.ajaxSetup({cache: false});  // required for IE to not cache AJAX requests       
     $.getJSON(url, data, function (JSON) {
       if (JSON.status == "error") {

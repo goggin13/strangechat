@@ -1,6 +1,8 @@
 
 package models.powers;
  
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -106,7 +108,7 @@ public class StoredPower extends Model {
      * Use this power, return the string from the super powers use() method
      * @param subject the {@link User} the power is being used on     
      * @return the result of this.getSuperPower().use() */
-    public String use (User subject, String[] params) {
+    public String use (User subject, List<String> params) {
         SuperPower superPower = this.getSuperPower();
         if (!superPower.infinite) {
             this.available--;

@@ -1,5 +1,7 @@
 package models.powers;
 
+import java.util.List;
+
 import models.User;
 import models.karma.KarmaKube;
 import play.Logger;
@@ -12,23 +14,17 @@ public class Karma extends IntervalPower {
 	}
 
 	@Override
-	public String use (User caller, User subject, String[] params) {
-		if (caller == null || subject == null || params.length == 0) {
+	public String use (User caller, User subject, List<String> params) {
+		if (caller == null || subject == null || params == null || params.size() == 0) {
 			Logger.error("Karma requires both a caller and subject and params[0]");
 			return "";
 		}
-		boolean isGood = params[0].equals("1");
-		KarmaKube kube = KarmaKube.find("byOwner", caller).first();
-		kube.setReward(isGood);
-		kube.giftTo(subject);
+		boolean isGood = params.get(0).equals("1");
+		KarmaKube kube = new KarmaKube(caller, subject, isGood);
+		System.out.println(kube.toJson());
+		subject.notifyMe("karma", kube.toJson());
 		return "KarmaKube-" + kube.id;
 	}
-	
-    @Override
-    public StoredPower grantTo (User user, int level) {
-    	new KarmaKube(user).save();
-    	return super.grantTo(user, level);
-    } 
 	
 	@Override
 	public Long getFieldValue(User user) {

@@ -6,11 +6,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 import models.User;
+import models.Utility;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 import play.libs.F.None;
 import play.libs.F.Option;
 import play.libs.F.Some;
+
+import com.google.gson.reflect.TypeToken;
+
 import enums.KarmaReward;
 
 /**
@@ -24,12 +28,15 @@ public class KarmaKube extends Model {
 	/** the person who originally received this karma kube */
 	@Required
 	@ManyToOne
-	public User owner;			
+	public User sender;			
 
 	/** The person who the cube has been given to */
     @ManyToOne
     public User recipient;
 
+    /** if this is good or bad karma kube */
+    public boolean isGood;
+    
     /** True if this kube has been opened by the recipient */
     public boolean opened;
 
@@ -38,25 +45,23 @@ public class KarmaKube extends Model {
     @Enumerated(EnumType.STRING)    
     public KarmaReward reward;
     
-	public KarmaKube (User o) {
-        this.owner = o;
+	public KarmaKube (User o, User r, boolean isGood) {
+        this.sender = o;
         this.opened = false;
-        this.recipient = null;
-        this.reward = null;
+        this.recipient = r;
+        this.reward = KarmaReward.getRandom(isGood);
+        this.isGood = isGood;
+        this.save();
 	}
-	
-	public boolean full () {
-		return this.getReward().isDefined();
-	}
-
-	public boolean awarded () {
-		return this.getRecipient().isDefined();
-	}
-	
+		
 	public Reward open () {
 		this.opened = true;
 		this.save();
-		return this.getReward().get().getReward();
+		return this.reward.getReward();
+	}
+	
+	public boolean hasBeenSent () {
+		return this.getRecipient().isDefined();
 	}
 	
 	public Option<User> getRecipient() {
@@ -66,22 +71,9 @@ public class KarmaKube extends Model {
 			return new Some(recipient);
 		}
 	}
-	
-	public Option<KarmaReward> getReward() {
-		if (reward == null) {
-			return new None();
-		} else {
-			return new Some(reward);
-		}
-	}
-	
-	/** 
-	 * @param isGood dictates whether this is a good or bad karma box
-	 * @return */
-	public Reward setReward (boolean isGood) {
-		this.reward = KarmaReward.getRandom(isGood);
-		this.save();
-		return this.reward.getReward();
+			
+	public String toJson () {
+	    return Utility.toJson(this, new TypeToken<KarmaKube>(){});
 	}
 	
 	/**
@@ -89,14 +81,8 @@ public class KarmaKube extends Model {
 	 * reward it contains
 	 * @param recipient the user receiving this karma 
 	 * @return the reward, assuming it exists */
-	public Option<Reward> giftTo (User recipient) {
+	public void giftTo (User recipient) {
 		this.recipient = recipient;
 		this.save();
-		if (this.getReward().isDefined()) {
-			Reward r = this.getReward().get().getReward();
-			return new Some(r);
-		}
-		return new None();
 	}
-	
 }

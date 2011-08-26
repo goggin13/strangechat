@@ -1,5 +1,7 @@
 package models.powers;
 import java.lang.reflect.Type;
+import java.util.LinkedList;
+import java.util.List;
 
 import models.User;
 import models.UserEvent;
@@ -94,12 +96,12 @@ public abstract class SuperPower {
      * @param subject the {@link User} the power is being used on
      * @param params optional params to pass to use 
      * @return */
-    public String use (User caller, User subject, String[] params) {
+    public String use (User caller, User subject, List<String> params) {
         return "used";
     }
     
     public String use (User caller, User subject) {
-    	return use(caller, subject, new String[0]);
+    	return use(caller, subject, new LinkedList<String>());
     }
     
     /** count how many powers the given user has of this type */

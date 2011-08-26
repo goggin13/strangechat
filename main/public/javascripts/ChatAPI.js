@@ -52,6 +52,7 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   that.im_talking_to = {}; // map user_ids to room_ids
   that.superPowers = []; // filled after login so clients can retrieve
   that.superPowerDetails = {};
+  that.karmaKubes = [];
   
   that.user = null;
   my.superhero_id = user_id;
@@ -79,9 +80,7 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     var hash = url + "?" + MyUtil.serialize(data);
     
     // hash.indexOf("heartbeat") === -1 && 
-    if (hash.indexOf('imtyping') === -1) {
-      MyUtil.debug("GET " + hash);
-    }
+    MyUtil.debug("GET " + hash);
     
 	  $.ajaxSetup({cache: false});  // required for IE to not cache AJAX requests    
 
@@ -135,6 +134,7 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     
     that.superPowers = me.superPowers;
     that.superPowerDetails = me.superPowerDetails;  
+    that.karmaKubes = me.karmaKubes;
     
     // MyContacts.put(that.user);
     that.user_id = that.user.user_id;
@@ -217,7 +217,11 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   that.getBroadcastChannel = function () {
     return my.broadcastChannel;
   };
-  
+
+  that.bindNewKarmaKube = function (f) {
+    my.userChannel.bindNewKarmaKube(f);
+  };
+
   that.bindNewPower = function (f) {
     my.userChannel.bindNewPower(f);
   };

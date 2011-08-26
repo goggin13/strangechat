@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import models.karma.KarmaKube;
 import models.powers.StoredPower;
 import models.powers.SuperPower;
 import models.pusher.Pusher;
@@ -66,7 +67,10 @@ public class User extends Model {
      *  Just for login to tell them what they have */
     @Transient
     public HashMap<Power, SuperPower> superPowerDetails;
-	
+
+    @Transient
+    public List<KarmaKube> karmaKubes;
+    
 	/** set of icebreaker indices seen */
 	@ElementCollection  
 	public Set<Integer> icebreakers_seen;
@@ -133,6 +137,7 @@ public class User extends Model {
 		this.online = true;
 		Random r = new Random();
 		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis() + r.nextInt());
+		this.karmaKubes = KarmaKube.find("byRecipientAndOpened", this, false).fetch(1000);
 		this.lastLogin = Utility.time();
 		this.populateSuperPowerDetails();
 		return new UserSession(this, this.session_id);
@@ -255,12 +260,14 @@ public class User extends Model {
 	 * Send this user a notification that they have recieved a new power
 	 * @param power the new power they have received */
 	public void notifyNewPower (StoredPower power) {
-		Pusher pusher = new Pusher();
         UserEvent.NewPower message = new UserEvent.NewPower(this.id, power, "");
-        System.out.println("push to" + this.getChannelName());
-	    pusher.trigger(this.getChannelName(), "newpower", message.toJson());
+        notifyMe("newpower", message.toJson());
 	}
 
+	public void notifyMe (String event, String json) {
+		new Pusher().trigger(this.getChannelName(), event, json);
+	}
+	
     /**
      * Check all of the super powers and see if I am eligible for any
      * new ones; if so, assign them to me, and put notification events in
@@ -324,6 +331,9 @@ public class User extends Model {
 		  return f.getName().equals("friends")
                  || f.getName().equals("user_id")
                  || f.getName().equals("owner")
+                 || f.getName().equals("recipient")
+                 || f.getName().equals("isGood")
+                 || f.getName().equals("reward")
                  || f.getName().equals("recentMeetings");
 		}
  	}

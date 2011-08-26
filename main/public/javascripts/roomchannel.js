@@ -39,7 +39,11 @@ var RoomChannel = function (spec) {
     });
   };
 
-  that.usePower = function (power_id, user, on_user, isGood) {
+  that.useKarma = function (power_id, user, on_user, isGood) {
+    that.usePower(power_id, user, on_user, isGood ? 1 : 0);
+  };
+
+  that.usePower = function (power_id, user, on_user, params) {
     var path = 'usepower';
     that.send(path, {
       power_id: power_id,
@@ -48,7 +52,7 @@ var RoomChannel = function (spec) {
       session: user.session,
       for_user: on_user ? on_user.user_id : -1,
       for_session: on_user ? on_user.session : "",
-      params: isGood ? [1] : [0]
+      "params[0]": params
     });
   };
 

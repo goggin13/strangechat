@@ -27,7 +27,6 @@ public class CheckPowers extends Job {
         processUpdates(getEvents());
 
         for (User u : myUsers.values()) {
-            System.out.println("Check powers for " + u.id);
             u.checkForNewPowers();
         }
         myUsers.clear(); 

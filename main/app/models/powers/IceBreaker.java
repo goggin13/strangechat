@@ -59,7 +59,7 @@ public class IceBreaker extends SuperPower {
 	}
 	
 	@Override
-	public synchronized String use (User caller, User subject, String[] params) {
+	public synchronized String use (User caller, User subject) {
         int index = chooseIndex(caller, subject);
         caller.addSeenIceBreaker(index);
         if (subject != null) {

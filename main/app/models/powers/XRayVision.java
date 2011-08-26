@@ -20,7 +20,7 @@ public class XRayVision extends IntervalPower {
 	}
 	
 	@Override
-	public String use (User caller, User subject, String[] params) {
+	public String use (User caller, User subject) {
 	    return "X-Ray";
 	}
 }
