@@ -10,7 +10,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 import play.cache.Cache;
 import play.libs.WS;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 
 /**
@@ -101,6 +104,13 @@ public class Utility {
 	 	Format formatter = new SimpleDateFormat("HH:mm:ss a");
 		String str = formatter.format(date);
 		return str;
+	}
+	
+	public static String toJson (Object obj, TypeToken t) {
+        Gson gson = new GsonBuilder()
+                        .setExclusionStrategies(new User.ChatExclusionStrategy())
+                        .create();
+        return gson.toJson(obj, t.getType());
 	}
 	
 	/** 

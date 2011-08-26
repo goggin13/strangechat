@@ -32,9 +32,12 @@ var AdminPage = function (API) {
   };
   
   my.handleLogon = function (users) {
+    var any = false;
     $.each(users, function(i, user) {
       my.displayUser(user);
+      any = true;
     });
+    if (!any) my.updateHeader();
   };
   
   my.init = function () {

@@ -16,6 +16,7 @@ public class Cloning extends SuperPower {
 		this.multiRoom = true;
 	}
 	
+	@Override
 	public int isQualified (User user) {
 	    Power p = this.getPower();
         int currentLevel = user.currentLevel(p);
@@ -26,7 +27,8 @@ public class Cloning extends SuperPower {
 		return user.messageCount - msgsUsed > CHAT_MSGS_REQUIRED ? 1 : 0;
 	}
 	
-	public String use (User caller, User subject) {
+	@Override
+	public String use (User caller, User subject, String[] params) {
 	    return "cloning";
 	}
 	

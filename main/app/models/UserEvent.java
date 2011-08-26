@@ -1,16 +1,13 @@
 package models;
  
 import java.lang.reflect.Type;
-import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 import models.powers.StoredPower;
 import models.powers.SuperPower;
 import play.libs.F.ArchivedEventStream;
 import play.libs.F.IndexedEvent;
-import play.libs.F.Promise;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,25 +25,8 @@ import enums.Power;
  * more detail */
 public class UserEvent {
     private static final int adminStreamSize = 2000;
-    private static final int userStreamSize = 100;
     final private ArchivedEventStream<UserEvent.Event> adminEvents = new ArchivedEventStream<UserEvent.Event>(adminStreamSize);
-	private static AbstractMap<Long, ArchivedEventStream<UserEvent.Event>> eventStreams = 
-	        new ConcurrentHashMap<Long, ArchivedEventStream<UserEvent.Event>>();
 	        
-	/**
-     * For long polling, as we are sometimes disconnected, we need to pass 
-     * the last event seen id, to be sure to not miss any message.  Gets the
-	 * messages that have been published to the event stream for the chat room
-	 * @param lastReceived	the id of the last message the caller has seen.  Messages
-	 * 						with ids greater than lastReceived are returned
-	 * @return list of messages with ids > lastReceived
-     */
-    public Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents (long user_id, long lastReceived) {
-        ArchivedEventStream<UserEvent.Event> stream = getOrCreateStream(user_id);
-        Promise<List<IndexedEvent<UserEvent.Event>>> nextEvents = stream.nextEvents(lastReceived);
-        return nextEvents;
-    }
-
 	/**
      * Just used for admin purposes, return entire event stream
 	 * @return list of all messages in the queue
@@ -63,28 +43,6 @@ public class UserEvent {
 
     public void publish (Event e) {
         adminEvents.publish(e);
-    }
-
-    private ArchivedEventStream<UserEvent.Event> getOrCreateStream (long user_id) {
-        ArchivedEventStream<UserEvent.Event> eventStream;
-        if (eventStreams.containsKey(user_id)) {
-          // System.out.println("return existing stream for " + user_id);
-          eventStream = eventStreams.get(user_id);  
-        } else {
-          // System.out.println("start new stream for " + user_id);
-          eventStream = new ArchivedEventStream<UserEvent.Event>(userStreamSize); 
-          eventStreams.put(user_id, eventStream);
-        }
-        return eventStream;
-    }
-
-	/**
-	 * Reset the user event queue, flushing out existing events */
-    public void resetEventQueue () {
-        for (int i = 0; i < adminStreamSize; i++) {
-            publish(new DummyEvent());
-        }
-        eventStreams.clear();
     }
 
 	/**
@@ -126,7 +84,10 @@ public class UserEvent {
 		}
 		
 		public String toJson (TypeToken t) {
-	        Gson gson = new Gson();
+	        Gson gson = new GsonBuilder()
+	                        .setExclusionStrategies(new User.ChatExclusionStrategy())
+	                        .create();
+	        
             String json = gson.toJson(
                 this,
                 t.getType()
@@ -135,86 +96,7 @@ public class UserEvent {
 	    }
 		
 	}
-    
-	/**
-	 * This event indicates to clients that this user has just logged
-	 * into the system and is ready to chat */
-	public static class UserLogon extends Event {
-		/** The user id of the user who just logged on */
-		public final long new_user;
-		/** the name of the user logging on */
-		public final String name;
-		/** server this user is located on */
-		final public String server;
-		/** the other user's session */
-		public final String new_session;		
-		
-		public UserLogon (long user_id, long new_user, String name, String server, String session_id, String new_session) {
-			super("userlogon", user_id, session_id);
-			this.new_user = new_user;
-			this.name = name;
-			this.server = server;
-			this.new_session = new_session;
-			publishMe();
-		}
-		
-		public String toString () {
-			return super.toString() + " : " + this.new_user + " has logged in ";
-		}		
-	}	
-	
-	public void addUserLogon (long user_id, long new_user, String name, String server, String session_id, String new_session) {
-        new UserLogon(user_id, new_user, name, server, session_id, new_session);
-	}
-	
-	/**
-	 * This event indicates to clients that this user has just logged
-	 * out of the system */
-	public static class UserLogout extends Event {
-		/** The user id of the user who just logged out */
-		public final long left_user;
-		
-		public UserLogout (long user_id, long left_user, String session_id) {
-			super("userlogout", user_id, session_id);
-			this.left_user = left_user;
-			publishMe();
-		}
-		
-		public String toString () {
-			return super.toString() + " : " + this.left_user + " has logged out ";
-		}		
-	}	
-	
-	public void addUserLogout (long user_id, long left_user, String session_id) {
-        new UserLogout(user_id, left_user, session_id);
-	}
-	
-	/**
-	 * Represents a direct message from one user to another (not in a chatroom) */
-    public static class DirectMessage extends Event {
-		/** the user_id of the user who sent the message */
-        public final long from;
-		/** the text of the message */
- 		public final String text;
-		
-        public DirectMessage(long to, long from, String msg, String session) {
-            super("directmessage", to, session);
-            this.from = from;
-            this.text = msg;
-			publishMe();
-        }
-
-		public String toString () {
-			return super.toString() 
-				   + " : message from " + this.from + ", " + this.text;
-		}
-        
-    }
-	    
-	public void addDirectMessage (long to, long from, String msg, String session) {
-        new DirectMessage(to, from, msg, session);
-	}    
-	    
+    	    
 	/**
 	 * Represents a direct message from one user to another in a chatroom */
     public static class RoomMessage extends Event {
@@ -237,59 +119,6 @@ public class UserEvent {
 	    }   
         
     }
-	
-	public void addRoomMessage (long from, String msg) {
-        new RoomMessage(from, msg);
-	}	
-	
-	/** 
-	 * represents a user joining the chat room */
-    public static class Join extends Event {
-        /** the user id of the joining user */
-        public final long new_user;
-        /** an optional url displaying this new users avatar */
-		public final String avatar;
-		/** the other user's session */
-		public final String new_session;
-		/** the name of the user joining */
-		public final String alias;
-		/** the server the new user is on */
-		public final String server;
-		/** the room id that you are now chatting in */
-		public final long room_id;
-		
-        public Join (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id, String new_session) {
-			super("join", for_user, session_id);
-            this.new_user = new_user;
-			this.avatar = avatar;
-			this.alias = name;
-			this.server = server;
-			this.room_id = room_id;
-			this.new_session = new_session;
-
-			// as soon as this event is created, we heartbeat for the given user; if they never received this event,
-			// we see their heartbeat fail and notify the other user
-            models.HeartBeat.beatInRoom(room_id, for_user, session_id);    
-            	
-			publishMe();
-        }
-
-		public String toString () {
-			return super.toString() + " : " + this.new_user + " is joining room " + this.room_id;
-		}
-        
-    }
-
-	public void addJoin (long for_user, 
-						 long new_user, 
-						 String avatar, 
-						 String name, 
-						 String server, 
-						 long room_id, 
-						 String session_id,
-						 String other_session) {
-        new Join(for_user, new_user, avatar, name, server, room_id, session_id, other_session);
-	}
 
 	/**
 	 * Indicates that the user is typing */
@@ -314,55 +143,6 @@ public class UserEvent {
 		}		
 	}
 
-	public void addUserIsTyping (long for_user, long typing_user, String text, long room_id, String session) {
-        new UserIsTyping(for_user, typing_user, text, room_id, session);
-	}
-
-	/**
-	 * Indicates that the user is heartbeating; only used for admin tracking purposes */
-	public static class HeartBeat extends Event {
-        /** user id of the user heart beating */
-        final public long for_user_id;
-		
-        public HeartBeat (long for_user) {
-            super("heartbeat", -1L, "");  // -1 so we don't bother sending this back to anyone
-            this.for_user_id = for_user;
-            publishMe();
-        }
-
-		public String toString () {
-			return super.toString() + " : " + "heartbeat - " + for_user_id;
-		}		
-	}
-
-	public void addHeartBeat (long for_user) {
-        new HeartBeat(for_user);
-	}
-
-	/**
-	 * Represents a user leaving the chat room */
-    public static class Leave extends Event {
-        /** user id of the user leaving */
-        final public long left_user;
-        /** room id that was left */
-		final public long room_id;
-		
-        public Leave(long for_user, long left_user, long room_id, String session_id) {
-            super("leave", for_user, session_id);
-            this.left_user = left_user;
-			this.room_id = room_id;
-			publishMe();
-        }
-
-		public String toString () {
-			return super.toString() + " : " + this.left_user + " left room " + this.room_id;
-		}
-    }
-	
-	public void addLeave (long for_user, long left_user, long room_id, String session_id) {
-        new Leave(for_user, left_user, room_id, session_id);
-	}	
-	
 	/** 
 	 * Notifies a user that they have recieved a new super power */
 	public static class NewPower extends Event {
@@ -383,26 +163,6 @@ public class UserEvent {
 	    
 		public String toString () {
 			return super.toString() + " : " + this.superPower.name + " awarded (L " + this.storedPower.level +")";
-		}	    
-	}
-
-    
-
-    // public void addNewPower (long for_user, SuperPower sp, long power_id, int level, String session_id) {
-        // new NewPower(for_user, sp, power_id, level, session_id);
-    // }
-
-	/** 
-	 * Notifies a user that they have recieved a new super power */
-	private static class DummyEvent extends Event {
-	    
-	    public DummyEvent () {
-	        super("dummy", -1, null);
-	        publishMe();
-	    }
-	    
-		public String toString () {
-			return "dummy event";
 		}	    
 	}
 
@@ -444,11 +204,15 @@ public class UserEvent {
 	    /** The level of the new super power */
 	    final public int level;	    
 	    
-	    public UsedPower (long by_user, SuperPower sp, int level, String result) {
+	    /** user_id of the person it was used on */
+	    final public long used_on;
+	    
+	    public UsedPower (long by_user, long used_on, SuperPower sp, int level, String result) {
 	        super("usedpower", by_user, null);
 	        this.superPower = sp;
 	        this.result = result;
 	        this.level = level;
+	        this.used_on = used_on;
 	        publishMe();
 	    }
 	    
@@ -456,10 +220,6 @@ public class UserEvent {
             return toJson(new TypeToken<UsedPower>() {});
 	    }
 	    	    
-	}
-
-	public void addUsedPower (long for_user, long by_user, long room_id, SuperPower sp, int level, String result, String session_id) {
-        // new UsedPower(for_user, by_user, room_id, sp, level, result, session_id);
 	}
 
     /**

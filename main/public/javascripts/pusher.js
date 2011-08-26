@@ -31,7 +31,11 @@ var APusher = function (spec) {
   that.unsubscribe = function (channel) {
     return my.pusher.unsubscribe(channel);
   };
-  
+
+  that.disconnect = function () {
+    return my.pusher.disconnect();
+  };
+
   that.bindConnected = function (f) {
     my.pusher.connection.bind('connected', f);
   };

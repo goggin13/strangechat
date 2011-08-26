@@ -106,7 +106,7 @@ public class StoredPower extends Model {
      * Use this power, return the string from the super powers use() method
      * @param subject the {@link User} the power is being used on     
      * @return the result of this.getSuperPower().use() */
-    public String use (User subject) {
+    public String use (User subject, String[] params) {
         SuperPower superPower = this.getSuperPower();
         if (!superPower.infinite) {
             this.available--;
@@ -114,7 +114,7 @@ public class StoredPower extends Model {
         this.used++;
         this.newToLevel = false;
         this.save();
-        return superPower.use(this.owner, subject);
+        return superPower.use(this.owner, subject, params);
     }
  	
 }

@@ -11,6 +11,7 @@ public abstract class IntervalPower extends SuperPower {
 	
 	public abstract Long getFieldValue (User user);
 	    
+	@Override
 	public int isQualified (User user) {	    
         if (countAvailablePowers(user) >= 100) {
             return 0;

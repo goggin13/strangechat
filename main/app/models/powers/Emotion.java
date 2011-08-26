@@ -26,6 +26,7 @@ public class Emotion extends SuperPower {
 	    this.multiRoom = true;		
 	}
 	
+	@Override
 	public int isQualified (User user) {
 	    
 	    Power p = this.getPower();
@@ -44,7 +45,8 @@ public class Emotion extends SuperPower {
 	    }
 	}
 	
-	public String use (User caller, User subject) {
+	@Override
+	public String use (User caller, User subject, String[] params) {
 	    return "emotion";
 	}
 	

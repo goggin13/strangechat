@@ -22,7 +22,7 @@ public class UserListTests extends MyFunctionalTest {
 		JsonObject jsonObj = postAndValidateResponse("/signin", params);
 		System.out.println(jsonObj);
 		assertEquals("error", jsonObj.get("status").getAsString());
-		assertEquals("You have been blacklisted", jsonObj.get("message").getAsString());
+		assertEquals("You have been blacklisted; <br/> If you think this is an error, please contact info@bnter.com", jsonObj.get("message").getAsString());
 	}  
 	
 }

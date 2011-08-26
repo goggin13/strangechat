@@ -14,6 +14,7 @@ public class Freeze extends IntervalPower {
 		this.award_interval = 120;
 	}
 
+	@Override
 	public Long getFieldValue (User user) {	    
 	    return user.chatTime;
 	}

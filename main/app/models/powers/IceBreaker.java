@@ -20,6 +20,7 @@ public class IceBreaker extends SuperPower {
 		);
 	}
 		
+	@Override
 	public int isQualified (User user) {
 	    return 0;
 	}
@@ -57,7 +58,8 @@ public class IceBreaker extends SuperPower {
         return index;
 	}
 	
-	public synchronized String use (User caller, User subject) {
+	@Override
+	public synchronized String use (User caller, User subject, String[] params) {
         int index = chooseIndex(caller, subject);
         caller.addSeenIceBreaker(index);
         if (subject != null) {
@@ -184,7 +186,6 @@ public class IceBreaker extends SuperPower {
             messages.add("Favorite city?");
             messages.add("What planet are you from?");
             messages.add("Why did the chicken cross the road?");
-            messages.add("Where will you be when Ozzy comes for you?");
             messages.add("When did you learn you were special?");
             messages.add("How do you get to work?");
             messages.add("What did you do after your first kiss?");

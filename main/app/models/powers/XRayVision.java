@@ -13,12 +13,14 @@ public class XRayVision extends IntervalPower {
 		);
 		this.award_interval = 3;
 	}
-		
+	
+	@Override
 	public Long getFieldValue (User user) {	
 	    return Long.valueOf(user.offersMadeCount);
 	}
-		
-	public String use (User caller, User subject) {
+	
+	@Override
+	public String use (User caller, User subject, String[] params) {
 	    return "X-Ray";
 	}
 }

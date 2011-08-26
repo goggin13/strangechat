@@ -80,6 +80,7 @@ public abstract class SuperPower {
         StoredPower sp = StoredPower.getOrCreate(p, user);
         sp.increment(level);
         user.notifyNewPower(sp);
+        System.out.println("AWARD " + sp.getSuperPower().name + " to " + user.id);
     	return sp;
     } 
     
@@ -91,9 +92,14 @@ public abstract class SuperPower {
      * string they wish 
      * @param caller the {@link User} using the power
      * @param subject the {@link User} the power is being used on
+     * @param params optional params to pass to use 
      * @return */
-    public String use (User caller, User subject) {
+    public String use (User caller, User subject, String[] params) {
         return "used";
+    }
+    
+    public String use (User caller, User subject) {
+    	return use(caller, subject, new String[0]);
     }
     
     /** count how many powers the given user has of this type */

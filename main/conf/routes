@@ -19,6 +19,7 @@ GET     /demo																		Application.demo
 *				 /usepower															Users.usePower
 * 			 /eliza																	Elizas.reply
 * 		   /group											            Users.joinGroupChat
+*				 /openkube															Users.openKube
 
 # Chat actions
 GET   /listen																  Notify.listen

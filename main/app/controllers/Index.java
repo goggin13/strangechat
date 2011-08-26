@@ -2,7 +2,6 @@ package controllers;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import models.User;
@@ -36,7 +35,7 @@ public abstract class Index extends CRUD {
     }
 
     private static void createSessionVariable (String user_key, String session_key, String save_key) {
-
+        
         Long user_id = params.get(user_key, Long.class);
         String session = params.get(session_key, String.class);
         boolean containsUserKey = user_id != null;
@@ -56,32 +55,6 @@ public abstract class Index extends CRUD {
             renderArgs.put(save_key, null);
         }
     }
-
-     static List<UserSession.Faux> currentForFauxSessionList () {
-    	 List<UserSession.Faux> sessions = new LinkedList<UserSession.Faux>();
-    	 UserSession.Faux current = currentForFauxSession();
-    	 if (current != null) {
-    		 sessions.add(current);
-    		 return sessions;
-    	 }
-    	 String saveKey;
-    	 boolean exists;
-    	 int i = 0;
-         do {
-        	 String userKey = "for_user[" + i + "]";
-        	 String sessKey = "for_session[" + i + "]";
-        	 saveKey = "for_user_" + i;
-        	 String fauxSaveKey = saveKey + "_faux";
-        	 createSessionVariable(userKey, sessKey, saveKey);
-        	 exists = renderArgs.data.containsKey(fauxSaveKey) &&
-        	            renderArgs.get(fauxSaveKey) != null;
-        	 if (exists) {
-        		 sessions.add(renderArgs.get(fauxSaveKey, UserSession.Faux.class));
-        	 }
-        	 i++;
-         } while (exists);
-         return sessions;
-     }
 
     static UserSession.Faux currentForFauxSession () {
         if(renderArgs.data.containsKey("forSession_faux")) {
@@ -184,21 +157,22 @@ public abstract class Index extends CRUD {
 	 * renders a JSON status okay response
 	 * @param callback optional, used for cross domain requests */
 	protected static void returnOkay (String msg) {
-		Users.renderJSONP(
-			getOkayResponse(msg), 
-			new TypeToken<HashMap<String, String>>() {}.getType()
-		);
+		returnOkay(getOkayResponse(msg));
 	}
+
+    protected static void returnOkay () {
+        returnOkay(getOkayResponse());
+    }
 
 	/**
 	 * renders a JSON status okay response */
-	protected static void returnOkay () {
+	protected static void returnOkay (HashMap<String, String> result) {
 		Users.renderJSONP(
-			getOkayResponse(), 
+			result, 
 			new TypeToken<HashMap<String, String>>() {}.getType()
 		);
 	}
-
+	
 	/**
 	 * renders a JSON response, utilizing <code>callback</code> as necessary for
 	 * cross domain requests
@@ -224,11 +198,7 @@ public abstract class Index extends CRUD {
 			renderText(json);			
 		}
 	}
-    
-    // Invalid signature: Expected HMAC SHA256 hex digest of 1368.26206:presence-random-chat:
-    // {"user_id":"c71c345417154d49a2e060e2bd7d01ac","user_info":{"name":"SuperMan","avatar":"http://bnter.com/web/assets/images/8996__w320_h320.jpg","user_id":8}}, 
-    // but got 86ccb52ad49e2a637d4e6c04bd9bad4b830d8ff41949f52976e0604683211a52
-    
+        
 	/**
 	 * Simple exception class used by our controllers to handle invalid
 	 * arguments.  These are thrown by individual methods, and caught and handled

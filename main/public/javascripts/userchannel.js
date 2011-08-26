@@ -7,6 +7,7 @@ var UserChannel = function (spec) {
     NEW_POWER: "newpower"
   };
   
+  
   that.bindNewPower = function (f) {
     that.bind(my.types.NEW_POWER, function (power) {
       f(power);

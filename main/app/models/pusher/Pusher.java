@@ -110,8 +110,9 @@ public class Pusher {
     public String createAuthString(String socketId, String channel, PresenceChannelData channelData) {
 
         Gson gson = new Gson();
-        String jsonChannelData = jsonChannelData = gson.toJson(channelData);
-
+//        String jsonChannelData = jsonChannelData = gson.toJson(channelData);
+        String jsonChannelData = gson.toJson(channelData);
+        
         String signature = PusherUtil.sha256((socketId + ":"  + channel +  ":" + jsonChannelData ), this.secret);
         AuthData auth = new AuthData(this.key + ":" + signature, jsonChannelData);
 

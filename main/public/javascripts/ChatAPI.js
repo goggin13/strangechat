@@ -39,11 +39,11 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   "use strict";
   var that = {},
   my = {};
-  // my.home_url = "http://localhost:9000/";
-  my.home_url = "http://10.0.1.50:9000/";  // dev  
+  my.home_url = "http://localhost:9000/";
+  // my.home_url = "http://10.0.1.50:9000/";  // dev  
   // my.home_url = "http://173.246.100.79/";  // prod 
   // my.home_url = "http://173.246.101.45/";  // staging
-  // my.home_url = "http://173.246.101.127/";
+  // my.home_url = "http://173.246.101.127/"; // staging2
   
   that.user_id = "";
   my.inputsToWatch = [];
@@ -58,13 +58,19 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   my.channels = {};
   my.broadcastHandler = false;
   my.pusher = false
+  that.serverErrorCallback = false;
   
   // send an API call, either POST, or GET, with given data.
   // on success the given callback function is called
   that.send = function (url, method, data, callback) {
+    var sendFunc = $.ajax,
+      dataType = 'json';
+      
     // add callback if this is cross domain
     if (url.indexOf(window.location.host) === -1) {
       url += "?callback=?";
+      sendFunc = $.jsonp;
+      dataType = 'jsonp';
     }
     
     if (that.user != null) {
@@ -78,14 +84,15 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
     }
     
 	  $.ajaxSetup({cache: false});  // required for IE to not cache AJAX requests    
-    $.ajax({
+
+    sendFunc({
         type: "GET",
         url: url,
         data: data,
-        dataType: 'json',
+        dataType: dataType,
         success: function(JSON) {
           if (!JSON.hasOwnProperty('status')) {
-            MyUtil.debug(JSON);
+            // MyUtil.debug(JSON);
           } else if (JSON.status == "error") {
             MyUtil.debug("ERROR!!!");
             MyUtil.debug(JSON);
@@ -98,6 +105,9 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
           MyUtil.debug("BAD RESPONSE");
           MyUtil.debug(textStatus);
           MyUtil.debug(errorThrown);
+          if (that.serverErrorCallback) {
+            that.serverErrorCallback();
+          }
         }
     });
     return hash;
@@ -117,7 +127,6 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
       return;
     }
     var me = JSON[my.superhero_id];
-    console.debug(me);
     that.user = User({user_id: me.id,
       session: me.session_id,
       alias: me.alias,
@@ -135,11 +144,7 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
   };
     
   that.logout = function () {
-    // var url = my.home_url + 'signout',
-    //   data = {
-    //     user_id: that.user_id,
-    //   };
-    //   that.send(url, "POST", data, callback);
+    my.pusher.disconnect();
   };
   
   that.login = function (user_id, avatar, alias, callback) {
@@ -192,6 +197,21 @@ var ChatAPI = function (user_id, avatar, alias, login_callback) {
         pusher: my.pusher
       });
     matchMaker.matchMe();
+  };
+  
+  that.openKube = function (kube_id, callback) {
+    var url = my.home_url + "openkube",
+      data = {
+        kube_id: kube_id,
+        user_id: that.user.user_id
+      };
+    that.send(url, "GET", data, function (resp) {
+      callback(JSON.parse(resp.reward));
+    });
+  };
+  
+  that.checkPowers = function () {
+    $.get(my.home_url + "mock/checkPowers");
   };
   
   that.getBroadcastChannel = function () {

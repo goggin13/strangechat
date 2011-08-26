@@ -3,21 +3,15 @@ package controllers;
 import java.util.HashMap;
 
 import models.BlackList;
-import models.HeartBeat;
-import models.Room;
-import models.Server;
 import models.User;
 import models.UserEvent;
 import models.UserSession;
-import models.Utility;
-import models.WaitingRoom;
+import models.karma.KarmaKube;
+import models.karma.Reward;
 import models.powers.StoredPower;
 import models.powers.SuperPower;
-import models.pusher.Pusher;
 import play.data.validation.Required;
-import play.libs.WS;
 
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -60,84 +54,47 @@ public class Users extends Index {
 	}
 	
 	/**
-	 * Mark this user as offline; remove them from the waiting room;
-	 * @param fromChatServer if this is <code>true</code>, then it means
-	 * we are getting this request from their chat server.  They will have
-	 * already silenced this users heartbeat.  If we are not getting this from
-	 * the chat server, we should contact their chat server, and tell them
-	 * to flush this heartbeat. */
-	public static void signout (boolean fromChatServer) {
+	 * Mark this user as offline */
+	public static void signout () {
 	    UserSession sess = currentSession();
-	    UserSession.Faux sessFaux = currentFauxSession();
 		if (sess != null) {
-		    sess.flushMyHeartBeats();
-		    WaitingRoom.get().remove(sess.user.id, sess.session, true);
 		    sess.logout();
 		    sess.delete();
 			returnOkay();
 		} else {
-		    if (sessFaux != null) {
-		        WaitingRoom.get().remove(sessFaux.user_id, sessFaux.session, true);
-		    }
 		    returnFailed("No valid user, session data passed (user_id, session)");
 		}
 	}
-
-    /**
-     * For super hero chat, indicate you are ready to start chatting.  Someone else will be
-     * paired with you immediately if they are available, or whenever they do become available
-     * @param user_id your user_id, so the random returned user isn't you 
-     * @param callback optional JSONP callback*/
-    public static synchronized void requestRandomRoom () {
-        UserSession user = currentSession();
-        if (user == null) {
-            returnFailed("No current session provided");
-        }
-        WaitingRoom.get().requestRandomRoom(user);
-        returnOkay();
-    }	
-    
-	/**
-	 * Join or create a group room with the given key
-	 * @param key the key to link to the room */
-    public static void joinGroupChat (@Required String key) {
-        if (validation.hasErrors()) {
-            returnFailed(validation.errors());
-        }
-        Room r = Room.joinGroupChat(currentSession(), key);
-        returnOkay(r.room_id + "");
-    }
 	
-    /**
-     * This is only called from a unit test, and all it does it test if the waitingroom is
-     * empty.  Two test bots wish to talk to eachother but don't want to accidentally get a 
-     * real user */
-    public static void waiting_room_is_empty () {
-        if (WaitingRoom.get().empty()) {
-            returnOkay(null);
-        } else {
-            returnFailed("The waiting room is not empty");
-        }
-    }
-
-    /**
-	 * Remove a user from a room, and notify other participants they left
-	 * @param room_id the room to remove them from */
-	public static void leaveRoom (long room_id) {
-		Room room = Room.find("byRoom_id", room_id).first();
-		UserSession user = currentSession();
-		if (room == null) {
-			returnFailed("no room with id " + room_id);
-		}
-		room.removeParticipant(user);
-		returnOkay();
+	public static void openKube (@Required long kube_id) {
+	   KarmaKube kube = KarmaKube.findById(kube_id);
+	   UserSession sess = currentSession();
+       if (validation.hasErrors()) {
+           returnFailed(validation.errors());
+       } else if (sess == null) {
+           returnFailed("valid user and session required to use a karma kube");
+       } else if (kube == null) {
+	       returnFailed(kube_id + " does not reference a valid kube");
+	   } else if (!kube.full()) {
+		   returnFailed("There's nothing in this Kube!");
+	   } else if (kube.opened) {
+		   returnFailed("This kube's already been opened!");
+	   } else if (!kube.awarded() || !kube.getRecipient().get().equals(sess.user)) {
+	       returnFailed("This kube does not belong to you");
+	   }
+       
+       Reward reward = kube.open();
+	   HashMap<String, String> msg = new HashMap<String, String>();
+	   msg.put("reward", reward.toJson());
+	   returnOkay(msg);
 	}
 	
 	/**
 	 * Use the given power, and notify the relevant users.
 	 * @param power_id the id of a {@link StoredPower} to use
-	 * @param channel optional, the channel this power is being used in */
-	public static void usePower (@Required long power_id, @Required String channel) { 
+	 * @param channel, the channel this power is being used in 
+	 * @param params optional, params to pass to SuperPower.use */
+	public static void usePower (@Required long power_id, @Required String channel, String[] params) { 
         if (validation.hasErrors()) {
             returnFailed(validation.errors());
         }	    
@@ -156,9 +113,18 @@ public class Users extends Index {
         }
 
         SuperPower sp = storedPower.getSuperPower();
-        String result = storedPower.use(other != null ? other.user : null);
+        if (params == null) {
+            params = new String[0];
+        }
+        String result = storedPower.use(other != null ? other.user : null, params);
         
-        UserEvent.UsedPower message = new UserEvent.UsedPower(user.user.id, sp, storedPower.level, result);
+        UserEvent.UsedPower message;
+        if (other == null) {
+            message = new UserEvent.UsedPower(user.user.id, 0L, sp, storedPower.level, result);
+        } else {
+            message = new UserEvent.UsedPower(user.user.id, other.user.id, sp, storedPower.level, result);
+        }
+        
 	    Notify.push(channel, "usedpower", message.toJson(), null, callback());
 	}
 }

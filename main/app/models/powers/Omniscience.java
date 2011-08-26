@@ -14,11 +14,13 @@ public class Omniscience extends IntervalPower {
 		this.award_interval = 100;
 	}
 		
+	@Override
 	public Long getFieldValue (User user) {	    
 	    return user.chatTime;
 	}
 	
-	public String use (User caller, User subject) {
+	@Override
+	public String use (User caller, User subject, String[] params) {
 	    return "omniscient";
 	}
 	

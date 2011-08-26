@@ -1,19 +1,14 @@
 package controllers;
 
 import java.util.HashMap;
-import java.util.List;
 
-import models.HeartBeat;
-import models.Room;
-import models.Server;
 import models.BlackList;
 import models.User;
 import models.UserEvent;
-import models.WaitingRoom;
 import models.pusher.Pusher;
 import play.Play;
-import play.mvc.Before;
 import play.data.validation.Required;
+import play.mvc.Before;
 
 /**
  * Demo page and home page, which is blank for now */

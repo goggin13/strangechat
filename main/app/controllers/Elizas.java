@@ -2,10 +2,8 @@ package controllers;
 
 import java.util.HashMap;
 
-import models.Room;
 import models.User;
 import models.UserEvent;
-import models.UserSession;
 import models.Utility;
 import models.eliza.Eliza;
 import models.pusher.Pusher;
@@ -40,9 +38,8 @@ public class Elizas extends Index {
         if (bot == null) {
             returnFailed(bot_id + " does not map to a valid bot");
         }   
-	    UserSession u = currentSession();        
-	    UserSession botSess = new UserSession(bot, "-1");        
-        Room.createBotRoomFor(u, botSess);
+//	    UserSession u = currentSession();        
+//	    UserSession botSess = new UserSession(bot, "-1");        
 		returnOkay();
 	}
 

@@ -39,20 +39,21 @@ var RoomChannel = function (spec) {
     });
   };
 
-  that.usePower = function (power_id, user) {
+  that.usePower = function (power_id, user, on_user, isGood) {
     var path = 'usepower';
     that.send(path, {
       power_id: power_id,
       channel: that.channel_name,
       user_id: user.user_id,
-      session: user.session
+      session: user.session,
+      for_user: on_user ? on_user.user_id : -1,
+      for_session: on_user ? on_user.session : "",
+      params: isGood ? [1] : [0]
     });
   };
 
   that.bindToUsedPower = function (f) {
-    that.bind(my.types.USED_POWER, function (data) {
-      f(data);
-    });
+    that.bind(my.types.USED_POWER, f);
   };
   
   that.userIsTyping = function (from, text) {

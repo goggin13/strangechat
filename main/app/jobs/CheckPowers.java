@@ -15,6 +15,7 @@ import play.libs.F.IndexedEvent;
 
 @Every("10s")
 public class CheckPowers extends Job {
+    private static int counter = 0;
     private static AbstractMap<Long, User> myUsers = new HashMap<Long, User>();
     
     private static long lastReceived = 0L;
@@ -26,10 +27,15 @@ public class CheckPowers extends Job {
         processUpdates(getEvents());
 
         for (User u : myUsers.values()) {
-            u.save();
+            System.out.println("Check powers for " + u.id);
             u.checkForNewPowers();
         }
-        myUsers.clear();        
+        myUsers.clear(); 
+        
+        // call every 3 hours (60 * 60 * 3 / 5)
+        if (counter++ % 2160 == 0) {
+            System.gc();
+        }       
     }
     
     private static void processUpdates (List<UserEvent.Event> events) {
@@ -56,7 +62,7 @@ public class CheckPowers extends Job {
                 } else {
                     from.messageCount += 1;             
                 }                           
-                // from.save();
+                putUser(from); 
             } else if (event instanceof UserEvent.AcceptRequest) {
                 UserEvent.AcceptRequest j = (UserEvent.AcceptRequest)event;
                 if (j.from < 0) {
@@ -65,7 +71,7 @@ public class CheckPowers extends Job {
                 User user = getUser(j.from);     
                 if (user != null) {
                     user.joinCount += 1;
-                    // user.save();                    
+                    putUser(user);                     
                 }
             } else if (event instanceof UserEvent.UsedPower) {
                 if (event.from < 0) {
@@ -79,12 +85,18 @@ public class CheckPowers extends Job {
                 User from = getUser(event.from);              
                 if (from != null) {
                     from.chatTime += 15;
-                    // from.save();                   
+                    // from.save(); 
+                    putUser(from);                  
                 }                
             } else if (!(event instanceof UserEvent.Event)) {
                 Logger.error("Processing super power check and encountered a bad event");
             } 
         }
+    }
+    
+    private static void putUser (User u) {
+        u.save();
+        myUsers.put(u.id, u);
     }
     
     private static User getUser (long id) {

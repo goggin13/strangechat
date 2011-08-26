@@ -1,7 +1,6 @@
 package models;
  
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -14,13 +13,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import models.powers.StoredPower;
 import models.powers.SuperPower;
 import models.pusher.Pusher;
+import play.Play;
 import play.db.jpa.Model;
 
 import com.google.gson.ExclusionStrategy;
@@ -99,10 +98,6 @@ public class User extends Model {
     /** mutual offers to receive */
     public int revealCount; 			
 
-	/** The server this user was assigned to heartbeat on */	
-	@ManyToOne
-	public Server heartbeatServer;
-	
 	public User (long u) {
 		this.user_id = u;
 		this.online = false;
@@ -125,6 +120,10 @@ public class User extends Model {
         sp.level = 1;
         sp.available = 2;
 	    sp.save();
+	    sp = new StoredPower(Power.KARMA, this);
+        sp.level = 1;
+        sp.available = 10;
+	    sp.save();	    
 	}
 		
 	/**
@@ -165,13 +164,7 @@ public class User extends Model {
 	    }
 		return str;
 	}
-	
-	/**
-	 * @return the URI of this users heartbeat server */ 
-	public String getHeartbeatURI () {
-	    return this.heartbeatServer.uri;
-	}
-	
+		
 	/**
 	 * A random user who's user_id does not match this object
 	 * @return a random user */
@@ -264,6 +257,7 @@ public class User extends Model {
 	public void notifyNewPower (StoredPower power) {
 		Pusher pusher = new Pusher();
         UserEvent.NewPower message = new UserEvent.NewPower(this.id, power, "");
+        System.out.println("push to" + this.getChannelName());
 	    pusher.trigger(this.getChannelName(), "newpower", message.toJson());
 	}
 
@@ -293,7 +287,7 @@ public class User extends Model {
 	}	
 
     public String getChannelName () {
-        return this.id + "_channel";
+        return this.id + "_channel" + (Play.mode == Play.Mode.DEV ? "-local" : "");
     }
 			
 	/**
@@ -310,17 +304,7 @@ public class User extends Model {
 		user.populateSuperPowerDetails();
 		return user;
 	}
-		
-    /**
-     * Broadcast a message to all online users */
-    public static void broadcast (String msg) {
-        List<UserSession> users = UserSession.findAll();
-        UserSession.Faux adminSess = new UserSession.Faux(User.admin_id, "dummy_session");
-        for (UserSession u : users) {
-            u.sendMessage(adminSess, -1, msg);
-        }
-    }
-    
+		    
 	/** 
 	 * This class is used when serializing and deserializing JSON.  Its only 
 	 * purpose is to inform the GsonBuilder objects that they should exclude 
@@ -343,29 +327,5 @@ public class User extends Model {
                  || f.getName().equals("recentMeetings");
 		}
  	}
-	
-	/**
-	 * All the rooms this user is in
-	 * @return a list of all the rooms this user is participating in */
-	public Set<Room> getRooms () {
-	    List<UserSession> sessions = getSessions();
-	    Set<Room> roomSet = new HashSet<Room>();
-	    for (UserSession session : sessions) {
-	        roomSet.addAll(session.getRooms());
-	    }
-	    return roomSet;
-	}
-
-	/**
-	 * All the rooms this user is in
-	 * @return a list of all the rooms this user is participating in */
-	public Set<Room> getNonGroupRooms () {
-	    List<UserSession> sessions = getSessions();
-	    Set<Room> roomSet = new HashSet<Room>();
-	    for (UserSession session : sessions) {
-	        roomSet.addAll(session.getNonGroupRooms());
-	    }
-	    return roomSet;
-	}	
-		
+			
 }

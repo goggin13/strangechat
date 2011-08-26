@@ -1,14 +1,7 @@
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
-import jobs.CheckPowers;
-import models.StoredPower;
-import models.SuperPower;
 
 import org.junit.Test;
 
-import play.libs.F.Promise;
 import play.mvc.Http.Response;
 import play.test.FunctionalTest;
 
@@ -16,8 +9,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import controllers.Notify;
 
 public class MyFunctionalTest extends FunctionalTest {
 	
@@ -167,7 +158,7 @@ public class MyFunctionalTest extends FunctionalTest {
         url += "?";
         for (String k : params.keySet()) {
             String v = params.get(k);
-            url += k + "=" + k + "&";
+            url += k + "=" + v + "&";
         }
         String jsonStr = getAndValidateInner(url);
 		JsonObject jsonObj = new JsonParser().parse(jsonStr).getAsJsonObject();
@@ -186,70 +177,6 @@ public class MyFunctionalTest extends FunctionalTest {
 		return jsonObj;
 	}
 	
-	protected void requestRoomFor (long user_id, String sess) {
-	    HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("user_id", user_id + "");
-	    params.put("session", sess);	    
-		postAndAssertOkay("/requestrandomroom", params);
-	}
-	
-	protected void notifyLogout (long for_user, long left_user) {
-	    HashMap<String, String> params = Notify.getNotifyLogoutParams(for_user, sessionMap.get(for_user), left_user, sessionMap.get(left_user));
-		postAndAssertOkay("/notify/logout", params);
-	}
-	
-	protected void notifyLogin (long for_user, long new_user) {
-	    HashMap<String, String> params = Notify.getNotifyLoginParams(for_user, sessionMap.get(for_user), new_user, sessionMap.get(new_user), "name", "server");
-		postAndAssertOkay("/notify/login", params);
-	}	
-
-    protected void notifyMessage (long for_user, long from_user, String msg) {
-        HashMap<String, String> params = Notify.getNotifyMessageParams(from_user, sessionMap.get(from_user), for_user, sessionMap.get(for_user), msg);
-        System.out.println(params);
-		postAndAssertOkay("/notify/message", params);
-    }
-    
-    protected void notifyChatMessage (long from_user, List<Long> for_users, String msg, long room_id) {
-    	List<String> sessions = new LinkedList<String>();
-    	for (long for_u : for_users) {
-    		sessions.add(sessionMap.get(for_u));
-    	}
-		HashMap<String, String> params = Notify.getNotifyChatMessageParams(for_users, sessions, from_user, sessionMap.get(from_user), msg, room_id);
-		System.out.println(params);
-		postAndAssertOkay("/notify/roommessage", params);        
-    }
-
-    protected void notifyChatMessage (long from_user, long for_user, String msg, long room_id) {
-		HashMap<String, String> params = Notify.getNotifyChatMessageParams(for_user, sessionMap.get(for_user), from_user, sessionMap.get(from_user), msg, room_id);
-		postAndAssertOkay("/notify/roommessage", params);        
-    }
-
-    protected void notifyJoined (long for_user, long new_user, String avatar, String name, String server, long room_id, String session_id) {
-        HashMap<String, String> params = Notify.getNotifyJoinedParams(for_user, sessionMap.get(for_user), new_user, sessionMap.get(new_user), avatar, name, server, room_id);
-    	postAndAssertOkay("/notify/joined", params);        
-    }
-     
-    protected void notifyLeft (long for_user, long left_user, long room_id) {
-        HashMap<String, String> params = Notify.getNotifyLeftParams(for_user, sessionMap.get(for_user), left_user, sessionMap.get(left_user), room_id);
-		postAndAssertOkay("/notify/left", params);
-    }
-
-    protected void notifyNewPower(long for_user, StoredPower sp, String session_id) {
-        HashMap<String, String> params = Notify.getNotifyNewPowerParams(for_user, sessionMap.get(for_user), sp.getSuperPower(), sp.id, sp.level);
-        System.out.println(params);
-        postAndAssertOkay("/notify/newpower", params);
-    }
-
-    protected void notifyUsedPower (long for_user, long by_user, long room_id, SuperPower power, int level, String result, String session_id) {
-        HashMap<String, String> params = Notify.getNotifyUsedPowerParams(for_user, sessionMap.get(for_user), by_user, sessionMap.get(by_user), room_id, power, level, result);
-        postAndAssertOkay("/notify/usedpower", params);
-    }
-
-    protected void notifyTyping (long for_user, long user_id, long room_id, String txt) {
-		HashMap<String, String> params = Notify.getNotifyTypingParams(for_user, sessionMap.get(for_user), user_id, sessionMap.get(user_id), room_id, txt);
-		postAndAssertOkay("/notify/useristyping", params);        
-    }
-
 	protected JsonObject usePower (long power_id, long user_id, String sess, long other_id, String other_sess, long room_id) {
 	    HashMap<String, String> params = new HashMap<String, String>();
 	    params.put("power_id", power_id + "");
@@ -279,61 +206,5 @@ public class MyFunctionalTest extends FunctionalTest {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	protected JsonObject assertResponseContainsInner (long user_id, String power_name, int level, int lastReceived) {
-	    Promise<String> p = new CheckPowers().now();
-        goToSleep(3);
-        
-        JsonArray arr = getWholeListenResponse(user_id, lastReceived);
-		int received = 0;
-		int lastLevel = 0;
-		JsonObject newPower = null;
-		
-		for (JsonElement event : arr) {
-		    JsonObject data = event.getAsJsonObject().get("data").getAsJsonObject();
-
-		    if (data.get("type").getAsString().equals("newpower")) {
-                newPower = data.get("superPower").getAsJsonObject();
-		        if (newPower.get("name").getAsString().equals(power_name)) {
-		            received++;
-		            lastLevel = Math.max(lastLevel, data.get("level").getAsInt());
-		            power_id = data.get("power_id").getAsLong();
-		            return data;
-		        }
-		    }
-		}
-		return null;
-	}
-	
-	protected int assertResponseContains (long user_id, String power_name, int level, int lastReceived) {
-	    Promise<String> p = new CheckPowers().now();
-        goToSleep(3);
-        
-        JsonArray arr = getWholeListenResponse(user_id, lastReceived);
-		int received = 0;
-		int lastLevel = 0;
-		
-		for (JsonElement event : arr) {
-		    JsonObject data = event.getAsJsonObject().get("data").getAsJsonObject();
-
-		    if (data.get("type").getAsString().equals("newpower")) {
-                JsonObject newPower = data.get("superPower").getAsJsonObject();
-		        if (newPower.get("name").getAsString().equals(power_name)) {
-		            received++;
-		            lastLevel = Math.max(lastLevel, data.get("level").getAsInt());
-		            power_id = data.get("power_id").getAsLong();
-		        }
-		    }
-		    lastReceived = event.getAsJsonObject().get("id").getAsInt();
-		}
-		
-    	assertTrue(1 <= received);
-    	assertEquals(level, lastLevel);
-		return lastReceived;         
-	}	
-	
-    protected int assertResponseHasIceBreaker (long user_id, int level, int lastReceived) {
-        return assertResponseContains(user_id, "Ice Breaker", level, lastReceived);
-    }
 
 }
