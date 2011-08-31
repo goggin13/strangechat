@@ -116,7 +116,12 @@ public class StoredPower extends Model {
         this.used++;
         this.newToLevel = false;
         this.save();
-        return superPower.use(this.owner, subject, params);
+        if (params != null && params.size() > 0) {
+            return superPower.use(this.owner, subject, params);
+        } else {
+            return superPower.use(this.owner, subject);
+        }
+        
     }
  	
 }

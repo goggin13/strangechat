@@ -22,6 +22,7 @@ public class Mock extends Index {
 	}
 
     public static void init () {
+        System.out.println("DELETE DATABASE");
 		Fixtures.deleteDatabase();
         // Fixtures.loadModels("data-full.yml");
     }

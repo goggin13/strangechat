@@ -32,12 +32,10 @@ var AdminPage = function (API) {
   };
   
   my.handleLogon = function (users) {
-    var any = false;
     $.each(users, function(i, user) {
       my.displayUser(user);
-      any = true;
     });
-    if (!any) my.updateHeader();
+    my.updateHeader();
   };
   
   my.init = function () {
@@ -64,8 +62,14 @@ $(document).ready(function () {
   if (!oApp) {
     return;
   }
-  var API = ChatAPI(oApp.user_id, oApp.avatar, oApp.alias, function () {
-    AdminPage(API);
+  var API = ChatAPI({
+    user_id: oApp.user_id, 
+    avatar: oApp.avatar, 
+    alias: oApp.alias,
+    home_url: oApp.home_url, 
+    login_callback: function () {
+      AdminPage(API);
+    }
   });
 });
 

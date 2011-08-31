@@ -19,12 +19,8 @@ public class Elizas extends Index {
         if (qry == null) {
             qry = "";
         }
-        System.out.println(qry);
         String response = Eliza.get().respondTo(qry);
-        System.out.println(response);
         String json = new UserEvent.RoomMessage(Eliza.user_id, response).toJson();
-        System.out.println(json);
-        System.out.println(channel);
         new Pusher().trigger(channel, "roommessage", json);
         returnOkay();
     }
@@ -38,8 +34,6 @@ public class Elizas extends Index {
         if (bot == null) {
             returnFailed(bot_id + " does not map to a valid bot");
         }   
-//	    UserSession u = currentSession();        
-//	    UserSession botSess = new UserSession(bot, "-1");        
 		returnOkay();
 	}
 

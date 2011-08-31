@@ -21,7 +21,6 @@ public class Karma extends IntervalPower {
 		}
 		boolean isGood = params.get(0).equals("1");
 		KarmaKube kube = new KarmaKube(caller, subject, isGood);
-		System.out.println(kube.toJson());
 		subject.notifyMe("karma", kube.toJson());
 		return "KarmaKube-" + kube.id;
 	}

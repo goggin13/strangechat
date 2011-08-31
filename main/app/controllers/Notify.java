@@ -5,6 +5,7 @@ import models.UserSession;
 import models.pusher.BasicUserInfo;
 import models.pusher.PresenceChannelData;
 import models.pusher.Pusher;
+import play.Play;
 import play.data.validation.Required;
 
 /**
@@ -43,18 +44,14 @@ public class Notify extends Index {
             returnFailed(validation.errors());
         }	    
 	    Pusher pusher = new Pusher();
-	    System.out.println("TO CHANNEL " + channel);
 	    if (socket_id != null) {
-	        pusher.trigger(channel, event, message); //, socket_id);
+	        pusher.trigger(channel, event, message, socket_id);
 	    } else {
 	        pusher.trigger(channel, event, message);
 	    }
 	    UserEvent.Event ue = UserEvent.deserializeEvent(message);
 	    if (ue != null) {
 	        UserEvent.get().publish(ue);
-	        if (ue instanceof UserEvent.RoomMessage) {
-	            System.out.println(channel + " : " + ((UserEvent.RoomMessage)ue).text);
-	        }
 	    } 
 	    returnOkay();
 	}

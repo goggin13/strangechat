@@ -20,6 +20,7 @@ GET     /demo																		Application.demo
 * 			 /eliza																	Elizas.reply
 * 		   /group											            Users.joinGroupChat
 *				 /openkube															Users.openKube
+*				 /rejectkube														Users.rejectKube
 
 # Chat actions
 GET   /listen																  Notify.listen
@@ -36,6 +37,10 @@ GET     /favicon.ico                            404
 
 # Import Secure routes
 *       /                                       module:secure
+
+# Import Secure routes
+*       /                                       module:trivia
+
 
 # Enable GreenScript dynamic configuration
 # IMPORTANT: make sure this routine map be different from your

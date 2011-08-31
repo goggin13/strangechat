@@ -88,6 +88,22 @@ public class Users extends Index {
 	   msg.put("reward", reward.toJson());
 	   returnOkay(msg);
 	}
+
+	public static void rejectKube (@Required long kube_id) {
+	   KarmaKube kube = KarmaKube.findById(kube_id);
+	   UserSession sess = currentSession();
+       if (validation.hasErrors()) {
+           returnFailed(validation.errors());
+       } else if (sess == null) {
+           returnFailed("valid user and session required to use a karma kube");
+		   returnFailed("This kube's already been opened!");
+	   } else if (!kube.hasBeenSent() || !kube.getRecipient().get().equals(sess.user)) {
+	       returnFailed("This kube does not belong to you");
+	   }
+       kube.rejected = true;
+       kube.save();
+	   returnOkay();
+	}
 	
 	/**
 	 * Use the given power, and notify the relevant users.
@@ -100,8 +116,6 @@ public class Users extends Index {
         }	    
 	    UserSession user = currentSession();
 	    UserSession other = currentForSession();
-	    
-	    System.out.println(params);
 	    
 	    if (user == null) {
 	        returnFailed("valid session is required");

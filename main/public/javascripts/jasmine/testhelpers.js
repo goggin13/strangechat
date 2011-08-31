@@ -51,6 +51,10 @@ var beforeEachFunction = function () {
        testLogin(JSON, user4);
        loggedIn++;
      });         
+     user1.api.hideSocketID();
+     user2.api.hideSocketID();
+     user3.api.hideSocketID();
+     user4.api.hideSocketID();
      waitsFor(function () { 
        return loggedIn == 4;
      }, "waiting for users to log in", 4000);

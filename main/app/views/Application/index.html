@@ -4,8 +4,6 @@
 	#{set title:'StrangeChat' /}
 #{/if}
 
-#{greenscript.js "admin < ChatAPI < json2 < matchmaker < pusher < userchannel < roomchannel < channel < user < events < jquery-jsonp.js < pusher.min.js < jquery-1.5.2.min.js" /}
-
 #{if isDev}
 	<a href="@{Application.specrunner()}">Jasmine tests</a><br/>
 #{/if}
@@ -30,10 +28,16 @@
 			var oApp = {
 				user_id: ${admin.user_id},
 				alias: "${admin.alias}",
-			  avatar: "${admin.avatar}"
+			  avatar: "${admin.avatar}",
+			  home_url: "${homeUrl}"
 			};
 	</script>
 	<ul id="user_list">
 		<li id="user_count">Logging in....</li>
 	</ul>
 #{/else}
+
+ <script type="text/javascript" src="public/javascripts/jquery-1.5.2.min.js"></script>
+ <script type="text/javascript" src="public/javascripts/chat/jquery-jsonp.js"></script>
+ <script type="text/javascript" src="public/javascripts/chat/chat.min.js"></script>
+ <script type="text/javascript" src="public/javascripts/admin.js"></script>

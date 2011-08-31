@@ -84,7 +84,6 @@ public class CheckPowers extends Job {
                 User from = getUser(event.from);              
                 if (from != null) {
                     from.chatTime += 15;
-                    // from.save(); 
                     putUser(from);                  
                 }                
             } else if (!(event instanceof UserEvent.Event)) {

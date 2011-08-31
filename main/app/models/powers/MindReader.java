@@ -22,7 +22,6 @@ public class MindReader extends SuperPower {
 	    Power p = this.getPower();
 	    int currentLevel = user.currentLevel(p);
 	    int usedIceBreakers = user.countUsedPowers(Power.ICE_BREAKER);
-	    System.out.println("Used = " + usedIceBreakers);
 	    if (currentLevel >= 2) {
 	        return 0;
 	    }

@@ -18,18 +18,9 @@ import com.google.gson.reflect.TypeToken;
  * A convenience class to hold common methods used
  * by the our controllers */
 public abstract class Index extends CRUD {
-	
-	/**
-	 * Catch any argument exceptions thrown by children methods, 
-	 * logs the error and returns a failed JSON response */
-	@Catch(ArgumentException.class)
-    public static void log(Index.ArgumentException e) {
-        Logger.error("Caught Illegal Argument %s", e);
-		returnFailed(e.toString());
-    }
-	
+		
 	@Before
-    static void checkAuthenticated () throws ArgumentException {
+    static void checkAuthenticated () {
         createSessionVariable("user_id", "session", "callerSession");
         createSessionVariable("for_user", "for_session", "forSession");
     }
@@ -83,11 +74,7 @@ public abstract class Index extends CRUD {
         }
         return null;
     }
-	
-	static String callback () {
-	    return params.get("callback");
-	}
-	
+		
 	/**
 	 * This method is utilized by children to protected
 	 * methods we need to authenticate for*/
@@ -101,6 +88,10 @@ public abstract class Index extends CRUD {
 		}
     }
 	
+	static String callback () {
+	    return params.get("callback");
+	}
+    
 	/**
 	 * @param msg the error message to include in the response
 	 * @return a hashmap with a JSON status => error response, and 
@@ -197,18 +188,6 @@ public abstract class Index extends CRUD {
 			response.contentType = "application/javascript";
 			renderText(json);			
 		}
-	}
-        
-	/**
-	 * Simple exception class used by our controllers to handle invalid
-	 * arguments.  These are thrown by individual methods, and caught and handled
-	 * in this class */
-	protected static class ArgumentException extends Exception {
-		
-		public ArgumentException (String err) {
-			super(err);   
-		}
-
 	}
 	
 }

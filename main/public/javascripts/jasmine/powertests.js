@@ -94,7 +94,7 @@ describe("powers", function () {
             seeUsed = true;
           });
           
-          user4channel.usePower(power_id, user4.api.user, user3.api.user, true);
+          user4channel.useKarma(power_id, user4.api.user, user3.api.user, true);
           waitsFor(function () { 
             return seeUsed;
           }, "to see used karma", 4000);

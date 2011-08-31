@@ -39,6 +39,9 @@ public class KarmaKube extends Model {
     
     /** True if this kube has been opened by the recipient */
     public boolean opened;
+    
+    /** True if this kube has been rejected by the recipient */
+    public boolean rejected;    
 
     /** The contents of this KarmaKube */
     @Required
@@ -51,6 +54,7 @@ public class KarmaKube extends Model {
         this.recipient = r;
         this.reward = KarmaReward.getRandom(isGood);
         this.isGood = isGood;
+        this.rejected = false;
         this.save();
 	}
 		
@@ -73,7 +77,7 @@ public class KarmaKube extends Model {
 	}
 			
 	public String toJson () {
-	    return Utility.toJson(this, new TypeToken<KarmaKube>(){});
+	    return Utility.toJson(this, new TypeToken<KarmaKube>(){}, new User.ChatExclusionStrategy());
 	}
 	
 	/**

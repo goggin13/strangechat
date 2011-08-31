@@ -54,9 +54,9 @@ public class User extends Model {
 	public String botid;
 	
     /** List of other users this user has met with recently */
-    @ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
-    @JoinTable(name = "UserToMetWith")
-    public List<User> recentMeetings;	
+    // @ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+    // @JoinTable(name = "UserToMetWith")
+    // public List<User> recentMeetings;    
 
     /** Collection of the superpowers this user has, including
      *  ones that have already been used */ 
@@ -113,7 +113,7 @@ public class User extends Model {
 		this.offersReceivedCount = 0;
 		this.revealCount = 0;
 	    this.superPowers = new LinkedList<StoredPower>();
-	    this.recentMeetings = new LinkedList<User>();
+        // this.recentMeetings = new LinkedList<User>();
 	    this.icebreakers_seen = new TreeSet<Integer>();
 	    this.save();
         addStartUpPowers();
@@ -123,11 +123,11 @@ public class User extends Model {
 	    StoredPower sp = new StoredPower(Power.ICE_BREAKER, this);
         sp.level = 1;
         sp.available = 2;
-	    sp.save();
-	    sp = new StoredPower(Power.KARMA, this);
+        sp.save();
+        sp = new StoredPower(Power.KARMA, this);
         sp.level = 1;
         sp.available = 10;
-	    sp.save();	    
+        sp.save();       
 	}
 		
 	/**
@@ -137,7 +137,7 @@ public class User extends Model {
 		this.online = true;
 		Random r = new Random();
 		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis() + r.nextInt());
-		this.karmaKubes = KarmaKube.find("byRecipientAndOpened", this, false).fetch(1000);
+		this.karmaKubes = KarmaKube.find("byRecipientAndOpenedAndRejected", this, false, false).fetch(1000);
 		this.lastLogin = Utility.time();
 		this.populateSuperPowerDetails();
 		return new UserSession(this, this.session_id);
