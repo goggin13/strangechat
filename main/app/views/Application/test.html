@@ -1,0 +1,15 @@
+#{extends 'main.html' /}
+
+#{set title:'StrangeChat' /}
+
+#{if isDev}
+	<a href="@{Application.specrunner()}">Jasmine tests</a><br/>
+#{/if}
+	<a href="@{Application.broadcast()}">Broadcast</a><br/>
+
+
+
+ <script type="text/javascript" src="public/javascripts/jquery-1.5.2.min.js"></script>
+ <script type="text/javascript" src="public/javascripts/chat/jquery-jsonp.js"></script>
+ <script type="text/javascript" src="public/javascripts/chat/chat.min.js"></script>
+ <script type="text/javascript" src="public/javascripts/admin.js"></script>

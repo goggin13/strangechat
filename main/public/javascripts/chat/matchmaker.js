@@ -94,10 +94,13 @@ var MatchMaker = function (spec) {
   
   // login to the given channel, and ensure the user described by userData joins you there.
   // if they do, call the appropriate callback
+  my.returned = false;
   my.loginToChannel = function (channel_name, userData) {
     var otherUserSignedIn = false,
       channel = null,
       returnData = function () {
+        if (my.returned) return;
+        my.returned = true;
         userData.channel = channel;
         my.callback(userData);
         otherUserSignedIn = true;
@@ -124,6 +127,7 @@ var MatchMaker = function (spec) {
     });
     setTimeout(function () {
       if (!otherUserSignedIn) {
+        channel.disconnect();
         that.matchMe();
       }
     }, 1500);
