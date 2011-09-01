@@ -9,7 +9,7 @@ NUM_TESTERS = 8
 ROOT_URL = "http://173.246.101.127/"
 ROOT_ID = 1001
 CHANNEL = "#{ROOT_ID}-channel"
-NUM_ITERS = 4000
+NUM_ITERS = 10000
 
 class PhoneBook
   @@people = {}
@@ -215,7 +215,7 @@ class Tester
   def run 
     while @@message_timer.myID < NUM_ITERS
       sendMessage(@@message_timer.incAndGet())
-      sleep(0.25)
+      sleep(0.5)
     end
     puts "sleeping..."
     sleep(3)
