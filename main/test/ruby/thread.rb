@@ -229,9 +229,9 @@ class Tester
       @@message_timer.markPowerSent(@api.user_id)
       @api.use_icebreaker @my_channel, @otherUser
     end
-    # if (mid % 103 == 0)
-    #   report
-    # end
+    if (mid % 1000 == 0)
+      report
+    end
   end
   
   def report
