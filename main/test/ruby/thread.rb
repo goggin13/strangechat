@@ -9,7 +9,7 @@ NUM_TESTERS = 8
 ROOT_URL = "http://173.246.101.127/"
 ROOT_ID = 1001
 CHANNEL = "#{ROOT_ID}-channel"
-NUM_ITERS = 400
+NUM_ITERS = 4000
 
 class PhoneBook
   @@people = {}
