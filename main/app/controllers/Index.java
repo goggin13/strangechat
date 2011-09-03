@@ -8,7 +8,6 @@ import models.User;
 import models.UserSession;
 import play.Logger;
 import play.mvc.Before;
-import play.mvc.Catch;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

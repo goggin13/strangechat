@@ -31,7 +31,7 @@ var Channel = function (spec) {
       return;
     }
     my.channel = my.pusher.subscribe(that.channel_name);
-    my.channel.bind('subscription_error', function(status) {
+    my.channel.bind('subscription_error', function (status) {
       alert("HTTP: " + status + " on subscribe attempt to " + that.channel_name);
       my.subscribed = false;
     });

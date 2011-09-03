@@ -13,7 +13,7 @@ import play.jobs.OnApplicationStart;
 import enums.ResponseType;
 
 @OnApplicationStart
-public class BookBootstrap extends Job {
+public class ZBookBootstrap extends Job {
 
     public void doJob() {
         Category c = Category.getOrCreate("Books");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;					

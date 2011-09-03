@@ -37,8 +37,6 @@ var sendChat = function (msg) {
 selenium.openAndWait("http://superheroclubhouse.com/staging");
 selenium.waitForTextPresent("Create your super secret identity");
 
-selenium.type("id=super_hero_name", "Tester");  
-
 selenium.click("id=button_startchat");
 selenium.waitForTextPresent("Looking for trouble");
 
@@ -51,6 +49,21 @@ selenium.waitForTextPresent("Try again");
 selenium.click("css=.restart_chat.fake_link");
 selenium.waitForTextPresent("Welcome to movie trivia.");
 sendChat("movies");
+
+var answerQuestion = function () {
+  selenium.pause(MESSAGE_PAUSE_TIME);
+  sendChat("a");
+  var xPath = '//img[@alt="Movies"]';  
+  var curCount = parseInt(selenium.getXpathCount(xPath), 10);
+  var nextCount = curCount + 1;
+  selenium.waitForXpathCount(xPath, nextCount);  
+}
+
+for (var i = 0; i < 3; i++) {
+  answerQuestion();
+}
+
+selenium.waitForTextPresent("Round Completed!");
 
 browserMob.endStep();
 browserMob.endTransaction();

@@ -1,14 +1,49 @@
 package controllers;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
 import models.Answer;
 import models.Batch;
 import models.Category;
 import models.Question;
 import models.Result;
 import models.TriviaUser;
+import play.Logger;
 import play.data.validation.Required;
+import play.db.DB;
 
 public class Trivia extends TriviaIndex{
+	private static final int BATCH_SIZE = 5;
+	
+	public static void getEligibleTrivia (@Required long user_id) {
+		if (validation.hasErrors()) {
+			returnFailed(validation.errors());
+		}		
+		String sql = "select distinct C.name as name from category C " +
+					"inner join question Q on " +
+						"Q.category_id = C.id " +
+					"left join result R on " +
+						"R.question_id = Q.id " +
+				"where R.id is null " +
+				"group by C.name " +
+				"having count(*) >= " + BATCH_SIZE;
+		
+		ResultSet results = DB.executeQuery(sql);
+		try {
+			HashMap<String, String> categories = new HashMap<String, String>();
+			while (results.next()) {
+				String name = results.getString("name");
+				categories.put(name, name); 
+			}
+			returnOkay(categories);
+		} catch (SQLException e) {
+			Logger.error(e.getMessage());
+			returnFailed(e.getMessage());
+		} 
+
+	}
 	
 	public static void getBatch (@Required long user_id, @Required String name) {
 		if (validation.hasErrors()) {
@@ -19,8 +54,8 @@ public class Trivia extends TriviaIndex{
 			returnFailed("Category " + name + " does not exist");
 		}
 		TriviaUser u = TriviaUser.getOrCreate(user_id);
-		Batch b = u.getBatch(c, 3);
-		returnJson(b.toJson());
+		Batch b = u.getBatch(c, BATCH_SIZE);
+		returnJson(b.toJson());	
 	}
 	
 	public static void answerQuestion (

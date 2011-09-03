@@ -13,17 +13,14 @@ public class TriviaUser extends Model{
 	
 	public long user_id;
 	
-	@ManyToMany
-	public List<Result> results;
-	
 	public TriviaUser (long u) {
 		user_id = u;
-		results = new LinkedList<Result>();
 		save();
 	}
 
 	public Batch getBatch (Category c, int size) {
-		return new Batch(c, size, results);
+	    List<Result> results = Result.find("byUser", this).fetch();
+		return new Batch(this, c, size, results);
 	}
 	
 	public static TriviaUser getOrCreate(long user_id) {

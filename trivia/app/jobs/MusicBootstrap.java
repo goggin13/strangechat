@@ -113,8 +113,6 @@ public class MusicBootstrap extends Job {
 		new TriviaResponse(c, "You’re killing my vibes here, dude.", ResponseType.INCORRECT);
 		
 		new TriviaResponse(c, "You’re killing my vibes here, dude.", ResponseType.SALUTATION);
-		new TriviaResponse(c, "You’re killing my vibes here, dude.", ResponseType.SALUTATION);
-		new TriviaResponse(c, "You’re killing my vibes here, dude.", ResponseType.SALUTATION);
 		
 		Logger.info("Bootstrapped music trivia");
     }

@@ -28,6 +28,7 @@ public class CatBootstrap extends Job {
         a1 = new Answer("Yellow with black markings", true);	a2 = new Answer("Black with yellow markings.", false);	a3 = new Answer("Brown and white markings.", false);	a4 = new Answer("White and black stripes", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What color is an ocelot?", a, c);
         a1 = new Answer("Manx", true);	a2 = new Answer("Calico", false);	a3 = new Answer("Siamese", false);	a4 = new Answer("Persian", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What cat does not have a tail?", a, c);
         a1 = new Answer("18", true);	a2 = new Answer("12", false);	a3 = new Answer("10", false);	a4 = new Answer("20", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("House cats have how many claws in total?", a, c);
+        
         new TriviaResponse(c, "Welcome to Cat Trivia.", ResponseType.SALUTATION);
 
         new TriviaResponse(c, "I don’t understand what you’re trying to say. Type that again?", ResponseType.REPEAT);

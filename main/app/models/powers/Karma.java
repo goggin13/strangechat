@@ -5,12 +5,12 @@ import java.util.List;
 import models.User;
 import models.karma.KarmaKube;
 import play.Logger;
-
+ 
 public class Karma extends IntervalPower {
 
 	public Karma() {
 		super("Karma", "", "Accrue karma to reward or punish others", false, false);
-		this.award_interval = 120;
+		this.award_interval = 400;
 	}
 
 	@Override

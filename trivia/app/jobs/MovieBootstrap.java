@@ -77,36 +77,25 @@ public class MovieBootstrap extends Job {
         a1 = new Answer("Barbara Streisand", true);	a2 = new Answer("Judy Garland", false);	a3 = new Answer("Joan Rivers", false);	a4 = new Answer("Bette Midler", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Who said, \"I knew that with a mouth like mine I just had to be a star or something?\"", a, c);
         a1 = new Answer("The Full Monty", true);	a2 = new Answer("Bean", false);	a3 = new Answer("The Borrowers", false);	a4 = new Answer("Spiceworld", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Which 1997 film was the then most successful British movie of all time?", a, c);
         		
-		new TriviaResponse(c, "Welcome to movie trivia.", ResponseType.SALUTATION);
 		
-        new TriviaResponse(c, "Like, what?", ResponseType.REPEAT);
-        new TriviaResponse(c, "I totally don’t understand what you’re saying. Type that out again?", ResponseType.REPEAT);
-        new TriviaResponse(c, "You’re making like, no sense. Boring. ", ResponseType.REPEAT);
-        new TriviaResponse(c, "La, la, la I can’t understand you. Try again.", ResponseType.REPEAT);
-        new TriviaResponse(c, "Unfair, I don’t know what you’re trying to say! ", ResponseType.REPEAT);
+        new TriviaResponse(c, "Hi there, want to play?", ResponseType.SALUTATION);
 
-        new TriviaResponse(c, "You’re rocking it!", ResponseType.CORRECT);
-        new TriviaResponse(c, "Totally awesome.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Awesome.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Totally.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Yes way.", ResponseType.CORRECT);
-        new TriviaResponse(c, "OMG you’re so good at this game!", ResponseType.CORRECT);
-        new TriviaResponse(c, "Definitely.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Yes!", ResponseType.CORRECT);
-        new TriviaResponse(c, "So right.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Way to go!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Can\'t get that through my head. Can you try typing it again?", ResponseType.REPEAT);
+        new TriviaResponse(c, "Are you trying to confuse a gal? Type that out again.", ResponseType.REPEAT);
+        new TriviaResponse(c, "Now that\'s just nonsense. Try to be more clear.", ResponseType.REPEAT);
 
-        new TriviaResponse(c, "You’re so clueless.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "OMG don’t you know anything?", ResponseType.INCORRECT);
-        new TriviaResponse(c, "No way.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Totally NOT awesome.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "I’m kinda like, feeling bad for you right now.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Def so wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Ew, no!", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You’re totally off.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "That’s so wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Talk to the hand. You’re so off.", ResponseType.INCORRECT);
-        
+        new TriviaResponse(c, "Now you\'re onto something.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Look at you go.", ResponseType.CORRECT);
+        new TriviaResponse(c, "You’re really putting me through my paces.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Marvelous!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Wonderful!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Beautiful, darling!", ResponseType.CORRECT);
+
+        new TriviaResponse(c, "If this is being wrong...", ResponseType.INCORRECT);
+        new TriviaResponse(c, "It hurts to say you’re anything less than perfect, but you ain’t right.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "No way, sugar.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Sorry to say you\'re wrong, darling.", ResponseType.INCORRECT);
+				        
         Logger.info("Bootstrapped movie trivia");
     }
  

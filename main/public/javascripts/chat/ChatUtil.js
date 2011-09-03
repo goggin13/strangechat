@@ -6,7 +6,7 @@ var HTTP = (function () {
   "use strict";
   var that = {};
   
-  that.send = function (url, method, data, callback) {
+  that.send = function (url, method, data, callback, errCallback) {
     var sendFunc = $.ajax,
       dataType = 'json',
       hash = url + "?" + MyUtil.serialize(data);
@@ -39,8 +39,9 @@ var HTTP = (function () {
           MyUtil.debug("BAD RESPONSE");
           MyUtil.debug(textStatus);
           MyUtil.debug(errorThrown);
-          if (that.serverErrorCallback) {
-            that.serverErrorCallback();
+          
+          if (errCallback) {
+            errCallback();
           }
         }
     });   

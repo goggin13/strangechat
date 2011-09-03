@@ -1,8 +1,10 @@
 package models;
 
+import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import play.db.DB;
 import play.db.jpa.Model;
 
 import com.google.gson.Gson;
@@ -19,14 +21,23 @@ public class Batch extends Model{
 	public List<TriviaResponse> correctResponses;
 	public List<TriviaResponse> salutationResponses;
 	
+	public final long totalInCategory;
+	public final long totalAttempted;
+	public final long totalCorrect;
+			
 	public Category category;
 	
-	public Batch (Category c, int size, List<Result> seen) {
+	public Batch (TriviaUser user, Category c, int size, List<Result> seen) {
 		this.category = c;
 		List<Long> seenIDs = new LinkedList<Long>();
 		for (Result r : seen) {
 			seenIDs.add(r.question.id);
 		}
+		
+		this.totalInCategory = Question.count("byCategory", c);
+		this.totalAttempted = c.attemptsByMe(user);
+		this.totalCorrect = c.answeredByMe(user);
+		
 		this.questions = Question.getRandomFrom(c, size, seenIDs);
 		this.repeatResponses = TriviaResponse.getBy(c, ResponseType.REPEAT);
 		this.incorrectResponses = TriviaResponse.getBy(c, ResponseType.INCORRECT);

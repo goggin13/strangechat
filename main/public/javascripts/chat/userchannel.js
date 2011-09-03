@@ -1,5 +1,5 @@
 /*jslint eqeq: true, newcap: true, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
-/*global document, Event, types, console, HTTP, RoomChannel, MatchMaker, APusher, Pusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
+/*global document, Event, types, console, HTTP, RoomChannel, MatchMaker, APusher, Pusher, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
 
 var UserChannel = function (spec) {
   "use strict";

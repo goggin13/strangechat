@@ -13,7 +13,9 @@ import play.libs.F.None;
 import play.libs.F.Option;
 import play.libs.F.Some;
 
+import com.google.gson.ExclusionStrategy;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.FieldAttributes;
 
 import enums.KarmaReward;
 
@@ -59,9 +61,25 @@ public class KarmaKube extends Model {
 	}
 		
 	public Reward open () {
+	    if (!this.getRecipient().isDefined()) {
+	        return null;
+	    }
 		this.opened = true;
-		this.save();
-		return this.reward.getReward();
+		Reward r = this.reward.getReward();
+		User recipient = this.getRecipient().get();
+		if (r instanceof GoldCoin) {
+		    GoldCoin coin = new GoldCoin(); // make a new one to get a new random amount
+		    int amount = coin.coins;
+		    recipient.addCoins(amount);
+		    this.save();
+		    return coin;
+		} else { // if (r instanceof Fart) {
+		    Fart fart = new Fart();
+		    int amount = fart.coins;
+		    recipient.subtractCoins(amount);
+		    this.save();
+		    return fart;		    
+		}
 	}
 	
 	public boolean hasBeenSent () {
@@ -75,9 +93,20 @@ public class KarmaKube extends Model {
 			return new Some(recipient);
 		}
 	}
+	
+	private static class KubeExclusionStrategy implements ExclusionStrategy {
+
+		public boolean shouldSkipClass(Class<?> clazz) { return false; }
+
+		public boolean shouldSkipField(FieldAttributes f) {
+		  return f.getName().equals("karmaKubes")
+		  || f.getName().equals("recentMeetings")
+		  || f.getName().equals("owner");
+		}
+ 	}
 			
 	public String toJson () {
-	    return Utility.toJson(this, new TypeToken<KarmaKube>(){}, new User.ChatExclusionStrategy());
+	    return Utility.toJson(this, new TypeToken<KarmaKube>(){}, new KubeExclusionStrategy());
 	}
 	
 	/**

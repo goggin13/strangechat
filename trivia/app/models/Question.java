@@ -69,8 +69,7 @@ public class Question extends Model {
     				    " and q.id not in " + seen.toString().replace('[', '(').replace(']', ')') +
     				    " order by rand()", c
     				)
-//    			.find("category = ? and id not in ? order by rand()", c, seen)
-    			.fetch(s);    		
+    			.fetch(s);
 
     }
     

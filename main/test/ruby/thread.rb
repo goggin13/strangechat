@@ -7,7 +7,7 @@ require "pusher-client"
 NUM_TESTERS = 8
 # ROOT_URL = "http://10.0.1.50:9000/"
 ROOT_URL = "http://173.246.101.127/"
-ROOT_ID = 1001
+ROOT_ID = 2001
 CHANNEL = "#{ROOT_ID}-channel"
 NUM_ITERS = 10000
 
@@ -97,6 +97,7 @@ class MessageTimer
     @powers = {}
     @connected = false
     @counter = 0
+    @start_time = Time.now
     connect
     while !@connected
       puts "connecting..."
@@ -181,9 +182,9 @@ class MessageTimer
       end
     end
     avg = total_time / both_count
-    puts "sent #{sent_count}, received #{received_count} of #{@messages.length}"
+    # puts "sent #{sent_count}, received #{received_count} of #{@messages.length}"
     puts "sent and received #{both_count}, avg #{avg}"
-    
+    puts "elapsed time = #{Time.now - @start_time}"
     totalSent = 0
     totalReceived = 0
     @powers.each_pair do |from_id, counts|
@@ -215,7 +216,7 @@ class Tester
   def run 
     while @@message_timer.myID < NUM_ITERS
       sendMessage(@@message_timer.incAndGet())
-      sleep(0.5)
+      sleep(0.2)
     end
     puts "sleeping..."
     sleep(3)
@@ -229,7 +230,7 @@ class Tester
       @@message_timer.markPowerSent(@api.user_id)
       @api.use_icebreaker @my_channel, @otherUser
     end
-    if (mid % 1000 == 0)
+    if (mid % 100 == 0)
       report
     end
   end

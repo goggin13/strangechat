@@ -1,11 +1,11 @@
-/*jslint eqeq: true, newcap: true, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
+/*jslint eqeq: true, newcap: false, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
 /*global document, HTTP, RoomChannel, MatchMaker, APusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
 
 
 var ChatAPI = function (spec) {
   "use strict";
   var that = {},
-  my = {};
+    my = {};
   my.home_url = spec.home_url;
   
   that.user_id = "";
@@ -16,6 +16,7 @@ var ChatAPI = function (spec) {
   that.superPowers = []; // filled after login so clients can retrieve
   that.superPowerDetails = {};
   that.karmaKubes = [];
+  that.coinCount = 0;
   
   that.user = null;
   my.superhero_id = spec.user_id;
@@ -27,10 +28,10 @@ var ChatAPI = function (spec) {
   // send an API call, either POST, or GET, with given data.
   // on success the given callback function is called
   that.send = function (url, method, data, callback) {
-    if (that.user != null) {
+    if (that.user !== null) {
       data.session = that.user.session;
     }      
-    return HTTP.send(url, method, data, callback);
+    return HTTP.send(url, method, data, callback, that.serverErrorCallback);
   };
 
   that.getGroupChannel = function (groupKey) {
@@ -42,12 +43,13 @@ var ChatAPI = function (spec) {
   };
 
   my.loginCallback = function (JSON, alias, callback) {
-    if (JSON.hasOwnProperty("status") && JSON.status == "error") {
+    if (JSON.hasOwnProperty("status") && JSON.status === "error") {
       callback(JSON);
       return;
     }
     var me = JSON[my.superhero_id];
-    that.user = User({user_id: me.id,
+    that.user = User({
+      user_id: me.id,
       session: me.session_id,
       alias: me.alias,
       avatar: me.avatar
@@ -56,6 +58,7 @@ var ChatAPI = function (spec) {
     that.superPowers = me.superPowers;
     that.superPowerDetails = me.superPowerDetails;  
     that.karmaKubes = me.karmaKubes;
+    that.coinCount = me.coinCount;
     
     // MyContacts.put(that.user);
     that.user_id = that.user.user_id;
@@ -75,14 +78,14 @@ var ChatAPI = function (spec) {
         avatar: avatar,
         alias: alias
       };
-      that.send(url, "POST", data, function (JSON) {
-        if (JSON.hasOwnProperty("status") && JSON.status == "error") {
-          $("#content").html(JSON.message);
-        } else {
-          my.loginCallback(JSON, alias, callback);
-        }
-        
-      });     
+    that.send(url, "POST", data, function (JSON) {
+      if (JSON.hasOwnProperty("status") && JSON.status === "error") {
+        $("#content").html(JSON.message);
+      } else {
+        my.loginCallback(JSON, alias, callback);
+      }
+      
+    });     
   };
 
   my.sendMySocketID = function (callback) {
@@ -120,24 +123,35 @@ var ChatAPI = function (spec) {
     matchMaker.matchMe();
   };
   
-  that.openKube = function (kube_id, callback) {
-    var url = my.home_url + "openkube",
+  that.spendCoins = function (amount, callback) {
+    var url = my.home_url + "users/spendCoins",
       data = {
-        kube_id: kube_id,
+        amount: amount,
         user_id: that.user.user_id
       };
     that.send(url, "GET", data, function (resp) {
-      callback(JSON.parse(resp.reward));
-    });
+      callback(resp);
+    });    
   };
   
-  that.rejectKube = function (kube_id, callback) {
+  that.openKube = function (kube_id, channel) {
+    var url = my.home_url + "openkube",
+      data = {
+        kube_id: kube_id,
+        user_id: that.user.user_id,
+        channel: channel
+      };
+    that.send(url, "GET", data);
+  };
+  
+  that.rejectKube = function (kube_id, channel) {
     var url = my.home_url + "rejectkube",
       data = {
         kube_id: kube_id,
+        channel: channel,
         user_id: that.user.user_id
       };
-    that.send(url, "GET", data, callback);
+    that.send(url, "GET", data);
   };  
   
   that.checkPowers = function () {
@@ -161,7 +175,7 @@ var ChatAPI = function (spec) {
   };
   
   my.blacklistWrapper = function (msg) {
-    if (msg.text == that.user.user_id) {
+    if (msg.text === that.user.user_id) {
       window.location.reload();
     }
   };
@@ -180,7 +194,7 @@ var ChatAPI = function (spec) {
   
   my.initPusher = function (login_callback) {
     my.pusher = APusher({home_url: my.home_url});
-    my.pusher.bindConnected(function() {  // wait to connect
+    my.pusher.bindConnected(function () {  // wait to connect
       that.login(spec.user_id, spec.avatar, spec.alias, function (JSON_login) {  // send Play! our socket key
         my.pusher.setUserInfo(that.user.session, that.user.user_id);
         my.userChannel = UserChannel({
@@ -189,7 +203,7 @@ var ChatAPI = function (spec) {
         });     
            
         my.sendMySocketID(function (JSON) {             
-          if (JSON.status == "okay") {
+          if (JSON.status === "okay") {
         
             my.broadcastChannel = Channel({
               channel_name: "presence-SHCH-broadcast",

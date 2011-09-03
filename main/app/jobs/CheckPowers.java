@@ -23,7 +23,7 @@ public class CheckPowers extends Job {
     public static final String DATA_CODE = "*&^%$!";
     public static final int HEARTBEAT_INTERVAL = 5; 
     
-    public void doJob () {
+    public synchronized void doJob () {
         processUpdates(getEvents());
 
         for (User u : myUsers.values()) {
@@ -32,9 +32,12 @@ public class CheckPowers extends Job {
         myUsers.clear(); 
         
         // call every 3 hours (60 * 60 * 3 / 5)
-        if (counter++ % 2160 == 0) {
-            System.gc();
-        }       
+        if (counter++ % 100 == 0) {
+            if (counter % 2200 == 0
+                || Runtime.getRuntime().freeMemory() < 20971520) { // 20 mb
+                System.gc();
+            }
+        }
     }
     
     private static void processUpdates (List<UserEvent.Event> events) {

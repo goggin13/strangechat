@@ -1,5 +1,5 @@
 /*jslint eqeq: true, newcap: true, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
-/*global document, Event, types, console, HTTP, RoomChannel, MatchMaker, APusher, Pusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
+/*global document, Event, types, console, HTTP, MatchMaker, APusher, Pusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
 
 
 var RoomMessage = function (spec) {
@@ -25,7 +25,9 @@ var RoomChannel = function (spec) {
   my.types = {
     ROOM_MESSAGE: "roommessage",
     USER_TYPING: "useristyping",
-    USED_POWER: "usedpower"
+    USED_POWER: "usedpower",
+    OPENED_KUBE: "openedkube",
+    REJECTED_KUBE: "rejectedkube"
   };
   
   my.push = function (obj) {
@@ -61,6 +63,16 @@ var RoomChannel = function (spec) {
     });
   };
 
+  that.bindToOpenKube = function (f) {
+    that.bind(my.types.OPENED_KUBE, function (response) {
+      f(JSON.parse(response.reward), JSON.parse(response.kube));
+    });
+  };
+
+  that.bindToRejectedKube = function (f) {
+    that.bind(my.types.REJECTED_KUBE, f);
+  };
+
   that.bindToUsedPower = function (f) {
     that.bind(my.types.USED_POWER, f);
   };
@@ -75,7 +87,7 @@ var RoomChannel = function (spec) {
   that.message = function (from, msg) {
     my.push(RoomMessage({
       from: from,
-      text: msg,
+      text: msg
     }));
   };
   

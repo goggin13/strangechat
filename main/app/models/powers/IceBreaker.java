@@ -65,11 +65,14 @@ public class IceBreaker extends SuperPower {
 		
 	@Override
 	public String use (User caller, User subject) {
+        // int index = IceBreakers.getRandomIndex();
         int index = chooseIndex(caller, subject);
         caller.addSeenIceBreaker(index);
-        if (subject != null) {
-            subject.addSeenIceBreaker(index);
-        }
+        caller.save();
+        // if (subject != null) {
+        //     subject.addSeenIceBreaker(index);
+        //     subject.save();
+        // }
         String txt = IceBreakers.get(index);
         return txt;
 	}
@@ -115,7 +118,7 @@ public class IceBreaker extends SuperPower {
             messages.add("What’s your favorite word?");
             messages.add("What’s your favorite number?");
             messages.add("What would be the title of your memoir?");
-            messages.add("How would you describe yourself in two words?                   ");
+            messages.add("How would you describe yourself in two words?");
             messages.add("What's something romantic to do on a first date?");
             messages.add("What's it like to be in love?");
             messages.add("What's your fondest memory from being small?");

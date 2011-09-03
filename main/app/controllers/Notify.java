@@ -5,7 +5,6 @@ import models.UserSession;
 import models.pusher.BasicUserInfo;
 import models.pusher.PresenceChannelData;
 import models.pusher.Pusher;
-import play.Play;
 import play.data.validation.Required;
 
 /**

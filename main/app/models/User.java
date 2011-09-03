@@ -5,14 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -75,6 +72,12 @@ public class User extends Model {
 	@ElementCollection  
 	public Set<Integer> icebreakers_seen;
 
+    /** number of gold coins this user has available to spend **/
+    public int coinCount;
+
+    /** number of coins this user has accrued all time */
+    public int coinsEarned;
+    
     /** True if this user is currently online */
     public long lastLogin;
 	
@@ -112,9 +115,12 @@ public class User extends Model {
 		this.offersMadeCount = 0;
 		this.offersReceivedCount = 0;
 		this.revealCount = 0;
+        coinCount = 0;
+        coinsEarned = 0;		
 	    this.superPowers = new LinkedList<StoredPower>();
         // this.recentMeetings = new LinkedList<User>();
-	    this.icebreakers_seen = new TreeSet<Integer>();
+        this.icebreakers_seen = new CopyOnWriteArraySet<Integer>();
+        // this.icebreakers_seen = new TreeSet<Integer>();      
 	    this.save();
         addStartUpPowers();
 	}
@@ -191,7 +197,7 @@ public class User extends Model {
      * @param i the index of the icebreaker to mark as seen */
     public void addSeenIceBreaker (int i) {
         this.icebreakers_seen.add(i);
-        this.save();
+        // this.save();
     }
 
     /**
@@ -242,6 +248,23 @@ public class User extends Model {
 	 * @return */
     public int countPowers (Power p) {
         return countPowers(p, 0);
+    }
+    
+    /**
+     * Add money to this users coin count 
+     * @param n number of coins to add */
+    public void addCoins (int n) {
+        this.coinCount += n;
+        this.coinsEarned += n;
+        this.save();
+    }
+
+    /**
+     * Subtract money from this users coin count, not below zero though
+     * @param n number of coins to subtract */
+    public void subtractCoins (int n) {
+        this.coinCount = Math.max(0, this.coinCount - n);
+        this.save();
     }
     
     /**
@@ -328,8 +351,7 @@ public class User extends Model {
 		/**
 		 * Indicate which fieds to skip; for now, just friends */
 		public boolean shouldSkipField(FieldAttributes f) {
-		  return f.getName().equals("friends")
-                 || f.getName().equals("user_id")
+		  return f.getName().equals("user_id")
                  || f.getName().equals("owner")
                  || f.getName().equals("recipient")
                  || f.getName().equals("isGood")

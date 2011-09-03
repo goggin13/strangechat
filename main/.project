@@ -15,16 +15,56 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	<linkedResources><link><name>playapps-1.4</name><type>2</type><location>/Users/goggin/Documents/CS/chatmaster/playapps-1.4/app</location></link>
-<link><name>conf/playapps-1.4</name><type>2</type><location>/Users/goggin/Documents/CS/chatmaster/playapps-1.4/conf</location></link>
-<link><name>secure</name><type>2</type><location>/Users/goggin/Library/play-1.2.1/modules/secure/app</location></link>
-<link><name>conf/secure</name><type>2</type><location>/Users/goggin/Library/play-1.2.1/modules/secure/conf</location></link>
-<link><name>public/secure</name><type>2</type><location>/Users/goggin/Library/play-1.2.1/modules/secure/public</location></link>
-<link><name>crud</name><type>2</type><location>/Users/goggin/Library/play-1.2.1/modules/crud/app</location></link>
-<link><name>conf/crud</name><type>2</type><location>/Users/goggin/Library/play-1.2.1/modules/crud/conf</location></link>
-<link><name>public/crud</name><type>2</type><location>/Users/goggin/Library/play-1.2.1/modules/crud/public</location></link>
-<link><name>greenscript-1.2.5</name><type>2</type><location>/Users/goggin/Documents/CS/chatmaster/greenscript-1.2.5/app</location></link>
-<link><name>conf/greenscript-1.2.5</name><type>2</type><location>/Users/goggin/Documents/CS/chatmaster/greenscript-1.2.5/conf</location></link>
-<link><name>public/greenscript-1.2.5</name><type>2</type><location>/Users/goggin/Documents/CS/chatmaster/greenscript-1.2.5/public</location></link>
-</linkedResources>
+	<linkedResources>
+		<link>
+			<name>crud</name>
+			<type>2</type>
+			<location>/Users/goggin/Library/play-1.2.1/modules/crud/app</location>
+		</link>
+		<link>
+			<name>playapps-1.4</name>
+			<type>2</type>
+			<location>/Users/goggin/Documents/CS/chatmaster/playapps-1.4/app</location>
+		</link>
+		<link>
+			<name>secure</name>
+			<type>2</type>
+			<location>/Users/goggin/Library/play-1.2.1/modules/secure/app</location>
+		</link>
+		<link>
+			<name>conf/crud</name>
+			<type>2</type>
+			<location>/Users/goggin/Library/play-1.2.1/modules/crud/conf</location>
+		</link>
+		<link>
+			<name>conf/greenscript-1.2.5</name>
+			<type>2</type>
+			<location>/Users/goggin/Documents/CS/chatmaster/greenscript-1.2.5/conf</location>
+		</link>
+		<link>
+			<name>conf/playapps-1.4</name>
+			<type>2</type>
+			<location>/Users/goggin/Documents/CS/chatmaster/playapps-1.4/conf</location>
+		</link>
+		<link>
+			<name>conf/secure</name>
+			<type>2</type>
+			<location>/Users/goggin/Library/play-1.2.1/modules/secure/conf</location>
+		</link>
+		<link>
+			<name>public/crud</name>
+			<type>2</type>
+			<location>/Users/goggin/Library/play-1.2.1/modules/crud/public</location>
+		</link>
+		<link>
+			<name>public/greenscript-1.2.5</name>
+			<type>2</type>
+			<location>/Users/goggin/Documents/CS/chatmaster/greenscript-1.2.5/public</location>
+		</link>
+		<link>
+			<name>public/secure</name>
+			<type>2</type>
+			<location>/Users/goggin/Library/play-1.2.1/modules/secure/public</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -8,10 +8,12 @@ import models.BlackList;
 import models.User;
 import models.UserEvent;
 import models.UserSession;
+import models.Utility;
 import models.karma.KarmaKube;
 import models.karma.Reward;
 import models.powers.StoredPower;
 import models.powers.SuperPower;
+import models.pusher.Pusher;
 import play.data.validation.Required;
 
 import com.google.gson.reflect.TypeToken;
@@ -68,7 +70,22 @@ public class Users extends Index {
 		}
 	}
 	
-	public static void openKube (@Required long kube_id) {
+	public static void spendCoins (@Required long amount) {
+	    UserSession sess = currentSession();
+        if (validation.hasErrors()) {
+           returnFailed(validation.errors());
+        } else if (sess == null) {
+           returnFailed("valid user and session required to use a karma kube");
+        } else if (sess.user.coinCount < amount) {
+           returnFailed("You have less than " + amount + " available");
+        }
+        
+        sess.user.coinCount -= amount;
+        sess.user.save();
+        returnOkay();
+	}
+	
+	public static void openKube (@Required long kube_id, @Required String channel) {
 	   KarmaKube kube = KarmaKube.findById(kube_id);
 	   UserSession sess = currentSession();
        if (validation.hasErrors()) {
@@ -86,10 +103,13 @@ public class Users extends Index {
        Reward reward = kube.open();
 	   HashMap<String, String> msg = new HashMap<String, String>();
 	   msg.put("reward", reward.toJson());
-	   returnOkay(msg);
+	   msg.put("kube", kube.toJson());
+	   String json = Utility.toJson(msg, new TypeToken<HashMap<String, String>>(){});
+       new Pusher().trigger(channel, "openedkube", json);
+	   returnOkay();
 	}
 
-	public static void rejectKube (@Required long kube_id) {
+	public static void rejectKube (@Required long kube_id, @Required String channel) {
 	   KarmaKube kube = KarmaKube.findById(kube_id);
 	   UserSession sess = currentSession();
        if (validation.hasErrors()) {
@@ -102,6 +122,7 @@ public class Users extends Index {
 	   }
        kube.rejected = true;
        kube.save();
+       new Pusher().trigger(channel, "rejectedkube", kube.toJson());
 	   returnOkay();
 	}
 	
@@ -110,7 +131,7 @@ public class Users extends Index {
 	 * @param power_id the id of a {@link StoredPower} to use
 	 * @param channel, the channel this power is being used in 
 	 * @param params optional, params to pass to SuperPower.use */
-	public static void usePower (@Required long power_id, @Required String channel, List<String> params) { 
+	public static synchronized void usePower (@Required long power_id, @Required String channel, List<String> params) { 
         if (validation.hasErrors()) {
             returnFailed(validation.errors());
         }	    
@@ -132,7 +153,14 @@ public class Users extends Index {
         if (params == null) {
             params = new LinkedList<String>();
         }
-        String result = storedPower.use(other != null ? other.user : null, params);
+        String result;
+        if (other == null) {
+            result = storedPower.use(null, params);
+        } else {
+            result = storedPower.use(other.user, params);
+            // other.user.save();
+        }
+        // user.user.save();
         
         UserEvent.UsedPower message;
         if (other == null) {
@@ -141,6 +169,7 @@ public class Users extends Index {
             message = new UserEvent.UsedPower(user.user.id, other.user.id, sp, storedPower.level, result);
         }
         
-	    Notify.push(channel, "usedpower", message.toJson(), null, callback());
+	    new Pusher().trigger(channel, "usedpower", message.toJson());
+	    returnOkay();
 	}
 }

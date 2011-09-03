@@ -71,7 +71,6 @@ public class StoredPower extends Model {
 	    StoredPower storedPower = StoredPower.find("byPowerAndOwner", p, u).first();
     	if (storedPower == null) {
     	  storedPower = new StoredPower(p, u);  
-    	  storedPower.save(); 
     	}
     	return storedPower;
 	}
