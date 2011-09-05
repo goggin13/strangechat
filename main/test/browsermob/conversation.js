@@ -27,7 +27,7 @@ var tx = browserMob.beginTransaction();
 var step = browserMob.beginStep("Step 1");
 
 selenium.open("http://superheroclubhouse.com/staging");
-selenium.waitForTextPresent("Create your super secret identity");
+selenium.waitForTextPresent("Superhero Name");
 
 var layers = [
   'tshirt_choose_color', 
