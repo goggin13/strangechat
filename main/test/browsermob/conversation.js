@@ -82,13 +82,13 @@ var sendKarma = function () {
 };
 
 if (flipCoin(2)) {
-  selenium.click("css=#gender_chooser .square:last");
+  selenium.click("css=#gender_chooser .item:last");
 }
 
-for (var i = 0; i < layers.length; i++) {
-  var r = Math.floor(1 + Math.random() * 8);
-  selenium.click("css=#" + layers[i] +" .color.box_" + r);
-}
+// for (var i = 0; i < layers.length; i++) {
+//   var r = Math.floor(1 + Math.random() * 8);
+//   selenium.click("css=#" + layers[i] +" .item.box_" + r);
+// }
 
 selenium.click("css=.button_save");
 selenium.waitForTextPresent("Enters your view");
