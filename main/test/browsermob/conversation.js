@@ -76,6 +76,8 @@ var sendKarma = function () {
   var curCount = parseInt(selenium.getXpathCount(xPath), 10);
   var nextCount = curCount + 1;
   selenium.click("css=.chatting .karma");
+  selenium.waitForElementPresent("css=#yes_splash_option");
+  selenium.click("css=#yes_splash_option");
   selenium.waitForXpathCount(xPath, nextCount);  
 };
 
@@ -108,7 +110,7 @@ for (i = 1; i < NUM_ITERS; i++) {
   var elapsedTime = timestamp() - iceBreakerTimer;
   if (elapsedTime > 17 && i < NUM_ITERS - 2 && flipCoin(3)) {
     sendIceBreaker();
-  } else if (flipCoin(5) && !sentKarma) {
+  } else if (flipCoin(2) && !sentKarma) {
     sendKarma();
   }
 }
