@@ -59,17 +59,22 @@ var sendChat = function (msg) {
 };
 
 var iceBreakerTimer = -1;
+var sentBefore = false;
 var sendIceBreaker = function () {
   pause();
   var xPath = '//img[@alt="IceBreaker"]';  
   var curCount = parseInt(selenium.getXpathCount(xPath), 10);
   var nextCount = curCount + 1;
   selenium.click("css=.chatting .ice_breaker");
+  if (!sentBefore) {
+    selenium.waitForElementPresent("css=.power_splash.ice_breaker");
+    selenium.click("css=.power_splash.ice_breaker");
+    sentBefore = true;
+  }
   selenium.waitForXpathCount(xPath, nextCount);  
   iceBreakerTimer = timestamp();
 };
 
-var sentKarma = false;
 var sendKarma = function () {
   pause();
   var xPath = '//img[@alt="Karma"]';  
@@ -110,7 +115,7 @@ for (i = 1; i < NUM_ITERS; i++) {
   var elapsedTime = timestamp() - iceBreakerTimer;
   if (elapsedTime > 17 && i < NUM_ITERS - 2 && flipCoin(3)) {
     sendIceBreaker();
-  } else if (flipCoin(2) && !sentKarma) {
+  } else if (flipCoin(4)) {
     sendKarma();
   }
 }
