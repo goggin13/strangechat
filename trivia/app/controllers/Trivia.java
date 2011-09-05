@@ -21,10 +21,10 @@ public class Trivia extends TriviaIndex{
 		if (validation.hasErrors()) {
 			returnFailed(validation.errors());
 		}		
-		String sql = "select distinct C.name as name from category C " +
-					"inner join question Q on " +
+		String sql = "select distinct C.name as name from Category C " +
+					"inner join Question Q on " +
 						"Q.category_id = C.id " +
-					"left join result R on " +
+					"left join Result R on " +
 						"R.question_id = Q.id " +
 				"where R.id is null " +
 				"group by C.name " +

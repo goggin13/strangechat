@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.HashMap;
 
+import jobs.Bootstrap;
 import models.BlackList;
 import models.User;
 import models.UserEvent;
@@ -17,6 +18,11 @@ public class Application extends Index {
 	@Before
 	public static void checkAuth () {
 		Index.checkAuthentication();
+	}
+
+	public static void reload_icebreakers () {
+	    Bootstrap.initIceBreakers();
+        index();
 	}
 
 	private static HashMap<String, String> getMasterStats () {

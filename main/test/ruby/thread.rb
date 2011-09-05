@@ -7,7 +7,8 @@ require "pusher-client"
 NUM_TESTERS = 8
 # ROOT_URL = "http://10.0.1.50:9000/"
 ROOT_URL = "http://173.246.101.127/"
-ROOT_ID = 2001
+ROOT_ID = Integer(ARGV[0])
+USE_POWERS = ARGV.length == 1 || ARGV[1] == "usepowers"
 CHANNEL = "#{ROOT_ID}-channel"
 NUM_ITERS = 10000
 
@@ -35,6 +36,8 @@ class ChatAPI
     @hero_id = u
     @alias = a
     @avatar = av
+    @my_channel = "#{CHANNEL}-"
+    @my_channel += (@hero_id % 2 == 1 ? @hero_id.to_s : (@hero_id-1).to_s)
     signin
   end
     
@@ -44,28 +47,66 @@ class ChatAPI
     sign_in_data = JSON.parse(resp)
     myData = sign_in_data[@hero_id.to_s]
     @user_id = myData["id"]
+    subscribe_to_me()
     @session = myData["session_id"]
     myData["superPowers"].each do |power| 
       name = power["power"]
       if (name == "ICE_BREAKER")
         @iceBreaker = power['id']
       end
+      if (name == "KARMA")
+        @karma = power['id']
+      end      
     end
     @@phone_book.put(@hero_id, @user_id, @session)
   end
+
+  def subscribe_to_me
+    PusherClient.logger = Dummy.new
+    @socket = PusherClient::Socket.new('c6c59a2e80e51c248a47')
+    @socket.connect(true) # Connect asynchronously
+    @socket.bind('pusher:connection_established') do |data|
+      @connected = true
+    end    
+    channel = @user_id.to_s + "_channel";
+    @socket.subscribe(channel)
+    @socket.channels[channel].bind('karma') do |json|
+      data = JSON.parse(json)
+      open_kube data['id']
+    end
+  end
+
+  def open_kube (kube_id) 
+    data = {
+      :channel => @my_channel, 
+      :kube_id => kube_id,
+      :user_id => @user_id,
+      :session => @session,
+    }
+    result = send "openkube", data
+  end
+
+  def use_karma(channel, other_hero_id) 
+    use_power channel, @karma, other_hero_id
+  end
     
   def use_icebreaker (channel, other_hero_id) 
+    use_power channel, @iceBreaker, other_hero_id
+  end
+  
+  def use_power (channel, power_id, other_hero_id) 
     other_hero = @@phone_book.get(other_hero_id)
     if other_hero.nil?
       return false
     end
     data = {
       :channel => channel, 
-      :power_id => @iceBreaker,
+      :power_id => power_id,
       :user_id => @user_id,
       :session => @session,
       :for_user => other_hero[:user_id],
-      :for_session => other_hero[:session]
+      :for_session => other_hero[:session],
+      "params[0]" => 1
     }
     result = send "usepower", data
   end
@@ -124,7 +165,7 @@ class MessageTimer
     @socket.channels[channel].bind('usedpower') do |data|
       from_id = JSON.parse(data)['from']
       markPowerReceived from_id
-    end    
+    end 
   end
   
   def incAndGet 
@@ -148,8 +189,10 @@ class MessageTimer
   def markPowerReceived (from_id) 
     # puts "got from #{from_id}"    
     counts = @powers[from_id]   
-    counts[1] += 1
-    @powers[from_id] = counts
+    if counts != nil
+      counts[1] += 1
+      @powers[from_id] = counts      
+    end
   end
   
   def markReceived (id) 
@@ -199,8 +242,9 @@ end
 class Tester
   @@message_timer = MessageTimer.new
   
-  def initialize(i, login=true)
+  def initialize(i, login=true, usePowers=true)
      @myID = i
+     @usePowers = usePowers
      @otherUser = (i % 2 == 1 ? @myID + 1 : @myID-1)
      @my_channel = "#{CHANNEL}-"
      @my_channel += (i % 2 == 1 ? @myID.to_s : (@myID-1).to_s) 
@@ -216,7 +260,7 @@ class Tester
   def run 
     while @@message_timer.myID < NUM_ITERS
       sendMessage(@@message_timer.incAndGet())
-      sleep(0.2)
+      sleep(1)
     end
     puts "sleeping..."
     sleep(3)
@@ -226,10 +270,14 @@ class Tester
     message = '{"type": "roommessage", "from":' + @api.user_id.to_s + ', "text": ' + mid.to_s + '}'
     @@message_timer.markSent(mid)
     @api.push(@my_channel, "roommessage", message)
-    if (mid > 20 && mid % 3 == 0) 
+    if (@usePowers && mid > 20 && mid % 3 == 0) 
       @@message_timer.markPowerSent(@api.user_id)
       @api.use_icebreaker @my_channel, @otherUser
     end
+    if (@usePowers && mid > 20 && mid % 5 == 0) 
+      @@message_timer.markPowerSent(@api.user_id)
+      @api.use_karma @my_channel, @otherUser
+    end    
     if (mid % 100 == 0)
       report
     end
@@ -243,7 +291,7 @@ end
 start = Time.now
 threads = Array.new
 for i in 0..NUM_TESTERS - 1
-  tester = Tester.new(ROOT_ID + i)
+  tester = Tester.new(ROOT_ID + i, true, USE_POWERS)
   threads[i] = Thread.new { tester.run() }
 end
 
@@ -254,3 +302,5 @@ finished = Time.now
 duration = finished - start
 puts "Completed in #{duration}"
 Tester.new(99, false).report
+
+

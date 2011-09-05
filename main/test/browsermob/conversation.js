@@ -65,10 +65,19 @@ var sendIceBreaker = function () {
   var curCount = parseInt(selenium.getXpathCount(xPath), 10);
   var nextCount = curCount + 1;
   selenium.click("css=.chatting .ice_breaker");
-  // selenium.waitForXpathCount(xPath, nextCount);  
+  selenium.waitForXpathCount(xPath, nextCount);  
   iceBreakerTimer = timestamp();
 };
 
+var sentKarma = false;
+var sendKarma = function () {
+  pause();
+  var xPath = '//img[@alt="Karma"]';  
+  var curCount = parseInt(selenium.getXpathCount(xPath), 10);
+  var nextCount = curCount + 1;
+  selenium.click("css=.chatting .karma");
+  selenium.waitForXpathCount(xPath, nextCount);  
+};
 
 if (flipCoin(2)) {
   selenium.click("css=#gender_chooser .square:last");
@@ -99,6 +108,8 @@ for (i = 1; i < NUM_ITERS; i++) {
   var elapsedTime = timestamp() - iceBreakerTimer;
   if (elapsedTime > 17 && i < NUM_ITERS - 2 && flipCoin(3)) {
     sendIceBreaker();
+  } else if (flipCoin(5) && !sentKarma) {
+    sendKarma();
   }
 }
 

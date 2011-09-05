@@ -5,14 +5,16 @@ public class BasicUserInfo {
     private String name;
     private String avatar;
     private long user_id;
+    private String session;
     
     public BasicUserInfo() {
     }
 
-    public BasicUserInfo(long user_id, String name, String avatar) {
+    public BasicUserInfo(long user_id, String name, String avatar, String session) {
         this.name = name;
         this.user_id = user_id;
         this.avatar = avatar;
+        this.session = session;
     }
 
     public String getName() {
@@ -21,6 +23,14 @@ public class BasicUserInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSession() {
+        return this.session;
+    }
+
+    public void setSession(String s) {
+        this.session = s;
     }
     
     public void setAvatar (String v) {

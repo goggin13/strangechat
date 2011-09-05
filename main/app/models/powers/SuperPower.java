@@ -66,6 +66,7 @@ public abstract class SuperPower {
     public boolean awardIfQualified (User user) {
     	int level = isQualified(user);
     	if (level > 0) {
+    	    System.out.println("Grant " + this.name + " to " + user.id);
     		grantTo(user, level);
     	}
     	return level > 0;

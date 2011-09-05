@@ -80,7 +80,6 @@ public class Pusher {
         return WS.url(uri).body(message).post();
     }
 
-
     /**
      * Generates an authentication signature for a private channel
      *
@@ -98,7 +97,6 @@ public class Pusher {
         return gson.toJson(auth);
     }
 
-
     /**
      * Generates an authentication signature for a presence channel
      *
@@ -108,9 +106,7 @@ public class Pusher {
      * @return The auth signature
      */
     public String createAuthString(String socketId, String channel, PresenceChannelData channelData) {
-
         Gson gson = new Gson();
-//        String jsonChannelData = jsonChannelData = gson.toJson(channelData);
         String jsonChannelData = gson.toJson(channelData);
         
         String signature = PusherUtil.sha256((socketId + ":"  + channel +  ":" + jsonChannelData ), this.secret);

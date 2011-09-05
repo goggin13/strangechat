@@ -132,7 +132,7 @@ public class User extends Model {
         sp.save();
         sp = new StoredPower(Power.KARMA, this);
         sp.level = 1;
-        sp.available = 10;
+        sp.available = 100;
         sp.save();       
 	}
 		
@@ -317,7 +317,7 @@ public class User extends Model {
 	}	
 
     public String getChannelName () {
-        return this.id + "_channel" + (Play.mode == Play.Mode.DEV ? "-local" : "");
+        return this.id + "_channel"; // + (Play.mode == Play.Mode.DEV ? "-local" : "");
     }
 			
 	/**

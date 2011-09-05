@@ -1,0 +1,121 @@
+## List of icebreakers 
+## After editing this file view /application/reload_icebreakers in a browser to clear
+## the cached messages
+## As you edit, keep in mind that we track which ice breakers a user has seen by 
+## using the INDEX of the message in this list.  Deleting single elements 
+## invalidate the saved indices which people have seen.  Not the end of the world, and
+## we can reset them and have everyone start over if we change a bunch, but keep it in mind.
+
+Did you like your high school experience?
+Have any unrequited loves?
+Have you ever wanted to be an astronaut?
+Would you rather be stuck in an elevator or locked in a bathroom?
+Do you think the world will end in 2012?
+Who are your heroes?
+When do you have your best ideas?
+If you won the lottery, what would be your first big purchase?
+If you could only wear one color clothing for the rest of your life, what would you choose?
+What’s your favorite kind of candy?
+What the craziest thing you’ve ever done?
+Does deja vu exist or are we all just slightly psychic?
+Would you rather fly or be able to run faster than 60 mph?
+What’s more important: a dream wedding or a perfect birthday?
+Where did you have your first kiss?
+What’s the worst thing you’ve ever done?
+If you had all the money you needed, would you still work?
+What's your kryptonite?
+Is it more important for superheros to be strong or fast?
+Are you better with recognizing faces or remembering names?
+Do you think Barack Obama is a good President?
+Why do villains always have to spend twenty minutes explaining why they're evil when they catch you?
+Do you like Facebook or Twitter more?
+Who is your favorite author?
+What was the worst class in middle school?
+What super power do you wish you possessed?
+What’s your favorite board game?
+Do you have any superhero siblings?
+Have you ever quit a job and why?
+Were you a fan of the Backstreet Boys? Who was your favorite?
+What’s your favorite word?
+What’s your favorite number?
+What would be the title of your memoir?
+How would you describe yourself in two words?
+What's something romantic to do on a first date?
+What's it like to be in love?
+What's your fondest memory from being small?
+Do you have any tattoos?
+What's the best meal you've ever had?
+What is your favorite food to eat in a bed?
+What's a secret you have?
+What’s your favorite smell?
+What did you dress up as for Halloween last year?
+What movie makes you cry?
+What's your stance on the afterlife?
+What's your take on soul mates?
+What is your greatest regret?
+Do you like spicy food and why?
+Who was your first crush?
+Do you own any pets?
+What is Angelina Jolie's super power?
+What are the 3 most important things in your life?
+What time period would you time travel to?
+Which female superhero would you want to hang out with?
+What instruments do you play?
+What is your favorite band?
+Where did humans come from?
+Do you think there are aliens? What're they like?
+If God had a face what would it look like?
+What's a funny joke?
+What do women want?
+Is it more important to be happy or to be stable in life?
+How do you know if it's love?
+How do you know if someone likes you?
+What makes you laugh?
+What makes people successful?
+Why do people do drugs?
+Why do people drink?
+How do you fall asleep?
+What's your secret lair like?
+Do you have a sidekick?
+Does your true identity wear glasses?
+What would you do to stop a crashing airplane?
+What would you do to stop an astroid from hitting Earth?
+How would you save a baby from a burning building?
+How often do you help little old ladies cross the street?
+How did you become a superhero?
+Who is your nemesis?
+When was the last time you cried?
+How many times have you saved a life?
+What's the best thing you've ever done?
+What was your first love like?
+Are your parents superheroes?
+Who is your favorite X-Men?
+Who is your greatest nemesis?
+What are your weaknesses?
+Blondes, redheads or brunettes?
+The Simpsons, South Park, Futurama or Family Guy?
+What's your superhero slogan?
+What's your theme song?
+What song do you sing in the shower?
+Where do you come from?
+What's your favorite television show?
+Do you peep out people's underwear with your x-ray vision?
+Do you have special superhero transportation?
+Where do you change into your superhero costume?
+Have you ever had any wardrobe malfunctions?
+Does your mask get itchy?
+Have you ever smelled what The Rock is cooking?  
+Do you think Jean Grey should have been with Wolverine or Cyclops?
+Was Godzilla just misunderstood?
+What was your best age?
+Would you give up everything to accomplish your dreams?
+Do politics matter?
+What's your favorite inspirational quote?
+In-n-Out or Shake Shack?
+Favorite city?
+What planet are you from?
+Why did the chicken cross the road?
+When did you learn you were special?
+How do you get to work?
+What did you do after your first kiss?
+Why are you so odd?

@@ -118,7 +118,7 @@ public class GeneralBootstrap extends Job {
         a1 = new Answer("Rowing", true);	a2 = new Answer("Skiing", false);	a3 = new Answer("Swimming", false);	a4 = new Answer("Diving", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Child expert Dr. Spock won an Olympic gold medal in what event?", a, c);
         a1 = new Answer("Teaching about evolution", true);	a2 = new Answer("Teaching about sex", false);	a3 = new Answer("Teaching about religion", false);	a4 = new Answer("Teaching about witches", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Why was John Scopes brought to trial in Tennessee in 1925?", a, c);
         
-        new TriviaResponse(c, "Welcome to General Trivia.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You ready to go?", ResponseType.SALUTATION);
 
         new TriviaResponse(c, "I don’t understand what you’re trying to say. Type that again?", ResponseType.REPEAT);
         new TriviaResponse(c, "You’re not making sense, try typing your response out again.", ResponseType.REPEAT);

@@ -20,6 +20,10 @@ public abstract class IntervalPower extends SuperPower {
         long current = getFieldValue(user);
         long used = count * this.award_interval;
         long availableSeconds = current - used;
+        // System.out.println("count = " + count);
+        // System.out.println("current = " + current);
+        // System.out.println("used = " + used);
+        // System.out.println("availableSeconds = " + availableSeconds);
         return (availableSeconds >= this.award_interval) ? 1 : 0;
 	}
 	

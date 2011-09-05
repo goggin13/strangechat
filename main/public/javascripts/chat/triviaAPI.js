@@ -4,17 +4,17 @@
 var TriviaBots = {
   Music: {
     alias: "Music",
-    startWord: "go",
+    startWord: "right on",
     avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
   },
   General: {
     alias: "General",      
-    startWord: "yes",
+    startWord: "it's on",
     avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
   },                                                                
   Movies: {        
     alias: "Movies",                                                       
-    startWord: "yes, ma\'am",                                            
+    startWord: "play",                                            
     avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
   },                                                                
   Books: {         
@@ -215,7 +215,6 @@ var TriviaAPI = function (spec) {
         name: category
       };
     HTTP.send(url, "GET", data, function (batch) {
-      console.debug(batch);
       if (batch.questions.length !== 0) {
         my.state = my.states.WELCOME;
       } else {

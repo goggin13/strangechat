@@ -91,6 +91,7 @@ public class MusicBootstrap extends Job {
     	a1 = new Answer("\"The Twist\" by Chubby Checker", true);	a2 = new Answer("\"Twist and Shout\" by The Beatles", false);	a3 = new Answer("\"Unchained Melody\" by Righteous Brothers", false);	a4 = new Answer("\"Stand By Me\" by Ben E. King", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What is the only song in the rock era to ever hit #1 twice?", a, c);
     	a1 = new Answer("\"All You Need Is Love\"", true);	a2 = new Answer("\"We Can Work It Out\"", false);	a3 = new Answer("\"Eight Days A Week\"", false);	a4 = new Answer("\"Paperback Writer\"", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("All of these Beatles' songs hit #1, but one of them only held the top spot for one week. Which one?", a, c);
     
+    
 		new TriviaResponse(c, "Man, I can’t understand ya!", ResponseType.REPEAT);
 		new TriviaResponse(c, "Come again?", ResponseType.REPEAT);
 		new TriviaResponse(c, "I don’t have the time to play these games. What’re ya saying?", ResponseType.REPEAT);
@@ -112,7 +113,7 @@ public class MusicBootstrap extends Job {
 		new TriviaResponse(c, "Get on my level, man.", ResponseType.INCORRECT);
 		new TriviaResponse(c, "You’re killing my vibes here, dude.", ResponseType.INCORRECT);
 		
-		new TriviaResponse(c, "You’re killing my vibes here, dude.", ResponseType.SALUTATION);
+		new TriviaResponse(c, "You want to jam with me?", ResponseType.SALUTATION);
 		
 		Logger.info("Bootstrapped music trivia");
     }

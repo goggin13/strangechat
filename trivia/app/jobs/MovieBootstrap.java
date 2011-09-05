@@ -77,8 +77,8 @@ public class MovieBootstrap extends Job {
         a1 = new Answer("Barbara Streisand", true);	a2 = new Answer("Judy Garland", false);	a3 = new Answer("Joan Rivers", false);	a4 = new Answer("Bette Midler", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Who said, \"I knew that with a mouth like mine I just had to be a star or something?\"", a, c);
         a1 = new Answer("The Full Monty", true);	a2 = new Answer("Bean", false);	a3 = new Answer("The Borrowers", false);	a4 = new Answer("Spiceworld", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Which 1997 film was the then most successful British movie of all time?", a, c);
         		
-		
-        new TriviaResponse(c, "Hi there, want to play?", ResponseType.SALUTATION);
+	
+        new TriviaResponse(c, "OMG! Let's quiz abt movies.", ResponseType.SALUTATION);
 
         new TriviaResponse(c, "Can\'t get that through my head. Can you try typing it again?", ResponseType.REPEAT);
         new TriviaResponse(c, "Are you trying to confuse a gal? Type that out again.", ResponseType.REPEAT);

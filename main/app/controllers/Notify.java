@@ -22,7 +22,8 @@ public class Notify extends Index {
         BasicUserInfo userInfo = new BasicUserInfo(
             userSession.user.id,
             userSession.user.alias, 
-            userSession.user.avatar
+            userSession.user.avatar,
+            userSession.session
         );        
         PresenceChannelData channelData = new PresenceChannelData(userSession.session, userInfo);
         String auth = pusher.createAuthString(socket_id, channel_name, channelData);
