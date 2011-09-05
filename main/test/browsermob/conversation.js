@@ -90,7 +90,7 @@ for (var i = 0; i < layers.length; i++) {
   selenium.click("css=#" + layers[i] +" .color.box_" + r);
 }
 
-selenium.click("id=button_startchat");
+selenium.click("css=.chat_random ");
 selenium.waitForTextPresent("Enters your view");
 
 var myName = selenium.getText("id=your_name");
