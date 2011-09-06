@@ -1,3 +1,5 @@
 tmp/
 test-result/
 *.pyc
+main/eclipse/
+trivia/eclipse/
