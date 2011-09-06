@@ -6,11 +6,13 @@ require "pusher-client"
 
 # ruby thread.rb 1001 
 
-NUM_TESTERS = 8
+ROOT_ID = Integer(ARGV[0])
+NUM_TESTERS = ARGV.length < 2 ? 8 : Integer(ARGV[1])
+USE_POWERS = ARGV.length < 3 || ARGV[2] == "usepowers"
+
 ROOT_URL = "http://10.0.1.50:9000/"
 # ROOT_URL = "http://173.246.101.127/"
-ROOT_ID = Integer(ARGV[0])
-USE_POWERS = ARGV.length == 1 || ARGV[1] == "usepowers"
+
 CHANNEL = "#{ROOT_ID}-channel"
 NUM_ITERS = 10000
 
@@ -262,7 +264,7 @@ class Tester
   def run 
     while @@message_timer.myID < NUM_ITERS
       sendMessage(@@message_timer.incAndGet())
-      sleep(.2)
+      sleep(0.2)
     end
     puts "sleeping..."
     sleep(3)
