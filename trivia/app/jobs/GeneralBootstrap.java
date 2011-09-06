@@ -13,11 +13,12 @@ import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import enums.ResponseType;
 
-@OnApplicationStart
 public class GeneralBootstrap extends Job {
 
     public void doJob() {
-        Category c = Category.getOrCreate("General");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;					
+        Category c = Category.getOrCreate("General");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;	
+        Category.clearQuestionsAndResponses(c);				
+        
         a1 = new Answer("The Declaration of Independence", true);	a2 = new Answer("The Constitution", false);	a3 = new Answer("The Bible", false);	a4 = new Answer("The Torah", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What famous document begins: \"When in the course of human events...\"?", a, c);
         a1 = new Answer("The U.S. Air Force.", true);	a2 = new Answer("The U.S. Navy", false);	a3 = new Answer("The U.S. Marines", false);	a4 = new Answer("The U.S. Army", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What current branch of the U.S. military was a corps of only 50 soldiers when World War I broke out?", a, c);
         a1 = new Answer("Roulette", true);	a2 = new Answer("Euchre", false);	a3 = new Answer("Mancala", false);	a4 = new Answer("Roshambo", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What game was created by French mathematician Blaise Pascal, which he discovered when doing experiments into perpetual motion?", a, c);

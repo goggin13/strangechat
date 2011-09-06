@@ -12,11 +12,12 @@ import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import enums.ResponseType;
 
-@OnApplicationStart
 public class TVBootstrap extends Job {
 
     public void doJob() {
-    	Category c = Category.getOrCreate("TV");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;					
+    	Category c = Category.getOrCreate("TV");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;				
+        Category.clearQuestionsAndResponses(c);
+            		
         a1 = new Answer("Ellen", true);	a2 = new Answer("Friends", false);	a3 = new Answer("Seinfeld", false);	a4 = new Answer("ER", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Which show was originally called These Friends of Mine?", a, c);
         a1 = new Answer("Thing (the hand)", true);	a2 = new Answer("Grandmama", false);	a3 = new Answer("Uncle Fester", false);	a4 = new Answer("Pugsley", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Other than Lurch, who did Ted Cassidy play in The Addams Family?", a, c);
         a1 = new Answer("Theo", true);	a2 = new Answer("Michael", false);	a3 = new Answer("Jim", false);	a4 = new Answer("Allan", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What was Kojak's first name?", a, c);

@@ -35,6 +35,7 @@ public class CheckPowers extends Job {
         if (counter++ % 100 == 0) {
             if (counter % 2200 == 0
                 || Runtime.getRuntime().freeMemory() < 20971520) { // 20 mb
+                Logger.warn("Request Garbage Collection");
                 System.gc();
             }
         }

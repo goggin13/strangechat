@@ -1,10 +1,8 @@
 package models;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 
 import play.db.jpa.Model;
 

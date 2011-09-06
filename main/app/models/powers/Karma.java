@@ -4,6 +4,9 @@ import java.util.List;
 
 import models.User;
 import models.karma.KarmaKube;
+
+import org.hibernate.exception.LockAcquisitionException;
+
 import play.Logger;
  
 public class Karma extends IntervalPower {
@@ -20,9 +23,42 @@ public class Karma extends IntervalPower {
 			return "";
 		}
 		boolean isGood = params.get(0).equals("1");
-		KarmaKube kube = new KarmaKube(caller, subject, isGood);
-		subject.notifyMe("karma", kube.toJson());
-		return "KarmaKube-" + kube.id;
+		
+		boolean success = false;
+		int tries = 0;
+		KarmaKube kube = null;
+		while (!success && tries++ < 5) {
+			try {
+				kube = new KarmaKube(caller, subject, isGood);
+				kube.save();
+				success = true;
+			} catch (LockAcquisitionException e) {
+				Logger.error("CAUGHT 1 (%s)", tries);
+				pause(500);
+			} catch (play.exceptions.JavaExecutionException e) {
+				Logger.error("CAUGHT2 (%s)", tries);
+				pause(500);
+			} catch (javax.persistence.PersistenceException e) {
+				Logger.error("CAUGHT3 (%s)", tries);
+				pause(500);
+			}
+		}
+		
+		if (kube != null) {
+			subject.notifyMe("karma", kube.toJson());
+			return "KarmaKube-" + kube.id;
+		} else {
+			return "failed";
+		}
+
+	}
+	
+	private void pause (long secs) {
+		try {
+			Thread.sleep(secs);
+		} catch (InterruptedException e) {
+			
+		}
 	}
 	
 	@Override

@@ -15,7 +15,7 @@ import play.data.validation.Required;
 import play.db.DB;
 
 public class Trivia extends TriviaIndex{
-	private static final int BATCH_SIZE = 5;
+	private static final int BATCH_SIZE = 3;
 	
 	public static void getEligibleTrivia (@Required long user_id) {
 		if (validation.hasErrors()) {

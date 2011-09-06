@@ -128,6 +128,7 @@ var TriviaAPI = function (spec) {
         type: "continue",
         text: "To start another round, just type \"" + my.startWord + "\""    
       });
+      my.correct = 0;
       my.state = my.states.WAITING;      
     });
   };

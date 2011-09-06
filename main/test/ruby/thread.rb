@@ -35,6 +35,7 @@ end
 class ChatAPI 
   attr_accessor :user_id
   @@phone_book = PhoneBook.new
+  @@counter = 0
   
   def initialize(u, a, av)
     @hero_id = u
@@ -91,6 +92,8 @@ class ChatAPI
   end
 
   def use_karma(channel, other_hero_id) 
+    # @@counter += 1
+    # puts "karma - #{@@counter}"
     use_power channel, @karma, other_hero_id
   end
     

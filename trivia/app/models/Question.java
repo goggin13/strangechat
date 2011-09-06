@@ -53,6 +53,19 @@ public class Question extends Model {
     	Collections.shuffle(this.answers);
     }
     
+    @Override
+    public Question delete () {
+        List<Result> results = Result.find("byQuestion", this).fetch();
+        for (Result r : results) {
+            r.delete();
+        }
+        return super.delete();
+    }
+    
+    public String toString () {
+        return this.category.name + " : " + this.text;
+    }
+    
     public static List<Question> getByCategory (String n) {
     	Category c = Category.getOrCreate(n);
     	return Question.find("byCategory", c).fetch();

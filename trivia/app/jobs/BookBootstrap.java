@@ -12,11 +12,13 @@ import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import enums.ResponseType;
 
-@OnApplicationStart
-public class ZBookBootstrap extends Job {
+public class BookBootstrap extends Job {
 
     public void doJob() {
-        Category c = Category.getOrCreate("Books");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;					
+        
+        Category c = Category.getOrCreate("Books");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;	
+        Category.clearQuestionsAndResponses(c);
+                
         a1 = new Answer("Chitty Chitty Bang Bang", true);	a2 = new Answer("The Diamond Smugglers", false);	a3 = new Answer("For Your Eyes Only", false);	a4 = new Answer("Thrilling Cities", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("In which Ian Fleming novel did the dog Edison appear?", a, c);
         a1 = new Answer("P.G. Wodehouse", true);	a2 = new Answer("Tom Brown", false);	a3 = new Answer("Alfred Tennyson", false);	a4 = new Answer("Agatha Christie", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Which writer did Sean O' Casey describe as English Literature's performing flea?", a, c);
         a1 = new Answer("Russian Revolution", true);	a2 = new Answer("Nuclear bombs", false);	a3 = new Answer("Invention of the printing press", false);	a4 = new Answer("World War II", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Ten Days That Shook the World is about what?", a, c);
@@ -51,6 +53,10 @@ public class ZBookBootstrap extends Job {
         a1 = new Answer("White Noise", true);	a2 = new Answer("Carpenter's Gothic", false);	a3 = new Answer("Seize the Day", false);	a4 = new Answer("Going Postal", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("A professor of Hitler studies at a small liberal arts college flees a toxic outbreak with his family, shoots his wife's lover, and then takes him to the hospital in which book?", a, c);
         a1 = new Answer("JR", true);	a2 = new Answer("The Adventures of Augie March", false);	a3 = new Answer("Billy Bathgate", false);	a4 = new Answer("Omensetter's Luck", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("The central figure of this novel, which is all dialogue, is an 11 year-old boy who builds a financial empire from a phone booth near his school", a, c);
         a1 = new Answer("A Confederacy of Dunces", true);	a2 = new Answer("East of Eden", false);	a3 = new Answer("Grapes of Wrath", false);	a4 = new Answer("Rama II", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("This novel is set in New Orleans and follows the various French Quarter occupations and exploits of one Ignatius J. Reilly, obese admirer of the Roman philosopher Boethius", a, c);
+        
+
+        
+        new TriviaResponse(c, "Welcome to Book Trivia.", ResponseType.SALUTATION);
 
         new TriviaResponse(c, "I don’t understand what you’re trying to say. Type that again?", ResponseType.REPEAT);
         new TriviaResponse(c, "You’re not making sense, try typing your response out again.", ResponseType.REPEAT);

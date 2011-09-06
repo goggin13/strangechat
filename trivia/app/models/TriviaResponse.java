@@ -38,6 +38,10 @@ public class TriviaResponse extends Model {
 		save();
 	}
 	
+	public String toString () {
+	    return this.category.name + "(" + this.type + ") : " + this.text;
+	}
+	
 	public static TriviaResponse getRandomRepeatResponse (Category c) {
 		return getRandomResponse(c, ResponseType.REPEAT);
 	}

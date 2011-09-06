@@ -2,6 +2,7 @@ package models.karma;
 import java.util.Random;
 
 import models.Utility;
+
 import com.google.gson.reflect.TypeToken;
 
 public class Fart extends Reward {

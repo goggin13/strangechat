@@ -60,7 +60,6 @@ public class Application extends Index {
 		HashMap<String, String> masterStats = getMasterStats();
 		boolean isDev = Play.mode == Play.Mode.DEV;
 		User admin = User.find("byAlias", "SHCH_ADMIN_USER").first();
-		String home_url = Play.mode == Play.Mode.DEV ? "http://localhost:9000/": "http://173.246.101.127/";
         render(masterStats, isDev, admin);
     }
 

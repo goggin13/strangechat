@@ -17,7 +17,6 @@ import models.karma.KarmaKube;
 import models.powers.StoredPower;
 import models.powers.SuperPower;
 import models.pusher.Pusher;
-import play.Play;
 import play.db.jpa.Model;
 
 import com.google.gson.ExclusionStrategy;
@@ -132,7 +131,7 @@ public class User extends Model {
         sp.save();
         sp = new StoredPower(Power.KARMA, this);
         sp.level = 1;
-        sp.available = 100;
+        sp.available = 10000;
         sp.save();       
 	}
 		

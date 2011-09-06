@@ -12,11 +12,12 @@ import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import enums.ResponseType;
 
-@OnApplicationStart
 public class MusicBootstrap extends Job {
 
     public void doJob() {
-    	Category c = Category.getOrCreate("Music");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;					
+    	Category c = Category.getOrCreate("Music");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;	
+        Category.clearQuestionsAndResponses(c);
+            					
     	a1 = new Answer("Eleanor", true);	a2 = new Answer("A Day in the Life", false);	a3 = new Answer("Can't Buy Me Love", false);	a4 = new Answer("Good Day Sunshine", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Which hit managed to rhyme groovy with movie?", a, c);
     	a1 = new Answer("David Bowie", true);	a2 = new Answer("Ziggy Stardust", false);	a3 = new Answer("MC Hammer", false);	a4 = new Answer("Snoop Dogg", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Who issued bonds in his name for people to invest in in 1997?", a, c);
     	a1 = new Answer("Booby McFerrin", true);	a2 = new Answer("Bob Marley", false);	a3 = new Answer("Herbie Hancock", false);	a4 = new Answer("Chick Corea", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Who had an 80s No 1 with Don't Worry Be Happy?", a, c);

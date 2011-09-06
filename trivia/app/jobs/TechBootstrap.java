@@ -13,11 +13,12 @@ import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import enums.ResponseType;
 
-@OnApplicationStart
 public class TechBootstrap extends Job {
 
     public void doJob() {
-        Category c = Category.getOrCreate("Tech");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;					
+        Category c = Category.getOrCreate("Tech");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;			
+        Category.clearQuestionsAndResponses(c);
+                		
         a1 = new Answer("Wounds", true);	a2 = new Answer("Roof shingles", false);	a3 = new Answer("Tiles", false);	a4 = new Answer("Books", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Alan Roberts' special super glue was used to join what?", a, c);
         a1 = new Answer("Altair", true);	a2 = new Answer("Apple", false);	a3 = new Answer("Amstrad", false);	a4 = new Answer("Commodore PET", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What was the name of the first home computer to be manufactured?", a, c);
         a1 = new Answer("R.U.R.", true);	a2 = new Answer(" The Makropulos Affair", false);	a3 = new Answer("The Absolute at Large", false);	a4 = new Answer("Krakatit", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Which play by Karel Capek introduced the word robot?", a, c);
@@ -47,36 +48,18 @@ public class TechBootstrap extends Job {
 
         new TriviaResponse(c, "Welcome to Tech Trivia.", ResponseType.SALUTATION);
 
-        new TriviaResponse(c, "I don’t understand what you’re trying to say. Type that again?", ResponseType.REPEAT);
-        new TriviaResponse(c, "You’re not making sense, try typing your response out again.", ResponseType.REPEAT);
-        new TriviaResponse(c, "No time for gibberish, try responding again.", ResponseType.REPEAT);
-        new TriviaResponse(c, "It’s so uninteresting to be indecipherable. Try that again?", ResponseType.REPEAT);
-        new TriviaResponse(c, "I don’t understand your answer and I won’t respond to it", ResponseType.REPEAT);
-        new TriviaResponse(c, "I suppose you think that was terribly clever. However, I don’t understand it. Type that again?", ResponseType.REPEAT);
+        new TriviaResponse(c, "Does not compute. Try again!", ResponseType.REPEAT);
+        new TriviaResponse(c, "Unable to understand response. Try again.", ResponseType.REPEAT);
 
-        new TriviaResponse(c, "You’re rocking it but how long can you keep this up?", ResponseType.CORRECT);
-        new TriviaResponse(c, "Yes.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Sure.", ResponseType.CORRECT);
-        new TriviaResponse(c, "You got it. ", ResponseType.CORRECT);
-        new TriviaResponse(c, "One can’t expect you to get everything wrong, I guess.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Now you’re picking up what I’m putting down!", ResponseType.CORRECT);
-        new TriviaResponse(c, "You’re doing well. I’m surprised.", ResponseType.CORRECT);
-        new TriviaResponse(c, "You just might make it through this thing. ", ResponseType.CORRECT);
-        new TriviaResponse(c, "I daresay you might be right.", ResponseType.CORRECT);
-        new TriviaResponse(c, "I’ll give that one to you. It was an easy one, though.", ResponseType.CORRECT);
+        new TriviaResponse(c, "That is correct.", ResponseType.CORRECT); 
+        new TriviaResponse(c, "You are correct.", ResponseType.CORRECT);
+        new TriviaResponse(c, "I’m envious of your brains.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Right.", ResponseType.CORRECT);
 
-        new TriviaResponse(c, "You’re wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Nah.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Nope.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Wrong!", ResponseType.INCORRECT);
-        new TriviaResponse(c, "No way, Jose.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "I feel kinda bad about how wrong you are.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "That’s just wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You’re totally off.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You got that wrong. I’m not surprised.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Wrong. You’ll never make it through this.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You’re done for. Wrong!", ResponseType.INCORRECT);
-        new TriviaResponse(c, "I can’t believe you got that one wrong! It was so easy.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "That is incorrect.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "I’m sorry, you are not correct.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Such a n00b.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Wrong.", ResponseType.INCORRECT);
         
         Logger.info("Bootstrapped Tech trivia");
     }

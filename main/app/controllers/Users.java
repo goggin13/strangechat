@@ -146,7 +146,7 @@ public class Users extends Index {
         if (storedPower == null) {
             returnFailed("no power by that ID exists");
         } else if (!storedPower.canUse()) {
-            returnFailed("Use Power : You don't have any of that power remaining!");
+            returnFailed("Use Power (" + storedPower.power.toString() + "): You don't have any of that power remaining!");
         }
 
         SuperPower sp = storedPower.getSuperPower();

@@ -1,10 +1,8 @@
 package models;
 
-import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import play.db.DB;
 import play.db.jpa.Model;
 
 import com.google.gson.Gson;

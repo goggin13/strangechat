@@ -13,11 +13,12 @@ import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import enums.ResponseType;
 
-@OnApplicationStart
 public class CatBootstrap extends Job {
 
     public void doJob() {
-        Category c = Category.getOrCreate("Cats");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;					
+        Category c = Category.getOrCreate("Cats");	List<Answer> a; Answer a1; Answer a2; Answer a3; Answer a4;	
+        Category.clearQuestionsAndResponses(c);
+                				
         a1 = new Answer("Five days", true);	a2 = new Answer("One month", false);	a3 = new Answer("One week", false);	a4 = new Answer("One dat", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("How long does a cat typically stay in heat?", a, c);
         a1 = new Answer("Phyllis", true);	a2 = new Answer("Tara", false);	a3 = new Answer("Bette", false);	a4 = new Answer("Doris", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What was Felix the cat's girlfriend's name?", a, c);
         a1 = new Answer("Sweet", true);	a2 = new Answer("Savory", false);	a3 = new Answer("Spicy", false);	a4 = new Answer("Salty", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Cats are unable to detect what taste?", a, c);
@@ -30,37 +31,20 @@ public class CatBootstrap extends Job {
         a1 = new Answer("18", true);	a2 = new Answer("12", false);	a3 = new Answer("10", false);	a4 = new Answer("20", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("House cats have how many claws in total?", a, c);
         
         new TriviaResponse(c, "Welcome to Cat Trivia.", ResponseType.SALUTATION);
+        
+        new TriviaResponse(c, "Huh? Type that again.", ResponseType.REPEAT);
+        new TriviaResponse(c, "I can’t hear you! Try typing that again.", ResponseType.REPEAT);
 
-        new TriviaResponse(c, "I don’t understand what you’re trying to say. Type that again?", ResponseType.REPEAT);
-        new TriviaResponse(c, "You’re not making sense, try typing your response out again.", ResponseType.REPEAT);
-        new TriviaResponse(c, "No time for gibberish, try responding again.", ResponseType.REPEAT);
-        new TriviaResponse(c, "It’s so uninteresting to be indecipherable. Try that again?", ResponseType.REPEAT);
-        new TriviaResponse(c, "I don’t understand your answer and I won’t respond to it", ResponseType.REPEAT);
-        new TriviaResponse(c, "I suppose you think that was terribly clever. However, I don’t understand it. Type that again?", ResponseType.REPEAT);
+        new TriviaResponse(c, "*Yes*", ResponseType.CORRECT);
+        new TriviaResponse(c, "Yes, lol.", ResponseType.CORRECT);
+        new TriviaResponse(c, "FTW!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Very nice.", ResponseType.CORRECT);
 
-        new TriviaResponse(c, "You’re rocking it but how long can you keep this up?", ResponseType.CORRECT);
-        new TriviaResponse(c, "Yes.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Sure.", ResponseType.CORRECT);
-        new TriviaResponse(c, "You got it. ", ResponseType.CORRECT);
-        new TriviaResponse(c, "One can’t expect you to get everything wrong, I guess.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Now you’re picking up what I’m putting down!", ResponseType.CORRECT);
-        new TriviaResponse(c, "You’re doing well. I’m surprised.", ResponseType.CORRECT);
-        new TriviaResponse(c, "You just might make it through this thing. ", ResponseType.CORRECT);
-        new TriviaResponse(c, "I daresay you might be right.", ResponseType.CORRECT);
-        new TriviaResponse(c, "I’ll give that one to you. It was an easy one, though.", ResponseType.CORRECT);
-
-        new TriviaResponse(c, "You’re wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Nah.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Nope.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Wrong!", ResponseType.INCORRECT);
-        new TriviaResponse(c, "No way, Jose.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "I feel kinda bad about how wrong you are.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "That’s just wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You’re totally off.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You got that wrong. I’m not surprised.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Wrong. You’ll never make it through this.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You’re done for. Wrong!", ResponseType.INCORRECT);
-        new TriviaResponse(c, "I can’t believe you got that one wrong! It was so easy.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You’re wrong. Deal with it!", ResponseType.INCORRECT);
+        new TriviaResponse(c, "*No*", ResponseType.INCORRECT);
+        new TriviaResponse(c, "No, lol.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You’re so off!", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You stink.", ResponseType.INCORRECT);
         
         Logger.info("Bootstrapped cat trivia");
     }

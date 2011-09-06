@@ -5,7 +5,6 @@ import play.Play;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import play.test.Fixtures;
-import play.vfs.VirtualFile;
 
 @OnApplicationStart
 public class Bootstrap extends Job {
@@ -18,11 +17,18 @@ public class Bootstrap extends Job {
     }
         
     public void doJob() {
-        if (Play.mode == Play.Mode.DEV) {
-            Fixtures.deleteDatabase();
-            Fixtures.loadModels("bootstrap-data-dev.yml");
-        }
+		 if (Play.mode == Play.Mode.DEV) {
+			 Fixtures.deleteDatabase();
+			 Fixtures.loadModels("bootstrap-data-dev.yml");
+		 }
         initIceBreakers();
+        new BookBootstrap().now();
+        new CatBootstrap().now();
+        new TechBootstrap().now();
+        new MusicBootstrap().now();
+        new MovieBootstrap().now();
+        new GeneralBootstrap().now();
+        new TVBootstrap().now();
     }
  
 }
