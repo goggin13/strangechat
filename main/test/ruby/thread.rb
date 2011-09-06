@@ -4,9 +4,11 @@ require 'uri'
 require 'json'
 require "pusher-client"
 
+# ruby thread.rb 1001 
+
 NUM_TESTERS = 8
-# ROOT_URL = "http://10.0.1.50:9000/"
-ROOT_URL = "http://173.246.101.127/"
+ROOT_URL = "http://10.0.1.50:9000/"
+# ROOT_URL = "http://173.246.101.127/"
 ROOT_ID = Integer(ARGV[0])
 USE_POWERS = ARGV.length == 1 || ARGV[1] == "usepowers"
 CHANNEL = "#{ROOT_ID}-channel"
@@ -260,7 +262,7 @@ class Tester
   def run 
     while @@message_timer.myID < NUM_ITERS
       sendMessage(@@message_timer.incAndGet())
-      sleep(1)
+      sleep(.2)
     end
     puts "sleeping..."
     sleep(3)
