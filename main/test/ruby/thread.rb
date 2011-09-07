@@ -6,12 +6,16 @@ require "pusher-client"
 
 # ruby thread.rb 1001 
 
-ROOT_ID = Integer(ARGV[0])
+root = Integer(ARGV[0])
+if root % 2 == 0
+  root += 1
+end
+ROOT_ID = root
 NUM_TESTERS = ARGV.length < 2 ? 8 : Integer(ARGV[1])
 USE_POWERS = ARGV.length < 3 || ARGV[2] == "usepowers"
 
 # ROOT_URL = "http://10.0.1.50:9000/"
-ROOT_URL = "http://173.246.101.127/"
+ROOT_URL = "http://173.246.101.145/"
 
 CHANNEL = "#{ROOT_ID}-channel"
 NUM_ITERS = 10000
