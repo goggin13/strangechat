@@ -271,7 +271,7 @@ class Tester
   def run 
     while @@message_timer.myID < NUM_ITERS
       sendMessage(@@message_timer.incAndGet())
-      sleep(0.2)
+      sleep(1)
     end
     puts "sleeping..."
     sleep(3)
