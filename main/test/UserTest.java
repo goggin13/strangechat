@@ -130,10 +130,11 @@ public class UserTest extends UnitTest {
         // user 2 lower
         givePowersToUser(user1, Power.EMOTION, 5, 2, 1);
         givePowersToUser(user2, Power.EMOTION, 3, 7, 2);
+
+        givePowersToUser(user1, Power.KARMA, 7, 1, 1);
+        givePowersToUser(user2, Power.KARMA, 5, 4, 1);
         
-        int expected_kubeCount = user1.getKubes().size() 
-                                 + user2.getKubes().size() 
-                                 - User.INITIAL_KARMA_KUBES;
+        int expected_kubeCount = user1.getKubes().size() + user2.getKubes().size();
                                  
         int expected_exclusionCount = UserExclusion.userGroups(user1.id).size() + 
                                         UserExclusion.userGroups(user2.id).size();
@@ -160,6 +161,10 @@ public class UserTest extends UnitTest {
         assertEquals(4, user1.countUsedPowers(Power.ICE_BREAKER));
         assertEquals(8 - User.INITIAL_ICE_BREAKERS, user1.countAvailablePowers(Power.ICE_BREAKER));
         assertEquals(1, user1.currentLevel(Power.ICE_BREAKER));
+
+        assertEquals(5, user1.countUsedPowers(Power.KARMA));
+        assertEquals(12 - User.INITIAL_KARMA, user1.countAvailablePowers(Power.KARMA));
+        assertEquals(1, user1.currentLevel(Power.KARMA));
 
         assertEquals(3, user1.countUsedPowers(Power.MIND_READER));
         assertEquals(8, user1.countAvailablePowers(Power.MIND_READER));

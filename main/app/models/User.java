@@ -35,7 +35,7 @@ import enums.Power;
 @Entity
 public class User extends Model {
     final public static int INITIAL_ICE_BREAKERS = 2;
-    final public static int INITIAL_KARMA_KUBES = 3;
+    final public static int INITIAL_KARMA = 3;
         
     @Transient
 	public static long admin_id = -3L;    
@@ -135,7 +135,7 @@ public class User extends Model {
         sp.save();
         sp = new StoredPower(Power.KARMA, this);
         sp.level = 1;
-        sp.available = INITIAL_KARMA_KUBES;
+        sp.available = INITIAL_KARMA;
         sp.save();       
 	}
 		
@@ -371,6 +371,9 @@ public class User extends Model {
             if (theirStoredPower.power == Power.ICE_BREAKER) {
                 int add = Math.max(0, theirStoredPower.available - INITIAL_ICE_BREAKERS);
                 myStoredPower.available += add;
+            } else if (theirStoredPower.power == Power.KARMA) {
+                int add = Math.max(0, theirStoredPower.available - INITIAL_KARMA);
+                myStoredPower.available += add;                
             } else {
                 myStoredPower.available += theirStoredPower.available;
             }
@@ -382,13 +385,9 @@ public class User extends Model {
             this.addSeenIceBreaker(i);
         }
         
-        int counter = 0;
         for (KarmaKube k : user.getKubes()) {
-            // dont regift the ones you get for free
-            if (counter++ >= INITIAL_KARMA_KUBES) {
-                k.recipient_id = this.id;
-                k.save();   
-            }
+            k.recipient_id = this.id;
+            k.save();   
         }
         
         for (Long group_id : UserExclusion.userGroups(user.id)) {

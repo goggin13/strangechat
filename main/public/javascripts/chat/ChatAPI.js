@@ -184,7 +184,7 @@ var ChatAPI = function (spec) {
         consume_user_id: user_id,
         user_id: that.user.user_id
       };
-    that.send(url, "GET", data);
+    that.send(url, "GET", data, callback);
   };
 
   my.initUserChannelBindings = function () {
