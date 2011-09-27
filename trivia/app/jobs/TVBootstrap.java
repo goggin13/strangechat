@@ -72,35 +72,50 @@ public class TVBootstrap extends Job {
         a1 = new Answer("Steve Martin", true);	a2 = new Answer("Alec Baldwin", false);	a3 = new Answer("Tom Hanks", false);	a4 = new Answer("Robin Williams", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Who's been Saturday Night Live's most frequent host?", a, c);
         a1 = new Answer("Martha Stewart", true);	a2 = new Answer("Oprah", false);	a3 = new Answer("Rachael Ray", false);	a4 = new Answer("Ellen", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("What happy host chirps on TV: \"It's a good thing\"?", a, c);
     
-        new TriviaResponse(c, "Welcome to TV Trivia.", ResponseType.SALUTATION);
-
-        new TriviaResponse(c, "Like, what?", ResponseType.REPEAT);
         new TriviaResponse(c, "I totally don’t understand what you’re saying. Type that out again?", ResponseType.REPEAT);
-        new TriviaResponse(c, "You’re making like, no sense. Boring. ", ResponseType.REPEAT);
-        new TriviaResponse(c, "La, la, la I can’t understand you. Try again.", ResponseType.REPEAT);
+        new TriviaResponse(c, "Like, what?", ResponseType.REPEAT);
+        new TriviaResponse(c, "You’re making like, no sense. Boring. Just tell me the letter of the answer you want.", ResponseType.REPEAT);
+        new TriviaResponse(c, "La, la, la I can’t understand you. Try again with only the first letter of the answer.", ResponseType.REPEAT);
         new TriviaResponse(c, "Unfair, I don’t know what you’re trying to say! ", ResponseType.REPEAT);
-
-        new TriviaResponse(c, "You’re rocking it!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Right.", ResponseType.CORRECT);
+        new TriviaResponse(c, "You're rocking it!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Totally.", ResponseType.CORRECT);
         new TriviaResponse(c, "Totally awesome.", ResponseType.CORRECT);
         new TriviaResponse(c, "Awesome.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Totally.", ResponseType.CORRECT);
         new TriviaResponse(c, "Yes way.", ResponseType.CORRECT);
-        new TriviaResponse(c, "OMG you’re so good at this game!", ResponseType.CORRECT);
+        new TriviaResponse(c, "OMG you're so good at this game!", ResponseType.CORRECT);
         new TriviaResponse(c, "Definitely.", ResponseType.CORRECT);
         new TriviaResponse(c, "Yes!", ResponseType.CORRECT);
         new TriviaResponse(c, "So right.", ResponseType.CORRECT);
         new TriviaResponse(c, "Way to go!", ResponseType.CORRECT);
-
+        new TriviaResponse(c, "Way.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Suuuure!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Wr-ong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "You’re so clueless.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "OMG don’t you know anything?", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Clueless.", ResponseType.INCORRECT);
         new TriviaResponse(c, "No way.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "OMG don’t you know anything?", ResponseType.INCORRECT);
         new TriviaResponse(c, "Totally NOT awesome.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "NOT.", ResponseType.INCORRECT);
         new TriviaResponse(c, "I’m kinda like, feeling bad for you right now.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Def so wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Ew, no!", ResponseType.INCORRECT);
         new TriviaResponse(c, "You’re totally off.", ResponseType.INCORRECT);
         new TriviaResponse(c, "That’s so wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Talk to the hand. You’re so off.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Talk to the hand. ", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Definitely not.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "What's up? Type \"tv\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Hiiiiiiiiiiiiiii. Type \"hi\" back to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "What's up! Type back \"nothing\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Heyo! Wanna go? Respond back \"party starter\" to get it rolling.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "OMG let's quiz. Respond with \"ok\" so I can start.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Byeeeeeeeeee!", ResponseType.CLOSING);
+        new TriviaResponse(c, "C U l8r, h8r", ResponseType.CLOSING);
+        new TriviaResponse(c, "OMG, come back soon!", ResponseType.CLOSING);
+        new TriviaResponse(c, "Thx bai!", ResponseType.CLOSING);
+        new TriviaResponse(c, "Buh bye, boi..", ResponseType.CLOSING);
+        new TriviaResponse(c, "Check ya later.", ResponseType.CLOSING);
+        new TriviaResponse(c, "<3", ResponseType.CLOSING);
         
         Logger.info("Bootstrapped TV trivia");
     }

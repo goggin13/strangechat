@@ -1,5 +1,5 @@
 /*jslint eqeq: true, newcap: true, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
-/*global document, Event, types, console, HTTP, RoomChannel, MatchMaker, APusher, Pusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
+/*global document, Event, types, console, HTTP, RoomChannel, MatchMaker, Pusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
 
 var APusher = function (spec) {
   "use strict";
@@ -21,7 +21,7 @@ var APusher = function (spec) {
   
   that.isLocal = function () {
     return my.home_url.indexOf("localhost") > -1
-           || my.home_url.indexOf("10.0.1.50") > -1;
+        || my.home_url.indexOf("10.0.1.50") > -1;
   };
   
   that.setUserInfo = function (session, user_id) {

@@ -18,16 +18,13 @@ c.blacklistRequests("http://www\\.google\\.com/buzz/.*", 200);
 
 var timeout = 30000;
 var icebreaker_timeout = 4000;
-var NUM_ITERS = 25;
+var NUM_ITERS = 5;
 var MESSAGE_PAUSE_TIME = 1000;
 
 selenium.setTimeout(timeout);
 
 var tx = browserMob.beginTransaction();
 var step = browserMob.beginStep("Step 1");
-
-selenium.open("http://superheroclubhouse.com/staging");
-selenium.waitForTextPresent("Superhero Name");
 
 var layers = [
   'tshirt_choose_color', 
@@ -86,6 +83,17 @@ var sendKarma = function () {
   selenium.waitForXpathCount(xPath, nextCount);  
 };
 
+
+/****************************************
+ * TEST BODY
+ *****************************************/
+
+selenium.open("http://superheroclubhouse.com/staging");
+selenium.waitForTextPresent("Edit Costume");
+
+selenium.click("css=.edit_costume");
+selenium.waitForTextPresent("Superhero Name");
+
 if (flipCoin(2)) {
   selenium.click("css=#gender_chooser .item:last");
 }
@@ -95,7 +103,7 @@ if (flipCoin(2)) {
 //   selenium.click("css=#" + layers[i] +" .item.box_" + r);
 // }
 
-selenium.click("css=.button_save");
+selenium.click("css=.chat_random");
 selenium.waitForTextPresent("Enters your view");
 
 var myName = selenium.getText("id=your_name");

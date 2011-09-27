@@ -1,6 +1,6 @@
 package controllers;
 
-import jobs.CheckPowers;
+import jobs.*;
 import play.Play;
 import play.mvc.Before;
 import play.test.Fixtures;
@@ -23,8 +23,7 @@ public class Mock extends Index {
 
     public static void init () {
         System.out.println("DELETE DATABASE");
-		Fixtures.deleteDatabase();
-        // Fixtures.loadModels("data-full.yml");
+        Fixtures.deleteDatabase();
     }
 
     public static void initblacklist () {

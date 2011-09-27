@@ -4,9 +4,15 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.RollbackException;
+
 import models.User;
 import models.UserSession;
+import models.Utility;
 import play.Logger;
+import play.db.jpa.JPA;
 import play.mvc.Before;
 
 import com.google.gson.Gson;
@@ -30,7 +36,9 @@ public abstract class Index extends CRUD {
         String session = params.get(session_key, String.class);
         boolean containsUserKey = user_id != null;
         boolean containsSessKey = session != null;
-        
+        if (containsUserKey) {
+            renderArgs.put(user_key, user_id);
+        }
         if (containsUserKey && containsSessKey && user_id != -1) {
             
             UserSession sess = UserSession.getFor(user_id, session);
@@ -49,6 +57,13 @@ public abstract class Index extends CRUD {
     static UserSession.Faux currentForFauxSession () {
         if(renderArgs.data.containsKey("forSession_faux")) {
             return renderArgs.get("forSession_faux", UserSession.Faux.class);
+        }
+        return null;
+    }
+    
+    static Long currentUser_id () {
+        if(renderArgs.data.containsKey("user_id")) {
+            return renderArgs.get("user_id", Long.class);
         }
         return null;
     }
@@ -161,6 +176,43 @@ public abstract class Index extends CRUD {
 			result, 
 			new TypeToken<HashMap<String, String>>() {}.getType()
 		);
+	}
+	
+	/** commit currently running transaction */
+	protected static void commitCurrentTx () {
+//		boolean success = false;
+//		int tries = 0;
+//		EntityManager em = JPA.em();
+//        EntityTransaction tx = em.getTransaction();		
+//
+//        while (!success && tries < 5) {
+//        	try {
+//        		if (tx.isActive() && !tx.getRollbackOnly()) {
+//        			tx.commit();
+//        		}
+//        		success = true;
+//        	} catch (RollbackException e) {
+//        		JPA.em().clear();
+//        		Logger.warn("Index.java caught rollback : %s", e.getMessage());
+//        		Utility.pause(250);
+//        	} catch (org.hibernate.exception.LockAcquisitionException e) {
+//        		JPA.em().clear();
+//				Logger.warn("Index.java LockAquis : %s", e.getMessage());
+//				Utility.pause(250);
+//			} catch (javax.persistence.PersistenceException e) {
+//				JPA.em().clear();
+//				Logger.warn("Index.java PersistenceException : %s", e.getMessage());
+//				Utility.pause(250);
+//			}
+//        }
+//        if (success) {
+//        	if (tries > 1) {
+//        		Logger.error("Committed transaction in %s tries", tries);
+//        	}
+//        } else {
+//        	Logger.error("Failed to commit in %s tries", tries);
+//        }
+        
 	}
 	
 	/**

@@ -87,7 +87,6 @@ public class UserEvent {
 	        Gson gson = new GsonBuilder()
 	                        .setExclusionStrategies(new User.ChatExclusionStrategy())
 	                        .create();
-	        
             String json = gson.toJson(
                 this,
                 t.getType()
@@ -183,6 +182,23 @@ public class UserEvent {
 		}	    
 	}
 
+
+	public static class NewCoins extends Event {
+	    final public int amount;
+	    
+	    public NewCoins (long by_user, int a) {
+	        super("newcoins", by_user, null);
+            amount = a;
+	    }
+	    
+	    public String toJson () {
+            return toJson(new TypeToken<NewCoins>() {});
+	    }	    
+	    
+		public String toString () {
+			return amount + "new coints";
+		}	    
+	}
 
     public static class AcceptRequest extends Event {
         public AcceptRequest (long for_user) {

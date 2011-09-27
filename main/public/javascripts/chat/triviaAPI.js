@@ -5,37 +5,37 @@ var TriviaBots = {
   Music: {
     alias: "Music",
     startWord: "right on",
-    avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/9f608b9bf8437d65e9ffd7df9bada5a0.png"
   },
   General: {
     alias: "General",      
     startWord: "it's on",
-    avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/0712cde686264e879899025683dcbb34.png"
   },                                                                
   Movies: {        
     alias: "Movies",                                                       
     startWord: "play",                                            
-    avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/a1c03ee2fa28cf0b0e8fbeea89c2e149.png"
   },                                                                
   Books: {         
     alias: "Books",                                                       
     startWord: "books",                                             
-    avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/f1300b80c2fd0d4b9e36956e7613c952.png"
   },
   TV: {            
     alias: "TV",                                                    
     startWord: "TV",                                             
-    avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/2b2dcb168dff3b6cbdd03c287e4960d5.png"
   },                                                                    
   Tech: {          
     alias: "Tech",                                                       
     startWord: "tech",                                              
-    avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/f1300b80c2fd0d4b9e36956e7613c952.png"
   },                                                                
   Cats: {          
     alias: "Cats",                                                       
     startWord: "meow",                                              
-    avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
+    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/fc1e20beaaad93bff7066aa047380eac.png"
   }        
 };
 
@@ -53,7 +53,10 @@ var TriviaAPI = function (spec) {
   my.correct = 0;
     
   my.states = {
-    PROCESSING: function () {}
+    PROCESSING: {
+      f: function () { },
+      name: "processing"
+    }
   };
   
   // Welcome
@@ -63,7 +66,10 @@ var TriviaAPI = function (spec) {
     my.state = my.states.WAITING;
     callback({type: "SALUTATION", text: welcomeText});
   };
-  my.states.WELCOME = my.welcomeInput;
+  my.states.WELCOME = {
+    f: my.welcomeInput,
+    name: "welcome"
+  };
     
   // Waiting for user input
   my.waitingInput = function (text, callback) {
@@ -78,7 +84,10 @@ var TriviaAPI = function (spec) {
       my.state = my.states.WELCOME;
     }
   };
-  my.states.WAITING = my.waitingInput;    
+  my.states.WAITING  = {
+    f: my.waitingInput,
+    name: "waiting"
+  };
     
   // Asking questions
   my.questionInput = function (text, callback) {
@@ -115,7 +124,10 @@ var TriviaAPI = function (spec) {
       }, 500);      
     }
   };
-  my.states.QUESTIONING = my.questionInput;
+  my.states.QUESTIONING = {
+    f: my.questionInput,
+    name: "questioning"
+  };
   
   // Completed round
   my.finishedRoundInput = function (text, callback) {
@@ -123,6 +135,7 @@ var TriviaAPI = function (spec) {
       total: my.batch.questions.length,
       correct: my.correct
     });
+    my.reportRound(my.batch.questions.length, my.correct);
     that.startBatch(my.batch.category.name, function () {
       callback({
         type: "continue",
@@ -132,7 +145,10 @@ var TriviaAPI = function (spec) {
       my.state = my.states.WAITING;      
     });
   };
-  my.states.FINISHED_ROUND = my.finishedRoundInput;
+  my.states.FINISHED_ROUND = {
+    f: my.finishedRoundInput,
+    name: "finished_round"
+  };
     
   // Completed Category
   my.finishedInput = function (input, callback) {
@@ -140,7 +156,15 @@ var TriviaAPI = function (spec) {
     text += "Head back to the [[Trivia Page]][[" + oApp.base_url + "trivia]] to find some more competition!";
     callback({type: "completed", text: text});
   };  
-  my.states.FINISHED = my.finishedInput;
+  my.states.FINISHED = {
+    f: my.finishedInput,
+    name: "finishedinput"
+  };
+      
+  that.input = function (text, callback) {
+    console.debug(my.state.name);
+    my.state.f(text, callback);
+  };
     
   /**
    * HELPER FUNCTIONS 
@@ -167,7 +191,7 @@ var TriviaAPI = function (spec) {
         } else {
           my.state = my.states.FINISHED_ROUND;
         }
-        my.state("", callback); 
+        my.state.f("", callback); 
       });
     } else {
       callback(my.currentQuestion());
@@ -189,9 +213,15 @@ var TriviaAPI = function (spec) {
   my.currentQuestion = function () {
     return my.batch.questions[my.question_index];
   };
-
-  that.input = function (text, callback) {
-    var f = my.state(text, callback);
+  
+  my.reportRound = function (total, correct) {
+    var url = my.home_url + "reportRound",
+      data = {
+        user_id: my.user_id,
+        total: total,
+        correct: correct
+      };
+    HTTP.send(url, "GET", data);
   };
   
   my.categoryIsComplete = function (category, callback) {

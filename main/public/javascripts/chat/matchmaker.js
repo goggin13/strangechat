@@ -1,5 +1,5 @@
-/*jslint eqeq: true, newcap: true, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: true, bitwise: true, maxerr: 50, indent: 2, browser: true */
-/*global document, Event, types, console, HTTP, RoomChannel, MatchMaker, APusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
+/*jslint eqeq: true, newcap: true, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: false, bitwise: true, maxerr: 50, indent: 2, browser: true */
+/*global document, Event, types, console, HTTP, RoomChannel, APusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
 
 var JoinRequest = function (spec) {
   "use strict";
@@ -20,7 +20,6 @@ var AcceptRequest = function (spec) {
   return that;  
 };
 
-
 var MatchMaker = function (spec) {
   "use strict";  
   var that = {},
@@ -33,8 +32,11 @@ var MatchMaker = function (spec) {
     ACCEPT_REQUEST: "AcceptRequest"
   };
   my.user = spec.user;
+  my.recentMeetings = spec.user.recentMeetings.reverse();
+  my.excludedList = spec.user.excludedUsers;
   my.callback = spec.callback;
   my.successful = false;
+  my.CAN_MEET_AGAIN = 0;
   
   that.membersToChannelName = function (user_id, user_id2) {
     var list = [user_id, user_id2];
@@ -47,10 +49,18 @@ var MatchMaker = function (spec) {
     my.waitingForChat = true;
   };
 
+  my.metTimesAgo = function (user_id) {
+    var meetings = my.recentMeetings;
+    return $.inArray(user_id, meetings);
+  };
+
   my.canIPairWithMember = function (user_id) {
+    var metTimesAgo = my.metTimesAgo(user_id);
     return user_id 
-           && my.user.user_id 
-           && user_id != my.user.user_id;
+      && my.user.user_id 
+      && user_id !== my.user.user_id
+      && $.inArray(user_id, my.excludedList) === -1
+      && (metTimesAgo === -1 || metTimesAgo >= my.CAN_MEET_AGAIN);
   };
   
   my.proposeToAll = function (eligible) {
@@ -99,7 +109,9 @@ var MatchMaker = function (spec) {
     var otherUserSignedIn = false,
       channel = null,
       returnData = function () {
-        if (my.returned) return;
+        if (my.returned) {
+          return;
+        }
         my.returned = true;
         userData.channel = channel;
         my.callback(userData);
@@ -114,14 +126,14 @@ var MatchMaker = function (spec) {
     channel.subscribe();
     channel.bindLogin(function (users) {
       $.each(users, function (k, user) {
-        if (user.user_id == userData.user_id) {
+        if (user.user_id === userData.user_id) {
           returnData();
           return false;
         }
       });
     });
     channel.bindLogon(function (user) {
-      if (user.user_id == userData.user_id) {
+      if (user.user_id === userData.user_id) {
         returnData();
       }
     });
@@ -138,19 +150,19 @@ var MatchMaker = function (spec) {
       sentAcceptTo = false;
     my.randomChannel.subscribe();
     
-    my.randomChannel.bind(my.types.JOIN_REQUEST, function(data) {
-      if (data.to == my.user.user_id
-          && (waitingForChat || my.pendingResponse == data.from)) {
+    my.randomChannel.bind(my.types.JOIN_REQUEST, function (data) {
+      if (data.to === my.user.user_id
+          && (waitingForChat || my.pendingResponse === data.from)) {
         my.acceptMeetUp(data.from); 
         sentAcceptTo = data.from;
       }
     });
 
     my.randomChannel.bind(my.types.ACCEPT_REQUEST, function (data) {
-      if (data.to == my.user.user_id && waitingForChat) {
+      if (data.to === my.user.user_id && waitingForChat) {
         waitingForChat = false;
         my.randomChannel.disconnect();
-        if (sentAcceptTo != data.from) {
+        if (sentAcceptTo !== data.from) {
           my.acceptMeetUp(data.from);
           sentAcceptTo = data.from;
         }        
@@ -169,9 +181,9 @@ var MatchMaker = function (spec) {
 
     my.randomChannel.bindLogin(function (users) {    
       var eligible = [];      
-      $.each(users, function(k, user) {
+      $.each(users, function (k, user) {
         if (my.canIPairWithMember(user.user_id)) {
-          if ($.inArray(user.user_id, eligible) == -1) {
+          if ($.inArray(user.user_id, eligible) === -1) {
             eligible.push(user.user_id); 
           }
         }
@@ -186,7 +198,7 @@ var MatchMaker = function (spec) {
     }); 
 
     my.randomChannel.bindLogoff(function (user) {    
-      if (my.pendingResponse == user.user_id) {
+      if (my.pendingResponse === user.user_id) {
         my.propsalFailed();
       }
     });    

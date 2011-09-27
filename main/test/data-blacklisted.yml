@@ -1,7 +1,6 @@
 User(goggin):
   user_id: 100002292928724
   name: "Matthew Goggin"
-  online: true
   heartbeatServer: chat1
   superpowers: gstoredpower
  

@@ -116,7 +116,17 @@ public class Utility {
 	public static String toJson (Object obj, TypeToken t) {
         return new Gson().toJson(obj, t.getType());
 	}
-	
+
+    /**
+     * @param millis the number of milliseconds to pause for */
+	public static void pause (long millis) {
+		try {
+		    Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			
+		}
+	}
+		
 	/** 
 	 * the MD5 hash of a string 
 	 * @param str

@@ -3,11 +3,14 @@ package models.powers;
 import java.util.List;
 
 import models.User;
+import models.Utility;
 import models.karma.KarmaKube;
 
 import org.hibernate.exception.LockAcquisitionException;
 
 import play.Logger;
+import play.Play;
+import play.db.jpa.JPA;
  
 public class Karma extends IntervalPower {
 
@@ -24,41 +27,37 @@ public class Karma extends IntervalPower {
 		}
 		boolean isGood = params.get(0).equals("1");
 		
+		KarmaKube kube = null;
+		
 		boolean success = false;
 		int tries = 0;
-		KarmaKube kube = null;
 		while (!success && tries++ < 5) {
 			try {
 				kube = new KarmaKube(caller, subject, isGood);
 				kube.save();
 				success = true;
-			} catch (LockAcquisitionException e) {
-				Logger.error("CAUGHT 1 (%s)", tries);
-				pause(500);
-			} catch (play.exceptions.JavaExecutionException e) {
-				Logger.error("CAUGHT2 (%s)", tries);
-				pause(500);
 			} catch (javax.persistence.PersistenceException e) {
-				Logger.error("CAUGHT3 (%s)", tries);
-				pause(500);
+				JPA.em().clear();
+				Logger.warn("Karma.java Caught PersistenceException : %s", e.getMessage());
+				Utility.pause(250);
 			}
 		}
-		
+        if (success) {
+        	if (tries > 1) {
+        		Logger.error("Karma Kube saved in %s tries", tries);
+        	}
+        } else {
+        	Logger.error("Failed to save in %s tries", tries);
+        }
+        
 		if (kube != null) {
 			subject.notifyMe("karma", kube.toJson());
 			return "KarmaKube-" + kube.id;
 		} else {
-			return "failed";
+			return "";
 		}
-
-	}
-	
-	private void pause (long secs) {
-		try {
-			Thread.sleep(secs);
-		} catch (InterruptedException e) {
-			
-		}
+		
+		
 	}
 	
 	@Override

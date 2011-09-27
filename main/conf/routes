@@ -21,6 +21,7 @@ GET     /demo																		Application.demo
 * 		   /group											            Users.joinGroupChat
 *				 /openkube															Users.openKube
 *				 /rejectkube														Users.rejectKube
+*        /trivia/reportRound                    Users.reportRound
 
 # Chat actions
 GET   /listen																  Notify.listen

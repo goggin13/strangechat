@@ -35,13 +35,15 @@ public class StoredPower extends Model {
 	public boolean newToLevel;
 	
 	/** User who has accrued this power */
-	@Required
-	@ManyToOne
-    public User owner;
+//	@Required
+//	@ManyToOne
+//    public User owner;
+	public long owner_id;
 	
 	public StoredPower (Power p, User u) {
 		this.power = p;
-		this.owner = u;
+//		this.owner = u;
+		this.owner_id = u.id;
 		this.available = 0;
 		this.level = 1;
 		this.used = 0;
@@ -55,7 +57,7 @@ public class StoredPower extends Model {
 		return power.toString() 
 		       + "(" + this.level + ")"
                + " " + this.available + " / " + (this.used + this.available) 
-               + " --> " + owner.toString();
+               + " --> " + owner_id;
 	}
 	
 	public SuperPower getSuperPower () {
@@ -68,7 +70,7 @@ public class StoredPower extends Model {
      * @param u the user to match against
 	 * @return a new record if none matches, or the existing row */
 	public static StoredPower getOrCreate (Power p, User u) {
-	    StoredPower storedPower = StoredPower.find("byPowerAndOwner", p, u).first();
+	    StoredPower storedPower = StoredPower.find("byPowerAndOwner_id", p, u.id).first();
     	if (storedPower == null) {
     	  storedPower = new StoredPower(p, u);  
     	}
@@ -103,6 +105,10 @@ public class StoredPower extends Model {
         return this.available > 0;
     }
     
+    public User getOwner () {
+    	return User.findById(owner_id);
+    }
+    
     /**
      * Use this power, return the string from the super powers use() method
      * @param subject the {@link User} the power is being used on     
@@ -116,9 +122,9 @@ public class StoredPower extends Model {
         this.newToLevel = false;
         this.save();
         if (params != null && params.size() > 0) {
-            return superPower.use(this.owner, subject, params);
+            return superPower.use(getOwner(), subject, params);
         } else {
-            return superPower.use(this.owner, subject);
+            return superPower.use(getOwner(), subject);
         }
         
     }

@@ -119,38 +119,58 @@ public class GeneralBootstrap extends Job {
         a1 = new Answer("Rowing", true);	a2 = new Answer("Skiing", false);	a3 = new Answer("Swimming", false);	a4 = new Answer("Diving", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Child expert Dr. Spock won an Olympic gold medal in what event?", a, c);
         a1 = new Answer("Teaching about evolution", true);	a2 = new Answer("Teaching about sex", false);	a3 = new Answer("Teaching about religion", false);	a4 = new Answer("Teaching about witches", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Why was John Scopes brought to trial in Tennessee in 1925?", a, c);
         
-        new TriviaResponse(c, "You ready to go?", ResponseType.SALUTATION);
-
         new TriviaResponse(c, "I don’t understand what you’re trying to say. Type that again?", ResponseType.REPEAT);
         new TriviaResponse(c, "You’re not making sense, try typing your response out again.", ResponseType.REPEAT);
         new TriviaResponse(c, "No time for gibberish, try responding again.", ResponseType.REPEAT);
-        new TriviaResponse(c, "It’s so uninteresting to be indecipherable. Try that again?", ResponseType.REPEAT);
-        new TriviaResponse(c, "I don’t understand your answer and I won’t respond to it", ResponseType.REPEAT);
-        new TriviaResponse(c, "I suppose you think that was terribly clever. However, I don’t understand it. Type that again?", ResponseType.REPEAT);
-
+        new TriviaResponse(c, "It’s so uninteresting to be indecipherable. Just give me the first letter of your answer.", ResponseType.REPEAT);
+        new TriviaResponse(c, "I don’t understand your answer and I won’t respond to it.", ResponseType.REPEAT);
+        new TriviaResponse(c, "I suppose you think that was terribly clever. However, I don’t understand it. Give me only the corresponding letter to your answer.", ResponseType.REPEAT);
         new TriviaResponse(c, "You’re rocking it but how long can you keep this up?", ResponseType.CORRECT);
         new TriviaResponse(c, "Yes.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Yeah.", ResponseType.CORRECT);
         new TriviaResponse(c, "Sure.", ResponseType.CORRECT);
-        new TriviaResponse(c, "You got it. ", ResponseType.CORRECT);
+        new TriviaResponse(c, "You got it.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Right.", ResponseType.CORRECT);
         new TriviaResponse(c, "One can’t expect you to get everything wrong, I guess.", ResponseType.CORRECT);
-        new TriviaResponse(c, "Now you’re picking up what I’m putting down!", ResponseType.CORRECT);
         new TriviaResponse(c, "You’re doing well. I’m surprised.", ResponseType.CORRECT);
         new TriviaResponse(c, "You just might make it through this thing. ", ResponseType.CORRECT);
         new TriviaResponse(c, "I daresay you might be right.", ResponseType.CORRECT);
         new TriviaResponse(c, "I’ll give that one to you. It was an easy one, though.", ResponseType.CORRECT);
-
-        new TriviaResponse(c, "You’re wrong.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Nah.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Nope.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Yup.", ResponseType.CORRECT);
+        new TriviaResponse(c, "I guess you're right.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Suuuure.", ResponseType.CORRECT);
+        new TriviaResponse(c, "You're right.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Point.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Right...I guess.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You're wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Wrong!", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Nope!", ResponseType.INCORRECT);
+        new TriviaResponse(c, "No.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Incorrect!", ResponseType.INCORRECT);
         new TriviaResponse(c, "No way, Jose.", ResponseType.INCORRECT);
         new TriviaResponse(c, "I feel kinda bad about how wrong you are.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "That’s just wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "You’re totally off.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "You got that wrong. I’m not surprised.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "That's just wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Wrong. You’ll never make it through this.", ResponseType.INCORRECT);
         new TriviaResponse(c, "You’re done for. Wrong!", ResponseType.INCORRECT);
         new TriviaResponse(c, "I can’t believe you got that one wrong! It was so easy.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You got that wrong. I’m not surprised.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Nah.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Ready for this jelly? Type \"yes\" to begin.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Oh hai. Say \"holla\" to begin.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Oh, it's you. Let's get started. Type \"sure\" to get it going.", ResponseType.SALUTATION);
+        new TriviaResponse(c, " You ready to go? Reply \"it's on\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Let's see what you can do. Reply \"sure\" to get it going.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You don't seem very formidable. Reply \"we'll see about that\" to start.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Ugh, you? Reply \"I'm worthy\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "I guess I'll go against you. Reply \"ok\" if you want to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "See you on the flip side.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Check ya later.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Leave.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Go away now.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Don't come back.", ResponseType.CLOSING);
+        new TriviaResponse(c, "I've had enough of you.", ResponseType.CLOSING);
         
         Logger.info("Bootstrapped general trivia");
     }

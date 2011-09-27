@@ -93,28 +93,47 @@ public class MusicBootstrap extends Job {
     	a1 = new Answer("\"All You Need Is Love\"", true);	a2 = new Answer("\"We Can Work It Out\"", false);	a3 = new Answer("\"Eight Days A Week\"", false);	a4 = new Answer("\"Paperback Writer\"", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("All of these Beatles' songs hit #1, but one of them only held the top spot for one week. Which one?", a, c);
     
     
-		new TriviaResponse(c, "Man, I can’t understand ya!", ResponseType.REPEAT);
-		new TriviaResponse(c, "Come again?", ResponseType.REPEAT);
-		new TriviaResponse(c, "I don’t have the time to play these games. What’re ya saying?", ResponseType.REPEAT);
-		new TriviaResponse(c, "You’re making no sense. Tell me again?", ResponseType.REPEAT);
-		new TriviaResponse(c, "You’re dancing to your own drum, man. Tell me that again?", ResponseType.REPEAT);
-		new TriviaResponse(c, "Dude try typing that out again.", ResponseType.REPEAT);
-		  
-		new TriviaResponse(c, "Now we’re jammin’!", ResponseType.CORRECT);
-		new TriviaResponse(c, "Rock on.", ResponseType.CORRECT);
-		new TriviaResponse(c, "Jam out!", ResponseType.CORRECT);
-		new TriviaResponse(c, "Now you’re feeling me.", ResponseType.CORRECT);
-		new TriviaResponse(c, "Crushing it.", ResponseType.CORRECT);
-		new TriviaResponse(c, "Groovy!", ResponseType.CORRECT);
-		new TriviaResponse(c, "Yeahhhhh.", ResponseType.CORRECT);
-		  
-		new TriviaResponse(c, "No worries but you’re so wrong.", ResponseType.INCORRECT);
-		new TriviaResponse(c, "You don’t know what you’re talking about. Sorry, man.", ResponseType.INCORRECT);
-		new TriviaResponse(c, "My brother you’re failing here! ", ResponseType.INCORRECT);
-		new TriviaResponse(c, "Get on my level, man.", ResponseType.INCORRECT);
-		new TriviaResponse(c, "You’re killing my vibes here, dude.", ResponseType.INCORRECT);
-		
-		new TriviaResponse(c, "You want to jam with me?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Man, I can’t understand ya! Just gimme the letter of the answer.", ResponseType.REPEAT);
+        new TriviaResponse(c, "You’re dancing to your own drum, man. Tell me that again?", ResponseType.REPEAT);
+        new TriviaResponse(c, "Dude, try typing that out again. Just the letter.", ResponseType.REPEAT);
+        new TriviaResponse(c, " I don’t have the time to play these games. What’re ya saying?", ResponseType.REPEAT);
+        new TriviaResponse(c, "You’re making no sense. Tell me again the letter of the answer?", ResponseType.REPEAT);
+        new TriviaResponse(c, "Come again?", ResponseType.REPEAT);
+        new TriviaResponse(c, "Now we’re jammin’!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Rock on.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Jam on.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Now you’re feeling me.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Crushing it.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Yeahhhhh.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Groovy!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Every dog has his day.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Jammin’!", ResponseType.CORRECT);
+        new TriviaResponse(c, "There we go!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Rocking.", ResponseType.CORRECT);
+        new TriviaResponse(c, "You got it!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Groovin'", ResponseType.CORRECT);
+        new TriviaResponse(c, "No worries but you’re so wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You don’t know what you’re talking about. Sorry, man.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Sorry, man.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You don't know what you're talking about.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "My brother you’re failing here! ", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Get on my level, man.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You’re killing my vibes here, dude. ", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Dude, you're not right.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Not your day.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Totally not groovy.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You've got it all wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You're not picking up what I’m putting down!", ResponseType.INCORRECT);
+        new TriviaResponse(c, " Nah, brother.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Let's jam. Reply \"play\" to get the show on the road.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Wanna riff? Reply \"jam\" to go.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Heyo, nice to see ya. Respond \"Marley\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You want to jam with me? Reply \"right on\" to get it started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You've got that flow? Reply \"yes\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "See you soon, brother man!", ResponseType.CLOSING);
+        new TriviaResponse(c, "Peace!", ResponseType.CLOSING);
+        new TriviaResponse(c, "See you on the flip side!", ResponseType.CLOSING);
+        new TriviaResponse(c, "Miss you, man.", ResponseType.CLOSING);
 		
 		Logger.info("Bootstrapped music trivia");
     }

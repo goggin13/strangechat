@@ -18,6 +18,8 @@ import play.data.validation.Required;
 
 import com.google.gson.reflect.TypeToken;
 
+import play.Logger;
+
 /**
  * This controller is responsible for keeping track of users, updating their
  * status in the system, assigning them rooms, passing chat requests, etc..
@@ -50,11 +52,27 @@ public class Users extends Index {
 		user.alias = alias == null ? "" : alias;
 		user.login();
 		user.save();		
+		commitCurrentTx();
 		
 		HashMap<String, User> data = new HashMap<String, User>();
 		data.put(user.user_id + "", user);
 		
 		return data;	    
+	}
+	
+	public static void met_with (@Required long other_id) {
+	    Long user_id = currentUser_id();
+	    User user = null;
+	    if (user_id != null) {
+	        user = User.findById(user_id);
+	    }		
+        if (validation.hasErrors()) {
+           returnFailed(validation.errors());
+        } else if (user == null) {
+           returnFailed("valid user_id and user required to set met with");
+        } 
+        user.addToRecentMeetings(other_id);
+        returnOkay();
 	}
 	
 	/**
@@ -70,6 +88,24 @@ public class Users extends Index {
 		}
 	}
 	
+	/** report scores from a trivia round and reward them */
+	public static void reportRound (@Required long total, @Required long correct) {
+	    Long user_id = currentUser_id();
+	    User user = null;
+	    if (user_id != null) {
+	        user = User.findById(user_id);
+	    }
+        if (validation.hasErrors()) {
+           returnFailed(validation.errors());
+        } else if (user == null) {
+           returnFailed("user_id is required and must map to a valid user");
+        }
+        double pct = correct / (float)total;
+        user.awardTriviaCoins(pct);
+        commitCurrentTx();
+        returnOkay();
+	}
+	
 	public static void spendCoins (@Required long amount) {
 	    UserSession sess = currentSession();
         if (validation.hasErrors()) {
@@ -82,6 +118,7 @@ public class Users extends Index {
         
         sess.user.coinCount -= amount;
         sess.user.save();
+        commitCurrentTx();
         returnOkay();
 	}
 	
@@ -101,6 +138,7 @@ public class Users extends Index {
 	   }
        
        Reward reward = kube.open();
+       commitCurrentTx();
 	   HashMap<String, String> msg = new HashMap<String, String>();
 	   msg.put("reward", reward.toJson());
 	   msg.put("kube", kube.toJson());
@@ -120,10 +158,32 @@ public class Users extends Index {
 	   } else if (!kube.hasBeenSent() || !kube.getRecipient().get().equals(sess.user)) {
 	       returnFailed("This kube does not belong to you");
 	   }
-       kube.rejected = true;
-       kube.save();
+       kube.reject();
+       commitCurrentTx();
        new Pusher().trigger(channel, "rejectedkube", kube.toJson());
 	   returnOkay();
+	}
+	
+	/**
+	 * consume and delete user identified by consume_user_id, giving all their
+	 * powers and stats to current user 
+	 * @param consume_id */
+	public static void consume (@Required Long consume_user_id) {
+	    UserSession sess = currentSession();
+	    User consume = User.find("byUser_id", consume_user_id).first();
+	    
+	    System.out.println("search for user with user_id = " + consume_user_id);
+	    
+	    if (validation.hasErrors()) {
+            returnFailed(validation.errors());
+        } else if (sess == null) {
+            returnFailed("valid user and session required to use a karma kube");
+        } else if (consume == null) {
+            returnFailed("consume id does not map to a valid user");
+        }
+        sess.user.consume(consume);
+        Logger.info("Consumed " + consume.id);
+        returnOkay();
 	}
 	
 	/**
@@ -161,6 +221,7 @@ public class Users extends Index {
             // other.user.save();
         }
         // user.user.save();
+        commitCurrentTx();
         
         UserEvent.UsedPower message;
         if (other == null) {
@@ -170,6 +231,11 @@ public class Users extends Index {
         }
         
 	    new Pusher().trigger(channel, "usedpower", message.toJson());
-	    returnOkay();
+	    if (result.length() == 0) {
+	       returnFailed("No result from use power (" + storedPower.power +")"); 
+	    } else {
+	       returnOkay();
+	    }
+	    
 	}
 }

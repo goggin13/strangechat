@@ -15,20 +15,28 @@ import play.data.validation.Required;
 import play.db.DB;
 
 public class Trivia extends TriviaIndex{
-	private static final int BATCH_SIZE = 3;
+	private static final int BATCH_SIZE = 10;
 	
 	public static void getEligibleTrivia (@Required long user_id) {
 		if (validation.hasErrors()) {
 			returnFailed(validation.errors());
 		}		
+		TriviaUser tUser = TriviaUser.find("byUser_id", user_id).first();
+	    long tUser_id;
+		if (tUser == null) {
+		    tUser_id = -1;
+		} else {
+		    tUser_id = tUser.id;
+		}
 		String sql = "select distinct C.name as name from Category C " +
-					"inner join Question Q on " +
+					 "inner join Question Q on " +
 						"Q.category_id = C.id " +
-					"left join Result R on " +
+					 "left join Result R on " +
 						"R.question_id = Q.id " +
-				"where R.id is null " +
-				"group by C.name " +
-				"having count(*) >= " + BATCH_SIZE;
+                        "and R.user_id = " + tUser_id + " " + 						
+				     "where R.id is null " + 
+				     "group by C.name " +
+				     "having count(*) >= " + BATCH_SIZE;
 		
 		ResultSet results = DB.executeQuery(sql);
 		try {

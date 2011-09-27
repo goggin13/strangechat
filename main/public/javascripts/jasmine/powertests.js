@@ -8,7 +8,7 @@ describe("powers", function () {
     afterEachFunction();
   });
   
-  describe("qualify for mind reader", function () {
+  xdescribe("qualify for mind reader", function () {
     it("should occur after using 3 icebreakers", function () {
       var msg1 = false, msg2 = false;
       
@@ -62,7 +62,7 @@ describe("powers", function () {
         
         user3channel.bindToIsTyping(function () {});  
         user4channel.bindToIsTyping(function () {});  
-        for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < 40; i++) {
           user4channel.userIsTyping(user4.api.user_id, "hello from 4");
         }
         
@@ -100,11 +100,12 @@ describe("powers", function () {
           }, "to see used karma", 4000);
           runs(function () {
             var gotResponse = false;
-            user3.api.openKube(karmaKubeID, function (reward) {
+            user3channel.bindToOpenKube(function (reward) {
               expect(reward.isGood).toBeTruthy();
               expect(reward.name).toEqual("Gold Coin");
               gotResponse = true;
             });
+            user3.api.openKube(karmaKubeID, user3channel.channel_name);
             waitsFor(function () {
               return gotResponse;
             }, "response from opening kube", 3000);

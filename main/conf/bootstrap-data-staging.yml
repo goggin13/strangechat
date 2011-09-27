@@ -20,7 +20,6 @@ Server(chat1):
 User(testBot):
   botid: 843ad5ae9e34019a
   alias: "Test"
-  online: true
   avatar: "http://bnter.com/web/assets/images/4571__w320_h320.png"
   heartbeatServer: chat1
   isBot: true

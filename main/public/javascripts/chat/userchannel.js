@@ -8,12 +8,17 @@ var UserChannel = function (spec) {
     my = {};
   my.types = {
     NEW_POWER: "newpower",
-    KARMA: "karma"
+    KARMA: "karma",
+    NEW_COINS: "newcoins"
   };
 
   that.bindNewKarmaKube = function (f) {
     that.bind(my.types.KARMA, f);
   };  
+
+  that.bindNewCoins = function (f) {
+    that.bind(my.types.NEW_COINS, f);
+  };
   
   that.bindNewPower = function (f) {
     that.bind(my.types.NEW_POWER, f);

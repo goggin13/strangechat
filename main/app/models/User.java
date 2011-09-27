@@ -1,11 +1,11 @@
 package models;
  
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
@@ -17,7 +17,11 @@ import models.karma.KarmaKube;
 import models.powers.StoredPower;
 import models.powers.SuperPower;
 import models.pusher.Pusher;
+import play.Play;
 import play.db.jpa.Model;
+import play.libs.F.None;
+import play.libs.F.Option;
+import play.libs.F.Some;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -28,9 +32,11 @@ import enums.Power;
  * A chat user in the system, who can be online or off, and the maintained meta
  * data relevant to them
  */
-
 @Entity
 public class User extends Model {
+    final public static int INITIAL_ICE_BREAKERS = 2;
+    final public static int INITIAL_KARMA_KUBES = 3;
+        
     @Transient
 	public static long admin_id = -3L;    
 	
@@ -50,9 +56,8 @@ public class User extends Model {
 	public String botid;
 	
     /** List of other users this user has met with recently */
-    // @ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
-    // @JoinTable(name = "UserToMetWith")
-    // public List<User> recentMeetings;    
+	@ElementCollection
+     public List<Long> recentMeetings;    
 
     /** Collection of the superpowers this user has, including
      *  ones that have already been used */ 
@@ -64,13 +69,18 @@ public class User extends Model {
     @Transient
     public HashMap<Power, SuperPower> superPowerDetails;
 
+    /** karmakubes this user has **/
     @Transient
     public List<KarmaKube> karmaKubes;
     
-	/** set of icebreaker indices seen */
-	@ElementCollection  
-	public Set<Integer> icebreakers_seen;
-
+    /** list of ids this user shouldn't talk to **/
+    @Transient
+    public List<Long> excludedUsers;
+    
+    /** list of indices of ice breakers this user has seen */
+    @Transient
+    public Set<Integer> seenIceBreakers = null;
+    
     /** number of gold coins this user has available to spend **/
     public int coinCount;
 
@@ -79,9 +89,6 @@ public class User extends Model {
     
     /** True if this user is currently online */
     public long lastLogin;
-	
-	/** True if this user is currently online */
-	public boolean online;
 
     /** total seconds chatting */
     public long chatTime;  		
@@ -106,7 +113,6 @@ public class User extends Model {
 
 	public User (long u) {
 		this.user_id = u;
-		this.online = false;
 		this.session_id = "";
 		this.chatTime = 0L;
 		this.messageCount = 0;
@@ -117,9 +123,7 @@ public class User extends Model {
         coinCount = 0;
         coinsEarned = 0;		
 	    this.superPowers = new LinkedList<StoredPower>();
-        // this.recentMeetings = new LinkedList<User>();
-        this.icebreakers_seen = new CopyOnWriteArraySet<Integer>();
-        // this.icebreakers_seen = new TreeSet<Integer>();      
+        this.recentMeetings = new LinkedList<Long>();
 	    this.save();
         addStartUpPowers();
 	}
@@ -127,24 +131,23 @@ public class User extends Model {
 	private void addStartUpPowers () {
 	    StoredPower sp = new StoredPower(Power.ICE_BREAKER, this);
         sp.level = 1;
-        sp.available = 2;
+        sp.available = INITIAL_ICE_BREAKERS;
         sp.save();
         sp = new StoredPower(Power.KARMA, this);
         sp.level = 1;
-        sp.available = 10000;
+        sp.available = INITIAL_KARMA_KUBES;
         sp.save();       
 	}
 		
 	/**
-	 * log this user in, and notify any of their friends that
-	 * are online that they are available */	
+	 * log this user in, populate transient properties and start a new session */	
 	public UserSession login () {
-		this.online = true;
 		Random r = new Random();
 		this.session_id = Utility.md5(this.avatar + this.alias + System.currentTimeMillis() + r.nextInt());
-		this.karmaKubes = KarmaKube.find("byRecipientAndOpenedAndRejected", this, false, false).fetch(1000);
+		this.karmaKubes = KarmaKube.find("byRecipient_idAndOpenedAndRejected", this.id, false, false).fetch(1000);
 		this.lastLogin = Utility.time();
 		this.populateSuperPowerDetails();
+		this.excludedUsers = UserExclusion.excludedList(this.id);
 		return new UserSession(this, this.session_id);
 	}
 	
@@ -162,13 +165,11 @@ public class User extends Model {
 	}
 		
 	/**
-	 * @return string representation of this user
-	 */	
+	 * @return string representation of this user */	
 	public String toString () {
 	    String str;
 	    if (!this.alias.equals("")) {
-	        str = this.alias 
-	              + " (" + this.user_id + ")";
+	        str = this.alias + " (" + this.user_id + ")";
 	    } else {
 	        str = this.user_id + "";
 	    }
@@ -188,24 +189,28 @@ public class User extends Model {
      * Return a list of all the ice breakers this user has seen 
      * @return list of indices of icebreakers */
     public Set<Integer> getSeenIceBreakers () {
-        return icebreakers_seen;
+    	if (this.seenIceBreakers == null) {
+    		this.seenIceBreakers = new HashSet(SeenIcebreaker.getMySeen(this.id));
+    	}
+        return this.seenIceBreakers;
     }
     
     /**
      * Mark the given index as seen by this user 
      * @param i the index of the icebreaker to mark as seen */
     public void addSeenIceBreaker (int i) {
-        this.icebreakers_seen.add(i);
-        // this.save();
+        new SeenIcebreaker(this.id, i);
+        this.seenIceBreakers.add(i);
     }
 
     /**
-     * @param i
-     * @return <code>true</code> if this user has seen the icebreaker at index i */
+     *  true if user has seen ice breaker at index i
+     * @param i index to check
+     * @return */
     public boolean seenIceBreaker (int i) {
-        return this.icebreakers_seen.contains(i);
+    	return getSeenIceBreakers().contains(i);
     }
-
+    
 	/**
 	* Count how many {@link StoredPower} instances 
 	* @param p the {@link Power} to count
@@ -216,16 +221,34 @@ public class User extends Model {
 	* @return number of powers matching <code>p</code>
 	*/
 	public int countPowers (Power p, int countUsed) {
-	    StoredPower sp = StoredPower.find("byOwnerAndPower", this, p).first();
-	    if (sp == null) {
+	    Option<StoredPower> sp = getStoredPower(p);
+	    if (!sp.isDefined()) {
 	        return 0;
 	    } else if (countUsed == 0) {
-			return sp.used + sp.available;
+			return sp.get().used + sp.get().available;
 		} else if (countUsed == 1) {
-			return sp.available;
+			return sp.get().available;
 		} else {
-		    return sp.used;
+		    return sp.get().used;
 		}
+	}
+	
+	public Option<StoredPower> getStoredPower (Power p) {
+	     StoredPower sp = StoredPower.find("byOwner_idAndPower", this.id, p).first();
+	     if (sp != null) {
+	         return new Some(sp);
+	     } else {
+	         return new None();
+	     }
+	}
+	
+	public StoredPower getOrCreateStoredPower (Power p) {
+	    Option<StoredPower> sp_opt = getStoredPower(p);
+	    if (sp_opt.isDefined()) {
+	        return sp_opt.get();
+	    } else {
+	        return new StoredPower(p, this);
+	    }
 	}
 	
 	/**
@@ -271,23 +294,119 @@ public class User extends Model {
      * @param p the power to check for
      * @return the level of that power for this user, or 0 if they don't have it */
     public int currentLevel (Power p) {
-        StoredPower sp = StoredPower.find("byOwnerAndPower", this, p).first();
+        StoredPower sp = StoredPower.find("byOwner_idAndPower", this.id, p).first();
 	    if (sp == null) {
 	        return 0;
 	    } 
 	    return sp.level;
     }
 
+    /**
+     * Add the given user_id to this users list of recently seen users
+     * @param user_id the user_id to add */
+    public void addToRecentMeetings (long user_id) {
+    	this.recentMeetings.add(user_id);
+    	if (this.recentMeetings.size() > 5) {
+    		this.recentMeetings.remove(0);
+    	}
+    	this.save();
+    }
+    
 	/**
 	 * Send this user a notification that they have recieved a new power
 	 * @param power the new power they have received */
 	public void notifyNewPower (StoredPower power) {
         UserEvent.NewPower message = new UserEvent.NewPower(this.id, power, "");
-        notifyMe("newpower", message.toJson());
+        notifyMe(message);
 	}
+
+    public void notifyMe (UserEvent.Event event) {
+        notifyMe(event.type, event.toJson());
+    }
 
 	public void notifyMe (String event, String json) {
 		new Pusher().trigger(this.getChannelName(), event, json);
+	}
+	
+	/**
+	 * Award this user a (somewhat) random amount of coins
+	 * based on their trivia percentage 
+	 * @param pct score on a trivia round 
+	 * @return the number of coins awarded */
+	public int awardTriviaCoins (double pct) {
+        Random r = new Random();
+        int min = 1;
+        if (pct > 0.75) {
+          min = 15;
+        } else if (pct > 0.5) {
+          min = 10;
+        } else if (pct > 0.25) {
+          min = 5;
+        }
+        int winnings = min + (int)(Math.ceil(r.nextInt(10) * pct));
+        this.coinCount += winnings;
+        this.save();
+        
+        UserEvent.NewCoins message = new UserEvent.NewCoins(this.id, winnings);
+        notifyMe(message);
+                
+        return winnings;	    
+	}
+	
+	public List<KarmaKube> getKubes () {
+	    return KarmaKube.find("byRecipient_id", this.id).fetch();
+	}
+	
+	/**
+	 * Consume the given user into this user; that is, take all of 
+	 * their powers, and delete them from the system.
+	 * @param user */
+	public void consume (User user) {
+                
+        for (StoredPower theirStoredPower : user.superPowers) {
+            StoredPower myStoredPower = getOrCreateStoredPower(theirStoredPower.power);
+            myStoredPower.used += theirStoredPower.used;
+            
+            // dont regift the icebreakers you get for free
+            if (theirStoredPower.power == Power.ICE_BREAKER) {
+                int add = Math.max(0, theirStoredPower.available - INITIAL_ICE_BREAKERS);
+                myStoredPower.available += add;
+            } else {
+                myStoredPower.available += theirStoredPower.available;
+            }
+            myStoredPower.level = Math.max(myStoredPower.level, theirStoredPower.level);
+            myStoredPower.save();
+        }
+        
+        for (Integer i : user.getSeenIceBreakers()) {
+            this.addSeenIceBreaker(i);
+        }
+        
+        int counter = 0;
+        for (KarmaKube k : user.getKubes()) {
+            // dont regift the ones you get for free
+            if (counter++ >= INITIAL_KARMA_KUBES) {
+                k.recipient_id = this.id;
+                k.save();   
+            }
+        }
+        
+        for (Long group_id : UserExclusion.userGroups(user.id)) {
+            new UserExclusion(this.id, group_id);
+        }
+        
+        this.coinCount += user.coinCount;
+        this.coinsEarned += user.coinsEarned;
+        this.chatTime += user.chatTime;  	
+        this.messageCount += user.messageCount;
+        this.gotMessageCount += user.gotMessageCount;
+        this.joinCount += user.joinCount;
+        this.offersMadeCount += user.offersMadeCount; 		
+        this.offersReceivedCount += user.offersReceivedCount;  	
+        this.revealCount += user.revealCount;
+        this.save();
+        
+        user.delete();
 	}
 	
     /**
@@ -305,7 +424,37 @@ public class User extends Model {
 	public List<UserSession> getSessions () {
 	    return UserSession.find("byUser", this).fetch();
 	}
-			
+		
+	public void deleteMySessions () {
+	    for (UserSession sess : getSessions()) {
+	        sess.delete();
+	    }
+	}
+	
+	public void deleteMyPowers () {
+	    List<StoredPower> powers = this.superPowers;
+	    this.superPowers.clear();
+	    this.save();
+	    for (StoredPower sp : superPowers) {
+	        sp.delete();
+	    }
+	}
+	
+    public void deleteSeenIceBreakers() {
+        this.seenIceBreakers.clear();
+        List<SeenIcebreaker> seen = SeenIcebreaker.find("byUser_id", this.id).fetch();
+        for (SeenIcebreaker s : seen) {
+            s.delete();
+        }
+    }
+    
+	public User delete () {
+        deleteMySessions();
+	    deleteMyPowers();
+        deleteSeenIceBreakers();
+	    return super.delete();
+	}
+	
 	public boolean equals (Object obj) {
 	    if (obj == null ||
             !(obj instanceof User)) {
@@ -316,7 +465,7 @@ public class User extends Model {
 	}	
 
     public String getChannelName () {
-        return this.id + "_channel"; // + (Play.mode == Play.Mode.DEV ? "-local" : "");
+        return this.id + "_channel" + (Play.mode == Play.Mode.DEV ? "-local" : "");
     }
 			
 	/**
@@ -333,7 +482,7 @@ public class User extends Model {
 		user.populateSuperPowerDetails();
 		return user;
 	}
-		    
+    
 	/** 
 	 * This class is used when serializing and deserializing JSON.  Its only 
 	 * purpose is to inform the GsonBuilder objects that they should exclude 
@@ -354,8 +503,7 @@ public class User extends Model {
                  || f.getName().equals("owner")
                  || f.getName().equals("recipient")
                  || f.getName().equals("isGood")
-                 || f.getName().equals("reward")
-                 || f.getName().equals("recentMeetings");
+                 || f.getName().equals("reward");
 		}
  	}
 			

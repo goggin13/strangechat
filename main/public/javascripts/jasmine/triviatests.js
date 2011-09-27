@@ -2,7 +2,10 @@
 
 
 describe("trivia api", function () {
-  var API = TriviaAPI(1);
+  var API = TriviaAPI({
+    home_url: "http://localhost:9000/",
+    user_id: 1
+  });
     
   describe("set up", function () {
     var step = 0,
@@ -17,8 +20,8 @@ describe("trivia api", function () {
     
     sequentialIf("should retrieve a batch of questions", function () {
       var gotBatch = 0;
-      API.getBatch("Music", function (batch) {
-        expect(batch.questions.length).toEqual(10);
+      API.startBatch("Music", function (user, batch) {
+        expect(10).toEqual(batch.questions.length);
         $.each(batch.questions, function (i, q) {
           expect(q.category.name).toEqual("Music");
         });
@@ -31,10 +34,22 @@ describe("trivia api", function () {
 
     var nextQuestion;
     sequentialIf("should wait for me to say yes to start", function () {
-      API.input("blahblahblah", function (question) {
-        expect(false).toBeTruthy(); // should never happen
+      // first says hi
+      API.input("blahblahblah", function (response) {
+        expect("SALUTATION").toEqual(response.type);
       });
-      API.input("yes", function (question) {
+      // leaves if we don't respond well
+      API.input("blahblahblah", function (response) {
+        expect("1").toEqual(response.leave);
+      });    
+      // salutation again
+      API.input("anything", function (response) {
+        expect("SALUTATION").toEqual(response.type);
+      });
+      // and starts now
+      API.input("Right on", function (question) {
+        expect(question.text).toBeDefined();
+        expect("Music").toEqual(question.category.name); 
         nextQuestion = question;
       });
       waitsFor(function () {
@@ -42,36 +57,53 @@ describe("trivia api", function () {
       }, "to get batch of questions", 3000);  
     }, 1);
         
-        
+    var getAnswerFromQuestion = function (isWrong) {
+      return function (question) {
+        var result = -1;
+        $.each(question.answers, function (k, a) {
+          if (a.isCorrect === isWrong) {
+            result = k;
+          }
+        });
+        return result;
+      };
+    };
+    var getWrongAnswer = getAnswerFromQuestion(false);
+    var getRightAnswer = getAnswerFromQuestion(true);
+    
     sequentialIf("should respond with the right type of response", function () {
       var rightAnswer = -1,
-        wrongAnswer = -1,
+        wrongAnswer = getWrongAnswer(nextQuestion),
         checkpoint = 0;
-        
+      
+      expect(wrongAnswer).toBeGreaterThan(-1);
       API.input("notananswer", function (response) {
          expect(response.type).toEqual("REPEAT");
          checkpoint++;
       });
-      $.each(nextQuestion.answers, function (k, a) {
-        if (a.isCorrect) {
-          rightAnswer = k;
-        } else {
-          wrongAnswer = k;
-        }
-      });
-      expect(rightAnswer).toBeGreaterThan(-1);
-      expect(wrongAnswer).toBeGreaterThan(-1);
       
       API.input(['a', 'b', 'c', 'd'][wrongAnswer], function (response) {
-        expect(response.type).toEqual("INCORRECT");
-        checkpoint++;
+        if (response.hasOwnProperty("incorrectRetort") && checkpoint === 1) {
+          checkpoint++;
+        } else if (response.hasOwnProperty("text") && checkpoint === 2) {
+          checkpoint++;
+          rightAnswer = getRightAnswer(response);
+          expect(wrongAnswer).toBeGreaterThan(-1);
+          
+          // brief second for it to process
+          setTimeout(function () {
+            API.input(['a', 'b', 'c', 'd'][rightAnswer], function (response) {
+              checkpoint++;
+            });
+          }, 100);
+
+        } else {
+          expect(false).toBeTruthy();
+        }
       });
-      API.input(['a', 'b', 'c', 'd'][rightAnswer], function (response) {
-        expect(response.type).toEqual("CORRECT");
-        checkpoint++;
-      });      
+            
       waitsFor(function () {
-        return checkpoint == 3;
+        return checkpoint == 4;
       }, "got all responses we needed", 3000);  
     }, 2);        
   });

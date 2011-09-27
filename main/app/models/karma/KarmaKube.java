@@ -32,14 +32,17 @@ import enums.KarmaReward;
 public class KarmaKube extends Model {
 
 	/** the person who originally received this karma kube */
-	@Required
-	@ManyToOne
-	public User sender;
+//	@Required
+//	@ManyToOne
+//	public User sender;
 
 	/** The person who the cube has been given to */
-	@ManyToOne
-	public User recipient;
+//	@ManyToOne
+//	public User recipient;
 
+	public long sender_id;
+	public long recipient_id;
+	
 	/** if this is good or bad karma kube */
 	public boolean isGood;
 
@@ -54,15 +57,19 @@ public class KarmaKube extends Model {
 	@Enumerated(EnumType.STRING)
 	public KarmaReward reward;
 
-	public KarmaKube(User o, User r, boolean isGood) {
-		this.sender = o;
+	public KarmaKube (User o, User r, boolean isGood) {
+		this.sender_id = o.id;
 		this.opened = false;
-		this.recipient = r;
+		this.recipient_id = r.id;
 		this.reward = KarmaReward.getRandom(isGood);
 		this.isGood = isGood;
 		this.rejected = false;
 	}
 
+	public User getSender () {
+		return User.findById(this.sender_id);
+	}
+		
 	public Reward open() {
 		if (!this.getRecipient().isDefined()) {
 			return null;
@@ -86,15 +93,21 @@ public class KarmaKube extends Model {
 		}
 	}
 
+    public void reject () {
+        this.rejected = true;
+        this.save();
+    }
+
 	public boolean hasBeenSent() {
 		return this.getRecipient().isDefined();
 	}
 
 	public Option<User> getRecipient() {
-		if (recipient == null) {
+		User user = User.findById(this.recipient_id);
+		if (user == null) {
 			return new None();
 		} else {
-			return new Some(recipient);
+			return new Some(user);
 		}
 	}
 
@@ -125,27 +138,8 @@ public class KarmaKube extends Model {
 	 * @return the reward, assuming it exists
 	 */
 	public void giftTo(User recipient) {
-		this.recipient = recipient;
+		this.recipient_id = recipient.id;
 		this.save();
 	}
 
-	@Override
-	public KarmaKube save() {
-		try {
-			super.save();
-		} catch (LockAcquisitionException e) {
-			Logger.error("DEADLOCK1 (%s) ", e.getMessage());
-			throw(e);
-		} catch (play.exceptions.JavaExecutionException e) {
-			Logger.error("DEADLOCK2 (%s, %s, %s) ",
-					e.getMessage(), e.getErrorDescription(),
-					e.getErrorTitle());
-			throw(e);
-		} catch (javax.persistence.PersistenceException e) {
-			Logger.error("DEADLOCK3 (%s) ", e.getMessage());
-			throw (e);
-		}
-
-		return this;
-	}
 }

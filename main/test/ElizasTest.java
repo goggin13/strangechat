@@ -21,7 +21,7 @@ public class ElizasTest extends MyFunctionalTest {
 	    params.put("session", pmo_session);
 	    params.put("channel", "15");	    
 	    params.put("qry", "whats up eliza");
-		JsonObject jsonObj = postAndValidateResponse("/eliza", params);   
+		postAndValidateResponse("/eliza", params);   
 	} 
 		
 }

@@ -21,7 +21,6 @@ public class UsersTest extends MyFunctionalTest {
 	    params.put("alias", "Matthew Goggin");
 		JsonObject jsonObj = postAndValidateResponse("/signin", params);		
 	    
-	    System.out.println(jsonObj);
 		assertEquals(1, jsonObj.entrySet().size());
 		
 		JsonObject caller = jsonObj.get(fb_id_2 + "").getAsJsonObject();
@@ -55,12 +54,43 @@ public class UsersTest extends MyFunctionalTest {
 		             jsonObj.get("message").getAsString());
 	} 
 
-    // @Test
-    // public void testGoodLogout () {
-    //  HashMap<String, String> params = new HashMap<String, String>();
-    //     params.put("user_id", pmo_db_id + "");
-    //     params.put("session", pmo_session);
-    //  postAndAssertOkay("/signout", params);
-    // }  
-    // 
+	@Test
+	public void testPostToConsume () {
+        HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("sign_in_id", fb_id_2 + "");
+	    params.put("alias", "Matthew Goggin");
+		JsonObject jsonObj = postAndValidateResponse("/signin", params);
+	    JsonObject caller = jsonObj.get(fb_id_2 + "").getAsJsonObject();
+        String session = caller.get("session_id").getAsString();
+        String id = caller.get("id").getAsString();
+        
+        params = new HashMap<String, String>();
+	    params.put("sign_in_id", pmo_id + "");
+	    params.put("alias", "Patrick Moberg");
+		postAndValidateResponse("/signin", params);
+        
+        params = new HashMap<String, String>();
+	    params.put("consume_user_id", pmo_id + "");
+        params.put("user_id", id + "");
+        params.put("session", session);
+        
+		postAndAssertOkay("/users/consume", params);		
+	}
+
+    @Test
+    public void testGoodLogout () {
+        HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("sign_in_id", fb_id_2 + "");
+	    params.put("alias", "Matthew Goggin");
+		JsonObject jsonObj = postAndValidateResponse("/signin", params);
+	    JsonObject caller = jsonObj.get(fb_id_2 + "").getAsJsonObject();
+        String session = caller.get("session_id").getAsString();
+        String id = caller.get("id").getAsString();
+        
+        params = new HashMap<String, String>();
+        params.put("user_id", id);
+        params.put("session", session);
+        postAndAssertOkay("/signout", params);
+    }  
+    
 }

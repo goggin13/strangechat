@@ -6,6 +6,7 @@ var ChatAPI = function (spec) {
   "use strict";
   var that = {},
     my = {};
+  console.debug(spec.home_url);
   my.home_url = spec.home_url;
   
   that.user_id = "";
@@ -52,7 +53,9 @@ var ChatAPI = function (spec) {
       user_id: me.id,
       session: me.session_id,
       alias: me.alias,
-      avatar: me.avatar
+      avatar: me.avatar,
+      recentMeetings: me.recentMeetings,
+      excludedUsers: me.excludedUsers
     });
     
     that.superPowers = me.superPowers;
@@ -60,7 +63,6 @@ var ChatAPI = function (spec) {
     that.karmaKubes = me.karmaKubes;
     that.coinCount = me.coinCount;
     
-    // MyContacts.put(that.user);
     that.user_id = that.user.user_id;
     if (callback) {
       callback(JSON);
@@ -107,6 +109,15 @@ var ChatAPI = function (spec) {
     that.send(url, "GET", data, callback);
   };
 
+  my.addToMetWith = function (other_id) {
+    var url = my.home_url + "users/met_with",
+      data = {
+        user_id: that.user.user_id,
+        other_id: other_id
+      };
+    that.send(url, "GET", data);    
+  };
+
   // indicate you wish to get paired with a random user
   that.requestRandomRoom = function (request_callback) {
     // subscribe to random-presence channel
@@ -114,11 +125,13 @@ var ChatAPI = function (spec) {
         request_callback(user);
         that.im_talking_to[user.user_id] = user;
         my.channels[user.channel.channel_name] = user.channel;
+        my.addToMetWith(user.user_id);
+        that.user.recentMeetings.push(user.user_id);
       },
       matchMaker = MatchMaker({
         user: that.user,
         callback: joinCallback,
-        pusher: my.pusher
+        pusher: my.pusher,
       });
     matchMaker.matchMe();
   };
@@ -162,12 +175,22 @@ var ChatAPI = function (spec) {
     return my.broadcastChannel;
   };
 
-  that.bindNewKarmaKube = function (f) {
-    my.userChannel.bindNewKarmaKube(f);
+  // combine this user with the given user_id; the passed
+  // user_id will be deleted, and all of their powers will be transferred onto
+  // this user
+  that.consumeUser = function (user_id, callback) {
+    var url = my.home_url + "users/consume",
+      data = {
+        consume_user_id: user_id,
+        user_id: that.user.user_id
+      };
+    that.send(url, "GET", data);
   };
 
-  that.bindNewPower = function (f) {
-    my.userChannel.bindNewPower(f);
+  my.initUserChannelBindings = function () {
+    that.bindNewKarmaKube = my.userChannel.bindNewKarmaKube;
+    that.bindNewPower = my.userChannel.bindNewPower;
+    that.bindNewCoins = my.userChannel.bindNewCoins;
   };
   
   that.bindBroadcast = function (f) {
@@ -201,7 +224,8 @@ var ChatAPI = function (spec) {
           user: that.user,
           pusher: my.pusher
         });     
-           
+        my.initUserChannelBindings();
+         
         my.sendMySocketID(function (JSON) {             
           if (JSON.status === "okay") {
         

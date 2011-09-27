@@ -66,7 +66,7 @@ public abstract class SuperPower {
     public boolean awardIfQualified (User user) {
     	int level = isQualified(user);
     	if (level > 0) {
-    	    System.out.println("Grant " + this.name + " to " + user.id);
+//    	    System.out.println("Grant " + this.name + " to " + user.id);
     		grantTo(user, level);
     	}
     	return level > 0;
@@ -83,7 +83,6 @@ public abstract class SuperPower {
         StoredPower sp = StoredPower.getOrCreate(p, user);
         sp.increment(level);
         user.notifyNewPower(sp);
-        System.out.println("AWARD " + sp.getSuperPower().name + " to " + user.id);
     	return sp;
     } 
     

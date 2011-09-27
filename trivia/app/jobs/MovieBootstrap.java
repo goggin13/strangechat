@@ -78,23 +78,53 @@ public class MovieBootstrap extends Job {
         a1 = new Answer("Barbara Streisand", true);	a2 = new Answer("Judy Garland", false);	a3 = new Answer("Joan Rivers", false);	a4 = new Answer("Bette Midler", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Who said, \"I knew that with a mouth like mine I just had to be a star or something?\"", a, c);
         a1 = new Answer("The Full Monty", true);	a2 = new Answer("Bean", false);	a3 = new Answer("The Borrowers", false);	a4 = new Answer("Spiceworld", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Which 1997 film was the then most successful British movie of all time?", a, c);
 	
-        new TriviaResponse(c, "Hi there, want to play?", ResponseType.SALUTATION);
-
-        new TriviaResponse(c, "Can\'t get that through my head. Can you try typing it again?", ResponseType.REPEAT);
+        new TriviaResponse(c, "Can’t get that through my head. Can you try typing it again?", ResponseType.REPEAT);
         new TriviaResponse(c, "Are you trying to confuse a gal? Type that out again.", ResponseType.REPEAT);
-        new TriviaResponse(c, "Now that\'s just nonsense. Try to be more clear.", ResponseType.REPEAT);
-
-        new TriviaResponse(c, "Now you\'re onto something.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Now that’s just nonsense. Try to be more clear.", ResponseType.REPEAT);
+        new TriviaResponse(c, "Honey, just give me the first letter of the answer you want.", ResponseType.REPEAT);
+        new TriviaResponse(c, "Darling, all I need is the letter.", ResponseType.REPEAT);
+        new TriviaResponse(c, "If you could only tell me the letter of your answer, that'd be fabulous.", ResponseType.REPEAT);
+        new TriviaResponse(c, "Now you’re onto something.", ResponseType.CORRECT);
         new TriviaResponse(c, "Look at you go.", ResponseType.CORRECT);
         new TriviaResponse(c, "You’re really putting me through my paces.", ResponseType.CORRECT);
         new TriviaResponse(c, "Marvelous!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Right!", ResponseType.CORRECT);
         new TriviaResponse(c, "Wonderful!", ResponseType.CORRECT);
         new TriviaResponse(c, "Beautiful, darling!", ResponseType.CORRECT);
-
+        new TriviaResponse(c, "Darling!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Fabulous!", ResponseType.CORRECT);
+        new TriviaResponse(c, "Wonderful.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Just amazing.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Fantastic.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Oh boy, oh boy. You're right.", ResponseType.CORRECT);
+        new TriviaResponse(c, "This is a beautiful thing.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Way to go, honey.", ResponseType.CORRECT);
         new TriviaResponse(c, "If this is being wrong...", ResponseType.INCORRECT);
         new TriviaResponse(c, "It hurts to say you’re anything less than perfect, but you ain’t right.", ResponseType.INCORRECT);
         new TriviaResponse(c, "No way, sugar.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Sorry to say you\'re wrong, darling.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Sorry, honey.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Sorry to say you’re wrong, darling.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "It's so ugly to say you're incorrect but you are.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Sad to say, no.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Hate to say you're wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Sorry, darling.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "What a shame.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Darling, no.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You're so lovely when you're wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "I still like you but you're wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Honey, no.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Crying shame.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Hi there, want to play? Reply back \"yes, ma’am\" if you do.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Bonjour. Wanna play with me? Reply \"oui\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Darling! Let's play. Tell me \"yes\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Call me \"sugar\" to get me started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Call me \"honey\" to get me started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Au revoir!", ResponseType.CLOSING);
+        new TriviaResponse(c, "Until next time.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Bye, lovely.", ResponseType.CLOSING);
+        new TriviaResponse(c, "See you again soon, right sugar?", ResponseType.CLOSING);
+        new TriviaResponse(c, "Bye lovely.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Bye, hun.", ResponseType.CLOSING);
 				        
         Logger.info("Bootstrapped movie trivia");
     }

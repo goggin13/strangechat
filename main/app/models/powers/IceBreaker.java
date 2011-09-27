@@ -70,14 +70,13 @@ public class IceBreaker extends SuperPower {
 		
 	@Override
 	public String use (User caller, User subject) {
-	    int index = IceBreakers.getRandomIndex();
-        // int index = chooseIndex(caller, subject);
-        // caller.addSeenIceBreaker(index);
-        // caller.save();
-        // if (subject != null) {
-        //     subject.addSeenIceBreaker(index);
-        //     subject.save();
-        // }
+		int index = chooseIndex(caller, subject);
+		caller.addSeenIceBreaker(index);
+		caller.save();
+		if (subject != null) {
+		    subject.addSeenIceBreaker(index);
+		    subject.save();
+		}
         String txt = IceBreakers.get(index);
         return txt;
 	}

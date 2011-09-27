@@ -1,5 +1,12 @@
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import models.User;
 import models.UserExclusion;
+import models.powers.StoredPower;
+import models.karma.*;
+import enums.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,37 +34,154 @@ public class UserTest extends UnitTest {
 	
 	@Before
     public void setup() {
-        Fixtures.deleteAll();
-        Fixtures.load("data-full.yml");
+        Fixtures.deleteDatabase();
+        Fixtures.loadModels("data-full.yml");
     }
 
-    @Test
-    public void testBasicUserFunctions () {
-        // first no users
-        assertEquals(7, User.count());
-        
-        User.getOrCreate(100);
-        User.getOrCreate(101);       
-        assertEquals(9, User.count());
-        
-        User.getOrCreate(100);       
-        assertEquals(9, User.count());
+
+    public void testWinningCountAmount (double pct, int expectedMin, int expectedMax, User user) {
+        for (int i = 0; i < 50; i++) {
+    	    int winnings = user.awardTriviaCoins(pct);  
+            assertTrue(winnings >= expectedMin);
+            assertTrue(winnings <= expectedMax);    
+    	}
     }
     
     @Test
-    public void testUsersCanSpeak () {
-        User u = User.getOrCreate(645);
-        User u2 = User.getOrCreate(646);
-        User u3 = User.getOrCreate(647);
-        
-        assertTrue(UserExclusion.canSpeak(u.id, u2.id));
-        
-        new UserExclusion(u, 1);
-        new UserExclusion(u2, 1);     
-        
-        assertFalse(UserExclusion.canSpeak(u.id, u2.id));       
-        
-        assertTrue(UserExclusion.canSpeak(u.id, u3.id));        
+    public void testAwardRandomCoins () {
+    	User user = User.getOrCreate(5000);
+        testWinningCountAmount(0.0, 1, 1, user);
+        testWinningCountAmount(0.26, 5, 8, user);
+    	testWinningCountAmount(0.51, 10, 15, user);    	
+        testWinningCountAmount(0.76, 15, 25, user);              
+    }
+    
+    @Test
+    public void testUserExclusions () {
+    	User user1 = User.getOrCreate(340L);
+    	User user2 = User.getOrCreate(341L);
+    	User user3 = User.getOrCreate(342L);
+    	new UserExclusion(user1, 1);
+    	new UserExclusion(user2, 1);
+    	new UserExclusion(user3, 1);
+    	
+    	List<Long> test = new LinkedList<Long>();
+    	test.add(user2.id);
+    	test.add(user3.id);
+    	user1.login();
+    	assertEquals(test, user1.excludedUsers);
     } 
 
+    public void givePowersToUser (User user, Power power, int countAvailable, int countUsed, int level) {        
+        StoredPower sp = new StoredPower(power, user);
+        sp.level = level;
+        sp.available = countAvailable;
+        sp.used = countUsed;        
+        sp.save();
+    }
+    
+    public void initRandomFields (User user) {
+        Random r = new Random();
+        user.coinCount = Math.abs(r.nextInt() % 10 + 1);
+        user.coinsEarned = Math.abs(r.nextInt() % 10 + 1);
+        user.chatTime = Math.abs(r.nextInt() % 10 + 1);
+        user.messageCount = Math.abs(r.nextInt() % 10 + 1);
+        user.gotMessageCount = Math.abs(r.nextInt() % 10 + 1);
+        user.joinCount = Math.abs(r.nextInt() % 10 + 1);
+        user.offersMadeCount = Math.abs(r.nextInt() % 10 + 1);
+        user.offersReceivedCount = Math.abs(r.nextInt() % 10 + 1);
+        user.revealCount = Math.abs(r.nextInt() % 10 + 1);
+        user.save();
+        
+        for (int i = 0; i < 10; i++) {
+            new KarmaKube(User.getOrCreate(r.nextInt()), user, r.nextInt() % 2 == 0).save();
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            new UserExclusion(user.id, r.nextInt());
+        }
+        
+    }
+    
+    @Test
+    public void testConsumeUser () {
+        User user1 = User.find("byAlias", "Patrick Moberg").first();
+        User user2 = User.find("byAlias", "Matthew Goggin").first();
+        initRandomFields(user1);
+        initRandomFields(user2);
+        
+        Random r = new Random();
+        for (int i = 0; i < 30; i++) {
+            if (r.nextInt() % 2 == 0) {
+                user1.addSeenIceBreaker(i);
+            } else {
+                user2.addSeenIceBreaker(i);        
+            }
+        }
+        
+        // same level
+        givePowersToUser(user1, Power.ICE_BREAKER, 3, 0, 1);
+        givePowersToUser(user2, Power.ICE_BREAKER, 5, 4, 1);
+        
+        // user 1 higher
+        givePowersToUser(user1, Power.MIND_READER, 5, 2, 2);
+        givePowersToUser(user2, Power.MIND_READER, 3, 1, 1);
+        
+        // user 2 lower
+        givePowersToUser(user1, Power.EMOTION, 5, 2, 1);
+        givePowersToUser(user2, Power.EMOTION, 3, 7, 2);
+        
+        int expected_kubeCount = user1.getKubes().size() 
+                                 + user2.getKubes().size() 
+                                 - User.INITIAL_KARMA_KUBES;
+                                 
+        int expected_exclusionCount = UserExclusion.userGroups(user1.id).size() + 
+                                        UserExclusion.userGroups(user2.id).size();
+                                        
+        int expected_iceBreakerCount = user1.getSeenIceBreakers().size() 
+                                        + user2.getSeenIceBreakers().size();
+                                        
+        
+        int expected_coinCount = user1.coinCount + user2.coinCount;
+        int expected_coinsEarned = user1.coinsEarned + user2.coinsEarned;
+        long expected_chatTime = user1.chatTime + user2.chatTime;
+        int expected_messageCount = user1.messageCount + user2.messageCount;
+        int expected_gotMessageCount = user1.gotMessageCount + user2.gotMessageCount;
+        int expected_joinCount = user1.joinCount + user2.joinCount;
+        int expected_offersMadeCount = user1.offersMadeCount + user2.offersMadeCount;
+        int expected_offersReceivedCount = user1.offersReceivedCount + user2.offersReceivedCount;
+        int expected_revealCount = user1.revealCount + user2.revealCount;
+        
+        user1.consume(user2);
+        
+        User deleted = User.find("byAlias", "Matthew Goggin").first();
+        assertNull(deleted);
+    
+        assertEquals(4, user1.countUsedPowers(Power.ICE_BREAKER));
+        assertEquals(8 - User.INITIAL_ICE_BREAKERS, user1.countAvailablePowers(Power.ICE_BREAKER));
+        assertEquals(1, user1.currentLevel(Power.ICE_BREAKER));
+
+        assertEquals(3, user1.countUsedPowers(Power.MIND_READER));
+        assertEquals(8, user1.countAvailablePowers(Power.MIND_READER));
+        assertEquals(2, user1.currentLevel(Power.MIND_READER));
+
+        assertEquals(9, user1.countUsedPowers(Power.EMOTION));
+        assertEquals(8, user1.countAvailablePowers(Power.EMOTION));
+        assertEquals(2, user1.currentLevel(Power.EMOTION));
+            
+        assertEquals(expected_iceBreakerCount, user1.getSeenIceBreakers().size());
+        assertEquals(expected_kubeCount, user1.getKubes().size());
+        assertEquals(expected_exclusionCount, UserExclusion.userGroups(user1.id).size());
+                
+        assertTrue(expected_coinCount > 0);
+        assertEquals(user1.coinCount, expected_coinCount);
+        assertEquals(user1.coinsEarned, expected_coinsEarned);
+        assertEquals(user1.chatTime, expected_chatTime);
+        assertEquals(user1.messageCount, expected_messageCount);
+        assertEquals(user1.gotMessageCount, expected_gotMessageCount);
+        assertEquals(user1.joinCount, expected_joinCount);
+        assertEquals(user1.offersMadeCount, expected_offersMadeCount);
+        assertEquals(user1.offersReceivedCount, expected_offersReceivedCount);
+        assertEquals(user1.revealCount, expected_revealCount);
+    }
 }

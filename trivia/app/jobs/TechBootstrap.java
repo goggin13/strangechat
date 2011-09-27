@@ -46,20 +46,40 @@ public class TechBootstrap extends Job {
         a1 = new Answer("Ovid", true);	a2 = new Answer("Socrates", false);	a3 = new Answer("Plato", false);	a4 = new Answer("Aristotle", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("Necessity is the mother of invention was suggested by whom?", a, c);
         a1 = new Answer("Plywood", true);	a2 = new Answer("Insulation", false);	a3 = new Answer("Drywall", false);	a4 = new Answer("Particle board", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("The inventor of dynamite and founder of the Nobel Prize Alfred Nobel also invented what building material?", a, c);
 
-        new TriviaResponse(c, "Welcome to Tech Trivia.", ResponseType.SALUTATION);
-
-        new TriviaResponse(c, "Does not compute. Try again!", ResponseType.REPEAT);
-        new TriviaResponse(c, "Unable to understand response. Try again.", ResponseType.REPEAT);
-
-        new TriviaResponse(c, "That is correct.", ResponseType.CORRECT); 
+        new TriviaResponse(c, "Does not compute. Try again with only the answer's corresponding letter!", ResponseType.REPEAT);
+        new TriviaResponse(c, "Unable to understand response. Answer only by entering the matching letter to the answer.", ResponseType.REPEAT);
+        new TriviaResponse(c, "You do not confuse me. Answer with only the letter of the answer.", ResponseType.REPEAT);
+        new TriviaResponse(c, "That is correct. ", ResponseType.CORRECT);
         new TriviaResponse(c, "You are correct.", ResponseType.CORRECT);
         new TriviaResponse(c, "I’m envious of your brains.", ResponseType.CORRECT);
         new TriviaResponse(c, "Right.", ResponseType.CORRECT);
-
+        new TriviaResponse(c, "You must've attended an Ivy.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Yes.", ResponseType.CORRECT);
+        new TriviaResponse(c, "You're not awful at this game.", ResponseType.CORRECT);
+        new TriviaResponse(c, "You're not bad. I've seen better, but you're not bad.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Hm. Correct.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Surprisingly right.", ResponseType.CORRECT);
+        new TriviaResponse(c, "Sure.", ResponseType.CORRECT);
         new TriviaResponse(c, "That is incorrect.", ResponseType.INCORRECT);
         new TriviaResponse(c, "I’m sorry, you are not correct.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Such a n00b.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You must be a public university graduate.", ResponseType.INCORRECT);
+        new TriviaResponse(c, " Wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "How embarrassing for you.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "No.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Not likely.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Definitely not.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "You should've quit while ahead.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Hmph. Wrong.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "Unsurprisingly incorrect.", ResponseType.INCORRECT);
+        new TriviaResponse(c, "I guess this is when we get started. Type \"Edison\" to begin.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "I'm here to quiz you on technology and inventions. Type \"Apple\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You think you're up to par? Type \"Zuckerberg\" to get things rolling.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Sure, you look like a semi-decent match for me. Respond \"Steve Jobs\" to get started.", ResponseType.SALUTATION);
+        
+        new TriviaResponse(c, "See you again soon, I'm sure.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Don't bother coming back.", ResponseType.CLOSING);
+        new TriviaResponse(c, "Maybe we'll see each other again, maybe not.", ResponseType.CLOSING);
+        new TriviaResponse(c, "See you on the other side.", ResponseType.CLOSING);
         
         Logger.info("Bootstrapped Tech trivia");
     }

@@ -18,7 +18,7 @@ USE_POWERS = ARGV.length < 3 || ARGV[2] == "usepowers"
 ROOT_URL = "http://173.246.101.145/"
 
 CHANNEL = "#{ROOT_ID}-channel"
-NUM_ITERS = 10000
+NUM_ITERS = 5000
 
 class PhoneBook
   @@people = {}
