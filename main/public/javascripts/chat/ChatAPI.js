@@ -6,7 +6,6 @@ var ChatAPI = function (spec) {
   "use strict";
   var that = {},
     my = {};
-  console.debug(spec.home_url);
   my.home_url = spec.home_url;
   
   that.user_id = "";
@@ -80,7 +79,7 @@ var ChatAPI = function (spec) {
         avatar: avatar,
         alias: alias
       };
-    that.send(url, "POST", data, function (JSON) {
+    that.send(url, "POST", data, function (JSON) {     
       if (JSON.hasOwnProperty("status") && JSON.status === "error") {
         $("#content").html(JSON.message);
       } else {

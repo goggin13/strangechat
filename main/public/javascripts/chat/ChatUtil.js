@@ -47,15 +47,21 @@ var HTTP = (function () {
   that.send = function (url, method, data, callback, errCallback) {
     var sendFunc = $.ajax,
       dataType = 'json',
-      hash = url + "?" + MyUtil.serialize(data);
+      hash = url + "?" + MyUtil.serialize(data),
+      success = false;
           
     // add callback if this is cross domain
-    
     if (url.indexOf(window.location.host) === -1) {
       url += "?callback=?";
-      sendFunc = $.jsonp;
-      dataType = 'jsonp';
     }
+    
+    // cross domain will not fire error callback, but we'll set a timeout
+    // to notify callers after 5 seconds
+    setTimeout(function () {
+      if (!success && errCallback) {  
+        errCallback();
+      }
+    }, 5000); 
     
     MyUtil.debug("GET " + hash);
       
@@ -70,21 +76,13 @@ var HTTP = (function () {
       data: data,
       dataType: dataType,
       success: function (JSON) {
+        success = true;
         if (JSON.status === "error") {
           MyUtil.debug("ERROR!!!");
           MyUtil.debug(JSON);
         }
         if (callback) {
           callback(JSON, hash);
-        }
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        MyUtil.debug("BAD RESPONSE");
-        MyUtil.debug(textStatus);
-        MyUtil.debug(errorThrown);
-
-        if (errCallback) {  
-          errCallback();
         }
       }
     });   

@@ -162,7 +162,6 @@ var TriviaAPI = function (spec) {
   };
       
   that.input = function (text, callback) {
-    console.debug(my.state.name);
     my.state.f(text, callback);
   };
     
