@@ -15,6 +15,7 @@ public class MindReader extends SuperPower {
 			true
 		);
 	    this.multiRoom = true;		
+	    this.autoOn = true;
 	}
 	
 	@Override

@@ -23,7 +23,8 @@ public class Emotion extends SuperPower {
 			true,
 			true
 		);
-	    this.multiRoom = true;		
+	    this.multiRoom = true;
+	    this.autoOn = true;		
 	}
 	
 	@Override
