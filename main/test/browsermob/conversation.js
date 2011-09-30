@@ -66,7 +66,7 @@ var sendIceBreaker = function () {
   pause();
   selenium.click("css=.chatting .ice_breaker");
   var nextCount = countIcebreakers() + 1;
-  waitForCondition("countIcebreakers() >= next");
+  selenium.waitForCondition("countIcebreakers() >= next");
   iceBreakerTimer = timestamp();
 };
 
@@ -120,7 +120,7 @@ for (i = 1; i < NUM_ITERS; i++) {
   selenium.waitForTextPresent(theirName + " hello" + i);
   var elapsedTime = timestamp() - iceBreakerTimer;
   if (i < NUM_ITERS - 2) {
-    if (elapsedTime > 17 && flipCoin(3)) {
+    if (elapsedTime > 17) {
       sendIceBreaker();
     } else if (flipCoin(4)) {
       sendKarma();
