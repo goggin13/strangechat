@@ -78,6 +78,7 @@ var sendKarma = function () {
   selenium.click("css=.chatting .karma");
   
   selenium.waitForElementPresent("css=#yes_splash_option");
+  pause();
   selenium.click("css=#yes_splash_option");
   
   var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='Karma']\"), 10) >= " + nextCount;
@@ -118,7 +119,7 @@ if (flipCoin(5)) {
   iceBreakerTimer = timestamp() - 17;
 }
 
-sendIceBreaker();
+sendKarma();
 for (i = 1; i < NUM_ITERS; i++) {  
   sendChat(myName + " hello" + i);    
   selenium.waitForTextPresent(theirName + " hello" + i);
