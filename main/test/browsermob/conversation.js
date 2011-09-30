@@ -76,13 +76,12 @@ var sendKarma = function () {
   var xPath = '//img[@alt="Karma"]';  
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;
   selenium.click("css=.chatting .karma");
+  
   selenium.waitForElementPresent("css=#yes_splash_option");
+  selenium.click("css=#yes_splash_option");
   
   var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='Karma']\"), 10) >= " + nextCount;
-  selenium.waitForCondition(JS, 10000);
-    
-  selenium.click("css=#yes_splash_option");
-  selenium.waitForXpathCount(xPath, nextCount);  
+  selenium.waitForCondition(JS, 10000);  
 };
 
 
