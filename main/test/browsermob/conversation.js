@@ -67,8 +67,13 @@ var sendIceBreaker = function () {
   var xPath = "//img[@alt='IceBreaker']";
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;  
   selenium.click("css=.chatting .ice_breaker");
-  pause();
-  selenium.click("css=body"); // kill the popup, if its there
+  
+  if (!sentBefore) { // kill popup
+    var css = "css=.power_splash.ice_breaker";
+    selenium.waitForElementPresent(css);
+    selenium.click(css);
+  }
+  
   var JS = "parseInt(selenium.getXpathCount(\"" + xPath + "\"), 10) >= " + nextCount;
   selenium.waitForCondition(JS, 10000);
   iceBreakerTimer = timestamp();
