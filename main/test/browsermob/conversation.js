@@ -64,7 +64,7 @@ var iceBreakerTimer = -1;
 var sentBefore = false;
 var sendIceBreaker = function () {
   pause();
-  var xPath = '//img[@alt="IceBreaker"]';
+  var xPath = "//img[@alt='IceBreaker']";
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;  
   selenium.click("css=.chatting .ice_breaker");
   var JS = "parseInt(selenium.getXpathCount(\"" + xPath + "\"), 10) >= " + nextCount;
@@ -74,7 +74,7 @@ var sendIceBreaker = function () {
 
 var sendKarma = function () {
   pause();
-  var xPath = '//img[@alt="Karma"]';  
+  var xPath = "//img[@alt='Karma']";  
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;
   selenium.click("css=.chatting .karma");
   pause();  
