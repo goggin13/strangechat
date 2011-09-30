@@ -18,7 +18,7 @@ c.blacklistRequests("http://www\\.google\\.com/buzz/.*", 200);
 
 var timeout = 30000;
 var icebreaker_timeout = 4000;
-var NUM_ITERS = 5;
+var NUM_ITERS = 10;
 var MESSAGE_PAUSE_TIME = 1000;
 
 selenium.setTimeout(timeout);
@@ -55,7 +55,7 @@ var sendChat = function (msg) {
   selenium.keyDown("css=.chat_input", "\\13");    
 };
 
-window.countIcebreakers = function () {
+countIcebreakers = function () {
   var xPath = '//img[@alt="IceBreaker"]';
   return parseInt(selenium.getXpathCount(xPath), 10);
 }
@@ -65,8 +65,8 @@ var sentBefore = false;
 var sendIceBreaker = function () {
   pause();
   selenium.click("css=.chatting .ice_breaker");
-  window.nextCount = countIcebreakers() + 1;
-  var JS = "selenium.browserbot.getCurrentWindow().countIcebreakers() >= window.Count;";
+  var nextCount = countIcebreakers() + 1;
+  var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='IceBreaker']\"), 10) >= " + nextCount;
   selenium.waitForCondition(JS, 1000);
   iceBreakerTimer = timestamp();
 };
@@ -74,10 +74,13 @@ var sendIceBreaker = function () {
 var sendKarma = function () {
   pause();
   var xPath = '//img[@alt="Karma"]';  
-  var curCount = parseInt(selenium.getXpathCount(xPath), 10);
-  var nextCount = curCount + 1;
+  var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;
   selenium.click("css=.chatting .karma");
   selenium.waitForElementPresent("css=#yes_splash_option");
+  
+  var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='Karma']\"), 10) >= " + nextCount;
+  selenium.waitForCondition(JS, 1000);
+    
   selenium.click("css=#yes_splash_option");
   selenium.waitForXpathCount(xPath, nextCount);  
 };
@@ -116,6 +119,7 @@ if (flipCoin(5)) {
   iceBreakerTimer = timestamp() - 17;
 }
 
+sendIceBreaker();
 for (i = 1; i < NUM_ITERS; i++) {  
   sendChat(myName + " hello" + i);    
   selenium.waitForTextPresent(theirName + " hello" + i);
