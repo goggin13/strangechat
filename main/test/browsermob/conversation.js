@@ -55,7 +55,7 @@ var sendChat = function (msg) {
   selenium.keyDown("css=.chat_input", "\\13");    
 };
 
-var countIcebreakers = function () {
+window.countIcebreakers = function () {
   var xPath = '//img[@alt="IceBreaker"]';
   return parseInt(selenium.getXpathCount(xPath), 10);
 }
@@ -65,8 +65,9 @@ var sentBefore = false;
 var sendIceBreaker = function () {
   pause();
   selenium.click("css=.chatting .ice_breaker");
-  var nextCount = countIcebreakers() + 1;
-  selenium.waitForCondition("countIcebreakers() >= next");
+  window.nextCount = countIcebreakers() + 1;
+  var JS = "selenium.browserbot.getCurrentWindow().countIcebreakers() >= window.Count;";
+  selenium.waitForCondition(JS, 1000);
   iceBreakerTimer = timestamp();
 };
 
