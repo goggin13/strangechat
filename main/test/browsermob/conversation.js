@@ -68,7 +68,7 @@ var sendIceBreaker = function () {
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;  
   selenium.click("css=.chatting .ice_breaker");
   pause();
-  selenium.click("css=.pad"); // kill the popup, if its there
+  selenium.click("css=body"); // kill the popup, if its there
   var JS = "parseInt(selenium.getXpathCount(\"" + xPath + "\"), 10) >= " + nextCount;
   selenium.waitForCondition(JS, 10000);
   iceBreakerTimer = timestamp();
