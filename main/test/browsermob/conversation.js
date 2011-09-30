@@ -64,8 +64,8 @@ var iceBreakerTimer = -1;
 var sentBefore = false;
 var sendIceBreaker = function () {
   pause();
+  var nextCount = countIcebreakers() + 1;  
   selenium.click("css=.chatting .ice_breaker");
-  var nextCount = countIcebreakers() + 1;
   var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='IceBreaker']\"), 10) >= " + nextCount;
   selenium.waitForCondition(JS, 10000);
   iceBreakerTimer = timestamp();
