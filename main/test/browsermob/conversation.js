@@ -67,7 +67,7 @@ var sendIceBreaker = function () {
   selenium.click("css=.chatting .ice_breaker");
   var nextCount = countIcebreakers() + 1;
   var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='IceBreaker']\"), 10) >= " + nextCount;
-  selenium.waitForCondition(JS, 1000);
+  selenium.waitForCondition(JS, 10000);
   iceBreakerTimer = timestamp();
 };
 
@@ -79,7 +79,7 @@ var sendKarma = function () {
   selenium.waitForElementPresent("css=#yes_splash_option");
   
   var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='Karma']\"), 10) >= " + nextCount;
-  selenium.waitForCondition(JS, 1000);
+  selenium.waitForCondition(JS, 10000);
     
   selenium.click("css=#yes_splash_option");
   selenium.waitForXpathCount(xPath, nextCount);  
