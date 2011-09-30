@@ -1,44 +1,6 @@
 /*jslint eqeq: true, newcap: true, white: true, onevar: true, undef: true, nomen: true, regexp: true, plusplus: false, bitwise: true, maxerr: 50, indent: 2, browser: true */
 /*global document, Event, types, console, HTTP, RoomChannel, MatchMaker, APusher, Pusher, UserChannel, Channel, MyUtil, $, User, base_url, alert, sign_up_in_prompt, oApp, jQuery */
 
-var TriviaBots = {
-  Music: {
-    alias: "Music",
-    startWord: "right on",
-    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/9f608b9bf8437d65e9ffd7df9bada5a0.png"
-  },
-  General: {
-    alias: "General",      
-    startWord: "it's on",
-    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/0712cde686264e879899025683dcbb34.png"
-  },                                                                
-  Movies: {        
-    alias: "Movies",                                                       
-    startWord: "play",                                            
-    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/a1c03ee2fa28cf0b0e8fbeea89c2e149.png"
-  },                                                                
-  Books: {         
-    alias: "Books",                                                       
-    startWord: "books",                                             
-    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/f1300b80c2fd0d4b9e36956e7613c952.png"
-  },
-  TV: {            
-    alias: "TV",                                                    
-    startWord: "TV",                                             
-    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/2b2dcb168dff3b6cbdd03c287e4960d5.png"
-  },                                                                    
-  Tech: {          
-    alias: "Tech",                                                       
-    startWord: "tech",                                              
-    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/f1300b80c2fd0d4b9e36956e7613c952.png"
-  },                                                                
-  Cats: {          
-    alias: "Cats",                                                       
-    startWord: "meow",                                              
-    avatar: "http://superheroclubhouse.com/staging/web/assets/images/users/fc1e20beaaad93bff7066aa047380eac.png"
-  }        
-};
-
 var TriviaAPI = function (spec) {
   "use strict";
   var my = {},

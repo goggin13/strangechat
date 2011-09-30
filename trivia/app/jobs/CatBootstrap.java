@@ -58,8 +58,8 @@ public class CatBootstrap extends Job {
         new TriviaResponse(c, "So wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "You stink.", ResponseType.INCORRECT);
         new TriviaResponse(c, "No, no, no silly!", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Ready to rumble? Type back \"purr\" to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "You wanna go? Type \"meow\" and we'll begin.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Ready to rumble?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You wanna go?", ResponseType.SALUTATION);
         new TriviaResponse(c, "Purfect! You're going away now", ResponseType.CLOSING);
         new TriviaResponse(c, "TTFN, loser.", ResponseType.CLOSING);
         

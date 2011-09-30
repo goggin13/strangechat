@@ -54,8 +54,6 @@ public class BookBootstrap extends Job {
         a1 = new Answer("JR", true);	a2 = new Answer("The Adventures of Augie March", false);	a3 = new Answer("Billy Bathgate", false);	a4 = new Answer("Omensetter's Luck", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("The central figure of this novel, which is all dialogue, is an 11 year-old boy who builds a financial empire from a phone booth near his school", a, c);
         a1 = new Answer("A Confederacy of Dunces", true);	a2 = new Answer("East of Eden", false);	a3 = new Answer("Grapes of Wrath", false);	a4 = new Answer("Rama II", false);	a = new LinkedList<Answer>(); 	a.add(a1); a.add(a2); a.add(a3); a.add(a4);	new Question("This novel is set in New Orleans and follows the various French Quarter occupations and exploits of one Ignatius J. Reilly, obese admirer of the Roman philosopher Boethius", a, c);
         
-
-        
         new TriviaResponse(c, "Welcome to Book Trivia.", ResponseType.SALUTATION);
 
         new TriviaResponse(c, "I don’t understand what you’re trying to say. Type that again?", ResponseType.REPEAT);

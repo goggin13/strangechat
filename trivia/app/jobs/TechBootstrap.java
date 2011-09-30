@@ -71,10 +71,10 @@ public class TechBootstrap extends Job {
         new TriviaResponse(c, "You should've quit while ahead.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Hmph. Wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Unsurprisingly incorrect.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "I guess this is when we get started. Type \"Edison\" to begin.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "I'm here to quiz you on technology and inventions. Type \"Apple\" to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "You think you're up to par? Type \"Zuckerberg\" to get things rolling.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Sure, you look like a semi-decent match for me. Respond \"Steve Jobs\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "I guess this is when we get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "I'm here to quiz you on technology and inventions.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You think you're up to par?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Sure, you look like a semi-decent match for me.", ResponseType.SALUTATION);
         
         new TriviaResponse(c, "See you again soon, I'm sure.", ResponseType.CLOSING);
         new TriviaResponse(c, "Don't bother coming back.", ResponseType.CLOSING);

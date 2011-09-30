@@ -104,11 +104,11 @@ public class TVBootstrap extends Job {
         new TriviaResponse(c, "That’s so wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Talk to the hand. ", ResponseType.INCORRECT);
         new TriviaResponse(c, "Definitely not.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "What's up? Type \"tv\" to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Hiiiiiiiiiiiiiii. Type \"hi\" back to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "What's up! Type back \"nothing\" to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Heyo! Wanna go? Respond back \"party starter\" to get it rolling.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "OMG let's quiz. Respond with \"ok\" so I can start.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "What's up?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Hiiiiiiiiiiiiiii", ResponseType.SALUTATION);
+        new TriviaResponse(c, "What's up!", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Heyo! Wanna go?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "OMG let's quiz.", ResponseType.SALUTATION);
         new TriviaResponse(c, "Byeeeeeeeeee!", ResponseType.CLOSING);
         new TriviaResponse(c, "C U l8r, h8r", ResponseType.CLOSING);
         new TriviaResponse(c, "OMG, come back soon!", ResponseType.CLOSING);

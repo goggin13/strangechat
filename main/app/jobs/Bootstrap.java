@@ -19,15 +19,15 @@ public class Bootstrap extends Job {
     public void doJob() {
 		if (Play.mode == Play.Mode.DEV) {
             Fixtures.deleteDatabase();
-            Fixtures.loadModels("bootstrap-data-dev.yml");
-            new BookBootstrap().now();
-            new CatBootstrap().now();
-            new TechBootstrap().now();
-            new MusicBootstrap().now();
-            new MovieBootstrap().now();
-            new GeneralBootstrap().now();
-            new TVBootstrap().now();			 
+            Fixtures.loadModels("bootstrap-data-dev.yml");			 
 		}
+        new BookBootstrap().now();
+        new CatBootstrap().now();
+        new TechBootstrap().now();
+        new MusicBootstrap().now();
+        new MovieBootstrap().now();
+        new GeneralBootstrap().now();
+        new TVBootstrap().now();		
 		initIceBreakers();
     }
  

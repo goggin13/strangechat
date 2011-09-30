@@ -4,7 +4,7 @@ require 'uri'
 require 'json'
 require "pusher-client"
 
-# ruby thread.rb 1001 
+# ruby thread.rb 1001 16 usepowers
 
 root = Integer(ARGV[0])
 if root % 2 == 0

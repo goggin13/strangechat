@@ -114,11 +114,9 @@ public class MovieBootstrap extends Job {
         new TriviaResponse(c, "I still like you but you're wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Honey, no.", ResponseType.INCORRECT);
         new TriviaResponse(c, "Crying shame.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Hi there, want to play? Reply back \"yes, ma’am\" if you do.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Bonjour. Wanna play with me? Reply \"oui\" to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Darling! Let's play. Tell me \"yes\" to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Call me \"sugar\" to get me started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Call me \"honey\" to get me started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Hi there, want to play?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Bonjour. Wanna play with me?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Darling! Let's play.", ResponseType.SALUTATION);
         new TriviaResponse(c, "Au revoir!", ResponseType.CLOSING);
         new TriviaResponse(c, "Until next time.", ResponseType.CLOSING);
         new TriviaResponse(c, "Bye, lovely.", ResponseType.CLOSING);

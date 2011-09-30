@@ -125,11 +125,11 @@ public class MusicBootstrap extends Job {
         new TriviaResponse(c, "You've got it all wrong.", ResponseType.INCORRECT);
         new TriviaResponse(c, "You're not picking up what I’m putting down!", ResponseType.INCORRECT);
         new TriviaResponse(c, " Nah, brother.", ResponseType.INCORRECT);
-        new TriviaResponse(c, "Let's jam. Reply \"play\" to get the show on the road.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Wanna riff? Reply \"jam\" to go.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "Heyo, nice to see ya. Respond \"Marley\" to get started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "You want to jam with me? Reply \"right on\" to get it started.", ResponseType.SALUTATION);
-        new TriviaResponse(c, "You've got that flow? Reply \"yes\" to get started.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Let's jam.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Wanna riff?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "Heyo, nice to see ya.", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You want to jam with me?", ResponseType.SALUTATION);
+        new TriviaResponse(c, "You've got that flow?", ResponseType.SALUTATION);
         new TriviaResponse(c, "See you soon, brother man!", ResponseType.CLOSING);
         new TriviaResponse(c, "Peace!", ResponseType.CLOSING);
         new TriviaResponse(c, "See you on the flip side!", ResponseType.CLOSING);
