@@ -56,17 +56,18 @@ var sendChat = function (msg) {
 };
 
 countIcebreakers = function () {
-  var xPath = '//img[@alt="IceBreaker"]';
-  return parseInt(selenium.getXpathCount(xPath), 10);
+  
+  return 
 }
 
 var iceBreakerTimer = -1;
 var sentBefore = false;
 var sendIceBreaker = function () {
   pause();
-  var nextCount = countIcebreakers() + 1;  
+  var xPath = '//img[@alt="IceBreaker"]';
+  var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;  
   selenium.click("css=.chatting .ice_breaker");
-  var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='IceBreaker']\"), 10) >= " + nextCount;
+  var JS = "parseInt(selenium.getXpathCount(\"" + xPath + "\"), 10) >= " + nextCount;
   selenium.waitForCondition(JS, 10000);
   iceBreakerTimer = timestamp();
 };
@@ -77,11 +78,12 @@ var sendKarma = function () {
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;
   selenium.click("css=.chatting .karma");
   pause();  
-  selenium.waitForElementPresent("css=#yes_splash_option");
+  var btnXpath = "xpath=//a[@id='yes_splash_option']";
+  selenium.waitForElementPresent(btnXpath);
   pause();
-  selenium.click("css=#yes_splash_option");
+  selenium.click(btnXpath);
   
-  var JS = "parseInt(selenium.getXpathCount(\"//img[@alt='Karma']\"), 10) >= " + nextCount;
+  var JS = "parseInt(selenium.getXpathCount(\"" + xPath + "\"), 10) >= " + nextCount;
   selenium.waitForCondition(JS, 10000);  
 };
 
