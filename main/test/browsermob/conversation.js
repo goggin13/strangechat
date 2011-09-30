@@ -100,11 +100,6 @@ if (flipCoin(2)) {
   selenium.click("css=#gender_chooser .item:last");
 }
 
-// for (var i = 0; i < layers.length; i++) {
-//   var r = Math.floor(1 + Math.random() * 8);
-//   selenium.click("css=#" + layers[i] +" .item.box_" + r);
-// }
-
 selenium.click("css=.chat_random");
 selenium.waitForTextPresent("Enters your view");
 
@@ -119,7 +114,6 @@ if (flipCoin(5)) {
   iceBreakerTimer = timestamp() - 17;
 }
 
-sendKarma();
 for (i = 1; i < NUM_ITERS; i++) {  
   sendChat(myName + " hello" + i);    
   selenium.waitForTextPresent(theirName + " hello" + i);
