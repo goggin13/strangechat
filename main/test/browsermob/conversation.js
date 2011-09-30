@@ -76,7 +76,7 @@ var sendKarma = function () {
   var xPath = '//img[@alt="Karma"]';  
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;
   selenium.click("css=.chatting .karma");
-  
+  pause();  
   selenium.waitForElementPresent("css=#yes_splash_option");
   pause();
   selenium.click("css=#yes_splash_option");
