@@ -49,18 +49,13 @@ selenium.click("css=.restart_chat.fake_link");
 selenium.waitForTextPresent("When you are ready, just type ");
 sendChat("play");
 
-var countIcebreakers = function () {
-  return parseInt(selenium.getXpathCount(xPath), 10);
-}
-
 var answerQuestion = function () {
   selenium.pause(MESSAGE_PAUSE_TIME);
   sendChat("a");
   var xPath = '//img[@alt="Movies"]';  
-  var nextCount = countIcebreakers() + 1;
-  var code = "countIcebreakers() >= nextCount";
-  waitForCondition(code);
-  // selenium.waitForXpathCount(xPath, nextCount);  
+  var curCount = parseInt(selenium.getXpathCount(xPath), 10);
+  var nextCount = curCount + 1;
+  selenium.waitForXpathCount(xPath, nextCount);  
 }
 
 for (var i = 0; i < 10 ; i++) {

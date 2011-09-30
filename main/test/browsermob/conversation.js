@@ -55,20 +55,18 @@ var sendChat = function (msg) {
   selenium.keyDown("css=.chat_input", "\\13");    
 };
 
+var countIcebreakers = function () {
+  var xPath = '//img[@alt="IceBreaker"]';
+  return parseInt(selenium.getXpathCount(xPath), 10);
+}
+
 var iceBreakerTimer = -1;
 var sentBefore = false;
 var sendIceBreaker = function () {
   pause();
-  var xPath = '//img[@alt="IceBreaker"]';  
-  var curCount = parseInt(selenium.getXpathCount(xPath), 10);
-  var nextCount = curCount + 1;
   selenium.click("css=.chatting .ice_breaker");
-  if (!sentBefore) {
-    selenium.waitForElementPresent("css=.power_splash.ice_breaker");
-    selenium.click("css=.power_splash.ice_breaker");
-    sentBefore = true;
-  }
-  selenium.waitForXpathCount(xPath, nextCount);  
+  var nextCount = countIcebreakers() + 1;
+  waitForCondition("countIcebreakers() >= next");
   iceBreakerTimer = timestamp();
 };
 
