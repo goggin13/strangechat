@@ -67,6 +67,7 @@ var sendIceBreaker = function () {
     var css = "css=.power_splash.ice_breaker";
     selenium.waitForElementPresent(css);
     selenium.click(css);
+    sentBefore = true;
   }
   
   var JS = "parseInt(selenium.getXpathCount(\"" + xPath + "\"), 10) >= " + nextCount;
