@@ -55,11 +55,6 @@ var sendChat = function (msg) {
   selenium.keyDown("css=.chat_input", "\\13");    
 };
 
-countIcebreakers = function () {
-  
-  return 
-}
-
 var iceBreakerTimer = -1;
 var sentBefore = false;
 var sendIceBreaker = function () {
