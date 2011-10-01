@@ -92,7 +92,6 @@ var sendKarma = function () {
   var xPath = "//img[@alt='Karma']";  
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;
   killPopupIf();  
-  selenium.click("css=.chatting .karma");  // the double clicks look sloppy, but we may need to 
   selenium.click("css=.chatting .karma");   
   pause();  
   var btnXpath = "xpath=//a[@id='yes_splash_option']";
