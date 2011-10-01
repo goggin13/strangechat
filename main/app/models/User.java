@@ -35,7 +35,7 @@ import enums.Power;
 @Entity
 public class User extends Model {
     final public static int INITIAL_ICE_BREAKERS = 2;
-    final public static int INITIAL_KARMA = 3;
+    final public static int INITIAL_KARMA = 10000; 
         
     @Transient
 	public static long admin_id = -3L;    
