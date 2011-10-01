@@ -51,6 +51,7 @@ var timestamp = function () {
 
 var killPopupIf = function () {
   var css = "css=.power_splash";
+  pause();
   if (selenium.isElementPresent(css)) {
     selenium.click(css);
   }
@@ -65,35 +66,31 @@ var sendChat = function (msg) {
 var iceBreakerTimer = -1;
 var sentBefore = false;
 var sendIceBreaker = function () {
-  pause();
   killPopupIf();    
   var xPath = "//img[@alt='IceBreaker']";
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;  
   killPopupIf();    
-  selenium.click("css=.chatting .ice_breaker"); // the double clicks look sloppy, but we may need to
-  selenium.click("css=.chatting .ice_breaker");  // to kill another popup on the way in
-  pause();
+  selenium.click("css=.chatting .ice_breaker");
+  
   if (!sentBefore) { // kill popup
     var css = "css=.power_splash.ice_breaker";
     selenium.waitForElementPresent(css);
     selenium.click(css);
     sentBefore = true;
   }
-  
   killPopupIf();
+  
   var JS = "parseInt(selenium.getXpathCount(\"" + xPath + "\"), 10) >= " + nextCount;
   selenium.waitForCondition(JS, 10000);
   iceBreakerTimer = timestamp();
 };
 
 var sendKarma = function () { 
-  pause();
   killPopupIf(); 
   var xPath = "//img[@alt='Karma']";  
   var nextCount = parseInt(selenium.getXpathCount(xPath), 10) + 1;
   killPopupIf();  
   selenium.click("css=.chatting .karma");   
-  pause();  
   var btnXpath = "xpath=//a[@id='yes_splash_option']";
   selenium.waitForElementPresent(btnXpath);
   pause();
